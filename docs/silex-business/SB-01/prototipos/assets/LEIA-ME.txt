@@ -1,0 +1,21 @@
+SILEX BUSINESS — RECONSTRUÇÃO VETORIAL REFINADA
+
+Base: arquivo enviado silex-business-logo-fundo-escuro.svg.
+
+CORREÇÕES
+- A tipografia original havia sido contornada a partir de pixels com centenas de segmentos retos e pontas serrilhadas. Foi substituída por caminhos Bézier originais da família tipográfica Inter (ExtraBold / Light), adaptados às dimensões do nome na logo enviada.
+- Cinco facetas originais do mineral foram preservadas, simplificando-se pequenos vértices herdados dos pixels.
+- O texto dos SVGs refinados está convertido em contornos vetoriais independentes do software e da instalação de fontes; não inclui fontes e não contém PNG embutido.
+- O visual foi mantido próximo ao material original, mas não é pixel a pixel idêntico à fonte gerada por IA.
+
+ARQUIVOS
+- silex-business-logo-fundo-escuro-refinado.svg: mesmo fundo azul da arte fornecida, texto branco/azul claro.
+- silex-business-logo-fundo-escuro-transparente.svg: texto branco/azul claro, sem fundo preenchido para compor sobre fundos escuros.
+- silex-business-logo-fundo-claro-refinado.svg: azul profundo/azul médio, fundo transparente.
+- silex-business-simbolo-refinado.svg: mineral isolado sem fundo.
+- silex-business-app-icon-refinado.svg: ícone quadrado com fundo azul profundo.
+- PNGs: visualizações rasterizadas de cada SVG.
+- comparativo-contornos.png: comparação da versão anterior e da reconstruída.
+
+CORES: azul profundo #102D5C, azul médio #1769E8, azul claro #8EB7FF.
+OBS.: validação marcária do nome ainda pendente para exploração comercial.

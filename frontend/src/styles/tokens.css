@@ -1,0 +1,104 @@
+/*
+ * Silex Business — tokens de identidade visual (SB-02.1)
+ *
+ * Esta camada é carregada pelo frontend, mas ainda não é aplicada aos
+ * seletores operacionais. A migração dos componentes começa nos incrementos
+ * seguintes, preservando a aparência e o comportamento atuais nesta etapa.
+ */
+@font-face {
+  font-family: "Silex Inter Local";
+  src: url("/assets/fonts/Inter-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Silex Inter Local";
+  src: url("/assets/fonts/Inter-SemiBold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+:root {
+  /* Marca */
+  --silex-brand-deep: #102d5c;
+  --silex-brand-primary: #1769e8;
+  --silex-brand-support: #8eb7ff;
+
+  /* Superfícies e texto */
+  --silex-surface-canvas: #f4f6fa;
+  --silex-surface-base: #ffffff;
+  --silex-surface-subtle: #eef3fa;
+  --silex-text-primary: #172b45;
+  --silex-text-muted: #52627a;
+  --silex-text-inverse: #ffffff;
+  --silex-border-default: #dce4f0;
+  --silex-border-control: #8192ac;
+
+  /* Semântica: estados e valores financeiros são intencionalmente distintos. */
+  --silex-status-success: #146b46;
+  --silex-status-error: #b42318;
+  --silex-status-warning: #855000;
+  --silex-status-overdue: #9e294a;
+  --silex-finance-income: #08745e;
+  --silex-finance-expense: #b83236;
+
+  /* Tipografia Inter local, com fallback; não conectada ao CSS global nesta etapa. */
+  --silex-font-family:
+    "Silex Inter Local", Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --silex-font-title: var(--silex-font-family);
+  --silex-font-body: var(--silex-font-family);
+  --silex-font-button: var(--silex-font-family);
+  --silex-font-menu: var(--silex-font-family);
+  --silex-font-table: var(--silex-font-family);
+  --silex-font-financial: var(--silex-font-family);
+  --silex-weight-regular: 400;
+  --silex-weight-semibold: 600;
+  --silex-size-caption: 12px;
+  --silex-size-table: 13px;
+  --silex-size-body: 14px;
+  --silex-size-commercial: 16px;
+  --silex-size-section: 20px;
+  --silex-size-page: 26px;
+  --silex-size-hero: 56px;
+  --silex-line-height-body: 1.5;
+  --silex-financial-numerals: tabular-nums;
+
+  /* Espaçamento */
+  --silex-space-1: 4px;
+  --silex-space-2: 8px;
+  --silex-space-3: 12px;
+  --silex-space-4: 16px;
+  --silex-space-5: 20px;
+  --silex-space-6: 24px;
+  --silex-space-8: 32px;
+  --silex-space-12: 48px;
+  --silex-space-16: 64px;
+
+  /* Bordas, elevação e controles */
+  --silex-radius-control: 6px;
+  --silex-radius-table: 8px;
+  --silex-radius-card: 12px;
+  --silex-radius-institutional: 16px;
+  --silex-radius-pill: 999px;
+  --silex-shadow-card: 0 3px 14px rgb(16 45 92 / 4%);
+  --silex-shadow-overlay: 0 16px 48px rgb(16 45 92 / 16%);
+  --silex-control-height-dense: 38px;
+  --silex-control-height-default: 44px;
+
+  /* Interação */
+  --silex-button-primary: var(--silex-brand-primary);
+  --silex-button-secondary-background: var(--silex-surface-base);
+  --silex-button-secondary-border: var(--silex-border-control);
+  --silex-button-secondary-text: var(--silex-text-primary);
+  --silex-interactive-hover: #102d5c;
+  --silex-interactive-active: #0b2349;
+  --silex-focus-ring: 0 0 0 3px #8eb7ff;
+  --silex-disabled-opacity: 0.55;
+  --silex-loading-label: "Processando…";
+  --silex-control-error: var(--silex-status-error);
+  --silex-motion-duration: 120ms;
+}

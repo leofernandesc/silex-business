@@ -1,0 +1,477 @@
+[
+  {
+    "pagina": "a-publica",
+    "tamanho": "desktop",
+    "larguraViewport": 1440,
+    "larguraDocumento": 1440,
+    "alturaDocumento": 2507,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [
+      {
+        "conteudo": 510,
+        "container": 510
+      }
+    ],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": null,
+    "titulo": "Sua empresa,organizada emum só lugar.",
+    "requests": [
+      "http://127.0.0.1:8031/a-publica.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-claro-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "b-login",
+    "tamanho": "desktop",
+    "larguraViewport": 1440,
+    "larguraDocumento": 1440,
+    "alturaDocumento": 900,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": "720px 720px",
+    "titulo": "Clareza para gerir.Estrutura para avançar.",
+    "requests": [
+      "http://127.0.0.1:8031/b-login.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-claro-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "c-inicial",
+    "tamanho": "desktop",
+    "larguraViewport": 1440,
+    "larguraDocumento": 1440,
+    "alturaDocumento": 1211,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": null,
+    "titulo": "Página inicial",
+    "requests": [
+      "http://127.0.0.1:8031/c-inicial.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-simbolo-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "d-lancamentos",
+    "tamanho": "desktop",
+    "larguraViewport": 1440,
+    "larguraDocumento": 1440,
+    "alturaDocumento": 1452,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [
+      {
+        "conteudo": 1158,
+        "container": 1158
+      }
+    ],
+    "tabelasVendas": [],
+    "datas": [
+      {
+        "id": "de",
+        "apresentacao": "01/10/2026",
+        "iso": "2026-10-01",
+        "readonly": true
+      },
+      {
+        "id": "ate",
+        "apresentacao": "31/10/2026",
+        "iso": "2026-10-31",
+        "readonly": true
+      }
+    ],
+    "orientacaoRolagem": [
+      {
+        "texto": "Role horizontalmente para ver todas as colunas e ações.",
+        "visivel": false
+      }
+    ],
+    "botaoNovaDespesa": [
+      {
+        "classe": "btn ",
+        "cor": "rgb(16, 45, 92)",
+        "fundo": "rgb(255, 255, 255)"
+      }
+    ],
+    "colunasFinanceiras": 6,
+    "acoesEstornar": 2,
+    "colunasLogin": null,
+    "titulo": "Lançamentos (Despesa/Receita)",
+    "requests": [
+      "http://127.0.0.1:8031/d-lancamentos.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "a-publica",
+    "tamanho": "tablet",
+    "larguraViewport": 768,
+    "larguraDocumento": 768,
+    "alturaDocumento": 3402,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [
+      {
+        "conteudo": 642,
+        "container": 642
+      }
+    ],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": null,
+    "titulo": "Sua empresa,organizada emum só lugar.",
+    "requests": [
+      "http://127.0.0.1:8031/a-publica.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-claro-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "b-login",
+    "tamanho": "tablet",
+    "larguraViewport": 768,
+    "larguraDocumento": 768,
+    "alturaDocumento": 1024,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": "384px 384px",
+    "titulo": "Clareza para gerir.Estrutura para avançar.",
+    "requests": [
+      "http://127.0.0.1:8031/b-login.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-claro-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "c-inicial",
+    "tamanho": "tablet",
+    "larguraViewport": 768,
+    "larguraDocumento": 768,
+    "alturaDocumento": 1547,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": null,
+    "titulo": "Página inicial",
+    "requests": [
+      "http://127.0.0.1:8031/c-inicial.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-simbolo-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "d-lancamentos",
+    "tamanho": "tablet",
+    "larguraViewport": 768,
+    "larguraDocumento": 768,
+    "alturaDocumento": 1965,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [
+      {
+        "conteudo": 830,
+        "container": 722
+      }
+    ],
+    "tabelasVendas": [],
+    "datas": [
+      {
+        "id": "de",
+        "apresentacao": "01/10/2026",
+        "iso": "2026-10-01",
+        "readonly": true
+      },
+      {
+        "id": "ate",
+        "apresentacao": "31/10/2026",
+        "iso": "2026-10-31",
+        "readonly": true
+      }
+    ],
+    "orientacaoRolagem": [
+      {
+        "texto": "Role horizontalmente para ver todas as colunas e ações.",
+        "visivel": true
+      }
+    ],
+    "botaoNovaDespesa": [
+      {
+        "classe": "btn ",
+        "cor": "rgb(16, 45, 92)",
+        "fundo": "rgb(255, 255, 255)"
+      }
+    ],
+    "colunasFinanceiras": 6,
+    "acoesEstornar": 2,
+    "colunasLogin": null,
+    "titulo": "Lançamentos (Despesa/Receita)",
+    "ultimaColuna": {
+      "scrollLeft": 108,
+      "todasColunas": 6,
+      "acoesVisiveis": true
+    },
+    "requests": [
+      "http://127.0.0.1:8031/d-lancamentos.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "a-publica",
+    "tamanho": "mobile",
+    "larguraViewport": 375,
+    "larguraDocumento": 375,
+    "alturaDocumento": 4084,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [
+      {
+        "conteudo": 460,
+        "container": 301
+      }
+    ],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": null,
+    "titulo": "Sua empresa,organizada emum só lugar.",
+    "requests": [
+      "http://127.0.0.1:8031/a-publica.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-claro-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "b-login",
+    "tamanho": "mobile",
+    "larguraViewport": 375,
+    "larguraDocumento": 375,
+    "alturaDocumento": 846,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": "375px",
+    "titulo": "Clareza para gerir.Estrutura para avançar.",
+    "requests": [
+      "http://127.0.0.1:8031/b-login.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-claro-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "c-inicial",
+    "tamanho": "mobile",
+    "larguraViewport": 375,
+    "larguraDocumento": 375,
+    "alturaDocumento": 2099,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [],
+    "tabelasVendas": [],
+    "datas": [],
+    "orientacaoRolagem": [],
+    "botaoNovaDespesa": [],
+    "colunasFinanceiras": 0,
+    "acoesEstornar": 0,
+    "colunasLogin": null,
+    "titulo": "Página inicial",
+    "requests": [
+      "http://127.0.0.1:8031/c-inicial.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-simbolo-refinado.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf"
+    ],
+    "errors": []
+  },
+  {
+    "pagina": "d-lancamentos",
+    "tamanho": "mobile",
+    "larguraViewport": 375,
+    "larguraDocumento": 375,
+    "alturaDocumento": 2611,
+    "inter400": true,
+    "inter600": true,
+    "imagensNaoCarregadas": [],
+    "tabelas": [
+      {
+        "conteudo": 830,
+        "container": 341
+      }
+    ],
+    "tabelasVendas": [],
+    "datas": [
+      {
+        "id": "de",
+        "apresentacao": "01/10/2026",
+        "iso": "2026-10-01",
+        "readonly": true
+      },
+      {
+        "id": "ate",
+        "apresentacao": "31/10/2026",
+        "iso": "2026-10-31",
+        "readonly": true
+      }
+    ],
+    "orientacaoRolagem": [
+      {
+        "texto": "Role horizontalmente para ver todas as colunas e ações.",
+        "visivel": true
+      }
+    ],
+    "botaoNovaDespesa": [
+      {
+        "classe": "btn ",
+        "cor": "rgb(16, 45, 92)",
+        "fundo": "rgb(255, 255, 255)"
+      }
+    ],
+    "colunasFinanceiras": 6,
+    "acoesEstornar": 2,
+    "colunasLogin": null,
+    "titulo": "Lançamentos (Despesa/Receita)",
+    "ultimaColuna": {
+      "scrollLeft": 489,
+      "todasColunas": 6,
+      "acoesVisiveis": true
+    },
+    "requests": [
+      "http://127.0.0.1:8031/d-lancamentos.html",
+      "http://127.0.0.1:8031/estudos.css",
+      "http://127.0.0.1:8031/estudos.js",
+      "http://127.0.0.1:8031/assets/silex-business-logo-fundo-escuro-transparente.svg",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg",
+      "http://127.0.0.1:8031/assets/Inter-Regular.otf",
+      "http://127.0.0.1:8031/assets/Inter-SemiBold.otf",
+      "http://127.0.0.1:8031/assets/silex-business-app-icon-refinado.svg"
+    ],
+    "errors": []
+  }
+]
