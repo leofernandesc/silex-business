@@ -7,7 +7,10 @@ import {
   Landmark,
   Printer,
   Search,
+  Plus,
 } from "lucide-react";
+import { LedgerDateField, LedgerTable } from "./ledgerPresentation";
+import "./ledger.css";
 import { api, query } from "./api";
 import { dateOnly, localDate, money, parseDecimal } from "./format";
 import { presets, periodRange } from "./financeDates";
@@ -30,7 +33,6 @@ import {
   PageTitle,
   Pagination,
   SummaryCard,
-  Table,
   useLoad,
 } from "./ui";
 
@@ -123,7 +125,7 @@ export function LedgerPage() {
   const summary =
     result.loading || result.error ? undefined : result.data?.summary;
   return (
-    <div className="ledger-page">
+    <div className="ledger-page silex-ledger">
       <PageTitle
         title="Lançamentos (Despesa/Receita)"
         subtitle="Livro caixa: entradas e saídas efetivas por conta."
@@ -140,7 +142,13 @@ export function LedgerPage() {
             location.href = "/api/finance/movements.csv?" + query(applied);
           }}
         />
-        <AddButton onClick={() => setAdding("expense")}>Nova despesa</AddButton>
+        <button
+          className="ledger-new-expense"
+          onClick={() => setAdding("expense")}
+        >
+          <Plus size={17} />
+          Nova despesa
+        </button>
         <AddButton onClick={() => setAdding("income")}>Nova receita</AddButton>
       </PageTitle>
       <div className="period-tabs" aria-label="Período">
@@ -323,7 +331,7 @@ export function LedgerPage() {
             </label>
           ))}
         </fieldset>
-        <Field label="De">
+        <LedgerDateField label="De" value={draft.start}>
           <input
             type="date"
             value={draft.start}
@@ -332,8 +340,8 @@ export function LedgerPage() {
               setPreset("Personalizado");
             }}
           />
-        </Field>
-        <Field label="Até">
+        </LedgerDateField>
+        <LedgerDateField label="Até" value={draft.end}>
           <input
             type="date"
             value={draft.end}
@@ -342,7 +350,7 @@ export function LedgerPage() {
               setPreset("Personalizado");
             }}
           />
-        </Field>
+        </LedgerDateField>
         <button type="submit" className="primary">
           <Search size={15} />
           Pesquisar
@@ -378,7 +386,7 @@ export function LedgerPage() {
             <span>Nenhum lançamento no período/filtro escolhido.</span>
           </div>
         ) : (
-          <Table
+          <LedgerTable
             loading={result.loading}
             empty={false}
             headers={[
@@ -419,6 +427,9 @@ export function LedgerPage() {
                   className={`numeric ${row.amount_cents > 0 ? "positive" : "negative"}`}
                 >
                   {money(row.amount_cents)}
+                  <small className="ledger-value-kind">
+                    {row.amount_cents > 0 ? "Entrada" : "Saída"}
+                  </small>
                 </td>
                 <td>
                   {row.origin === "manual" &&
@@ -433,7 +444,7 @@ export function LedgerPage() {
                 </td>
               </tr>
             ))}
-          </Table>
+          </LedgerTable>
         )}
         <Pagination data={result.data} onPage={setPage} />
       </section>
@@ -575,7 +586,7 @@ function MovementForm({
           done();
         }}
       >
-        <div className="form-grid">
+        <div className="form-grid silex-ledger-form">
           <Field label="Histórico *" span>
             <input
               autoFocus
@@ -632,7 +643,7 @@ function MovementForm({
               </select>
             </Field>
           )}
-          <Field label="Data de lançamento *">
+          <LedgerDateField label="Data de lançamento *" value={posting}>
             <input
               required
               type="date"
@@ -641,15 +652,15 @@ function MovementForm({
               value={posting}
               onChange={(e) => setPosting(e.target.value)}
             />
-          </Field>
-          <Field label="Data de competência *">
+          </LedgerDateField>
+          <LedgerDateField label="Data de competência *" value={competence}>
             <input
               required
               type="date"
               value={competence}
               onChange={(e) => setCompetence(e.target.value)}
             />
-          </Field>
+          </LedgerDateField>
           <Field label="Nº documento">
             <input
               maxLength={100}
@@ -709,11 +720,13 @@ function ReverseForm({
         cancel={close}
         submit="Confirmar estorno"
         onSubmit={async () => {
-          await api(`/finance/movements/${row.id}/reverse`, "POST", { reason });
+          await api(`/finance/movements/${row.id}/reverse`, "POST", {
+            reason,
+          });
           done();
         }}
       >
-        <p>
+        <p className="silex-ledger-form">
           {row.description} · {money(row.amount_cents)}
         </p>
         <Field label="Motivo *">

@@ -1,0 +1,334 @@
+/* SB-05.1: screen-only presentation for LedgerPage and its owned dialogs. */
+@media screen {
+  .silex-ledger {
+    color: var(--silex-text-primary);
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+    line-height: var(--silex-line-height-body);
+    min-width: 0;
+  }
+  .silex-ledger .page-title {
+    gap: var(--silex-space-4);
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-ledger .page-title h1 {
+    font-size: var(--silex-size-page);
+  }
+  .silex-ledger .page-title p {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-body);
+  }
+  .silex-ledger .actions {
+    flex-wrap: wrap;
+    gap: var(--silex-space-2);
+  }
+  .silex-ledger button {
+    font-family: var(--silex-font-button);
+  }
+  .silex-ledger .actions button {
+    min-height: 44px;
+    color: var(--silex-brand-deep);
+    border-color: var(--silex-border-control);
+    background: var(--silex-surface-base);
+  }
+  .silex-ledger .actions button.primary {
+    background: var(--silex-brand-primary);
+    border-color: var(--silex-brand-primary);
+    color: var(--silex-text-inverse);
+  }
+  .silex-ledger .ledger-new-expense:hover {
+    background: var(--silex-surface-subtle);
+    border-color: var(--silex-brand-deep);
+  }
+  .silex-ledger .actions button.primary:hover {
+    background: var(--silex-interactive-hover);
+  }
+  .silex-ledger .period-tabs {
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-ledger .tabs {
+    border: 1px solid var(--silex-border-default);
+    border-radius: var(--silex-radius-table);
+    background: var(--silex-surface-base);
+    gap: var(--silex-space-1);
+    flex-wrap: wrap;
+  }
+  .silex-ledger .tabs button {
+    font-size: var(--silex-size-table);
+    padding: var(--silex-space-2) var(--silex-space-3);
+    min-height: 44px;
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .tabs button.selected {
+    background: var(--silex-brand-deep);
+    color: var(--silex-text-inverse);
+  }
+  .silex-ledger .summary-card {
+    padding: var(--silex-space-5);
+    border: 1px solid var(--silex-border-default);
+    border-radius: var(--silex-radius-card);
+    background: var(--silex-surface-base);
+    box-shadow: var(--silex-shadow-card);
+    min-width: 0;
+  }
+  .silex-ledger .summary-card span,
+  .silex-ledger .summary-card small {
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .summary-card span {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-ledger .summary-card small {
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+  }
+  .silex-ledger .summary-card strong {
+    color: var(--silex-text-primary);
+    font-size: 24px;
+    font-variant-numeric: var(--silex-financial-numerals);
+    overflow-wrap: anywhere;
+  }
+  .silex-ledger .summary-icon {
+    color: var(--silex-brand-deep);
+    background: var(--silex-surface-subtle);
+  }
+  .silex-ledger .summary-card.teal strong,
+  .silex-ledger .summary-card.teal .summary-icon {
+    color: var(--silex-finance-income);
+  }
+  .silex-ledger .summary-card.amber strong,
+  .silex-ledger .summary-card.amber .summary-icon {
+    color: var(--silex-finance-expense);
+  }
+  .silex-ledger .account-balances {
+    margin: var(--silex-space-5) 0;
+  }
+  .silex-ledger .account-balances p {
+    font-size: var(--silex-size-caption);
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .balance-chips button {
+    min-height: 56px;
+    border-color: var(--silex-border-default);
+    border-radius: var(--silex-radius-table);
+    background: var(--silex-surface-base);
+    color: var(--silex-brand-deep);
+  }
+  .silex-ledger .balance-chips button.selected {
+    border-color: var(--silex-brand-primary);
+    background: var(--silex-surface-subtle);
+  }
+  .silex-ledger .balance-chips strong {
+    color: var(--silex-brand-deep);
+    font-size: var(--silex-size-table);
+    font-variant-numeric: var(--silex-financial-numerals);
+  }
+  .silex-ledger .panel {
+    border: 1px solid var(--silex-border-default);
+    border-radius: var(--silex-radius-card);
+    box-shadow: var(--silex-shadow-card);
+  }
+  .silex-ledger .ledger-filters {
+    padding: var(--silex-space-5);
+    gap: var(--silex-space-4);
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-ledger .field label,
+  .silex-ledger .date-basis legend {
+    font-size: var(--silex-size-caption);
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .ledger-filters input:not([type="radio"]),
+  .silex-ledger .ledger-filters select {
+    min-height: 44px;
+    color: var(--silex-text-primary);
+    border-color: var(--silex-border-control);
+    background: var(--silex-surface-base);
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+    min-width: 0;
+  }
+  .silex-ledger .ledger-filters input::placeholder {
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .date-basis {
+    align-self: start;
+    color: var(--silex-text-primary);
+  }
+  .silex-ledger .date-basis input {
+    accent-color: var(--silex-brand-primary);
+  }
+  .silex-ledger .ledger-filters > button {
+    min-height: 44px;
+    align-self: start;
+    margin-top: 24px;
+  }
+  .silex-ledger .ledger-filter-help {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-ledger .ledger-list .panel-heading {
+    padding: var(--silex-space-4) var(--silex-space-5);
+    gap: var(--silex-space-3);
+    flex-wrap: wrap;
+  }
+  .silex-ledger .ledger-list h2 {
+    color: var(--silex-text-primary);
+    font-size: var(--silex-size-commercial);
+  }
+  .silex-ledger .inline-field {
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .inline-field select {
+    min-height: 44px;
+    border-color: var(--silex-border-control);
+    color: var(--silex-text-primary);
+  }
+  .silex-ledger .table-wrap {
+    max-width: 100%;
+  }
+  .silex-ledger .ledger-list table {
+    min-width: 1050px;
+    font-family: var(--silex-font-table);
+    font-size: var(--silex-size-table);
+  }
+  .silex-ledger .ledger-list th {
+    color: var(--silex-text-muted);
+    background: var(--silex-surface-subtle);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-ledger .ledger-list td {
+    color: var(--silex-text-primary);
+    padding: var(--silex-space-4);
+    border-color: var(--silex-border-default);
+  }
+  .silex-ledger .ledger-list td small {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-ledger .ledger-list td.numeric {
+    font-family: var(--silex-font-financial);
+    font-variant-numeric: var(--silex-financial-numerals);
+    font-weight: var(--silex-weight-semibold);
+    white-space: nowrap;
+  }
+  .silex-ledger .ledger-list td.positive {
+    color: var(--silex-finance-income);
+  }
+  .silex-ledger .ledger-list td.negative {
+    color: var(--silex-finance-expense);
+  }
+  .silex-ledger .ledger-list td .ledger-value-kind {
+    font-weight: var(--silex-weight-regular);
+  }
+  .silex-ledger .danger {
+    color: var(--silex-status-error);
+    border-color: var(--silex-status-error);
+    min-height: 44px;
+  }
+  .silex-ledger .pagination {
+    color: var(--silex-text-muted);
+    flex-wrap: wrap;
+    gap: var(--silex-space-3);
+  }
+  .silex-ledger .pagination button {
+    min-width: 44px;
+    min-height: 44px;
+    border-color: var(--silex-border-control);
+  }
+  .silex-ledger .ledger-empty {
+    color: var(--silex-text-muted);
+  }
+  .silex-ledger .ledger-empty svg {
+    color: var(--silex-brand-primary);
+  }
+  .silex-ledger button:focus-visible,
+  .silex-ledger input:focus-visible,
+  .silex-ledger select:focus-visible,
+  .silex-ledger .table-wrap:focus-visible {
+    outline: 2px solid var(--silex-brand-primary);
+    outline-offset: 3px;
+  }
+  .ledger-scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--silex-space-2);
+    margin: 0;
+    padding: var(--silex-space-3) var(--silex-space-5);
+    color: var(--silex-brand-deep);
+    background: var(--silex-surface-subtle);
+    font-size: var(--silex-size-caption);
+  }
+  .ledger-scroll-hint svg {
+    flex-shrink: 0;
+  }
+  .silex-ledger .ledger-date-field {
+    min-width: 0;
+  }
+  .ledger-date-caption {
+    display: block;
+    margin-top: var(--silex-space-1);
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    font-variant-numeric: var(--silex-financial-numerals);
+  }
+  dialog:has(.silex-ledger-form) {
+    border-color: var(--silex-border-default);
+    border-radius: var(--silex-radius-card);
+    color: var(--silex-text-primary);
+  }
+  dialog:has(.silex-ledger-form) > header h2 {
+    color: var(--silex-text-primary);
+  }
+  dialog:has(.silex-ledger-form) .field label {
+    color: var(--silex-text-muted);
+  }
+  dialog:has(.silex-ledger-form) input,
+  dialog:has(.silex-ledger-form) select,
+  dialog:has(.silex-ledger-form) textarea {
+    border-color: var(--silex-border-control);
+    color: var(--silex-text-primary);
+    font-family: var(--silex-font-body);
+    min-height: 44px;
+  }
+  dialog:has(.silex-ledger-form) .help {
+    color: var(--silex-text-muted);
+  }
+  dialog:has(.silex-ledger-form) button {
+    min-height: 44px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .silex-ledger .ledger-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 650px) {
+  .silex-ledger .page-title {
+    align-items: stretch;
+  }
+  .silex-ledger .actions button {
+    flex: 1 1 140px;
+  }
+  .silex-ledger .ledger-filters {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--silex-space-4);
+  }
+  .silex-ledger .ledger-filters > button {
+    margin-top: 0;
+  }
+  .silex-ledger .ledger-list .panel-heading {
+    align-items: flex-start;
+  }
+  .silex-ledger .summary-card {
+    padding: var(--silex-space-4);
+  }
+  .silex-ledger .ledger-list .inline-field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .silex-ledger .ledger-list .inline-field select {
+    width: auto;
+  }
+}
