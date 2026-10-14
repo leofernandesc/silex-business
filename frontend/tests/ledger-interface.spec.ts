@@ -112,6 +112,9 @@ test("P06 neutral expense, primary income, keyboard focus and six-column scroll"
   expect(focus.style).toBe("solid");
   expect(focus.width).toBeGreaterThanOrEqual(2);
   expect(focus.color).toBe("rgb(23, 105, 232)");
+  await search.fill("Lançamento ilustrativo SB05 02");
+  await search.press("Enter");
+  await expect(page.locator(".ledger-list tbody tr")).toHaveCount(1);
   const table = page.locator(".ledger-list .table-wrap");
   await expect(table.locator("thead th")).toHaveCount(6);
   await table.focus();
