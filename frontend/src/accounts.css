@@ -83,6 +83,11 @@
   .silex-accounts .finance-filter-grid .field label {
     font-size: var(--silex-size-caption);
   }
+  .silex-accounts .finance-filter-grid .inline-field {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
   .silex-accounts .finance-filter-grid input,
   .silex-accounts .finance-filter-grid select,
   .silex-accounts .finance-search-button {
