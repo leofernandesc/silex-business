@@ -96,6 +96,11 @@
     font-family: var(--silex-font-body);
     min-width: 0;
   }
+  .silex-accounts .finance-filter-grid input,
+  .silex-accounts .finance-filter-grid select {
+    width: 100%;
+    max-width: none;
+  }
   .silex-accounts .finance-filter-grid .ledger-date-field {
     min-width: 0;
     align-self: start;
