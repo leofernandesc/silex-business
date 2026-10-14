@@ -95,6 +95,11 @@
     min-width: 0;
     align-self: start;
   }
+  /* P02: outline belongs to the whole search control, outside the legacy borderless input. */
+  .silex-accounts .finance-search-input .input-with-icon:focus-within {
+    outline: 2px solid var(--silex-brand-primary);
+    outline-offset: 3px;
+  }
   .silex-accounts .finance-search-button {
     align-self: start;
     margin-top: 24px;
