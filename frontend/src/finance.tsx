@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks } from "lucide-react";
+import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks, Plus } from "lucide-react";
 import { api, exportCsv, query } from "./api";
 import { dateOnly, localDate, money, parseDecimal, labels } from "./format";
 import { partnerKinds, PixDetails } from "./partners";
@@ -14,7 +14,6 @@ import type {
   Page,
 } from "./types";
 import {
-  AddButton,
   Badge,
   ExportButton,
   Field,
@@ -24,9 +23,11 @@ import {
   PageTitle,
   Pagination,
   SummaryCard,
-  Table,
   useLoad,
 } from "./ui";
+
+import { LedgerDateField, LedgerTable } from "./ledgerPresentation";
+import "./accounts.css";
 
 type FinanceFilters = {
   q: string; status: string; direction: string; account_id: string;
@@ -67,12 +68,12 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
   function done() { setAdding(false); setSettling(null); setCanceling(null); refresh(version + 1); }
   const fixedDirection = Boolean(initialDirection);
   const title = initialDirection === "income" ? "Contas a Receber" : initialDirection === "expense" ? "Contas a Pagar" : "Lançamentos (Despesa/Receita)";
-  return <>
+  return <div className="silex-accounts">
     <PageTitle title={title} subtitle={initialDirection === "income" ? "Acompanhe recebimentos, vencimentos e baixas." : initialDirection === "expense" ? "Acompanhe pagamentos, vencimentos e beneficiários." : "Livro financeiro com filtros, comprovantes e histórico de pagamentos."}>
       <button onClick={() => setSettings(true)}><Settings2 size={15} /> Contas e categorias</button>
       <button onClick={() => window.open("/api/finance/print?" + query(filters), "_blank", "noopener,noreferrer")}><Printer size={15} /> Imprimir</button>
       <ExportButton onClick={() => exportCsv("finance", filters)} />
-      <AddButton onClick={() => setAdding(true)}>{initialDirection === "expense" ? "Nova despesa" : initialDirection === "income" ? "Nova receita" : "Novo lançamento"}</AddButton>
+      <button className={initialDirection === "expense" ? "accounts-new-expense" : "primary"} onClick={() => setAdding(true)}><Plus size={17} />{initialDirection === "expense" ? "Nova despesa" : initialDirection === "income" ? "Nova receita" : "Novo lançamento"}</button>
     </PageTitle>
     <div className="summary-grid finance-summary-grid">
       <SummaryCard label="Saldo pendente" value={money(result.data?.summary.pending_cents || 0)} detail={initialDirection === "income" ? "Principal a receber neste filtro." : initialDirection === "expense" ? "Principal a pagar neste filtro." : "Principal pendente no recorte aplicado."} tone="blue" icon={<ArrowDownLeft />} />
@@ -97,13 +98,13 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
         <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
         <label className="inline-field">Documento<input value={draft.document} onChange={(e) => update("document", e.target.value)} maxLength={100} /></label>
         <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Lançamento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Baixa</option></select></label>
-        <label className="inline-field">De<input type="date" value={draft.start} onChange={(e) => update("start", e.target.value)} /></label>
-        <label className="inline-field">Até<input type="date" value={draft.end} onChange={(e) => update("end", e.target.value)} /></label>
+        <LedgerDateField label="De" value={draft.start}><input type="date" value={draft.start} onChange={(e) => update("start", e.target.value)} /></LedgerDateField>
+        <LedgerDateField label="Até" value={draft.end}><input type="date" value={draft.end} onChange={(e) => update("end", e.target.value)} /></LedgerDateField>
         <button className="primary finance-search-button" onClick={() => apply()}><Search size={14} /> Pesquisar</button>
       </div>
       {result.error && <Notice>{result.error}</Notice>}
       <div className="panel-heading finance-table-heading"><h2>Lançamentos <span className="muted">({result.data?.total ?? 0})</span></h2><label className="inline-field">Itens por página<select value={String(pageSize)} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></div>
-      <Table headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
+      <LedgerTable headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
         {result.data?.items.map((row) => <tr key={row.id}>
           <td><strong>{row.description}</strong><small>{row.direction === "income" ? row.customer_name : row.supplier_name || `Título #${row.id}`}</small>{row.supplier_kind && row.supplier_kind !== "supplier" && <small>{partnerKinds[row.supplier_kind]}</small>}{row.service_order_code && <small>Serviço/pedido {row.service_order_code}</small>}{row.recurrence_count > 1 && <small>Ocorrência {row.recurrence_index}/{row.recurrence_count}</small>}{row.document && <small>Doc. {row.document}</small>}</td>
           <td><Badge status={row.direction} /></td><td>{row.account_name}<small>{row.category_name}</small></td>
@@ -111,7 +112,7 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
           <td className={`numeric ${row.direction === "income" ? "positive" : "negative"}`}>{money(row.amount_cents)}{row.paid_principal_cents > 0 && row.status !== "paid" && <small>Pago {money(row.paid_principal_cents)} · falta {money(row.remaining_cents)}</small>}</td>
           <td><Badge status={row.status} /></td><td><div className="row-actions">{["open", "partial"].includes(row.status) && <button onClick={() => setSettling(row)}>{row.status === "partial" ? "Nova baixa" : "Quitar"}</button>}{row.payments?.length > 0 && <button onClick={() => setHistoryEntry(row)}><HistoryIcon size={14} /> Baixas ({row.payments.length})</button>}{(row.attachments?.length > 0 || row.payments?.some((p) => p.attachments?.length)) && <span title="Comprovante anexado"><Paperclip size={14} /></span>}{row.status !== "canceled" && !row.sale_id && <button className="danger" onClick={() => setCanceling(row)}>Cancelar</button>}{row.sale_id && <small>Venda #{row.sale_id}</small>}</div></td>
         </tr>)}
-      </Table>
+      </LedgerTable>
       <Pagination data={result.data} onPage={setPage} />
     </section>
     {adding && accounts.data && categories.data && <EntryForm accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} initialDirection={initialDirection || "income"} fixedDirection={Boolean(initialDirection)} close={() => setAdding(false)} done={done} />}
@@ -119,7 +120,7 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
     {historyEntry && <PaymentHistory entry={historyEntry} close={() => setHistoryEntry(null)} done={() => { setHistoryEntry(null); refresh(version + 1); }} />}
     {canceling && <CancelForm entry={canceling} close={() => setCanceling(null)} done={done} />}
     {settings && accounts.data && categories.data && <FinanceSettings accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} close={() => setSettings(false)} refresh={() => refresh(version + 1)} />}
-  </>;
+  </div>;
 }
 function EntryForm({ accounts, categories, initialDirection='income', fixedDirection=false, close, done }: {accounts:Account[];categories:Category[];initialDirection?:string;fixedDirection?:boolean;close:()=>void;done:()=>void}) {
   const [description,setDescription]=useState(''),[direction,setDirection]=useState(initialDirection),[value,setValue]=useState(''),[account,setAccount]=useState(String(accounts.find(a=>a.kind==='bank')?.id||accounts[0]?.id||'')),[category,setCategory]=useState(String(categories.find(c=>c.direction==='both'||c.direction===initialDirection)?.id||categories[0]?.id||'')),[subcategory,setSubcategory]=useState(''),[due,setDue]=useState(localDate()),[competence,setCompetence]=useState(localDate()),[document,setDocument]=useState(''),[customer,setCustomer]=useState(''),[supplier,setSupplier]=useState(''),[q,setQ]=useState(''),[count,setCount]=useState('1'),[frequency,setFrequency]=useState('monthly');
@@ -134,8 +135,8 @@ function EntryForm({ accounts, categories, initialDirection='income', fixedDirec
       <Field label="Conta associada *"><select required value={account} onChange={e=>setAccount(e.target.value)}>{accounts.filter(a=>a.active).map(a=><option key={a.id} value={a.id}>{a.name}</option>)}</select></Field>
       <Field label="Categoria *"><select required value={category} onChange={e=>{setCategory(e.target.value);setSubcategory('');}}>{categoryChoices.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>
       <Field label="Subcategoria"><select value={subcategory} onChange={e=>setSubcategory(e.target.value)}><option value="">Geral</option>{subChoices.map(x=><option key={x.id} value={x.id}>{x.name}</option>)}</select></Field>
-      <Field label="Vencimento *"><input required type="date" value={due} onChange={e=>setDue(e.target.value)}/></Field>
-      <Field label="Competência *"><input required type="date" value={competence} onChange={e=>setCompetence(e.target.value)}/></Field>
+      <LedgerDateField label="Vencimento *" value={due}><input required type="date" value={due} onChange={e=>setDue(e.target.value)}/></LedgerDateField>
+      <LedgerDateField label="Competência *" value={competence}><input required type="date" value={competence} onChange={e=>setCompetence(e.target.value)}/></LedgerDateField>
       <Field label="Número do documento"><input maxLength={100} value={document} onChange={e=>setDocument(e.target.value)}/></Field>
       <Field label={direction==='income'?'Pesquisar cliente':'Pesquisar beneficiário'}><input value={q} onChange={e=>{setQ(e.target.value);setSupplier('');setCustomer('');}} placeholder="Nome, documento ou contato"/></Field>
       {direction==='income'?<Field label="Cliente"><select value={customer} onChange={e=>setCustomer(e.target.value)}><option value="">Não informado</option>{customers.data?.items.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>:<Field label="Beneficiário"><select value={supplier} onChange={e=>setSupplier(e.target.value)}><option value="">Não informado</option>{suppliers.data?.items.map(v=><option key={v.id} value={v.id}>{v.name} · {partnerKinds[v.kind]}</option>)}</select></Field>}
@@ -163,9 +164,9 @@ function SettleForm({entry,accounts,close,done}:{entry:Entry;accounts:Account[];
 function PaymentHistory({entry,close,done}:{entry:Entry;close:()=>void;done:()=>void}) {
   const [reason,setReason]=useState('');
   return <Modal title={`Baixas · ${entry.description}`} close={close} wide><p>Total {money(entry.amount_cents)} · Pago em principal {money(entry.paid_principal_cents)} · Restante {money(entry.remaining_cents)}</p>
-    <Table headers={['Data','Forma','Principal / encargos / desconto','Valor líquido','Comprovantes','Ação']} empty={!entry.payments.length}>
+    <LedgerTable headers={['Data','Forma','Principal / encargos / desconto','Valor líquido','Comprovantes','Ação']} empty={!entry.payments.length}>
       {entry.payments.map(p=><tr key={p.id}><td>{dateOnly(p.posting_date)}<small>Competência {dateOnly(p.competence_date)}</small>{p.reversal_reason&&<small>Motivo: {p.reversal_reason}</small>}</td><td>{labels[p.method]||p.method}{p.reversal_of&&<small>Estorno</small>}</td><td>{money(p.principal_cents)}<small>Juros {money(p.interest_cents)} · Multa {money(p.fine_cents)} · Desconto {money(p.discount_cents)}</small></td><td className="numeric">{money(p.amount_cents)}</td><td><AttachmentControls attachments={p.attachments||[]} path={`/finance/payments/${p.id}/attachments`} done={done}/></td><td>{!p.reversal_of&&!entry.payments.some(x=>x.reversal_of===p.id)&&<button className="danger" disabled={reason.trim().length<3} onClick={async()=>{await api(`/finance/payments/${p.id}/reverse`,'POST',{reason:reason.trim()});done();}}>Estornar baixa</button>}</td></tr>)}
-    </Table>
+    </LedgerTable>
     <Field label="Motivo de estorno"><input minLength={3} maxLength={300} value={reason} onChange={e=>setReason(e.target.value)} placeholder="Informado ao estornar"/></Field>
     <h3>Comprovantes do título</h3><AttachmentControls attachments={entry.attachments||[]} path={`/finance/${entry.id}/attachments`} done={done}/>
   </Modal>;

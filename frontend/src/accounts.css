@@ -1,0 +1,207 @@
+/* SB-05.2: presentation owned by payable/receivable; shared ERP and print stay intact. */
+@media screen {
+  .silex-accounts {
+    min-width: 0;
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+    line-height: var(--silex-line-height-body);
+  }
+  .silex-accounts .page-title {
+    gap: var(--silex-space-4);
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-accounts .page-title h1 {
+    color: var(--silex-brand-deep);
+    font-size: var(--silex-size-page);
+  }
+  .silex-accounts .page-title p {
+    font-size: var(--silex-size-body);
+  }
+  .silex-accounts button {
+    font-family: var(--silex-font-button);
+  }
+  .silex-accounts .actions {
+    flex-wrap: wrap;
+    gap: var(--silex-space-2);
+  }
+  .silex-accounts .actions button {
+    min-height: 44px;
+  }
+  .silex-accounts .accounts-new-expense {
+    background: var(--silex-button-secondary-background);
+    color: var(--silex-button-secondary-text);
+    border-color: var(--silex-button-secondary-border);
+  }
+  .silex-accounts .accounts-new-expense:hover {
+    background: var(--silex-surface-subtle);
+  }
+  .silex-accounts .summary-card {
+    min-width: 0;
+    padding: var(--silex-space-4);
+    border-radius: var(--silex-radius-card);
+    box-shadow: var(--silex-shadow-card);
+  }
+  .silex-accounts .summary-card span,
+  .silex-accounts .summary-card small {
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+  }
+  .silex-accounts .summary-card strong {
+    font-size: 24px;
+    font-variant-numeric: var(--silex-financial-numerals);
+    overflow-wrap: anywhere;
+  }
+  .silex-accounts .finance-ledger {
+    border-radius: var(--silex-radius-card);
+    box-shadow: var(--silex-shadow-card);
+    min-width: 0;
+  }
+  .silex-accounts .finance-periods,
+  .silex-accounts .finance-status-tabs {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding-inline: var(--silex-space-4);
+    gap: var(--silex-space-1);
+  }
+  .silex-accounts .finance-periods button,
+  .silex-accounts .finance-status-tabs button {
+    min-height: 38px;
+    font-size: var(--silex-size-caption);
+    padding: var(--silex-space-2) var(--silex-space-3);
+  }
+  .silex-accounts .finance-periods button.selected,
+  .silex-accounts .finance-status-tabs button.selected {
+    background: var(--silex-brand-deep);
+    color: var(--silex-text-inverse);
+  }
+  .silex-accounts .finance-filter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: var(--silex-space-4);
+    gap: var(--silex-space-3) var(--silex-space-4);
+  }
+  .silex-accounts .finance-filter-grid .inline-field,
+  .silex-accounts .finance-filter-grid .field label {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-accounts .finance-filter-grid input,
+  .silex-accounts .finance-filter-grid select,
+  .silex-accounts .finance-search-button {
+    min-height: 44px;
+    font-size: var(--silex-size-body);
+    font-family: var(--silex-font-body);
+    min-width: 0;
+  }
+  .silex-accounts .finance-filter-grid .ledger-date-field {
+    min-width: 0;
+    align-self: start;
+  }
+  .silex-accounts .finance-search-button {
+    align-self: start;
+    margin-top: 24px;
+  }
+  .silex-accounts .finance-table-heading {
+    padding: var(--silex-space-4);
+    gap: var(--silex-space-3);
+  }
+  .silex-accounts .finance-table-heading h2 {
+    font-size: var(--silex-size-commercial);
+  }
+  .silex-accounts .table-wrap {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .silex-accounts .table-wrap table {
+    min-width: 1090px;
+    font-family: var(--silex-font-table);
+    font-size: var(--silex-size-table);
+  }
+  .silex-accounts th {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-accounts td {
+    padding: var(--silex-space-3) var(--silex-space-4);
+  }
+  .silex-accounts td small {
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+  }
+  .silex-accounts td.numeric {
+    font-family: var(--silex-font-financial);
+    font-variant-numeric: var(--silex-financial-numerals);
+    white-space: nowrap;
+    font-weight: var(--silex-weight-semibold);
+  }
+  .silex-accounts .row-actions {
+    gap: var(--silex-space-2);
+  }
+  .silex-accounts .row-actions button {
+    min-height: 38px;
+    white-space: nowrap;
+  }
+  .silex-accounts .pagination {
+    flex-wrap: wrap;
+    gap: var(--silex-space-3);
+  }
+  .silex-accounts .pagination button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .silex-accounts .ledger-scroll-hint,
+  .silex-accounts .ledger-date-caption {
+    font-size: var(--silex-size-caption);
+    color: var(--silex-text-muted);
+  }
+  .silex-accounts dialog {
+    border-radius: var(--silex-radius-card);
+  }
+  .silex-accounts dialog input:not([type="file"]),
+  .silex-accounts dialog select,
+  .silex-accounts dialog textarea {
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+    min-height: 44px;
+  }
+  .silex-accounts dialog .field label,
+  .silex-accounts dialog .help {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-accounts dialog button {
+    min-height: 44px;
+  }
+  .silex-accounts button:focus-visible,
+  .silex-accounts select:focus-visible,
+  .silex-accounts .field input:focus-visible,
+  .silex-accounts .inline-field > input:focus-visible,
+  .silex-accounts textarea:focus-visible,
+  .silex-accounts .table-wrap:focus-visible {
+    outline: 2px solid var(--silex-brand-primary);
+    outline-offset: 3px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .silex-accounts .finance-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 650px) {
+  .silex-accounts .page-title {
+    align-items: stretch;
+  }
+  .silex-accounts .actions button {
+    flex: 1 1 140px;
+  }
+  .silex-accounts .finance-filter-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .silex-accounts .finance-search-button {
+    margin-top: 0;
+  }
+  .silex-accounts .finance-table-heading select {
+    min-height: 44px;
+  }
+  .silex-accounts .finance-periods button,
+  .silex-accounts .finance-status-tabs button,
+  .silex-accounts .row-actions button {
+    min-height: 44px;
+  }
+}
