@@ -69,6 +69,25 @@ test("P06 neutral expense, primary income, keyboard focus and six-column scroll"
   page,
 }) => {
   await start(page);
+  for (const name of [
+    "Hoje",
+    "Semana",
+    "Mês",
+    "Mês anterior",
+    "Ano",
+    "Tudo",
+    "Personalizado",
+  ]) {
+    const preset = page
+      .locator(".period-tabs")
+      .getByRole("button", { name, exact: true });
+    await expect(preset).toBeInViewport();
+    const bounds = await preset.boundingBox();
+    expect(bounds!.x).toBeGreaterThanOrEqual(0);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(
+      page.viewportSize()!.width + 1,
+    );
+  }
   const expense = page.getByRole("button", {
     name: "Nova despesa",
     exact: true,

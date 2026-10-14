@@ -47,6 +47,9 @@
     margin-bottom: var(--silex-space-5);
   }
   .silex-ledger .tabs {
+    width: fit-content;
+    max-width: 100%;
+    overflow: visible;
     border: 1px solid var(--silex-border-default);
     border-radius: var(--silex-radius-table);
     background: var(--silex-surface-base);
