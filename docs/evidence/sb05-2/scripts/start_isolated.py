@@ -59,7 +59,7 @@ if not template.exists():
         # Titles are created with the original API exclusively in this disposable fixture.
         cats = client.get("/api/categories").json()
         vendors = client.get("/api/suppliers?page_size=100").json()["items"]
-        customer_id = client.get("/api/customers?page_size=100").json()["items"][0]["id"]
+        customer_id = client.get("/api/customers?active=true&page_size=100").json()["items"][0]["id"]
         from datetime import timedelta
         for direction in ["expense", "income"]:
             category = next(c for c in cats if c["active"] and c["direction"] in [direction,"both"])
