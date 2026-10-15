@@ -2633,6 +2633,10 @@ textarea:focus {
   .app-shell .tile-add {
     color: var(--silex-finance-income);
   }
+  /* Keep caption readable where the decorative icon lightens the gradient. */
+  .app-shell .welcome-banner p {
+    color: var(--silex-text-inverse);
+  }
 
   .app-shell .badge {
     color: var(--silex-text-muted);
