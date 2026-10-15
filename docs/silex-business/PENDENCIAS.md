@@ -37,3 +37,11 @@ Pendente, gravidade média. A simulação equivalente a 187 px CSS (375 px a 200
 ### Auditoria SB-05.3A — limitações funcionais preexistentes da Conciliação
 
 Upload OFX usa fetch direto e não emite o evento global de expiração em 401; o backend mantém bloqueio de autorização. Contas/histórico/sugestões não exibem seus erros de consulta em Notice próprio; Ignorar possui handler assíncrono fora de Form. Revisão dessas situações depende de escopo funcional/autenticação aprovado. Sem mudanças nos handlers nesta etapa. [Auditoria](SB-05.3A/AUDITORIA.md).
+
+### SB-05.3A — apresentação da Conciliação e acompanhamento
+
+Datas da tabela e do diálogo já usam dateOnly/dd/mm/aaaa sem conversão por fuso; nenhum editor de data existe na Conciliação. P05 permanece **parcial** no ERP. P02/P03/P06/P08 são preservadas e cobertas pelos testes de regressão; não há nova correção global. P01/P04/P07/P09 continuam abertas.
+
+V01: verificações direcionadas fizeram 60 cliques reais em Abrir livro caixa (30 baseline, 30 candidata; dez por largura em cada versão), todos aprovados. Não encerra a observação nem comprova a causa anterior. Navegação inalterada.
+
+R02: em 187 px CSS, documento de 252 px em ambas as versões. A Conciliação candidata mede 163 px com scrollWidth 163 px; seu painel mede 161/161 px, sem contribuição adicional. Zoom CSS a 200% também conservou o mesmo overflow global anterior. Shell preservado e pendência aberta; não há conformidade completa de reflow. [Relatório e evidências](SB-05.3A/RELATORIO.md).
