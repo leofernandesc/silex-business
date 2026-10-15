@@ -4,16 +4,27 @@ export const money = (n: number) =>
   );
 export const quantity = (n: number) =>
   new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 3 }).format(n / 1000);
-export const dateTime = (value: string | null) =>
-  value
-    ? new Intl.DateTimeFormat("pt-BR", {
+export const dateTime = (value: string | null) => {
+  if (!value) return "—";
+  const instant = new Date(value);
+  if (!Number.isFinite(instant.getTime())) return "—";
+  return new Intl.DateTimeFormat("pt-BR", {
         dateStyle: "short",
         timeStyle: "short",
         timeZone: "America/Manaus",
-      }).format(new Date(value))
-    : "—";
-export const dateOnly = (value: string | null) =>
-  value ? value.split("-").reverse().join("/") : "—";
+      }).format(instant);
+};
+/** Civil ISO date only. No Date parsing, timezone conversion or input serialization. */
+export const dateOnly = (value: string | null) => {
+  const match = value?.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return "—";
+  const [, year, month, day] = match;
+  const y = Number(year), m = Number(month), d = Number(day);
+  const leap = y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
+  const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (y < 1 || m < 1 || m > 12 || d < 1 || d > days[m - 1]) return "—";
+  return `${day}/${month}/${year}`;
+};
 export const localDate = () =>
   new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Manaus",
