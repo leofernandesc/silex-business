@@ -4,6 +4,8 @@
 
 Baseline aprovado `48d6e36c0c865fec198f1dd03dab573505418063`. Backup dos 374 arquivos verificado antes de qualquer CSS. Matriz inicial de 201 estados em 1440/768/375/320, com tipografia, layout, cores, bordas, interações, tabelas e texto computado 200%. Ordem real de CSS registrada em dez estados de navegação pública/login/Home/módulos/Voltar/Avançar/refresh.
 
+Classificação **B**, conservadora: apresentação financeira dependente de herança/global e breakpoints, exigindo comparação visual e computada. Não é limpeza global ou troca automática de tokens.
+
 **Uma família:** títulos e detalhes dos quatro indicadores de Lançamentos, seletores `.silex-ledger .summary-card span` e `.silex-ledger .summary-card small`, em ledger.css. Não modificar SummaryCard, dinheiro, grid, contas, Dashboard, tabelas, shell ou Modal.
 
 ## Dificuldade concreta e benefício
