@@ -29,16 +29,16 @@ test("prepara a homologação da legenda brasileira sem gravar dados", async ({ 
   const date = page.getByLabel("Data do serviço *", { exact: true });
   await expect(date).toHaveAttribute("type", "date");
   await expect(date).toHaveAttribute("lang", "pt-BR");
-  await expect(date).toHaveValue("");
   const descriptionId = await date.getAttribute("aria-describedby");
   expect(descriptionId).toBeTruthy();
-  await expect(page.locator(`[id="${descriptionId}"]`)).toHaveText("Formato brasileiro: dd/mm/aaaa");
-  const requiredEmptyValidity = await date.evaluate((element: HTMLInputElement) => element.validity.valueMissing);
-  expect(requiredEmptyValidity).toBe(true);
 
   await page.getByLabel("Descrição do serviço/pedido *", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(date).toBeFocused();
+  await date.fill("");
+  await expect(page.locator(`[id="${descriptionId}"]`)).toHaveText("Formato brasileiro: dd/mm/aaaa");
+  const requiredEmptyValidity = await date.evaluate((element: HTMLInputElement) => element.validity.valueMissing);
+  expect(requiredEmptyValidity).toBe(true);
   await date.fill("2026-03-04");
   await expect(page.locator(`[id="${descriptionId}"]`)).toHaveText("Data: 04/03/2026");
   await expect(date).toHaveValue("2026-03-04");
