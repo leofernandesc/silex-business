@@ -29,3 +29,11 @@ P02 corrigida e validada nas duas telas/1440/768/375: Tab leva à busca, contorn
 ### Observação V01 — atalho do Dashboard em tablet
 
 Falha intermitente do clique Abrir livro caixa observada em testes: primeira regressão 131/132 aprovados, repetição candidata 4/5; baseline 5/5 e 10/10 em dados equivalentes. Rodada final 132/132 com clique original. Origem não comprovada; nenhuma correção de navegação implementada. Manter evidência e investigar em escopo próprio se houver reprodução, conforme [TESTES.md](SB-05.2/TESTES.md).
+
+### R02 — Reflow do cabeçalho global em zoom elevado
+
+Pendente, gravidade média. A simulação equivalente a 187 px CSS (375 px a 200% de zoom) registrou documento de 252 px antes/depois do ajuste final SB-05.2, com transbordamento do cabeçalho global. Os indicadores corrigidos cabem no seu contêiner. Fonte: [ajuste de legibilidade](SB-05.2/AJUSTE-LEGIBILIDADE.md). Correção do shell exige incremento próprio e aprovação; critério: cabeçalho e página caberem na viewport reduzida, com ações acessíveis, teclado e zoom preservados. SB-05.3A compara a contribuição da Conciliação sem corrigir o shell; não há declaração de conformidade completa de reflow.
+
+### Auditoria SB-05.3A — limitações funcionais preexistentes da Conciliação
+
+Upload OFX usa fetch direto e não emite o evento global de expiração em 401; o backend mantém bloqueio de autorização. Contas/histórico/sugestões não exibem seus erros de consulta em Notice próprio; Ignorar possui handler assíncrono fora de Form. Revisão dessas situações depende de escopo funcional/autenticação aprovado. Sem mudanças nos handlers nesta etapa. [Auditoria](SB-05.3A/AUDITORIA.md).
