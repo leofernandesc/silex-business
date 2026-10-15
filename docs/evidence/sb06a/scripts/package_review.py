@@ -36,7 +36,7 @@ page = '''<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="vi
 const data=DATA_JSON;
 function pair(prefix,stem){document.getElementById(prefix+'-before').src='captures/baseline-'+stem+'.png';document.getElementById(prefix+'-after').src='captures/candidate-'+stem+'.png';}
 function update(){const w=document.getElementById('width').value;pair('ledger','finance-'+w);pair('route',document.getElementById('route').value+'-375');const role=document.getElementById('role').value;pair('long','long-'+role+'-'+document.getElementById('long-width').value);pair('menu','menu-'+role+'-'+document.getElementById('menu-width').value);const b=data.baseline.rows.find(r=>r.id==='finance'&&r.width==w),a=data.candidate.rows.find(r=>r.id==='finance'&&r.width==w);document.getElementById('dimensions').textContent=`Viewport ${w} px; documento ${b.documentWidth} → ${a.documentWidth} px; cabeçalho scrollWidth ${b.header.scroll} → ${a.header.scroll} px.`;}
-document.querySelectorAll('select').forEach(e=>e.addEventListener('change',update));update();</script></html>'''
+document.querySelectorAll('select').forEach(e=>e.addEventListener('change',update));update();document.querySelectorAll('img').forEach(img=>{const link=document.createElement('a');link.href=img.src;img.before(link);link.append(img);img.addEventListener('load',()=>link.href=img.src);});</script></html>'''
 small = {v:{'rows':[{'id':r['id'],'width':r['width'],'documentWidth':r['documentWidth'],'header':{'scroll':r['header']['scroll']}} for r in d['rows']]} for v,d in versions.items()}
 page = page.replace('DATA_JSON',json.dumps(small,ensure_ascii=False).replace('</','<\\/'))
 (E/'index.html').write_text(page)
@@ -48,7 +48,7 @@ def include(p,name=None):
 for p in (ROOT/'docs/silex-business/SB-06A').glob('*.md'):include(p)
 include(ROOT/'docs/silex-business/PENDENCIAS.md')
 include(ROOT/'frontend/tests/header-reflow.spec.ts')
-for name in ['index.html','matrix.csv','measurements-baseline.json','measurements-candidate.json','pixel-comparison.json','layout-summary.json','api-comparison.json','test-results-summary.json','preservation-test.json','zoom-limitations.json','text-and-content-baseline.json','text-and-content-candidate.json','git-summary.txt','review.diff']:
+for name in ['index.html','matrix.csv','measurements-baseline.json','measurements-candidate.json','pixel-comparison.json','layout-summary.json','database-integrity.json','api-comparison.json','test-results-summary.json','preservation-test.json','zoom-limitations.json','text-and-content-baseline.json','text-and-content-candidate.json','git-summary.txt','review.diff']:
     include(E/name)
 for name in ['baseline-targeted.log','baseline-build.log','baseline-unit.log','candidate-build.log','candidate-unit.log','backend.log','types-e2e.log','e2e-final.log','computed-text200.log']:
     include(E/'tests'/name)

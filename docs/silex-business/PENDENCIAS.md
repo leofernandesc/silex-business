@@ -4,7 +4,7 @@ Registro central a partir do SB-03. A origem detalhada permanece no [relatório 
 
 | ID | Descrição | Gravidade | Estado atual | Incremento proposto | Critério de aceite |
 | --- | --- | --- | --- | --- | --- |
-| P01 | Modal operacional não retorna foco ao acionador após Escape | Média | Pendente, comportamento preservado | Incremento próprio de componentes, a aprovar | Abrir/fechar todos os diálogos por teclado, devolver foco ao acionador conectado e manter contenção/handlers |
+| P01 | Modal operacional não retorna foco ao acionador após Escape | Média | Pendente, comportamento preservado | SB-06B — Retorno de foco dos modais | Abrir/fechar todos os diálogos por teclado, devolver foco ao acionador conectado e manter contenção/handlers |
 | P02 | Busca de Pagar/Receber sem marcador de foco | Média | **Corrigida e validada em Pagar/Receber no SB-05.2** | SB-05.2 | Wrapper/controle com foco visível e contraste adequado nas três larguras, sem alterar busca/Enter |
 | P03 | Menu móvel abre sem transferência de foco e permite sair para conteúdo encoberto | Média | **Corrigida e validada no SB-03** | SB-03 | Inicial no Fechar menu, Tab/Shift+Tab contidos, submenus acionáveis, Escape/fechar/backdrop devolvem foco; painel fechado inert; desktop sem contenção |
 | P04 | Contrastes legados em textos, bordas e controles | Média | Pendente | SB-05/06 por módulo, a aprovar | Comparar contrastes/estados sem perder semântica financeira ou densidade |
@@ -32,7 +32,11 @@ Falha intermitente do clique Abrir livro caixa observada em testes: primeira reg
 
 ### R02 — Reflow do cabeçalho global em zoom elevado
 
-Pendente, gravidade média. A simulação equivalente a 187 px CSS (375 px a 200% de zoom) registrou documento de 252 px antes/depois do ajuste final SB-05.2, com transbordamento do cabeçalho global. Os indicadores corrigidos cabem no seu contêiner. Fonte: [ajuste de legibilidade](SB-05.2/AJUSTE-LEGIBILIDADE.md). Correção do shell exige incremento próprio e aprovação; critério: cabeçalho e página caberem na viewport reduzida, com ações acessíveis, teclado e zoom preservados. SB-05.3A compara a contribuição da Conciliação sem corrigir o shell; não há declaração de conformidade completa de reflow.
+**Corrigida e validada no SB-06A no recorte automatizado do cabeçalho; zoom nativo permanece não homologado.** A origem histórica está no [ajuste de legibilidade](SB-05.2/AJUSTE-LEGIBILIDADE.md) e nas evidências SB-05.4: documento 325 px em viewport 320 e 252 px em 187. Não se equipara a antiga simulação de largura a um ensaio de zoom real.
+
+A causa era o conjunto flex sem quebra, mínimos automáticos e breadcrumb em linha única. O CSS local ao shell permite redistribuição/altura automática, quebra de textos e limite do painel móvel. Em Lançamentos: documento 325→320 e 252→187; nas 24 telas × sete larguras, o cabeçalho não excede sua caixa nem sobrepõe os grupos. Nomes sintéticos longos, administrador/operador, teclado, menu P03 e autorização P08 foram validados. Fontes computadas do header/menu foram duplicadas em teste próprio, além do ensaio de raiz a 200%. A tentativa de zoom nativo não demonstrou alteração confiável de viewport/DPR; 200/400% não foram homologados e não se declara conformidade WCAG completa. [Diagnóstico, testes e limites](SB-06A/RELATORIO.md).
+
+Limites independentes, anteriores e fora do escopo: conteúdo da Visão Geral chega a documento 220 px em 187; Home com identificação sintética longa (especialmente a saudação com palavra extensa no nome do usuário) chega a 281 px em 256/187. O header cabe nesses casos. Não corrigidos. P01 permanece para **SB-06B**, ainda não iniciado.
 
 ### Auditoria SB-05.3A — limitações funcionais preexistentes da Conciliação
 
