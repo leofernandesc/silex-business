@@ -2661,6 +2661,12 @@ textarea:focus {
   .login-page :is(input, select, textarea):focus {
     border-color: var(--silex-brand-primary);
   }
+  .app-shell input::placeholder,
+  .app-shell textarea::placeholder,
+  .login-page input::placeholder {
+    color: var(--silex-text-muted);
+    opacity: 1;
+  }
 
   .app-shell .row-actions button,
   .app-shell .pagination button,
