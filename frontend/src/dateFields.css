@@ -1,0 +1,39 @@
+/* SB-07C: scoped civil-date/month controls; no changes to shell/print/global inputs. */
+.silex-date-field, .silex-month-field { min-width: 0; }
+.silex-date-picker { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.silex-date-label { color: var(--silex-text-muted); font-size: inherit; font-weight: 600; }
+.silex-date-group { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; min-width: 0; padding: 2px 3px 2px 8px; border: 1px solid var(--silex-border-control); border-radius: var(--silex-radius-control); background: var(--silex-surface-base); color: var(--silex-text-primary); }
+.silex-date-group[data-focus-within] { outline: 2px solid var(--silex-brand-primary); outline-offset: 2px; }
+.silex-date-group[data-invalid] { border-color: var(--silex-status-error); }
+.silex-date-input { display: flex; flex-wrap: wrap; align-items: center; flex: 1 1 9ch; min-width: 0; padding-block: 6px; font-variant-numeric: tabular-nums; }
+.silex-date-segment { padding: 1px; border-radius: 3px; white-space: nowrap; }
+.silex-date-segment[data-placeholder] { color: var(--silex-text-muted); }
+.silex-date-segment[data-focused] { outline: 2px solid var(--silex-brand-primary); outline-offset: 1px; background: var(--silex-surface-subtle); color: var(--silex-brand-deep); }
+.silex-date-group .silex-date-trigger { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; padding: 6px; min-width: 36px; min-height: 36px; border: 0; background: transparent; color: var(--silex-brand-deep); }
+.silex-date-picker[data-disabled] { opacity: var(--silex-disabled-opacity); }
+.silex-date-picker[data-readonly] .silex-date-group { background: var(--silex-surface-subtle); }
+.silex-date-error { color: var(--silex-status-error); font-size: 0.9em; line-height: 1.4; }
+.silex-date-description { color: var(--silex-text-muted); font-size: 0.9em; }
+.silex-date-popover { z-index: 100; width: min(20rem, calc(100vw - 24px)); max-width: calc(100vw - 24px); overflow: auto; background: var(--silex-surface-base); color: var(--silex-text-primary); border: 1px solid var(--silex-border-control); border-radius: var(--silex-radius-card); box-shadow: var(--silex-shadow-overlay); font-family: var(--silex-font-family); font-size: 14px; padding: 10px; }
+.silex-calendar-dialog { outline: none; }
+.silex-calendar-heading { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 8px; }
+.silex-calendar-heading h2 { font-size: 1em; margin: 0; text-align: center; }
+.silex-calendar-heading button { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; min-height: 36px; padding: 4px; }
+.silex-calendar table { width: 100%; table-layout: fixed; border-collapse: collapse; min-width: 0; }
+.silex-calendar th, .silex-calendar td { text-align: center; padding: 1px; border: 0; background: transparent; }
+.silex-calendar th { font-size: 0.85em; color: var(--silex-text-muted); }
+.silex-calendar-cell { display: flex; align-items: center; justify-content: center; min-height: 36px; min-width: 24px; padding: 3px; border-radius: var(--silex-radius-control); font-variant-numeric: tabular-nums; cursor: pointer; }
+.silex-calendar-cell[data-hovered] { background: var(--silex-surface-subtle); }
+.silex-calendar-cell[data-selected] { background: var(--silex-brand-deep); color: var(--silex-text-inverse); }
+.silex-calendar-cell[data-focused] { outline: 2px solid var(--silex-brand-primary); outline-offset: -2px; }
+.silex-calendar-cell[data-outside-month] { color: var(--silex-text-muted); }
+.silex-calendar-cell[data-disabled] { color: var(--silex-text-muted); opacity: 0.55; cursor: default; }
+.silex-date-popover .silex-date-clear { margin-top: 8px; min-height: 36px; width: 100%; }
+.silex-month-controls { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.silex-month-controls select { flex: 0 1 5em; min-width: 3.5em; }
+.silex-month-controls input { flex: 1 1 5em; min-width: 0; width: 6em; }
+@media (max-width: 600px) {
+  .silex-date-group .silex-date-trigger { min-width: 44px; min-height: 44px; }
+  .silex-calendar-heading button, .silex-date-popover .silex-date-clear { min-height: 44px; }
+  .silex-calendar-heading button { min-width: 44px; }
+}

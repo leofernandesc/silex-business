@@ -10,8 +10,10 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@internationalized/date": "3.12.4",
     "lucide-react": "^0.577.0",
     "react": "^19.2.0",
+    "react-aria-components": "1.22.1",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
