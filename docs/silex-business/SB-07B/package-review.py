@@ -46,9 +46,11 @@ paths = [
     ROOT / "frontend/tests/sb07b-date-homologation.spec.ts",
     ROOT / "frontend/playwright.sb07b.config.ts",
     EVIDENCE / "environment.json",
-    EVIDENCE / "preparation.json",
+    SCREENSHOTS / "preparation.json",
     EVIDENCE / "results.json",
     EVIDENCE / "approved-p05-results.json",
+    EVIDENCE / "p05-pt-BR.json",
+    EVIDENCE / "p05-en-US.json",
     EVIDENCE / "browser-availability.json",
     EVIDENCE / "git-summary.txt",
     EVIDENCE / "test-summary.json",
@@ -58,7 +60,6 @@ paths = [
     EVIDENCE / "logs/types.log",
     EVIDENCE / "logs/unit-tests.log",
     EVIDENCE / "logs/preparation-e2e.log",
-    EVIDENCE / "logs/approved-p05-e2e.log",
 ]
 missing = [str(p) for p in paths if not p.is_file()]
 if missing:

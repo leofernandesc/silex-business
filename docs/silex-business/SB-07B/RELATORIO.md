@@ -32,6 +32,24 @@ Manter a legenda atual durante a avaliação; não remover nem substituir contro
 
 P05 permanece **parcial**, com três campos de Serviços tecnicamente validados em SB-07A e eficácia humana ainda não medida. Permanecem fora do escopo: C02; P07 parcial; V01/T01 em acompanhamento; leitor de tela real; segurança de produção e isolamento multiempresa. Nenhuma dessas pendências foi encerrada neste trabalho.
 
+## Validação técnica desta preparação
+
+| Verificação | Resultado |
+|---|---|
+| Build frontend (`npm run build`) | Aprovado: `tsc -b` e Vite, 1.782 módulos |
+| TypeScript do teste/configuração SB-07B | Aprovado em modo estrito |
+| Testes unitários direcionados | 36/36 em 3 arquivos: apresentação de datas civis, lançamentos e financeiro |
+| Preparação E2E SB-07B | 1/1 aprovada em Firefox 155.0, locale `pt-BR`, viewport 375 × 900; sem gravações de serviço/título |
+| Regressão aprovada P05 em Serviços | 2/2: `pt-BR` e `en-US`; criação, edição, recarga e geração de títulos mantiveram payloads ISO |
+| Conferência de acessibilidade técnica | `input[type=date]`, idioma, rótulo/`aria-describedby`, foco por Tab e validade `required` verificados; popup nativo e compreensão humana não são cobertos |
+| Ambiente de dados | SQLite de demonstração temporário, criado a partir de `git archive`; servidor encerrado e diretório temporário removido |
+
+O campo de data do formulário já vem preenchido pela data local ao abrir um serviço novo. O instrumento técnico limpa esse campo explicitamente antes de testar `required`; isso preserva o comportamento aprovado e evita confundir um valor inicial com falha de validação. Os dois testes P05 aprovados foram executados em banco temporário descartável. Seus payloads de requisição foram capturados em arquivos separados, sem credenciais.
+
+Firefox 155.0 foi o único navegador Playwright disponível. Não havia Chrome/Chromium instalado nem em cache, `adb` não estava disponível e nenhum dispositivo móvel físico foi fornecido. Não houve participante humano, nem teste com leitor de tela real. Assim, esta entrega prepara a homologação e comprova a infraestrutura/testes técnicos, mas não conclui a avaliação de usabilidade solicitada.
+
+Ao final, a branch contém os commits `7436b9c`, `e953112` e `81b227f`, mais o commit de documentação de resultados. A `main` permanece desatualizada; não houve integração, push ou deploy.
+
 ## Evidências
 
 Registros automatizados, capturas e manifesto do preparo estão no pacote de revisão. Os testes automatizados provam estrutura, foco, valor ISO e ausência de mutação; não comprovam que um usuário entenda a data nem que consiga operar o popup nativo. Consulte `RESULTADOS-HUMANOS.md`: estado explícito `NÃO EXECUTADO` até haver observação real.
