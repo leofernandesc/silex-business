@@ -47,7 +47,7 @@ test("prepara a homologação da legenda brasileira sem gravar dados", async ({ 
   if (evidence) {
     mkdirSync(evidence, { recursive: true });
     await page.screenshot({ path: `${evidence}/services-date-pt-BR-375.png`, fullPage: true });
-    const metadata = await page.evaluate((captionId) => {
+    const metadata = await page.evaluate(({ captionId, requiredEmptyValidity }) => {
       const input = document.querySelector('input[type="date"]') as HTMLInputElement;
       return {
       locale: navigator.language,
@@ -58,7 +58,7 @@ test("prepara a homologação da legenda brasileira sem gravar dados", async ({ 
       caption: document.querySelector(`[id="${captionId}"]`)?.textContent,
       requiredEmptyValidity,
       };
-    }, descriptionId);
+    }, { captionId: descriptionId, requiredEmptyValidity });
     writeFileSync(`${evidence}/preparation.json`, JSON.stringify({ browser: browser.version(), ...metadata, writeRequests: writes, humanEvaluation: "not performed" }, null, 2));
   }
   expect(writes, "Este preparo não deve salvar serviços nem títulos").toEqual([]);
