@@ -8,6 +8,8 @@ Relação completa em comparação ao SB-06D.2 aprovado. Nenhum código funciona
 
 ## Adicionados
 
+- `docs/silex-business/SB-06E/ACESSIBILIDADE.md`
+
 - `docs/evidence/sb06e/scripts/analyze-reflow.py`
 - `docs/evidence/sb06e/scripts/auth-safety.py`
 - `docs/evidence/sb06e/scripts/baseline-probe.cjs`
