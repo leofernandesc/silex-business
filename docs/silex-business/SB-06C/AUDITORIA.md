@@ -22,6 +22,8 @@ Varredura em Firefox instalado, builds isolados e fixture fictícia idêntica; 2
 | Badges neutros/product/sale/operator e service/admin | 4,12 / 4,26:1 | Média; variantes semânticas acessíveis, conservar textos e distinção |
 | `.tile-stock` / `.tile-add` no PDV | 3,69 / 4,43:1 | Média; texto/ação legíveis, sem tocar no handler |
 | Campos legados e wrapper de busca | Borda ~1,42:1 | Média; token existente de borda de controle, manter bordas decorativas claras |
+| Placeholders, inclusive buscas financeiras | Mínimo 3,017:1 após composição da transparência | Média; texto secundário explícito/opacidade 1 em campos operacionais/login |
+| Parágrafo do banner na Visão Geral móvel | Estimativa local 4,419:1 junto ao ícone sobre o gradiente | Média; branco do token inverso, sem mudar gradiente/ícone/texto/ação |
 | Ícones de tabela/paginação/fechar diálogo | 30–34 px; maioria supera 24 px | Baixa/usabilidade; aumentar famílias delimitadas, sem alargar todas as linhas do ERP indiscriminadamente |
 | Checkbox/radio pequenos | 14–16 px, sem colisões na amostra | Não declarar falha pelo tamanho visual isolado; verificar labels/espaçamento |
 
@@ -32,3 +34,7 @@ Varredura em Firefox instalado, builds isolados e fixture fictícia idêntica; 2
 P09: preservar controles densos desktop que atendem mínimo/espaçamento; ampliar ações compactas para pelo menos 36 px e 44 px em celular, incluindo fechar/modal, paginação e ações de linha; menu móvel e botões principais de formulário também serão medidos. Todas as colunas e controles permanecem. Se a medição demonstrar efeito adverso, restringir o seletor antes da entrega.
 
 O encerramento de P04/P09 depende das matrizes finais. Estados não alcançados, fundos com incerteza e controles nativos não devem ser apresentados como homologados globalmente. P05 parcial, P07 pendente, V01 e T01 em acompanhamento; zoom nativo e leitor de tela real não são substituídos por automação.
+
+### Ajustes do instrumento de medição
+
+O Firefox devolve a cor dos placeholders em `color(srgb … / …)`, com canais normalizados. A primeira coleta tratava esses canais como 0–255 e superestimava o contraste. O parser foi corrigido antes da medição final; a transparência passou a ser composta corretamente e motivou a correção adicional dos placeholders. As coletas intermediárias foram preservadas localmente. Também foi acrescentado reload na captura estabilizada: uma navegação por hash pode herdar o estado networkidle anterior enquanto React inicia a próxima consulta. As capturas finais aguardam um documento recarregado no mesmo destino; estados intermediários não comprovam desaparecimento de colunas ou mudança funcional.

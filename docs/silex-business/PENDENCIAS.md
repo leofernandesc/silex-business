@@ -7,12 +7,12 @@ Registro central a partir do SB-03. A origem detalhada permanece no [relatório 
 | P01 | Modal operacional não retorna foco ao acionador após Escape | Média | **Corrigida e validada no recorte automatizado SB-06B** | SB-06B — Aguardando revisão | 51 testes de componente + 21 fluxos; retorno/fallback imediato e tardio, teclado, async e navegação. Leitor real/zoom nativo não homologados |
 | P02 | Busca de Pagar/Receber sem marcador de foco | Média | **Corrigida e validada em Pagar/Receber no SB-05.2** | SB-05.2 | Wrapper/controle com foco visível e contraste adequado nas três larguras, sem alterar busca/Enter |
 | P03 | Menu móvel abre sem transferência de foco e permite sair para conteúdo encoberto | Média | **Corrigida e validada no SB-03** | SB-03 | Inicial no Fechar menu, Tab/Shift+Tab contidos, submenus acionáveis, Escape/fechar/backdrop devolvem foco; painel fechado inert; desktop sem contenção |
-| P04 | Contrastes legados em textos, bordas e controles | Média | Pendente | SB-05/06 por módulo, a aprovar | Comparar contrastes/estados sem perder semântica financeira ou densidade |
+| P04 | Contrastes legados em textos, bordas e controles | Média | **Corrigida e validada no recorte auditado SB-06C** | SB-06C — revisão | Textos, placeholders, badges, campos, estados e banner corrigidos; matriz medida. Não equivale a conformidade WCAG global |
 | P05 | Datas nativas variam conforme locale do navegador | Baixa | Parcial em Lançamentos/Pagar/Receber: conferência dd/mm/aaaa e ISO preservados; editor nativo e print legado continuam limitados | Editor uniforme/templates e outras telas, a autorizar | Apresentar dd/mm/aaaa preservando valores ISO, bases e regras; testes de datas |
 | P06 | Nova despesa primária; protótipo aprovado prevê secundária/neutra | Baixa | Corrigida em Lançamentos (SB-05.1) e Pagar (SB-05.2); Nova receita primária e ações danger preservadas | Outras ações/módulos, a examinar em escopo autorizado | Hierarquia neutra, criação preservada, estorno mantém semântica distinta |
 | P07 | Repetição de seletores e consumo parcial de tokens | Baixa | Pendente | Migração por componente em SB-05/06 | Diff pequeno, tokens definidos, comparações sem regressão; sem limpeza global incidental |
 | P08 | Grupo/atalhos financeiros incoerentes com permissão do operador | Média | **Corrigida e validada no SB-03** | SB-03 | Menu e guard usam registro único; operador não vê financeiro/admin; todos os destinos restritos negados; backend responde 403 e impede mutação |
-| P09 | Controles densos menores que referência de 44 px | Baixa | Pendente de decisão de densidade | Revisão por módulo em SB-05/06 | Homologar alvos de toque sem ocultar informações e ações, três larguras |
+| P09 | Controles densos e áreas de acionamento | Baixa | **Corrigida e validada nas famílias priorizadas no SB-06C** | SB-06C — revisão | Alvos medidos, ações compactas 36 px/44 px móvel; demais controles avaliados por 24 px/espaçamento/exceções, sem exigir 44 px universal |
 
 P03/P08: evidências e critérios em [SB-03](SB-03/RELATORIO.md) e [matriz de testes](SB-03/TESTES.md). A validação de ARIA por DOM/teclado não equivale a homologação com leitor de tela real.
 
@@ -75,3 +75,13 @@ P02/P03/P06/P08/V02 e R02 preservadas. P04/P07/P09 continuam pendentes; P05 parc
 #### T01 — timeout networkidle no teste público móvel
 
 Regressão ampla: 248/249; uma espera em public.spec.ts:173 expirou após recarregar a página pública, já renderizada. Cenário não abre modais; nenhuma mudança na página/roteamento/autenticação ou asserções. Diagnóstico do mesmo teste sem alterar asserções, três execuções por versão: baseline 3/3, candidata 3/3 aprovadas. A falha original não foi reproduzida no baseline; sua causa permanece não comprovada, em acompanhamento. Não confundir com V01 nem declarar resolução por associação.
+
+### SB-06C — P04 e P09: contraste e controles
+
+P04: correções em CSS screen para texto secundário legado, ajuda/metadata, cabeçalhos e vazios, nota do login, badges semânticos, textos do PDV, placeholders e bordas de campos. A composição de color(srgb … / alpha) dos placeholders foi corrigida no instrumento e na apresentação. O parágrafo do banner da Visão Geral passa a branco para preservar contraste junto ao ícone decorativo sobre o gradiente. Identidade oficial e semântica financeira permanecem. Matrizes, estados e limites em [SB-06C](SB-06C/RELATORIO.md). Não há declaração de conformidade WCAG completa; amostragem de gradiente não substitui certificação pixel a pixel ou leitor de tela real.
+
+P09: ações de linha, paginação, fechar diálogo e remoção de item têm mínimo 36 px no desktop e 44 px no celular. Menu móvel/grupos e ações principais de formulário recebem alvos delimitados de 44 px. As tabelas mantêm todas as colunas e ações; seletores e checkbox/radio densos não são classificados como falha só por serem menores que 44 px. Labels/espaçamento e exceções de 24 px estão documentados. Toque físico e popups nativos não foram homologados globalmente.
+
+P01/P02/P03/P06/P08/V02/R02 têm regressões específicas. P05 permanece parcial e P07 pendente. V01 continua em acompanhamento, mesmo com 60/60 novos cliques dirigidos aprovados; T01 continua em acompanhamento mesmo com 21/21 testes públicos aprovados. Nenhuma alteração de roteamento por suspeita.
+
+Texto computado a 200% continua revelando excessos independentes preexistentes no conteúdo da Visão Geral e em alguns filtros/formulários, com valores equivalentes antes/depois; também permanecem os limites de Home/Visão Geral em larguras extremas descritos em R02. O cabeçalho não recebeu redesenho e esses excessos não foram escondidos com overflow-x:hidden. Zoom nativo não homologado.

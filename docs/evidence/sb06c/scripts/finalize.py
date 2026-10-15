@@ -6,6 +6,8 @@ from PIL import Image
 
 R=Path(__file__).resolve().parents[4];E=R/'docs/evidence/sb06c'
 subprocess.run(['python3',str(E/'scripts/matrices.py')],check=True)
+audit=json.loads((E/'audit-summary.json').read_text())['candidate']
+assert audit['failing_text_samples']==audit['field_boundaries_below_3']==audit['placeholders_below_4_5']==0,audit
 S=json.loads(Path(os.environ['SILEX_STATE']).read_text());W=Path(S['work'])
 for rel in ['frontend/src/styles.css','frontend/src/styles/tokens.css','frontend/tests/visual-accessibility.spec.ts']:
  assert (R/rel).read_bytes()==(W/'candidate'/rel).read_bytes(),rel
