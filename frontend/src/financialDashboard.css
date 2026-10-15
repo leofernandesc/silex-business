@@ -44,6 +44,7 @@
     min-width: 0;
   }
   .silex-financial-dashboard input {
+    border-color: var(--silex-border-control);
     min-width: 0;
     width: 100%;
     max-width: none;
@@ -62,6 +63,9 @@
     font-size: var(--silex-size-caption);
     font-family: var(--silex-font-button);
     white-space: normal;
+  }
+  .silex-financial-dashboard button:not(.primary) {
+    border-color: var(--silex-border-control);
   }
   .silex-financial-dashboard .dashboard-period button {
     justify-self: start;
@@ -192,6 +196,9 @@
     white-space: nowrap;
     border: 0;
   }
+  .silex-financial-dashboard .monthly-bars small {
+    color: var(--silex-text-muted);
+  }
   .silex-financial-dashboard .bar-income {
     background: var(--silex-finance-income);
   }
@@ -226,6 +233,7 @@
     min-width: 480px;
   }
   .silex-financial-dashboard th {
+    color: var(--silex-text-muted);
     font-size: var(--silex-size-caption);
   }
   .silex-financial-dashboard td {
