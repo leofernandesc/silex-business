@@ -1,3 +1,4 @@
+import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks, Plus } from "lucide-react";
 import { api, exportCsv, query } from "./api";
@@ -26,7 +27,7 @@ import {
   useLoad,
 } from "./ui";
 
-import { LedgerDateField, LedgerTable } from "./ledgerPresentation";
+import { LedgerTable } from "./ledgerPresentation";
 import "./accounts.css";
 
 type FinanceFilters = {
@@ -88,9 +89,9 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
       <div className="finance-status-tabs" aria-label="Situação dos títulos">
         {[["", "Todos"], ["open", "Em aberto"], ["partial", "Parciais"], ["paid", "Baixados"], ["overdue", "Vencidos"], ["canceled", "Cancelados"]].map(([key, label]) => <button key={key || "all"} className={filters.status === key ? "selected" : ""} onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}>{label}</button>)}
       </div>
-      <div className="finance-filter-grid">
+      <form className="finance-filter-grid" onSubmit={(e) => { e.preventDefault(); apply(); }}>
         <label className="inline-field">Buscar por<select value={draft.search_field} onChange={(e) => update("search_field", e.target.value)}><option value="history">Histórico ou documento</option><option value="description">Histórico</option><option value="document">Documento</option><option value="beneficiary">Beneficiário</option></select></label>
-        <label className="inline-field finance-search-input"><span>Busca</span><span className="input-with-icon"><Search size={14} /><input value={draft.q} onChange={(e) => update("q", e.target.value)} placeholder="Digite e tecle Enter…" onKeyDown={(e) => { if (e.key === "Enter") apply(); }} /></span></label>
+        <label className="inline-field finance-search-input"><span>Busca</span><span className="input-with-icon"><Search size={14} /><input value={draft.q} onChange={(e) => update("q", e.target.value)} placeholder="Digite e tecle Enter…" /></span></label>
         <label className="inline-field">Tipo<select value={fixedDirection ? initialDirection : draft.direction} disabled={fixedDirection} onChange={(e) => update("direction", e.target.value)}>{!fixedDirection && <option value="">Todas</option>}<option value="income">Receita</option><option value="expense">Despesa</option></select></label>
         <label className="inline-field">Conta<select value={draft.account_id} onChange={(e) => update("account_id", e.target.value)}><option value="">Todas</option>{accounts.data?.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}</select></label>
         <label className="inline-field">Categoria<select value={draft.category_id} onChange={(e) => update("category_id", e.target.value)}><option value="">Todas</option>{categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
@@ -98,10 +99,10 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
         <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
         <label className="inline-field">Documento<input value={draft.document} onChange={(e) => update("document", e.target.value)} maxLength={100} /></label>
         <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Lançamento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Baixa</option></select></label>
-        <LedgerDateField label="De" value={draft.start}><input type="date" value={draft.start} onChange={(e) => update("start", e.target.value)} /></LedgerDateField>
-        <LedgerDateField label="Até" value={draft.end}><input type="date" value={draft.end} onChange={(e) => update("end", e.target.value)} /></LedgerDateField>
-        <button className="primary finance-search-button" onClick={() => apply()}><Search size={14} /> Pesquisar</button>
-      </div>
+        <SilexDatePicker label="De" value={draft.start} onChange={(value) => update("start", value)} />
+        <SilexDatePicker label="Até" value={draft.end} onChange={(value) => update("end", value)} />
+        <button type="submit" className="primary finance-search-button"><Search size={14} /> Pesquisar</button>
+      </form>
       {result.error && <Notice>{result.error}</Notice>}
       <div className="panel-heading finance-table-heading"><h2>Lançamentos <span className="muted">({result.data?.total ?? 0})</span></h2><label className="inline-field">Itens por página<select value={String(pageSize)} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></div>
       <LedgerTable headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
@@ -135,8 +136,8 @@ function EntryForm({ accounts, categories, initialDirection='income', fixedDirec
       <Field label="Conta associada *"><select required value={account} onChange={e=>setAccount(e.target.value)}>{accounts.filter(a=>a.active).map(a=><option key={a.id} value={a.id}>{a.name}</option>)}</select></Field>
       <Field label="Categoria *"><select required value={category} onChange={e=>{setCategory(e.target.value);setSubcategory('');}}>{categoryChoices.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>
       <Field label="Subcategoria"><select value={subcategory} onChange={e=>setSubcategory(e.target.value)}><option value="">Geral</option>{subChoices.map(x=><option key={x.id} value={x.id}>{x.name}</option>)}</select></Field>
-      <LedgerDateField label="Vencimento *" value={due}><input required type="date" value={due} onChange={e=>setDue(e.target.value)}/></LedgerDateField>
-      <LedgerDateField label="Competência *" value={competence}><input required type="date" value={competence} onChange={e=>setCompetence(e.target.value)}/></LedgerDateField>
+      <SilexDatePicker label="Vencimento *" required value={due} onChange={(value) => setDue(value)} />
+      <SilexDatePicker label="Competência *" required value={competence} onChange={(value) => setCompetence(value)} />
       <Field label="Número do documento"><input maxLength={100} value={document} onChange={e=>setDocument(e.target.value)}/></Field>
       <Field label={direction==='income'?'Pesquisar cliente':'Pesquisar beneficiário'}><input value={q} onChange={e=>{setQ(e.target.value);setSupplier('');setCustomer('');}} placeholder="Nome, documento ou contato"/></Field>
       {direction==='income'?<Field label="Cliente"><select value={customer} onChange={e=>setCustomer(e.target.value)}><option value="">Não informado</option>{customers.data?.items.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></Field>:<Field label="Beneficiário"><select value={supplier} onChange={e=>setSupplier(e.target.value)}><option value="">Não informado</option>{suppliers.data?.items.map(v=><option key={v.id} value={v.id}>{v.name} · {partnerKinds[v.kind]}</option>)}</select></Field>}

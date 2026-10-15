@@ -42,12 +42,12 @@ describe.each([
         expect(rendered).toContain(label);
       expect(rendered).toContain('value="100"');
     });
-    it("retains native ISO date inputs with accessible Brazilian descriptions", () => {
+    it("uses Brazilian date segments and preserves ISO in the library autofill proxies", () => {
       const rendered = html();
       expect((rendered.match(/type="date"/g) || []).length).toBe(2);
-      expect((rendered.match(/lang="pt-BR"/g) || []).length).toBe(2);
-      expect((rendered.match(/aria-describedby=/g) || []).length).toBe(2);
-      expect(rendered).toMatch(/Data: \d{2}\/\d{2}\/\d{4}/);
+      for (const part of ["day", "month", "year"]) expect((rendered.match(new RegExp(`data-type="${part}"`, "g")) || []).length).toBe(2);
+      expect(rendered).toContain('data-testid="hidden-dateinput-container"');
+      expect(rendered).not.toContain('class="ledger-date-caption"');
       expect(rendered).toMatch(/value="\d{4}-\d{2}-\d{2}"/);
     });
   },

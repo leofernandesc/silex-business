@@ -32,6 +32,8 @@
 .silex-month-controls { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .silex-month-controls select { flex: 0 1 5em; min-width: 3.5em; }
 .silex-month-controls input { flex: 1 1 5em; min-width: 0; width: 6em; }
+.silex-budget-period { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; min-width: 0; }
+.silex-budget-period .silex-month-field { flex: 1 1 10em; max-width: 18em; }
 @media (max-width: 600px) {
   .silex-date-group .silex-date-trigger { min-width: 44px; min-height: 44px; }
   .silex-calendar-heading button, .silex-date-popover .silex-date-clear { min-height: 44px; }

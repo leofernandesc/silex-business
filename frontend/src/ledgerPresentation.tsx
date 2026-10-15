@@ -1,45 +1,13 @@
 import {
-  cloneElement,
   useId,
   useLayoutEffect,
   useRef,
   useState,
-  type InputHTMLAttributes,
   type ComponentProps,
-  type ReactElement,
   type ReactNode,
 } from "react";
 import { ArrowLeftRight } from "lucide-react";
-import { dateOnly } from "./format";
-import { Field, Table } from "./ui";
-
-/** Native input and original handlers/constraints are preserved; only its description is added. */
-export function LedgerDateField({
-  label,
-  value,
-  children,
-}: {
-  label: string;
-  value: string;
-  children: ReactElement<InputHTMLAttributes<HTMLInputElement>>;
-}) {
-  const hint = useId();
-  return (
-    <div className="ledger-date-field">
-      <Field label={label}>
-        {cloneElement(children, {
-          lang: "pt-BR",
-          "aria-describedby": [children.props["aria-describedby"], hint]
-            .filter(Boolean)
-            .join(" "),
-        })}
-      </Field>
-      <small id={hint} className="ledger-date-caption">
-        {value ? `Data: ${dateOnly(value)}` : "Formato brasileiro: dd/mm/aaaa"}
-      </small>
-    </div>
-  );
-}
+import { Table } from "./ui";
 
 /** Enhances only the existing Table instance inside this region, without modifying shared Table. */
 export function LedgerTableRegion({ children }: { children: ReactNode }) {

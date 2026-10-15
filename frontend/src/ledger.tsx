@@ -1,3 +1,4 @@
+import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import {
   ArrowDownLeft,
@@ -9,7 +10,7 @@ import {
   Search,
   Plus,
 } from "lucide-react";
-import { LedgerDateField, LedgerTable } from "./ledgerPresentation";
+import { LedgerTable } from "./ledgerPresentation";
 import "./ledger.css";
 import { api, query } from "./api";
 import { dateOnly, localDate, money, parseDecimal } from "./format";
@@ -331,26 +332,14 @@ export function LedgerPage() {
             </label>
           ))}
         </fieldset>
-        <LedgerDateField label="De" value={draft.start}>
-          <input
-            type="date"
-            value={draft.start}
-            onChange={(e) => {
-              change("start", e.target.value);
+        <SilexDatePicker label="De" value={draft.start} onChange={(value) => {
+              change("start", value);
               setPreset("Personalizado");
-            }}
-          />
-        </LedgerDateField>
-        <LedgerDateField label="Até" value={draft.end}>
-          <input
-            type="date"
-            value={draft.end}
-            onChange={(e) => {
-              change("end", e.target.value);
+            }} />
+        <SilexDatePicker label="Até" value={draft.end} onChange={(value) => {
+              change("end", value);
               setPreset("Personalizado");
-            }}
-          />
-        </LedgerDateField>
+            }} />
         <button type="submit" className="primary">
           <Search size={15} />
           Pesquisar
@@ -643,24 +632,8 @@ function MovementForm({
               </select>
             </Field>
           )}
-          <LedgerDateField label="Data de lançamento *" value={posting}>
-            <input
-              required
-              type="date"
-              min={selected?.opening_date}
-              max={localDate()}
-              value={posting}
-              onChange={(e) => setPosting(e.target.value)}
-            />
-          </LedgerDateField>
-          <LedgerDateField label="Data de competência *" value={competence}>
-            <input
-              required
-              type="date"
-              value={competence}
-              onChange={(e) => setCompetence(e.target.value)}
-            />
-          </LedgerDateField>
+          <SilexDatePicker label="Data de lançamento *" required min={selected?.opening_date} max={localDate()} value={posting} onChange={(value) => setPosting(value)} />
+          <SilexDatePicker label="Data de competência *" required value={competence} onChange={(value) => setCompetence(value)} />
           <Field label="Nº documento">
             <input
               maxLength={100}

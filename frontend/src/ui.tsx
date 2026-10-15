@@ -1,3 +1,4 @@
+import { SilexDatePicker } from "./SilexDatePicker";
 import {
   cloneElement,
   isValidElement,
@@ -161,22 +162,8 @@ export function Dates({
 }) {
   return (
     <>
-      <label className="inline-field">
-        De
-        <input
-          type="date"
-          value={start}
-          onChange={(e) => setStart(e.target.value)}
-        />
-      </label>
-      <label className="inline-field">
-        Até
-        <input
-          type="date"
-          value={end}
-          onChange={(e) => setEnd(e.target.value)}
-        />
-      </label>
+      <SilexDatePicker label="De" value={start} onChange={(value) => setStart(value)} />
+      <SilexDatePicker label="Até" value={end} onChange={(value) => setEnd(value)} />
     </>
   );
 }
