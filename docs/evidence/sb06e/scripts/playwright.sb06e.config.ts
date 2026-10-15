@@ -6,5 +6,5 @@ export default defineConfig({
   webServer: undefined,
   use: { ...config.use, baseURL: process.env.SILEX_TEST_ORIGIN },
   reporter: [['list'], ['json', { outputFile: process.env.SILEX_RESULTS }]],
-  outputDir: process.env.SILEX_OUTPUT_DIR || './test-results-sb06c',
+  outputDir: process.env.SILEX_OUTPUT_DIR || './test-results-sb06e',
 });
