@@ -137,10 +137,12 @@ export function SilexDatePicker({ label, value, onChange, required = false,
                 <Heading />
                 <Button slot="next" aria-label="Próximo mês"><ChevronRight size={18} /></Button>
               </header>
-              <CalendarGrid weekdayStyle="short">
-                <CalendarGridHeader>{day => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
-                <CalendarGridBody>{date => <CalendarCell date={date} className="silex-calendar-cell" />}</CalendarGridBody>
-              </CalendarGrid>
+              <div className="silex-calendar-grid-scroll" tabIndex={0} role="region" aria-label="Dias do calendário">
+                <CalendarGrid weekdayStyle="short">
+                  <CalendarGridHeader>{day => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+                  <CalendarGridBody>{date => <CalendarCell date={date} className="silex-calendar-cell" />}</CalendarGridBody>
+                </CalendarGrid>
+              </div>
             </Calendar>
             {allowClear && !readOnly && <Button slot={null} className="silex-date-clear" onPress={() => { publish(""); setOpen(false); }}>Limpar data</Button>}
           </Dialog>

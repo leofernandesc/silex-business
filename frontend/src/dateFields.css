@@ -19,10 +19,12 @@
 .silex-calendar-heading { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 8px; }
 .silex-calendar-heading h2 { font-size: 1em; margin: 0; text-align: center; }
 .silex-calendar-heading button { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; min-height: 36px; padding: 4px; }
-.silex-calendar table { width: 100%; table-layout: fixed; border-collapse: collapse; min-width: 0; }
+.silex-calendar-grid-scroll { max-width: 100%; overflow-x: auto; }
+.silex-calendar-grid-scroll:focus-visible { outline: 2px solid var(--silex-brand-primary); outline-offset: -2px; }
+.silex-calendar table { width: 100%; table-layout: auto; border-collapse: collapse; min-width: 0; }
 .silex-calendar th, .silex-calendar td { text-align: center; padding: 1px; border: 0; background: transparent; }
-.silex-calendar th { font-size: 0.85em; color: var(--silex-text-muted); }
-.silex-calendar-cell { display: flex; align-items: center; justify-content: center; min-height: 36px; min-width: 24px; padding: 3px; border-radius: var(--silex-radius-control); font-variant-numeric: tabular-nums; cursor: pointer; }
+.silex-calendar th { white-space: nowrap; font-size: 0.85em; color: var(--silex-text-muted); }
+.silex-calendar-cell { white-space: nowrap; display: flex; align-items: center; justify-content: center; min-height: 36px; min-width: 24px; padding: 3px; border-radius: var(--silex-radius-control); font-variant-numeric: tabular-nums; cursor: pointer; }
 .silex-calendar-cell[data-hovered] { background: var(--silex-surface-subtle); }
 .silex-calendar-cell[data-selected] { background: var(--silex-brand-deep); color: var(--silex-text-inverse); }
 .silex-calendar-cell[data-focused] { outline: 2px solid var(--silex-brand-primary); outline-offset: -2px; }
