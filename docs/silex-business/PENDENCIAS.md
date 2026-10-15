@@ -45,3 +45,17 @@ Datas da tabela e do diálogo já usam dateOnly/dd/mm/aaaa sem conversão por fu
 V01: verificações direcionadas fizeram 60 cliques reais em Abrir livro caixa (30 baseline, 30 candidata; dez por largura em cada versão), todos aprovados. Não encerra a observação nem comprova a causa anterior. Navegação inalterada.
 
 R02: em 187 px CSS, documento de 252 px em ambas as versões. A Conciliação candidata mede 163 px com scrollWidth 163 px; seu painel mede 161/161 px, sem contribuição adicional. Zoom CSS a 200% também conservou o mesmo overflow global anterior. Shell preservado e pendência aberta; não há conformidade completa de reflow. [Relatório e evidências](SB-05.3A/RELATORIO.md).
+
+### SB-05.3B — Dashboard Financeiro
+
+P05 permanece **parcial**: De/Até preservam ISO/inputs nativos/handlers e recebem conferência dd/mm/aaaa; a apresentação nativa ainda depende do navegador. P01 permanece aberta: Dashboard não possui modal próprio e os demais modais não foram alterados. P04 continua globalmente aberta; o recorte textual do Dashboard foi melhorado com tokens, sem mudar estilos compartilhados. P07 permanece aberta, com CSS novo restrito ao Dashboard, sem reorganização global. P09 permanece aberta nos demais controles; campos/botões do Dashboard têm altura mínima de 44 px.
+
+P02/P03/P06/P08 preservadas nas regressões. V01: 60/60 cliques reais em Abrir livro caixa (30 por versão, dez por largura) com sessão válida/dados/fontes carregados, destino e eventos registrados. **Não encerrada**; a bateria não comprova a causa histórica nem cobre todas as condições de corrida durante carregamento.
+
+R02: no Dashboard a 187 px CSS, documento de 252 tanto no baseline quanto na candidata; raiz candidata de 163/163 px. Zoom CSS a 200% no celular: documento de 584 em ambas, raiz candidata de 164/164 px. Sem overflow adicional do Dashboard; shell não corrigido e sem conformidade integral de reflow.
+
+#### V02 — Indicadores de Lançamentos com valores elevados
+
+Preexistente, gravidade média, descoberta pela fixture ampliada do SB-05.3B. Em 375 px, entradas/saídas/saldo de Lançamentos continuam em grade de duas colunas e podem exceder o cartão quando o valor é elevado. Mesmo fluxo e dados fictícios: documento de 401 px no baseline 86e9400 e na candidata; valores/estilos idênticos e nenhum wrapper do Dashboard presente. Duas verificações herdadas P05 (pt-BR/en-US no celular) falham apenas na asserção final de overflow e também falham no baseline. Evidências em [SB-05.3B/TESTES.md](SB-05.3B/TESTES.md). Não corrigido neste incremento. Próximo escopo depende de autorização específica para ledger.css; critério: valores completos, centavos preservados, sem overflow em 375 px/texto a 200%, sem alterar regras ou SummaryCard compartilhado.
+
+Limitação anterior do Dashboard: useLoad mantém os dados durante recarga e substitui por null em erro; cartões então mostram o fallback zero, acompanhado de Notice. Novo status de carregamento não altera esse comportamento nem transforma erro em confirmação de ausência de movimentos. Eventual revisão desses placeholders deve ser aprovada separadamente.
