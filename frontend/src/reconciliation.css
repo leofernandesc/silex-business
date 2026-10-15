@@ -1,0 +1,199 @@
+/* SB-05.3A: screen-only presentation of the existing reconciliation workflow. */
+@media screen {
+  .silex-reconciliation {
+    min-width: 0;
+    container-type: inline-size;
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+    line-height: var(--silex-line-height-body);
+  }
+  .silex-reconciliation .page-title h1 {
+    color: var(--silex-brand-deep);
+    font-size: var(--silex-size-page);
+  }
+  .silex-reconciliation .page-title p,
+  .silex-reconciliation .panel-heading p,
+  .silex-reconciliation .help {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+  }
+  .silex-reconciliation .panel {
+    min-width: 0;
+    border-radius: var(--silex-radius-card);
+    box-shadow: var(--silex-shadow-card);
+  }
+  .silex-reconciliation .panel-heading {
+    gap: var(--silex-space-3);
+    flex-wrap: wrap;
+    padding: var(--silex-space-4);
+  }
+  .silex-reconciliation .panel-heading > div {
+    min-width: 0;
+    flex: 1 1 240px;
+  }
+  .silex-reconciliation .panel-heading h2 {
+    color: var(--silex-brand-deep);
+    font-size: var(--silex-size-commercial);
+    overflow-wrap: anywhere;
+  }
+  .silex-reconciliation .ofx-import-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--silex-space-4);
+    padding: var(--silex-space-4);
+  }
+  .silex-reconciliation .field {
+    min-width: 0;
+  }
+  .silex-reconciliation .field label {
+    font-size: var(--silex-size-caption);
+    color: var(--silex-text-primary);
+  }
+  .silex-reconciliation input,
+  .silex-reconciliation select {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+    min-height: var(--silex-control-height-default);
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+  }
+  .silex-reconciliation input[type="file"] {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .silex-reconciliation button {
+    min-height: var(--silex-control-height-default);
+    font-family: var(--silex-font-button);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-reconciliation .table-wrap {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .silex-reconciliation .table-wrap table {
+    min-width: 1050px;
+    font-family: var(--silex-font-table);
+    font-size: var(--silex-size-table);
+  }
+  .silex-reconciliation .reconciliation-history table {
+    min-width: 850px;
+  }
+  .silex-reconciliation th {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-reconciliation td {
+    padding: var(--silex-space-3) var(--silex-space-4);
+    vertical-align: top;
+  }
+  .silex-reconciliation td small {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .silex-reconciliation td.numeric {
+    font-family: var(--silex-font-financial);
+    font-variant-numeric: var(--silex-financial-numerals);
+    font-weight: var(--silex-weight-semibold);
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .silex-reconciliation td.positive {
+    color: var(--silex-finance-income);
+  }
+  .silex-reconciliation td.negative {
+    color: var(--silex-finance-expense);
+  }
+  .silex-reconciliation .reconciliation-statement td:first-child,
+  .silex-reconciliation td button {
+    white-space: nowrap;
+  }
+  .silex-reconciliation .reconciliation-state {
+    display: inline-block;
+    padding: var(--silex-space-1) var(--silex-space-2);
+    border: 1px solid var(--silex-border-default);
+    border-radius: var(--silex-radius-pill);
+    color: var(--silex-text-muted);
+    background: var(--silex-surface-subtle);
+    font-size: var(--silex-size-caption);
+    font-weight: var(--silex-weight-semibold);
+    white-space: nowrap;
+  }
+  .silex-reconciliation .state-matched,
+  .silex-reconciliation .state-complete {
+    color: var(--silex-status-success);
+    background: #edf7f1;
+  }
+  .silex-reconciliation .state-duplicate {
+    color: var(--silex-status-warning);
+    background: #fff5e6;
+  }
+  .silex-reconciliation .state-posted,
+  .silex-reconciliation .state-preview,
+  .silex-reconciliation .state-pending {
+    color: var(--silex-brand-deep);
+    background: var(--silex-surface-subtle);
+  }
+  .silex-reconciliation .ledger-scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--silex-space-2);
+    margin: 0;
+    padding: var(--silex-space-3) var(--silex-space-4);
+    color: var(--silex-text-muted);
+    background: var(--silex-surface-subtle);
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+  }
+  .silex-reconciliation .ledger-scroll-hint svg {
+    flex: none;
+  }
+  .silex-reconciliation .pagination,
+  .silex-reconciliation .tabs,
+  .silex-reconciliation .form-actions {
+    flex-wrap: wrap;
+    gap: var(--silex-space-2);
+  }
+  .silex-reconciliation .pagination button {
+    min-width: var(--silex-control-height-default);
+  }
+  .silex-reconciliation dialog {
+    border-radius: var(--silex-radius-card);
+  }
+  .silex-reconciliation dialog .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+  .silex-reconciliation dialog .modal-content > p strong {
+    display: inline-block;
+    font-size: clamp(1rem, 5cqw, 18px);
+    font-variant-numeric: var(--silex-financial-numerals);
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+  .silex-reconciliation .tabs button {
+    padding: var(--silex-space-2) var(--silex-space-3);
+    border: 1px solid var(--silex-border-default);
+    border-radius: var(--silex-radius-control);
+    color: var(--silex-brand-deep);
+    background: var(--silex-surface-base);
+  }
+  .silex-reconciliation .tabs button.selected {
+    color: var(--silex-text-inverse);
+    background: var(--silex-brand-deep);
+    border-color: var(--silex-brand-deep);
+  }
+  .silex-reconciliation button:focus-visible,
+  .silex-reconciliation input:focus-visible,
+  .silex-reconciliation select:focus-visible,
+  .silex-reconciliation .table-wrap:focus-visible {
+    outline: 2px solid var(--silex-brand-primary);
+    outline-offset: 3px;
+  }
+  @container (max-width: 600px) {
+    .silex-reconciliation .ofx-import-form {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
