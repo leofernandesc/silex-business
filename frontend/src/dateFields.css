@@ -14,7 +14,7 @@
 .silex-date-picker[data-readonly] .silex-date-group { background: var(--silex-surface-subtle); }
 .silex-date-error { color: var(--silex-status-error); font-size: 0.9em; line-height: 1.4; }
 .silex-date-description { color: var(--silex-text-muted); font-size: 0.9em; }
-.silex-date-popover { z-index: 100; width: min(20rem, calc(100vw - 24px)); max-width: calc(100vw - 24px); overflow: auto; background: var(--silex-surface-base); color: var(--silex-text-primary); border: 1px solid var(--silex-border-control); border-radius: var(--silex-radius-card); box-shadow: var(--silex-shadow-overlay); font-family: var(--silex-font-family); font-size: 14px; padding: 10px; }
+.silex-date-popover { z-index: 100; width: min(20rem, calc(100vw - 24px), calc(100% - 24px)); max-width: min(calc(100vw - 24px), calc(100% - 24px)); overflow: auto; background: var(--silex-surface-base); color: var(--silex-text-primary); border: 1px solid var(--silex-border-control); border-radius: var(--silex-radius-card); box-shadow: var(--silex-shadow-overlay); font-family: var(--silex-font-family); font-size: 14px; padding: 10px; }
 .silex-calendar-dialog { outline: none; }
 .silex-calendar-heading { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 8px; }
 .silex-calendar-heading h2 { font-size: 1em; margin: 0; text-align: center; }
