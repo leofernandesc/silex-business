@@ -13,6 +13,13 @@
   }
   .silex-ledger .page-title h1 {
     font-size: var(--silex-size-page);
+    overflow-wrap: anywhere;
+  }
+  .silex-ledger .page-title > div {
+    min-width: 0;
+  }
+  .silex-ledger .ledger-summary {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(16em, calc((100% - 33px) / 4))), 1fr));
   }
   .silex-ledger .page-title p {
     color: var(--silex-text-muted);
@@ -299,6 +306,12 @@
   }
 }
 @media screen and (max-width: 1200px) {
+  .silex-ledger .ledger-summary {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, max(16em, calc((100% - 11px) / 2))), 1fr)
+    );
+  }
   .silex-ledger .ledger-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

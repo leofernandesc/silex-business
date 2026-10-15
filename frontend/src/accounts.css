@@ -234,7 +234,7 @@
     .silex-accounts .finance-summary-grid {
       grid-template-columns: repeat(
         auto-fit,
-        minmax(min(100%, max(14rem, calc((100% - 12px) / 2))), 1fr)
+        minmax(min(100%, max(16em, calc((100% - 12px) / 2))), 1fr)
       );
     }
   }

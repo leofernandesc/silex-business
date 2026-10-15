@@ -1,0 +1,19 @@
+/* SB-07A: only the operational overview indicators, including enlarged text. */
+@media screen {
+  .overview-summary {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, max(16em, calc((100% - 33px) / 4))), 1fr));
+  }
+}
+@media screen and (max-width: 1200px) {
+  .overview-summary {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, max(16em, calc((100% - 11px) / 2))), 1fr)
+    );
+  }
+}
+@media screen and (max-width: 650px) {
+  .overview-summary {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr));
+  }
+}

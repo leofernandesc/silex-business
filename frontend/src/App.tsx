@@ -54,6 +54,7 @@ import { AuditPage, UsersPage } from "./users";
 import { CompanySettingsPage } from "./settings";
 import { ServiceOrdersPage } from "./serviceOrders";
 import type { Sale } from "./types";
+import "./overview.css";
 
 const routeIcons: Record<string, typeof LayoutDashboard> = {
   home: Home, dashboard: LayoutDashboard, customers: Users, products: Package, suppliers: Users,
@@ -451,7 +452,7 @@ function DashboardPage({
         </button>
         <ShoppingCart className="banner-icon" />
       </section>
-      <div className="summary-grid">
+      <div className="summary-grid overview-summary">
         <SummaryCard
           label="Vendas hoje"
           value={money(d.sales_today_cents)}
