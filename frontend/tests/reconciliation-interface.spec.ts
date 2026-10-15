@@ -165,6 +165,29 @@ test("existing dialogs, field focus, validation and state text remain accessible
       })),
     )
     .toEqual({ color: "rgb(255, 255, 255)", bg: "rgb(16, 45, 92)" });
+  await dialog.evaluate((root) => {
+    const nodes = [root, ...root.querySelectorAll<HTMLElement>("*")];
+    const sizes = nodes.map((e) => parseFloat(getComputedStyle(e).fontSize));
+    nodes.forEach((e, i) => {
+      (e as HTMLElement).style.fontSize = `${sizes[i] * 2}px`;
+    });
+  });
+  const enlarged = await dialog
+    .locator(".modal-content")
+    .evaluate((content) => {
+      const value = content.querySelector("p strong")!;
+      const range = document.createRange();
+      range.selectNodeContents(value);
+      return {
+        client: content.clientWidth,
+        scroll: content.scrollWidth,
+        lines: range.getClientRects().length,
+        text: value.textContent,
+      };
+    });
+  expect(enlarged.scroll).toBeLessThanOrEqual(enlarged.client + 1);
+  expect(enlarged.lines).toBe(1);
+  expect(enlarged.text).toContain("1.234.567,89");
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveCount(0);
 });

@@ -167,7 +167,7 @@
   }
   .silex-reconciliation dialog .modal-content > p strong {
     display: inline-block;
-    font-size: clamp(1rem, 5cqw, 18px);
+    font-size: clamp(1rem, 4.3cqw, 18px);
     font-variant-numeric: var(--silex-financial-numerals);
     white-space: nowrap;
     overflow-wrap: normal;
