@@ -48,10 +48,11 @@
     line-height: 1.5;
   }
   .silex-accounts .summary-card strong {
-    font-size: 24px;
+    font-size: clamp(1rem, 5.5cqw, 24px);
     font-variant-numeric: var(--silex-financial-numerals);
-    overflow-wrap: anywhere;
-    white-space: normal;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
   }
   .silex-accounts .summary-card > div:last-child {
     min-width: 0;
@@ -228,16 +229,19 @@
 }
 
 @media screen {
-  /* Container width also responds to zoom; em tracks enlarged text. Keep at most two columns. */
+  /* Container width responds to zoom; rem tracks enlarged text when sizing the cards. */
   @container (max-width: 1200px) {
     .silex-accounts .finance-summary-grid {
       grid-template-columns: repeat(
         auto-fit,
-        minmax(min(100%, max(10.5em, calc((100% - 12px) / 2))), 1fr)
+        minmax(min(100%, max(14rem, calc((100% - 12px) / 2))), 1fr)
       );
     }
   }
   @container (max-width: 600px) {
+    .silex-accounts .finance-summary-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
     .silex-accounts .summary-card,
     .silex-accounts .page-title,
     .silex-accounts .finance-table-heading {

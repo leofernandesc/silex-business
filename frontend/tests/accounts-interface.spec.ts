@@ -39,6 +39,131 @@ async function search(page: Page, text: string) {
 }
 for (const m of modules) {
   test.describe(m.title, () => {
+    test("summary amounts stay whole and visible at different widths and text sizes", async ({
+      page,
+    }) => {
+      await start(page, m.route, m.title);
+      const values = [
+        "R$ 0,00",
+        "R$ 2.797,00",
+        "R$ 1.234.567,89",
+        "R$ 1.618,00",
+      ];
+      const setValues = async () => {
+        await page.evaluate((amounts) => {
+          document
+            .querySelectorAll<HTMLElement>(
+              ".finance-summary-grid .summary-card strong",
+            )
+            .forEach((node, index) => {
+              node.textContent = amounts[index];
+            });
+        }, values);
+      };
+      const assertWholeValues = async (checkPageWidth = true) => {
+        const result = await page.evaluate(() => {
+          const grid = document.querySelector<HTMLElement>(
+            ".finance-summary-grid",
+          )!;
+          const amounts = [
+            ...document.querySelectorAll<HTMLElement>(
+              ".finance-summary-grid .summary-card strong",
+            ),
+          ].map((node) => {
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            return {
+              lines: range.getClientRects().length,
+              clientWidth: node.clientWidth,
+              scrollWidth: node.scrollWidth,
+              value: node.textContent,
+            };
+          });
+          return {
+            pageWidth: document.documentElement.scrollWidth,
+            viewport: innerWidth,
+            gridWidth: grid.clientWidth,
+            gridScrollWidth: grid.scrollWidth,
+            amounts,
+          };
+        });
+        if (checkPageWidth)
+          expect(result.pageWidth).toBeLessThanOrEqual(result.viewport + 1);
+        expect(result.gridScrollWidth).toBeLessThanOrEqual(
+          result.gridWidth + 1,
+        );
+        for (const amount of result.amounts) {
+          expect(amount.lines, amount.value ?? "sem valor").toBe(1);
+          expect(
+            amount.scrollWidth,
+            amount.value ?? "sem valor",
+          ).toBeLessThanOrEqual(amount.clientWidth + 1);
+        }
+      };
+
+      await setValues();
+      await assertWholeValues();
+
+      const viewport = page.viewportSize()!;
+      await page.evaluate(() => {
+        document.documentElement.style.fontSize = "200%";
+      });
+      await assertWholeValues();
+
+      await page.evaluate(() => {
+        document.documentElement.style.fontSize = "";
+        document.querySelector<HTMLElement>(".silex-accounts")!.style.zoom =
+          "2";
+      });
+      await assertWholeValues();
+
+      await page.evaluate(() => {
+        document.querySelector<HTMLElement>(".silex-accounts")!.style.zoom = "";
+      });
+      await page.setViewportSize({
+        width: Math.floor(viewport.width / 2),
+        height: Math.floor(viewport.height / 2),
+      });
+      // The 187 px CSS viewport emulates a 375 px screen at browser zoom 200%.
+      // The shell has the same pre-existing overflow before and after this CSS change.
+      await assertWholeValues(false);
+    });
+
+    test("P02 search focus and P06 creation hierarchy remain intact", async ({
+      page,
+    }) => {
+      await start(page, m.route, m.title);
+      const searchInput = page.getByLabel("Busca", { exact: true });
+      await page.getByLabel("Buscar por").focus();
+      await page.keyboard.press("Tab");
+      await expect(searchInput).toBeFocused();
+      const focus = await searchInput.evaluate((el) => {
+        const style = getComputedStyle(el.parentElement!);
+        return {
+          width: parseFloat(style.outlineWidth),
+          style: style.outlineStyle,
+          offset: parseFloat(style.outlineOffset),
+          color: style.outlineColor,
+        };
+      });
+      expect(focus).toEqual({
+        width: 2,
+        style: "solid",
+        offset: 3,
+        color: "rgb(23, 105, 232)",
+      });
+      const createButton = page.getByRole("button", {
+        name: m.add,
+        exact: true,
+      });
+      await expect(createButton).toHaveClass(
+        m.direction === "expense" ? /accounts-new-expense/ : /primary/,
+      );
+      if (m.direction === "expense")
+        await expect(createButton).not.toHaveClass(/danger|primary/);
+      await overflow(page);
+    });
+
     test("P02 visible keyboard focus, creation hierarchy, all columns and horizontal actions", async ({
       page,
     }) => {
