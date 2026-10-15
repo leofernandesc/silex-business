@@ -42,6 +42,8 @@
   --silex-status-error: #b42318;
   --silex-status-warning: #855000;
   --silex-status-overdue: #9e294a;
+  /* SB-06C: darker semantic accent for small labels on pale purple. */
+  --silex-status-accent-text: #5f4e95;
   --silex-finance-income: #08745e;
   --silex-finance-expense: #b83236;
 
@@ -88,6 +90,7 @@
   --silex-shadow-overlay: 0 16px 48px rgb(16 45 92 / 16%);
   --silex-control-height-dense: 38px;
   --silex-control-height-default: 44px;
+  --silex-target-compact: 36px;
 
   /* Interação */
   --silex-button-primary: var(--silex-brand-primary);

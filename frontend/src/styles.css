@@ -2609,3 +2609,91 @@ textarea:focus {
     margin-bottom: 32px;
   }
 }
+
+/* SB-06C: measured contrast/target corrections. Screen only; no print changes.
+ * Scope excludes the public page and preserves dense desktop form layouts.
+ * Decorative panel/table borders intentionally retain their light tokens.
+ */
+@media screen {
+  .app-shell,
+  .login-page {
+    --muted: var(--silex-text-muted);
+  }
+
+  .login-note,
+  .app-shell th,
+  .app-shell .empty,
+  .app-shell .empty strong,
+  .app-shell .empty span,
+  .app-shell .today-chip,
+  .app-shell .tile-stock {
+    color: var(--silex-text-muted);
+  }
+
+  .app-shell .tile-add {
+    color: var(--silex-finance-income);
+  }
+
+  .app-shell .badge {
+    color: var(--silex-text-muted);
+  }
+  .app-shell .badge:is(.active, .open, .finalized, .paid, .income, .pix, .in, .opening) {
+    color: var(--silex-status-success);
+  }
+  .app-shell .badge:is(.inactive, .canceled, .out, .expense) {
+    color: var(--silex-status-error);
+  }
+  .app-shell .badge:is(.draft, .credit, .inventory),
+  .app-shell .stock-alerts b {
+    color: var(--silex-status-warning);
+  }
+  .app-shell .badge:is(.service, .card, .admin) {
+    color: var(--silex-status-accent-text);
+  }
+
+  .app-shell :is(input, select, textarea),
+  .login-page :is(input, select, textarea),
+  .app-shell .search,
+  .app-shell .input-with-icon {
+    border-color: var(--silex-border-control);
+  }
+  .app-shell :is(input, select, textarea):focus,
+  .login-page :is(input, select, textarea):focus {
+    border-color: var(--silex-brand-primary);
+  }
+
+  .app-shell .row-actions button,
+  .app-shell .pagination button,
+  .app-shell dialog > header button,
+  .app-shell .cart-row-head .icon-button {
+    min-width: var(--silex-target-compact);
+    min-height: var(--silex-target-compact);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  /* The mobile panel already scrolls; bigger targets preserve all menu items. */
+  .app-shell .sidebar :is(.nav-item, .nav-group-toggle),
+  .app-shell .sidebar-brand .icon-button {
+    min-height: var(--silex-control-height-default);
+  }
+  .app-shell .sidebar-brand .icon-button {
+    min-width: var(--silex-control-height-default);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .app-shell .row-actions button,
+  .app-shell .pagination button,
+  .app-shell dialog > header button,
+  .app-shell .cart-row-head .icon-button {
+    min-width: var(--silex-control-height-default);
+    min-height: var(--silex-control-height-default);
+  }
+  .app-shell .page-title .actions button,
+  .app-shell .form-actions button,
+  .app-shell .cart-inputs input,
+  .login-page .form-actions button {
+    min-height: var(--silex-control-height-default);
+  }
+}
