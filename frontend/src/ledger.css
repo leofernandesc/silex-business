@@ -77,12 +77,9 @@
   .silex-ledger .summary-card span,
   .silex-ledger .summary-card small {
     color: var(--silex-text-muted);
-  }
-  .silex-ledger .summary-card span {
     font-size: var(--silex-size-caption);
   }
   .silex-ledger .summary-card small {
-    font-size: var(--silex-size-caption);
     line-height: 1.5;
   }
   .silex-ledger .summary-card strong {
