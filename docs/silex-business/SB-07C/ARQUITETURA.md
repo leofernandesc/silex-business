@@ -5,7 +5,7 @@ Base aprovada `fddcb66d18ba22fc1c07700852cd2f5a5c6b6ed8`. Branch `feat/sb07c-ptb
 ## Dependências e fontes
 
 - `react-aria-components` 1.22.1 e `@internationalized/date` 3.12.4, versões estáveis fixadas no package.json/lockfile; Apache-2.0. Peer dependencies incluem React/ReactDOM 19, compatíveis com a aplicação.
-- Treze pacotes transitivos adicionados; nenhuma versão preexistente alterada. Auditoria npm na instalação: zero vulnerabilidades. Lista completa/licenças/integridade no pacote de evidências.
+- Treze pacotes adicionados ao todo (duas dependências diretas e onze transitivas); nenhuma versão preexistente alterada. Auditoria npm na instalação: zero vulnerabilidades. Lista completa/licenças/integridade no pacote de evidências.
 - Documentação oficial consultada: [DatePicker](https://react-aria.adobe.com/DatePicker), [DateField](https://react-aria.adobe.com/DateField), [CalendarDate](https://react-aria.adobe.com/internationalized/date/CalendarDate), [Popover](https://react-aria.adobe.com/Popover). A API efetiva também foi conferida nos tipos/source maps da versão instalada.
 
 ## Data civil
@@ -29,3 +29,13 @@ O próprio React Aria cria um input date invisível para autofill e um input de 
 ## Limites
 
 As verificações técnicas não substituem participação de usuários nem homologação com leitor de tela real. Impressões/CSV ISO e timestamps continuam sob seus contratos anteriores. C02 e SB-07D permanecem fora deste incremento.
+
+## Integração de validação nos filtros
+
+Em Pagar/Receber, o contêiner dos filtros tornou-se um formulário semântico. Pesquisar e Enter continuam chamando a mesma função `apply`, com os mesmos critérios. A validação nativa agora impede aplicar uma edição de data incompleta; não foi criada regra financeira. Em Relatórios, filtro mensal e Nova meta seguem o mesmo padrão para impedir abrir um formulário a partir de competência parcialmente editada. Nenhum callback assíncrono de salvamento nem expressão de chamada `api` dos sete consumidores foi alterado (comparação AST).
+
+## Responsividade e custo
+
+O popover usa os limites da viewport **e** do bloco de posicionamento. No primeiro teste real de zoom 400%, o calendário ultrapassava 3 px: a largura de 260 px excedia a área do diálogo. A restrição percentual local foi acrescentada, sem alterar Modal ou shell. Em texto ampliado, a grade usa dimensionamento intrínseco das colunas e uma região própria rolável por teclado, sem sobrepor abreviações/dígitos nem deslocar horizontalmente título e botões. O popover também pode rolar verticalmente sob zoom elevado.
+
+O chunk autenticado App passou de 163,56 kB (43,35 kB gzip) para 404,41 kB (121,84 kB gzip): +240,85/+78,49 kB gzip, custo das dependências acessíveis aprovadas. O chunk da página pública permaneceu 12,04/3,62 kB gzip. Não houve atualização de versões já instaladas; lockfile exato preservado.

@@ -7,6 +7,7 @@ EVIDENCE = ROOT / "docs/evidence/sb07c"
 parser = argparse.ArgumentParser()
 parser.add_argument("variant", choices=["baseline", "candidate"])
 parser.add_argument("--port", type=int, required=True)
+parser.add_argument("--regression-fixture", action="store_true")
 args = parser.parse_args()
 baseline = json.loads((EVIDENCE / "baseline.json").read_text())
 archive = Path(baseline["backup"]) / "approved.tar"
@@ -19,12 +20,15 @@ with tempfile.TemporaryDirectory(prefix=f"silex-sb07c-{args.variant}-") as work:
     shutil.copytree(dist, project / "frontend/dist", dirs_exist_ok=True)
     env = {**os.environ, "PYTHONPATH": str(project / "backend"), "GESTAO_DATABASE_URL": f"sqlite:///{work}/synthetic.sqlite3"}
     python = ROOT / ".venv/bin/python"
-    for command in ["init", "seed-demo"]:
-        subprocess.run([python, "-m", "app.cli", command], cwd=project, env=env, stdout=subprocess.DEVNULL, check=True)
-    log = (EVIDENCE / f"{args.variant}-server.log").open("w")
+    if args.regression_fixture:
+        subprocess.run([python, str(Path(__file__).with_name("regression_fixture.py")), str(project)], env=env, stdout=subprocess.DEVNULL, check=True)
+    else:
+        for command in ["init", "seed-demo"]:
+            subprocess.run([python, "-m", "app.cli", command], cwd=project, env=env, stdout=subprocess.DEVNULL, check=True)
+    log = (EVIDENCE / f"{args.variant}-{args.port}-server.log").open("w")
     server = subprocess.Popen([python, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(args.port)], cwd=project, env=env, stdout=log, stderr=log)
     metadata = {"variant": args.variant, "approved_backend": baseline["approved_head"], "port": args.port, "work": work, "pid": os.getpid(), "synthetic_only": True, "persistent_database_used": False}
-    (EVIDENCE / f"{args.variant}-runtime.json").write_text(json.dumps(metadata, indent=2))
+    (EVIDENCE / f"{args.variant}-{args.port}-runtime.json").write_text(json.dumps(metadata, indent=2))
     try:
         for _ in range(100):
             if server.poll() is not None:
