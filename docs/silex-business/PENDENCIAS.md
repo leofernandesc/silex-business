@@ -4,7 +4,7 @@ Registro central a partir do SB-03. A origem detalhada permanece no [relatório 
 
 | ID | Descrição | Gravidade | Estado atual | Incremento proposto | Critério de aceite |
 | --- | --- | --- | --- | --- | --- |
-| P01 | Modal operacional não retorna foco ao acionador após Escape | Média | Pendente, comportamento preservado | SB-06B — Retorno de foco dos modais | Abrir/fechar todos os diálogos por teclado, devolver foco ao acionador conectado e manter contenção/handlers |
+| P01 | Modal operacional não retorna foco ao acionador após Escape | Média | **Corrigida e validada no recorte automatizado SB-06B** | SB-06B — Aguardando revisão | 51 testes de componente + 21 fluxos; retorno/fallback imediato e tardio, teclado, async e navegação. Leitor real/zoom nativo não homologados |
 | P02 | Busca de Pagar/Receber sem marcador de foco | Média | **Corrigida e validada em Pagar/Receber no SB-05.2** | SB-05.2 | Wrapper/controle com foco visível e contraste adequado nas três larguras, sem alterar busca/Enter |
 | P03 | Menu móvel abre sem transferência de foco e permite sair para conteúdo encoberto | Média | **Corrigida e validada no SB-03** | SB-03 | Inicial no Fechar menu, Tab/Shift+Tab contidos, submenus acionáveis, Escape/fechar/backdrop devolvem foco; painel fechado inert; desktop sem contenção |
 | P04 | Contrastes legados em textos, bordas e controles | Média | Pendente | SB-05/06 por módulo, a aprovar | Comparar contrastes/estados sem perder semântica financeira ou densidade |
@@ -36,7 +36,7 @@ Falha intermitente do clique Abrir livro caixa observada em testes: primeira reg
 
 A causa era o conjunto flex sem quebra, mínimos automáticos e breadcrumb em linha única. O CSS local ao shell permite redistribuição/altura automática, quebra de textos e limite do painel móvel. Em Lançamentos: documento 325→320 e 252→187; nas 24 telas × sete larguras, o cabeçalho não excede sua caixa nem sobrepõe os grupos. Nomes sintéticos longos, administrador/operador, teclado, menu P03 e autorização P08 foram validados. Fontes computadas do header/menu foram duplicadas em teste próprio, além do ensaio de raiz a 200%. A tentativa de zoom nativo não demonstrou alteração confiável de viewport/DPR; 200/400% não foram homologados e não se declara conformidade WCAG completa. [Diagnóstico, testes e limites](SB-06A/RELATORIO.md).
 
-Limites independentes, anteriores e fora do escopo: conteúdo da Visão Geral chega a documento 220 px em 187; Home com identificação sintética longa (especialmente a saudação com palavra extensa no nome do usuário) chega a 281 px em 256/187. O header cabe nesses casos. Não corrigidos. P01 permanece para **SB-06B**, ainda não iniciado.
+Limites independentes, anteriores e fora do escopo: conteúdo da Visão Geral chega a documento 220 px em 187; Home com identificação sintética longa (especialmente a saudação com palavra extensa no nome do usuário) chega a 281 px em 256/187. O header cabe nesses casos. Não corrigidos. O tratamento de P01 está registrado na seção SB-06B abaixo.
 
 ### Auditoria SB-05.3A — limitações funcionais preexistentes da Conciliação
 
@@ -65,3 +65,13 @@ Preexistente, gravidade média, descoberta pela fixture ampliada do SB-05.3B. Em
 No SB-05.4, os indicadores passam a uma coluna em larguras móveis, e a tipografia preserva os valores inteiros sem quebra. Em 375 px, o documento mudou de 401 para 375 px; os dois testes P05 originais passaram sem alteração das asserções. Valores sintéticos também foram conferidos em 1440, 768, 375, 320 e reflow de 187 px CSS, além de texto ampliado a 200%. Aos 320 px, sobra um excesso de 5 px no cabeçalho global (`.topbar-right`, x=258–325); aos 187 px, o documento mede 252 px pelo cabeçalho global e a tela Lançamentos conserva excesso local de 4 px fora dos cartões. O grupo de indicadores não contribui para esses excessos; R02 permanece aberta e o shell não foi alterado. Detalhes em [SB-05.4/RELATORIO.md](SB-05.4/RELATORIO.md).
 
 Limitação anterior do Dashboard: useLoad mantém os dados durante recarga e substitui por null em erro; cartões então mostram o fallback zero, acompanhado de Notice. Novo status de carregamento não altera esse comportamento nem transforma erro em confirmação de ausência de movimentos. Eventual revisão desses placeholders deve ser aprovada separadamente.
+
+### SB-06B — P01: gerenciamento e retorno de foco dos modais
+
+Causa: limpeza passiva chamava close() após desconexão do dialog. Correção central em useModalFocus/useLayoutEffect, com restauração validada após o commit e acompanhamento somente enquanto o acionador conserva foco, cobrindo remoção assíncrona posterior. Não altera handlers, props, CSS, backend ou navegação. Inventário: 23 instâncias em dez arquivos; o histórico de 42 era 14 verificações × três larguras. Varredura atual: 0/45 → 45/45 retornos. Componente 51/51 e fluxos reais 21/21 em 1440/768/375; frontend 71/71, backend 69/69. [Relatório e limites](SB-06B/RELATORIO.md).
+
+P02/P03/P06/P08/V02 e R02 preservadas. P04/P07/P09 continuam pendentes; P05 parcial; V01 em acompanhamento. Home/Visão Geral conservam excessos independentes em larguras extremas já descritos em R02. Leitor de tela real e zoom nativo não homologados.
+
+#### T01 — timeout networkidle no teste público móvel
+
+Regressão ampla: 248/249; uma espera em public.spec.ts:173 expirou após recarregar a página pública, já renderizada. Cenário não abre modais; nenhuma mudança na página/roteamento/autenticação ou asserções. Diagnóstico do mesmo teste sem alterar asserções, três execuções por versão: baseline 3/3, candidata 3/3 aprovadas. A falha original não foi reproduzida no baseline; sua causa permanece não comprovada, em acompanhamento. Não confundir com V01 nem declarar resolução por associação.
