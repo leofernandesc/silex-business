@@ -1,3 +1,4 @@
+import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import { api, query } from "./api";
 import {
@@ -308,15 +309,7 @@ function CatalogForm({
                   onChange={(e) => setOpening(e.target.value)}
                 />
               </Field>
-              <Field label="Referência do saldo inicial *">
-                <input
-                  required
-                  type="date"
-                  max={localDate()}
-                  value={openingDate}
-                  onChange={(e) => setOpeningDate(e.target.value)}
-                />
-              </Field>
+              <SilexDatePicker label="Referência do saldo inicial *" required max={localDate()} value={openingDate} onChange={(value) => setOpeningDate(value)} />
               <Field label="Banco">
                 <input
                   maxLength={100}

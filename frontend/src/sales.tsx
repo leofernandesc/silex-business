@@ -1,3 +1,4 @@
+import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import {
   ShoppingCart,
@@ -347,15 +348,7 @@ export function PointOfSale({
                 </select>
               </Field>
               {method === "credit" && (
-                <Field label="Vencimento *">
-                  <input
-                    type="date"
-                    required
-                    min={localDate()}
-                    value={due}
-                    onChange={(e) => setDue(e.target.value)}
-                  />
-                </Field>
+                <SilexDatePicker label="Vencimento *" required min={localDate()} value={due} onChange={(value) => setDue(value)} />
               )}
               <p className="help">
                 Registro manual do pagamento. Recibo sem valor fiscal.
@@ -637,15 +630,7 @@ export function SaleDetail({
               </select>
             </Field>
             {method === "credit" && (
-              <Field label="Vencimento *">
-                <input
-                  type="date"
-                  required
-                  min={localDate()}
-                  value={due}
-                  onChange={(e) => setDue(e.target.value)}
-                />
-              </Field>
+              <SilexDatePicker label="Vencimento *" required min={localDate()} value={due} onChange={(value) => setDue(value)} />
             )}
           </div>
         </Form>
