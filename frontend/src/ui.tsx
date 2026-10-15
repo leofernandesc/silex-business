@@ -20,6 +20,7 @@ import {
 import { api } from "./api";
 import { labels } from "./format";
 import type { Page } from "./types";
+import { useModalFocus } from "./useModalFocus";
 
 export function useLoad<T>(path: string, version = 0) {
   const [data, setData] = useState<T | null>(null),
@@ -274,11 +275,7 @@ export function Modal({
 }) {
   const ref = useRef<HTMLDialogElement>(null),
     titleId = useId();
-  useEffect(() => {
-    ref.current?.showModal();
-    const el = ref.current;
-    return () => el?.close();
-  }, []);
+  useModalFocus(ref);
   return (
     <dialog
       aria-labelledby={titleId}
@@ -286,6 +283,7 @@ export function Modal({
       className={wide ? "wide" : ""}
       onCancel={(e) => {
         e.preventDefault();
+        e.stopPropagation();
         close();
       }}
     >
