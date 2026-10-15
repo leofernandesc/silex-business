@@ -2365,6 +2365,65 @@ textarea:focus {
   border-bottom: 1px solid var(--silex-border-default);
 }
 
+/* SB-06A / R02: let the authenticated shell reflow without clipping controls. */
+.app-shell .topbar {
+  height: auto;
+  padding-block: 3px;
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+.app-shell .topbar-left {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.app-shell .topbar-right {
+  min-width: 0;
+  max-width: 100%;
+  margin-left: auto;
+}
+
+.app-shell .topbar .icon-button,
+.app-shell .topbar .user-avatar,
+.app-shell .breadcrumb > svg {
+  flex-shrink: 0;
+}
+
+.app-shell .breadcrumb {
+  min-width: 0;
+  max-width: none;
+  flex-wrap: wrap;
+  overflow: visible;
+  white-space: normal;
+}
+
+.app-shell .user-profile,
+.app-shell .user-profile > div,
+.app-shell .workspace > div {
+  min-width: 0;
+}
+
+.app-shell .breadcrumb strong,
+.app-shell .user-profile > div,
+.app-shell .workspace > div {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .app-shell .sidebar {
+    max-width: 100%;
+  }
+
+  .app-shell .sidebar-logo {
+    min-width: 0;
+  }
+
+  .app-shell .sidebar-brand .icon-button {
+    flex-shrink: 0;
+  }
+}
+
 .breadcrumb {
   color: var(--silex-text-muted);
 }
