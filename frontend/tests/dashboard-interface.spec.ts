@@ -1,3 +1,4 @@
+import { dateField, enterDate, expectDate } from "./dateHelpers";
 import { test, expect, type Page } from "@playwright/test";
 import { money } from "../src/format";
 
@@ -110,12 +111,10 @@ test("draft and applied periods, Brazilian descriptions and existing interval er
     if (new URL(r.url()).pathname === "/api/finance/dashboard")
       requests.push(r.url());
   });
-  await page.getByLabel("De", { exact: true }).fill("2001-01-01");
-  await page.getByLabel("Até", { exact: true }).fill("2001-01-31");
-  await expect(page.locator(".ledger-date-caption")).toHaveText([
-    "Data: 01/01/2001",
-    "Data: 31/01/2001",
-  ]);
+  await enterDate(page, "De", "2001-01-01");
+  await enterDate(page, "Até", "2001-01-31");
+  await expectDate(page, "De", "2001-01-01");
+  await expectDate(page, "Até", "2001-01-31");
   expect(requests).toHaveLength(0);
   await expect(page.locator(".summary-card strong")).toHaveText(amounts(data));
   const response = page.waitForResponse(
@@ -141,7 +140,7 @@ test("draft and applied periods, Brazilian descriptions and existing interval er
       .locator(".dashboard-classification")
       .getByText("Nenhum registro encontrado", { exact: true }),
   ).toBeVisible();
-  await page.getByLabel("De", { exact: true }).fill("2001-02-01");
+  await enterDate(page, "De", "2001-02-01");
   const rejected = page.waitForResponse(
     (r) => new URL(r.url()).pathname === "/api/finance/dashboard",
   );
@@ -382,7 +381,7 @@ test("loading, error and empty accounts are presentation states without new quer
   await page.evaluate(() => {
     (window as any).dashboardMode = "error";
   });
-  await page.getByLabel("De", { exact: true }).fill("2025-01-01");
+  await enterDate(page, "De", "2025-01-01");
   await page.getByRole("button", { name: "Atualizar", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText(
     "Erro ilustrativo de consulta",

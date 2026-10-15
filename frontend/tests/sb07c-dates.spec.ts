@@ -61,7 +61,7 @@ test("components: controlled updates, fieldset disabled and read-only", async ({
   await expect(dateField(page, 'Data desabilitada').getByRole('button')).toBeDisabled();
   await expect(dateField(page, 'Data somente leitura').getByRole('button')).toBeDisabled();
 });
-for (const width of [1440, 768, 375, 320]) {
+for (const width of [1440, 768, 375, 320, 291]) {
   test(`components: calendar in native Modal, keyboard and viewport ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 }); await page.goto(fixture);
     const opener = page.getByRole('button', { name: 'Abrir modal', exact: true });
@@ -95,4 +95,14 @@ test("components: monthly format, year editing, read-only and ISO contract", asy
   await expect(page.getByLabel('Envio mensal', { exact: true })).toHaveText('2300-12');
   await expect(page.getByLabel('Competência fixa: ano', { exact: true })).toHaveAttribute('readonly', '');
   await expect(page.getByLabel('Competência fixa: mês', { exact: true })).toBeDisabled();
+});
+
+test('components: monthly limits, optional clearing and controlled update',async({page})=>{
+ await page.goto(fixture);
+ const year=page.getByLabel('Competência limitada: ano',{exact:true}),month=page.getByLabel('Competência limitada: mês',{exact:true}),send=page.getByRole('button',{name:'Enviar mensal limitada',exact:true}),output=page.getByLabel('Envio mensal limitado',{exact:true});
+ await year.fill('2023');await send.click();await expect(output).toHaveText('não enviado');
+ await year.fill('2027');await send.click();await expect(output).toHaveText('não enviado');
+ await year.fill('2026');await year.press('Tab');await month.selectOption('12');await send.click();await expect(output).toHaveText('2026-12');
+ await page.getByRole('button',{name:'Atualizar mensal limitada',exact:true}).click();await expect(year).toHaveValue('2024');await expect(month).toHaveValue('02');
+ await month.selectOption('');await year.fill('');await year.press('Tab');await send.click();await expect(output).toHaveText('vazio');
 });

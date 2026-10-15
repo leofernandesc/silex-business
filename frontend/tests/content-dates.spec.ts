@@ -1,3 +1,4 @@
+import { dateField, enterDate, expectDate } from "./dateHelpers";
 import { test, expect, type Page } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
@@ -84,28 +85,25 @@ for (const route of ['dashboard', 'finance', 'finance-payable', 'finance-receiva
 }
 
 async function caption(page: Page, label: string, iso: string, br: string) {
-  const input = page.getByLabel(label, { exact: true });
-  await expect(input).toHaveAttribute('type', 'date');
-  await expect(input).toHaveValue(iso);
-  const hint = await input.getAttribute('aria-describedby'); expect(hint).toBeTruthy();
-  await expect(page.locator(`[id="${hint}"]`)).toHaveText(br);
-  return input;
+  await expectDate(page, label, iso);
+  if (iso) expect((await dateField(page, label).locator('.silex-date-input').innerText()).replace(/\s/g, '')).toBe(br.replace('Data: ', ''));
 }
 for (const locale of ['pt-BR', 'en-US']) {
-  test(`P05 services ${locale}: native input, civil dates, creation, editing and generated titles`, async ({ browser }) => {
+  test(`P05 services ${locale}: Brazilian segments, civil dates, creation, editing and generated titles`, async ({ browser }) => {
     const context = await browser.newContext({ locale, timezoneId: locale === 'pt-BR' ? 'America/Manaus' : 'Pacific/Kiritimati', viewport: { width: 375, height: 900 } });
     const page = await context.newPage(); const requests: unknown[] = [];
     try {
       expect((await page.request.post(candidate + '/api/auth/login', { data: { username: 'demo.admin', password } })).status()).toBe(200);
       await page.goto(candidate + '/app#service-orders'); await page.locator('main h1').waitFor(); await ready(page);
       await page.getByRole('button', { name: 'Novo serviço/pedido', exact: true }).click();
-      const input = page.getByLabel('Data do serviço *', { exact: true });
+      const field = dateField(page, 'Data do serviço *');
+      const input = field.locator('[data-type=day]');
       for (const [iso, br] of [['2024-02-29', '29/02/2024'], ['2026-03-04', '04/03/2026'], ['2026-12-31', '31/12/2026'], ['2027-01-01', '01/01/2027']]) {
-        await input.fill(iso); await caption(page, 'Data do serviço *', iso, 'Data: ' + br);
+        await enterDate(page, 'Data do serviço *', iso); await caption(page, 'Data do serviço *', iso, 'Data: ' + br);
       }
-      await input.fill(''); expect(await input.evaluate(e => (e as HTMLInputElement).validity.valueMissing)).toBe(true);
+      await enterDate(page, 'Data do serviço *', ''); expect(await field.locator('input[hidden]').evaluate(e => (e as HTMLInputElement).validity.valueMissing)).toBe(true);
       await caption(page, 'Data do serviço *', '', 'Formato brasileiro: dd/mm/aaaa');
-      await input.fill('2026-03-04');
+      await enterDate(page, 'Data do serviço *', '2026-03-04');
       const description = 'Serviço sintético SB07A ' + locale + ' ' + Date.now();
       await page.getByLabel('Cliente *', { exact: true }).selectOption({ index: 1 });
       await page.getByLabel('Descrição do serviço/pedido *', { exact: true }).fill(description);
@@ -120,15 +118,14 @@ for (const locale of ['pt-BR', 'en-US']) {
       const row = page.getByRole('row').filter({ hasText: description }); await expect(row).toContainText('04/03/2026');
       await row.getByRole('button', { name: 'Editar ' + order.code, exact: true }).click();
       await caption(page, 'Data do serviço *', '2026-03-04', 'Data: 04/03/2026');
-      await page.getByLabel('Data do serviço *', { exact: true }).fill('2024-02-29');
+      await enterDate(page, 'Data do serviço *', '2024-02-29');
       const edited = page.waitForResponse(r => new URL(r.url()).pathname === '/api/service-orders/' + order.id && r.request().method() === 'PUT');
       await page.getByRole('button', { name: 'Salvar alterações', exact: true }).click();
       const update = await edited; expect(update.status()).toBe(200); expect(update.request().postDataJSON().service_date).toBe('2024-02-29'); requests.push(update.request().postDataJSON());
       await page.reload(); await page.locator('main h1').waitFor(); await ready(page); await expect(row).toContainText('29/02/2024');
       expect((await (await page.request.get(candidate + '/api/service-orders/' + order.id)).json()).service_date).toBe('2024-02-29');
       await row.getByRole('button', { name: 'Gerar títulos', exact: true }).click();
-      const due = page.getByLabel('Vencimento *', { exact: true }), competence = page.getByLabel('Competência *', { exact: true });
-      await due.fill('2026-12-31'); await competence.fill('2027-01-01');
+      await enterDate(page, 'Vencimento *', '2026-12-31'); await enterDate(page, 'Competência *', '2027-01-01');
       await caption(page, 'Vencimento *', '2026-12-31', 'Data: 31/12/2026'); await caption(page, 'Competência *', '2027-01-01', 'Data: 01/01/2027');
       await page.getByLabel('Conta associada aos títulos *', { exact: true }).selectOption({ index: 1 });
       const generated = page.waitForResponse(r => new URL(r.url()).pathname === `/api/service-orders/${order.id}/generate-titles` && r.request().method() === 'POST');

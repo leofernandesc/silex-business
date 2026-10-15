@@ -1,3 +1,4 @@
+import { dateField, enterDate, expectDate } from "./dateHelpers";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 async function start(page: Page) {
@@ -172,12 +173,11 @@ test("draft/applied filters, ISO dates, competence, documents, empty and paginat
   await page.getByLabel("Busca", { exact: true }).selectOption("document");
   await page.getByLabel("Tipo", { exact: true }).selectOption("income");
   await page.getByLabel("Origem", { exact: true }).selectOption("manual");
-  const from = page.getByLabel("De", { exact: true }),
-    to = page.getByLabel("Até", { exact: true });
+  const from = dateField(page, "De").locator('input[type="date"]');
   const iso = await from.inputValue();
-  await from.fill(iso);
+  await enterDate(page, "De", iso);
   // Use the last day from the original preset instead of assuming every month has 31 days.
-  await to.fill(
+  await enterDate(page, "Até",
     await page.evaluate(
       (month: string) => {
         const [y, m] = month.split("-").map(Number);
@@ -217,7 +217,7 @@ test("draft/applied filters, ISO dates, competence, documents, empty and paginat
 });
 
 for (const locale of ["pt-BR", "en-US"])
-  test(`P05 native ISO and Brazilian descriptions in ${locale}`, async ({
+  test(`P05 ISO and Brazilian segments in ${locale}`, async ({
     browser,
   }, info) => {
     const context = await browser.newContext({
@@ -232,40 +232,24 @@ for (const locale of ["pt-BR", "en-US"])
         ["2026-01-10", "10/01/2026"],
         ["2026-10-01", "01/10/2026"],
       ]) {
-        const input = page.getByLabel("De", { exact: true });
-        await input.fill(iso);
-        await expect(input).toHaveValue(iso);
-        await expect(input).toHaveAttribute("type", "date");
-        await expect(page.locator(".ledger-date-caption").first()).toHaveText(
-          `Data: ${display}`,
-        );
+        await enterDate(page, "De", iso);
+        await expectDate(page, "De", iso);
+        expect((await dateField(page, "De").locator(".silex-date-input").innerText()).replace(/\s/g, "")).toBe(display);
       }
-      await page.getByLabel("De", { exact: true }).fill("");
-      await expect(page.locator(".ledger-date-caption").first()).toHaveText(
-        "Formato brasileiro: dd/mm/aaaa",
-      );
+      await enterDate(page, "De", "");
+      await expectDate(page, "De", "");
       await page
         .getByRole("button", { name: "Nova despesa", exact: true })
         .click();
-      const dialog = page.getByRole("dialog"),
-        posting = dialog.getByLabel("Data de lançamento *", { exact: true });
-      await expect(posting).toHaveAttribute("type", "date");
-      await expect(posting).toHaveAttribute("required", "");
-      await expect(posting).toHaveAttribute("max", /\d{4}-\d{2}-\d{2}/);
-      const max = await posting.getAttribute("max");
-      await posting.fill("2099-12-31");
-      expect(
-        await posting.evaluate(
-          (el: HTMLInputElement) => el.validity.rangeOverflow,
-        ),
-      ).toBe(true);
-      await posting.fill(max!);
-      await posting.fill("");
-      expect(
-        await posting.evaluate(
-          (el: HTMLInputElement) => el.validity.valueMissing,
-        ),
-      ).toBe(true);
+      const dialog = page.getByRole("dialog");
+      const posting = dateField(dialog, "Data de lançamento *");
+      const max = await posting.locator('input[type="date"]').inputValue();
+      await expect(posting.locator('input[hidden]')).toHaveAttribute("required", "");
+      await enterDate(dialog, "Data de lançamento *", "2099-12-31");
+      expect(await posting.locator('input[hidden]').evaluate((el: HTMLInputElement) => el.validity.valid)).toBe(false);
+      await enterDate(dialog, "Data de lançamento *", max);
+      await enterDate(dialog, "Data de lançamento *", "");
+      expect(await posting.locator('input[hidden]').evaluate((el: HTMLInputElement) => el.validity.valueMissing)).toBe(true);
       await page.keyboard.press("Escape");
       await expect(dialog).toHaveCount(0);
       await overflow(page);
@@ -292,12 +276,8 @@ test("creation and reversal keep payload, amounts, constraints and accessible er
     "Informe um valor positivo",
   );
   await dialog.getByLabel("Valor (R$) *", { exact: true }).fill("21,35");
-  const posting = await dialog
-      .getByLabel("Data de lançamento *", { exact: true })
-      .inputValue(),
-    competence = await dialog
-      .getByLabel("Data de competência *", { exact: true })
-      .inputValue();
+  const posting = await dateField(dialog, "Data de lançamento *").locator('input[type="date"]').inputValue(),
+    competence = await dateField(dialog, "Data de competência *").locator('input[type="date"]').inputValue();
   const request = page.waitForRequest(
     (r) => r.url().endsWith("/api/finance/movements") && r.method() === "POST",
   );

@@ -23,6 +23,7 @@ function CivilForm({ label, required, min, max, disabled, readOnly }: { label: s
 }
 function App() {
   const [month, setMonth] = useState("2026-03"), [monthSaved, saveMonth] = useState("");
+  const [limitedMonth, setLimitedMonth] = useState("2026-03"), [limitedSaved, saveLimited] = useState("não enviado");
   const [modal, setModal] = useState(false), [date, setDate] = useState("2026-03-04");
   return <main style={{ maxWidth: 900, margin: "auto", padding: 16 }}>
     <h1>Datas — demonstração sintética</h1>
@@ -36,6 +37,12 @@ function App() {
       <SilexMonthField label="Competência fixa" value="2026-03" readOnly />
       <button>Enviar competência</button>
       <output aria-label="ISO mensal">{month}</output><output aria-label="Envio mensal">{monthSaved}</output>
+    </form>
+    <form className="panel" onSubmit={e => { e.preventDefault(); saveLimited(limitedMonth || "vazio"); }}>
+      <SilexMonthField label="Competência limitada" value={limitedMonth} onChange={setLimitedMonth} min="2024-02" max="2026-12" />
+      <button>Enviar mensal limitada</button>
+      <button type="button" onClick={() => setLimitedMonth("2024-02")}>Atualizar mensal limitada</button>
+      <output aria-label="Envio mensal limitado">{limitedSaved}</output>
     </form>
     <button onClick={() => setModal(true)}>Abrir modal</button>
     {modal && <Modal title="Modal com calendário" close={() => setModal(false)}><form onSubmit={e => { e.preventDefault(); setModal(false); }}><SilexDatePicker label="Data no modal" value={date} onChange={setDate} required /><button type="submit">Confirmar modal</button><button type="button" onClick={() => setModal(false)}>Cancelar modal</button></form></Modal>}

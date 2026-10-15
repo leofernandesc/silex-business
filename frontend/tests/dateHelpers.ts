@@ -1,7 +1,8 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 
 export function dateField(scope: Page | Locator, label: string) {
-  return scope.locator(".silex-date-field").filter({ has: scope.getByText(label, { exact: true }) });
+  const page = "keyboard" in scope ? scope : scope.page();
+  return scope.locator(".silex-date-field").filter({ has: page.getByText(label, { exact: true }) });
 }
 export async function enterDate(scope: Page | Locator, label: string, iso: string) {
   const field = dateField(scope, label);

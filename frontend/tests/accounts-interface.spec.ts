@@ -1,3 +1,4 @@
+import { dateField, enterDate, expectDate } from "./dateHelpers";
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 const modules = [
@@ -245,6 +246,9 @@ for (const m of modules) {
         await table.locator("th").last().scrollIntoViewIfNeeded();
         await expect(table.locator("th").last()).toBeInViewport();
       }
+      // Segment controls change filter height. Bring the action into view before
+      // checking it; reaching the table header does not guarantee its row is visible.
+      await table.getByRole("button", { name: "Quitar", exact: true }).scrollIntoViewIfNeeded();
       await expect(
         table.getByRole("button", { name: "Quitar", exact: true }),
       ).toBeInViewport();
@@ -319,16 +323,16 @@ for (const m of modules) {
       );
       await page.getByRole("button", { name: "Todos", exact: true }).click();
       await page.getByLabel("Período por").selectOption("competence");
-      await page.getByLabel("De", { exact: true }).fill("2024-02-29");
-      await page.getByLabel("Até", { exact: true }).fill("2024-02-29");
+      await enterDate(page, "De", "2024-02-29");
+      await enterDate(page, "Até", "2024-02-29");
       await page
         .getByRole("button", { name: "Pesquisar", exact: true })
         .click();
       await expect(page.locator(".finance-ledger tbody")).toContainText(
         "Nenhum registro encontrado",
       );
-      await page.getByLabel("De", { exact: true }).fill("2026-12-31");
-      await page.getByLabel("Até", { exact: true }).fill("2026-01-01");
+      await enterDate(page, "De", "2026-12-31");
+      await enterDate(page, "Até", "2026-01-01");
       await page
         .getByRole("button", { name: "Pesquisar", exact: true })
         .click();
@@ -338,7 +342,7 @@ for (const m of modules) {
       await overflow(page);
     });
     for (const locale of ["pt-BR", "en-US"]) {
-      test(`P05 ISO native date constraints and Brazilian descriptions in ${locale}`, async ({
+      test(`P05 ISO constraints and Brazilian segments in ${locale}`, async ({
         browser,
         viewport,
       }) => {
@@ -350,36 +354,21 @@ for (const m of modules) {
           ["2026-10-01", "01/10/2026"],
           ["2024-02-29", "29/02/2024"],
         ]) {
-          await page.getByLabel("De", { exact: true }).fill(iso);
-          await expect(page.getByLabel("De", { exact: true })).toHaveValue(iso);
-          await expect(
-            page.locator(".finance-filter-grid .ledger-date-caption").first(),
-          ).toHaveText(`Data: ${display}`);
+          await enterDate(page, "De", iso);
+          await expectDate(page, "De", iso);
+          expect((await dateField(page, "De").locator(".silex-date-input").innerText()).replace(/\s/g, "")).toBe(display);
         }
-        await page.getByLabel("De", { exact: true }).fill("");
-        await expect(
-          page.locator(".finance-filter-grid .ledger-date-caption").first(),
-        ).toHaveText("Formato brasileiro: dd/mm/aaaa");
+        await enterDate(page, "De", "");
+        await expectDate(page, "De", "");
         await page.getByRole("button", { name: m.add, exact: true }).click();
         const dialog = page.getByRole("dialog");
         for (const label of ["Vencimento *", "Competência *"]) {
-          const input = dialog.getByLabel(label, { exact: true });
-          await expect(input).toHaveAttribute("type", "date");
-          await expect(input).toHaveAttribute("required", "");
-          await expect(input).toHaveAttribute("lang", "pt-BR");
-          await input.fill("2024-02-29");
-          await expect(input).toHaveValue("2024-02-29");
+          await expect(dateField(dialog, label).locator('input[hidden]')).toHaveAttribute("required", "");
+          await enterDate(dialog, label, "2024-02-29");
+          await expectDate(dialog, label, "2024-02-29");
         }
-        await expect(dialog.locator(".ledger-date-caption")).toHaveText([
-          "Data: 29/02/2024",
-          "Data: 29/02/2024",
-        ]);
-        await dialog.getByLabel("Vencimento *", { exact: true }).fill("");
-        expect(
-          await dialog
-            .getByLabel("Vencimento *", { exact: true })
-            .evaluate((el: HTMLInputElement) => el.validity.valueMissing),
-        ).toBe(true);
+        await enterDate(dialog, "Vencimento *", "");
+        expect(await dateField(dialog, "Vencimento *").locator('input[hidden]').evaluate((el: HTMLInputElement) => el.validity.valueMissing)).toBe(true);
         await context.close();
       });
     }
@@ -394,9 +383,7 @@ for (const m of modules) {
       await dialog
         .getByLabel("Valor de cada título (R$) *", { exact: true })
         .fill("100,00");
-      const due = await dialog
-        .getByLabel("Vencimento *", { exact: true })
-        .inputValue();
+      const due = await dateField(dialog, "Vencimento *").locator('input[type="date"]').inputValue();
       if (m.direction === "expense") {
         await dialog
           .getByLabel("Beneficiário", { exact: true })
