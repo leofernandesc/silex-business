@@ -326,6 +326,15 @@
   .silex-ledger .summary-card {
     padding: var(--silex-space-4);
   }
+  .silex-ledger .ledger-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .silex-ledger .ledger-summary .summary-card strong {
+    font-size: clamp(0.85rem, 5vw, 1.5rem);
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
   .silex-ledger .ledger-list .inline-field {
     width: 100%;
     display: flex;
