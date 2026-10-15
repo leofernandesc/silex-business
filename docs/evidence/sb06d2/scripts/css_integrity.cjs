@@ -1,0 +1,9 @@
+const fs=require('fs'),path=require('path'),crypto=require('crypto'),{createRequire}=require('module'),root=process.env.SILEX_ROOT,req=createRequire(root+'/frontend/package.json'),postcss=req('postcss');
+const state=JSON.parse(fs.readFileSync(process.env.SILEX_STATE)),walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const rows=[],prints={baseline:[],candidate:[]};let oldCount=0,newCount=0;
+for(const file of walk(root+'/frontend/src').filter(p=>p.endsWith('.css'))){const rel=file.slice(root.length+1),old=fs.readFileSync(state.backup+'/original/'+rel),now=fs.readFileSync(file);rows.push({file:rel,equal:old.equals(now),baseline_sha256:sha(old),candidate_sha256:sha(now)});
+ for(const [version,raw] of [['baseline',old],['candidate',now]])postcss.parse(raw.toString()).walkRules(rule=>{if(version==='baseline')oldCount++;else newCount++;const contexts=[];for(let p=rule.parent;p;p=p.parent)if(p.type==='atrule')contexts.unshift('@'+p.name+' '+p.params);if(contexts.some(c=>/print/.test(c)))prints[version].push({file:rel,selector:rule.selector,contexts,declarations:rule.nodes.filter(n=>n.type==='decl').map(d=>[d.prop,d.value,!!d.important])});});
+}
+if(JSON.stringify(prints.baseline)!==JSON.stringify(prints.candidate))throw Error('Print rules differ');
+if(rows.filter(r=>!r.equal).map(r=>r.file).join()!=='frontend/src/ledger.css')throw Error('Other stylesheet changed');
+const result={files:rows,total_rules:{baseline:oldCount,candidate:newCount},print_rule_count:prints.baseline.length,print_rules_equal:true,imports_equal:fs.readFileSync(root+'/frontend/src/main.tsx').equals(fs.readFileSync(state.backup+'/original/frontend/src/main.tsx'))};fs.writeFileSync(process.env.SILEX_EVIDENCE+'/css-preservation.json',JSON.stringify(result,null,2));console.log(result.total_rules,'print:',result.print_rule_count,'unchanged');
