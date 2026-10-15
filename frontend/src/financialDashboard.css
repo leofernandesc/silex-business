@@ -1,0 +1,294 @@
+/* SB-05.3B: financial dashboard presentation only; shared ERP and print are unchanged. */
+@media screen {
+  .silex-financial-dashboard {
+    min-width: 0;
+    container-type: inline-size;
+    font-family: var(--silex-font-body);
+    font-size: var(--silex-size-body);
+    line-height: var(--silex-line-height-body);
+  }
+  .silex-financial-dashboard .page-title h1 {
+    color: var(--silex-brand-deep);
+    font-size: var(--silex-size-page);
+  }
+  .silex-financial-dashboard .panel,
+  .silex-financial-dashboard .summary-card {
+    min-width: 0;
+    border-radius: var(--silex-radius-card);
+    border-color: var(--silex-border-default);
+    box-shadow: var(--silex-shadow-card);
+  }
+  .silex-financial-dashboard h2 {
+    font-size: var(--silex-size-commercial);
+    color: var(--silex-brand-deep);
+  }
+  .silex-financial-dashboard .help,
+  .silex-financial-dashboard .panel-heading p,
+  .silex-financial-dashboard .ledger-date-caption,
+  .silex-financial-dashboard .dashboard-loading,
+  .silex-financial-dashboard .dashboard-empty {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+  }
+  .silex-financial-dashboard .dashboard-period {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 16rem)) auto;
+    align-items: start;
+    gap: var(--silex-space-4);
+    padding: var(--silex-space-4);
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-financial-dashboard .field,
+  .silex-financial-dashboard .ledger-date-field {
+    min-width: 0;
+  }
+  .silex-financial-dashboard input {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+    min-height: var(--silex-control-height-default);
+    font-size: var(--silex-size-body);
+  }
+  .silex-financial-dashboard .field label {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-financial-dashboard .ledger-date-caption {
+    display: block;
+    margin-top: var(--silex-space-1);
+  }
+  .silex-financial-dashboard button {
+    min-height: var(--silex-control-height-default);
+    font-size: var(--silex-size-caption);
+    font-family: var(--silex-font-button);
+    white-space: normal;
+  }
+  .silex-financial-dashboard .dashboard-period button {
+    justify-self: start;
+    margin-top: 23px;
+  }
+  .silex-financial-dashboard .dashboard-indicators {
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-financial-dashboard .dashboard-indicators > .help {
+    margin: var(--silex-space-1) 0 var(--silex-space-3);
+  }
+  .silex-financial-dashboard .summary-grid.three {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22em), 1fr));
+    gap: var(--silex-space-3);
+    margin-bottom: 0;
+  }
+  .silex-financial-dashboard .summary-card {
+    display: block;
+    position: relative;
+    padding: min(var(--silex-space-4), 4cqw);
+  }
+  .silex-financial-dashboard .summary-icon {
+    position: absolute;
+    top: min(var(--silex-space-4), 4cqw);
+    right: min(var(--silex-space-4), 4cqw);
+    width: 28px;
+    height: 28px;
+    color: var(--silex-brand-deep);
+    background: var(--silex-surface-subtle);
+  }
+  .silex-financial-dashboard .summary-card > div:last-child {
+    min-width: 0;
+    display: grid;
+    gap: var(--silex-space-2);
+  }
+  .silex-financial-dashboard .summary-card span {
+    padding-right: 36px;
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  .silex-financial-dashboard .summary-card strong {
+    font-size: clamp(1rem, 5cqw, 24px);
+    line-height: 1.3;
+    color: var(--silex-brand-deep);
+  }
+  .silex-financial-dashboard .summary-card small {
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .silex-financial-dashboard .summary-card.teal .summary-icon {
+    color: var(--silex-finance-income);
+    background: #edf7f1;
+  }
+  .silex-financial-dashboard .summary-card.amber .summary-icon,
+  .silex-financial-dashboard
+    .dashboard-current
+    .summary-card:nth-child(2)
+    .summary-icon {
+    color: var(--silex-finance-expense);
+    background: #fff1f1;
+  }
+  .silex-financial-dashboard .panel {
+    margin-bottom: var(--silex-space-5);
+  }
+  .silex-financial-dashboard .panel-heading {
+    gap: var(--silex-space-3);
+    padding: var(--silex-space-4);
+    flex-wrap: wrap;
+  }
+  .silex-financial-dashboard .panel-heading > div {
+    min-width: 0;
+    flex: 1 1 15em;
+  }
+  .silex-financial-dashboard .dashboard-chart-legend {
+    display: flex;
+    gap: var(--silex-space-5);
+    flex-wrap: wrap;
+    padding: var(--silex-space-4) var(--silex-space-4) 0;
+  }
+  .silex-financial-dashboard .dashboard-chart-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--silex-space-2);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-financial-dashboard .dashboard-chart-legend i {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .silex-financial-dashboard .dashboard-monthly > .help,
+  .silex-financial-dashboard .dashboard-empty {
+    padding-inline: var(--silex-space-4);
+  }
+  .silex-financial-dashboard .dashboard-chart-scroll {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+  .silex-financial-dashboard .monthly-bars {
+    min-width: max(760px, 50em);
+    min-height: 200px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    overflow: visible;
+    padding: var(--silex-space-3) var(--silex-space-4);
+  }
+  .silex-financial-dashboard .monthly-bars > div {
+    position: relative;
+    min-width: 0;
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-financial-dashboard .monthly-bars .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .silex-financial-dashboard .bar-income {
+    background: var(--silex-finance-income);
+  }
+  .silex-financial-dashboard .bar-expense {
+    background-color: var(--silex-finance-expense);
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 4px,
+      rgb(255 255 255 / 45%) 4px,
+      rgb(255 255 255 / 45%) 6px
+    );
+  }
+  .silex-financial-dashboard .dashboard-monthly-values summary {
+    padding: var(--silex-space-3) var(--silex-space-4);
+    min-height: var(--silex-control-height-default);
+    color: var(--silex-brand-deep);
+    font-size: var(--silex-size-body);
+    cursor: pointer;
+    border-top: 1px solid var(--silex-border-default);
+  }
+  .silex-financial-dashboard .table-wrap {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .silex-financial-dashboard table {
+    min-width: 760px;
+    font-family: var(--silex-font-table);
+    font-size: var(--silex-size-table);
+  }
+  .silex-financial-dashboard .dashboard-monthly-values table {
+    min-width: 480px;
+  }
+  .silex-financial-dashboard th {
+    font-size: var(--silex-size-caption);
+  }
+  .silex-financial-dashboard td {
+    padding: var(--silex-space-3) var(--silex-space-4);
+  }
+  .silex-financial-dashboard .ledger-scroll-hint {
+    display: flex;
+    gap: var(--silex-space-2);
+    margin: 0;
+    padding: var(--silex-space-3) var(--silex-space-4);
+    color: var(--silex-text-muted);
+    background: var(--silex-surface-subtle);
+    font-size: var(--silex-size-caption);
+  }
+  .silex-financial-dashboard .ledger-scroll-hint svg {
+    flex: none;
+  }
+  .silex-financial-dashboard .settings-list {
+    padding: 0;
+  }
+  .silex-financial-dashboard .settings-list li {
+    padding: min(var(--silex-space-4), 4cqw);
+    flex-wrap: wrap;
+    gap: var(--silex-space-2);
+  }
+  .silex-financial-dashboard .settings-list li > span {
+    flex: 1 1 16em;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .silex-financial-dashboard .settings-list small {
+    font-size: var(--silex-size-caption);
+    line-height: 1.5;
+    overflow-wrap: normal;
+    word-break: normal;
+    color: var(--silex-text-muted);
+  }
+  .silex-financial-dashboard .settings-list strong {
+    font-size: clamp(1rem, 5cqw, 22px);
+  }
+  .silex-financial-dashboard .summary-card strong,
+  .silex-financial-dashboard .settings-list strong,
+  .silex-financial-dashboard td.numeric {
+    font-family: var(--silex-font-financial);
+    font-variant-numeric: var(--silex-financial-numerals);
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .silex-financial-dashboard button:focus-visible,
+  .silex-financial-dashboard input:focus-visible,
+  .silex-financial-dashboard summary:focus-visible,
+  .silex-financial-dashboard .table-wrap:focus-visible,
+  .silex-financial-dashboard .dashboard-chart-scroll:focus-visible {
+    outline: 2px solid var(--silex-brand-primary);
+    outline-offset: 3px;
+  }
+  @container (max-width: 600px) {
+    .silex-financial-dashboard .dashboard-period {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .silex-financial-dashboard .dashboard-period button {
+      margin-top: 0;
+    }
+  }
+}
