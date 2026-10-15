@@ -31,6 +31,15 @@ Auditoria somente. **Nenhum CSS foi alterado no SB-06D.1.** `css-audit.json` reg
 
 Seletores repetidos não comprovam conflito: os casos acima são dependências de ordem confirmadas e riscos de consolidação. Nenhuma regra foi declarada obsoleta apenas por não aparecer nas capturas iniciais. Classes geradas (`state-*`, badges, tons, rotas e diálogos) impedem limpeza por simples busca de string.
 
+## Especificidade, ordem e regras protegidas
+
+- styles.css possui camadas históricas completas: a seção Sprint 15 volta a declarar cores/larguras, e a camada Silex posterior corrige o estado efetivo. A última camada screen do SB-06C preserva contraste/alvos. A remoção de uma declaração antiga pode afetar herança ou impressão mesmo quando a tela atual parece igual.
+- A regra de impressão `body:has(.finance-report-print) .finance-report-print .panel-heading button` tem especificidade (0,3,2), e usa `!important` para ocultar ações no papel. Esses recursos têm finalidade confirmada, não são redundância presumida. Reorganizar print é grupo C.
+- As regras `:is(...)` dos badges/bordas e o escopo `.app-shell` acrescentam prioridade deliberada à camada acessível. Não trocar por seletores de menor peso sem medir hover/focus/selected e variantes semânticas.
+- No público, `!important` aparece em tamanho da marca, margem e movimento reduzido. Remover os ajustes de reduced-motion junto com uma limpeza visual seria regressão. A revisão deve preservar a preferência do usuário.
+- Media queries de 650/900 px reaparecem no shell legado e nos módulos locais; a lista de 40 blocos e suas linhas consta no JSON. Mesma condição não significa que blocos distantes possam ser fundidos sem alterar a ordem relativa.
+- Os 11 tokens sem `var()` nos oito CSS são apenas candidatos à revisão: inclui aliases de tipografia/foco/controle e dimensões reservadas. Não há regra obsoleta comprovada pela mera ausência nas capturas. CSS de diálogos, impressão, estados desabilitados e classes dinâmicas precisa permanecer coberto.
+
 ## Plano proposto — não iniciado
 
 1. **D.2a, inventário executável:** capturar estilos computados dos componentes e estados, registrar ordem real de CSS com/sem navegação lazy, sem mover regras. Dependência: aprovação SB-06D.1. Aceite: matriz reproduzível e backup.

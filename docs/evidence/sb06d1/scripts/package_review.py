@@ -4,6 +4,7 @@ import hashlib
 import html
 import json
 import os
+import re
 import shutil
 import subprocess
 import zipfile
@@ -58,7 +59,7 @@ for name,p in entries.items():
     raw=p.read_bytes()
     if p.suffix not in ['.png']:
         assert not password or password not in raw,('test password',name)
-        assert b'-----BEGIN PRIVATE KEY' not in raw,name
+        assert not re.search(rb'(?m)^-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----\r?\n[A-Za-z0-9+/]{32}',raw),name
 archive=e/'SB-06D.1-review.zip'
 with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
     for name,p in sorted(entries.items()):z.write(p,name)

@@ -14,7 +14,7 @@ Varredura AST reproduzível em `date-inventory.json`: 116 ocorrências em 15 arq
 | Orçamento / BudgetForm | year/month inteiros; controle YYYY-MM | input month; suporte efetivo depende do navegador | /finance/budgets; Number(slice) nos handlers | Preservar; componente uniforme depende de aprovação |
 | `financeCatalog.tsx` Contas | Account.opening_date civil ISO | formulário date; tabela dateOnly | POST/PUT /accounts; saldo inicial e max localDate | Preservar; criação/edição com payload real testadas |
 | `sales.tsx` Vendas/PDV/SaleDetail | created_at timestamp, due_date civil | dateTime para instante Manaus, dateOnly para vencimento; Dates + input date | /sales; filtros start/end ISO; finalize envia due_date ISO | Preservar. Não confundir instante com vencimento |
-| `operations.tsx` Estoque/Caixa | created_at/opened_at/closed_at timestamps | dateTime; Dates para intervalo em Estoque | /stock, /cash; timestamp API intacto | Preservar Manaus e ordenação |
+| `operations.tsx` Estoque/Caixa | created_at/opened_at/closed_at timestamps | dateTime; Dates para intervalo em Estoque | /stock-movements, /cash-sessions; timestamp API intacto | Preservar Manaus e ordenação |
 | `serviceOrders.tsx` Serviços | service_date, title_due_date, title_competence_date civis | input date; dateOnly no detalhe/lista | /service-orders POST/PUT/generate-titles; ISO | Preservar, sem mudar geração de títulos |
 | `App.tsx` Visão Geral | dashboard.date civil; recent_sales.created_at timestamp | dateOnly/dateTime | /dashboard; nenhuma consulta adicional | Preservar |
 | `users.tsx` auditoria | Audit.created_at timestamp | dateTime em Manaus | /audit; sem editor | Preservar |
@@ -30,6 +30,13 @@ Varredura AST reproduzível em `date-inventory.json`: 116 ocorrências em 15 arq
 - Meses preservam sua granularidade: MM/AAAA, sem inventar um dia. Somente slugs confirmados são tratados como mês; nomes de categorias não são reinterpretados por reportGroupDate.
 - Campo nativo continua com value ISO e restrições originais; lang não obriga desenho localizado. Não adicionar máscara, alterar serialização ou trocar tipos.
 - Datas em cálculos, comparação, presets e ordenação não passam pelos formatadores de exibição.
+
+## Riscos preexistentes fora da correção de apresentação
+
+- `finance.tsx:quickPeriod` calcula atalhos de Pagar/Receber com calendário local do host (`new Date()`/getFullYear/getMonth/getDate), enquanto localDate/periodRange usam Manaus/UTC ancorado. Perto da meia-noite, outro fuso pode selecionar um intervalo diferente. A lógica é preexistente e não foi alterada; uniformizar isso mudaria filtros e precisa de autorização separada. Os testes de três fusos deste incremento comprovam os formatadores/periodRange testados, não a equivalência universal de todos os atalhos.
+- dateTime mantém o parser histórico para timestamps sem offset; a origem deve continuar enviando instantes inequívocos. Não se acrescenta Z nem se reinterpreta horário sem contrato.
+- O tooltip mensal legado do gráfico mantém YYYY-MM; o texto e a alternativa tabular já usam MM/AAAA. Campo month pode depender de suporte nativo. CSV/impressão backend mantêm ISO quando esse era o contrato.
+- formatReportValue conserva a heurística histórica de prefixo ISO em string; texto livre que comece por data pode ser interpretado como data. Refino por schema/coluna precisa de escopo/teste próprio, preservando nomes e contratos. A correção de meses é limitada a slugs e grupo explicitamente conhecidos.
 
 ## Ocorrências com posição e expressão
 
