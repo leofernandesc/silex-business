@@ -5,6 +5,7 @@ import { dateOnly, decimalInput, labels, localDate, money, parseDecimal, quantit
 import { partnerKinds } from "./partners";
 import type { Account, Customer, Page, ServiceOrder, Supplier, SupplierKind } from "./types";
 import { AddButton, Badge, Field, Form, Modal, Notice, PageTitle, Pagination, Table, useLoad } from "./ui";
+import { LedgerDateField } from "./ledgerPresentation";
 
 type CostDraft = { key: string; kind: "day_worker" | "subcontracted_freight"; supplier_id: string; days: string; amount: string; details: string; rateSuggested?: boolean };
 const statusLabels: Record<ServiceOrder["status"], string> = { draft: "Rascunho", scheduled: "Agendado", in_progress: "Em execução", completed: "Concluído", canceled: "Cancelado" };
@@ -97,7 +98,7 @@ function ServiceOrderForm({ order, close, done }: { order: ServiceOrder | null; 
       <div className="form-grid">
         <Field label="Cliente *" span><select required disabled={locked} value={customer} onChange={(e) => setCustomer(e.target.value)}><option value="">Selecione o cliente</option>{customers.data?.items.map((row) => <option key={row.id} value={row.id}>{row.name}</option>)}</select></Field>
         <Field label="Descrição do serviço/pedido *" span><input autoFocus required maxLength={300} value={description} onChange={(e) => setDescription(e.target.value)} /></Field>
-        <Field label="Data do serviço *"><input type="date" required value={serviceDate} onChange={(e) => setServiceDate(e.target.value)} /></Field>
+        <LedgerDateField label="Data do serviço *" value={serviceDate}><input type="date" required value={serviceDate} onChange={(e) => setServiceDate(e.target.value)} /></LedgerDateField>
         <Field label="Valor negociado (R$) *"><input required inputMode="decimal" disabled={locked} value={revenue} onChange={(e) => setRevenue(e.target.value)} /></Field>
         <Field label="Andamento"><select value={status} onChange={(e) => setStatus(e.target.value as "draft" | "scheduled" | "in_progress" | "completed")}><option value="draft">Rascunho</option><option value="scheduled">Agendado</option><option value="in_progress">Em execução</option><option value="completed">Concluído</option></select></Field>
         <Field label="Observações" span><textarea maxLength={500} value={notes} onChange={(e) => setNotes(e.target.value)} /></Field>
@@ -145,8 +146,8 @@ function GenerateTitlesForm({ order, close, done }: { order: ServiceOrder; close
     <Form cancel={close} submit="Confirmar geração de títulos" onSubmit={async () => { await api(`/service-orders/${order.id}/generate-titles`, "POST", { account_id: Number(account), due_date: dueDate, competence_date: competence }); done(); }}>
       <div className="form-grid">
         <Field label="Conta associada aos títulos *" span><select required value={account} onChange={(e) => setAccount(e.target.value)}><option value="">Selecione</option>{accounts.data?.filter((row) => row.active).map((row) => <option key={row.id} value={row.id}>{row.name}</option>)}</select></Field>
-        <Field label="Vencimento *"><input type="date" required value={dueDate} onChange={(e) => setDueDate(e.target.value)} /></Field>
-        <Field label="Competência *"><input type="date" required value={competence} onChange={(e) => setCompetence(e.target.value)} /></Field>
+        <LedgerDateField label="Vencimento *" value={dueDate}><input type="date" required value={dueDate} onChange={(e) => setDueDate(e.target.value)} /></LedgerDateField>
+        <LedgerDateField label="Competência *" value={competence}><input type="date" required value={competence} onChange={(e) => setCompetence(e.target.value)} /></LedgerDateField>
       </div>
       {accounts.error && <Notice>{accounts.error}</Notice>}
       <Notice tone="info">A geração é única para este pedido. Se precisar registrar uma correção depois, use o histórico de títulos para cancelar/estornar os lançamentos gerados.</Notice>
