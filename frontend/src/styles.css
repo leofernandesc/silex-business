@@ -2019,29 +2019,108 @@ dialog > header button {
     width: 100%;
   }
 }
+.finance-report-print-note,
+.finance-report-column-bands {
+  display: none;
+}
 @media print {
-  body:has(.finance-report-print) .sidebar,
-  body:has(.finance-report-print) .topbar,
-  body:has(.finance-report-print) .report-filters,
-  body:has(.finance-report-print) .finance-report-print .panel-heading button,
-  body:has(.finance-report-print) .finance-report-print .pagination,
-  body:has(.finance-report-print) .finance-report-print .table-wrap + div {
+  /* Named page confines A4 landscape to the eight-column financial reports. */
+  @page silex-finance-report {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+  body:has(main > .finance-report-print) .main-shell {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  main > .finance-report-print {
+    /* Overrides the receipt-only main > :not(dialog) rule without changing it. */
+    display: block !important;
+    page: silex-finance-report;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #111;
+  }
+  body:has(main > .finance-report-print) main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body:has(main > .finance-report-print) main > :not(.finance-report-print),
+  .finance-report-print .panel-heading button,
+  .finance-report-print .pagination,
+  .finance-report-wide > .table-wrap,
+  .finance-report-print .empty svg,
+  .finance-report-print .empty span {
     display: none !important;
   }
-  body:has(.finance-report-print) .app-content,
-  body:has(.finance-report-print) main {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
+  .finance-report-print .panel-heading {
+    display: block;
+    padding: 0 0 3mm;
+    break-after: avoid;
   }
-  body:has(.finance-report-print) .finance-report-print .table-wrap {
+  .finance-report-print h2 {
+    font-size: 14pt;
+  }
+  .finance-report-print .panel-heading p,
+  .finance-report-print-note {
+    font-size: 10pt;
+    color: #333;
+  }
+  .finance-report-print-note {
+    display: block;
+    margin: 0 0 4mm;
+  }
+  .finance-report-print .table-wrap {
     max-height: none;
     overflow: visible;
   }
-  body:has(.finance-report-print) .finance-report-print table {
+  .finance-report-print table {
     width: 100%;
     min-width: 0;
-    font-size: 9px;
+    table-layout: fixed;
+    font-size: 10pt;
+  }
+  .finance-report-print th,
+  .finance-report-print td {
+    max-width: none;
+    padding: 2mm 1.5mm;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+  }
+  .finance-report-print th {
+    font-size: 9pt;
+    color: #222;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .finance-report-print td[data-report-money] {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    font-variant-numeric: tabular-nums;
+  }
+  .finance-report-print thead {
+    display: table-header-group;
+  }
+  .finance-report-print tr {
+    break-inside: avoid;
+  }
+  .finance-report-column-bands {
+    display: block;
+  }
+  .finance-report-column-band + .finance-report-column-band {
+    break-before: page;
+  }
+  .finance-report-column-band h3 {
+    font-size: 11pt;
+    margin: 0 0 3mm;
+    break-after: avoid;
+  }
+  .finance-report-column-band .finance-report-row-number {
+    width: 12mm;
   }
 }
 

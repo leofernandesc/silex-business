@@ -65,10 +65,72 @@ export function FinanceReports(){
  const rows=result.data?.items||[],fields=Object.keys(rows[0]||{}),rowsQuery=query({...filters,page:1,page_size:100});
  return <><PageTitle title="Relatórios Financeiros" subtitle={`${catalog.data?.length||26} relatórios do financeiro, com filtros e exportação CSV.`}/>
   <form className="panel toolbar report-filters" onSubmit={e=>{e.preventDefault();setFilters({start:from,end:to,account_id:account,category_id:category,supplier_kind:supplierKind});setPage(1);}}><Field label="Relatório"><select value={report} onChange={e=>{setReport(e.target.value);setPage(1)}}>{catalog.data?.map(r=><option key={r.id} value={r.id}>{r.name}</option>)}</select></Field><SilexDatePicker label="De" value={from} onChange={(value) => setFrom(value)} /><SilexDatePicker label="Até" value={to} onChange={(value) => setTo(value)} /><Field label="Conta"><select value={account} onChange={e=>setAccount(e.target.value)}><option value="">Todas</option>{accounts.data?.map(a=><option value={a.id} key={a.id}>{a.name}</option>)}</select></Field><Field label="Categoria"><select value={category} onChange={e=>setCategory(e.target.value)}><option value="">Todas</option>{categories.data?.map(c=><option value={c.id} key={c.id}>{c.name}</option>)}</select></Field><Field label="Tipo de beneficiário"><select value={supplierKind} onChange={e=>setSupplierKind(e.target.value)}><option value="">Todos</option><option value="supplier">Fornecedor</option><option value="day_worker">Diarista</option><option value="subcontracted_freight">Frete subcontratado</option></select></Field><button className="primary">Gerar relatório</button></form>
-  {result.error&&<Notice>{result.error}</Notice>}<section className="panel finance-report-print"><div className="panel-heading"><div><h2>{result.data?.name||'Relatório'}</h2><p>{dateOnly(filters.start)} a {dateOnly(filters.end)} · {result.data?.total||0} registros</p></div><button onClick={()=>location.href='/api/finance/reports/'+report+'.csv?'+rowsQuery}>Exportar CSV</button><button onClick={()=>window.print()}>Imprimir</button></div><Table headers={fields.map(reportColumn)} loading={result.loading} empty={!rows.length}>{rows.map((row,index)=><tr key={index}>{fields.map(key=><td key={key}>{formatReportValue(key,row[key],report)}</td>)}</tr>)}</Table><Pagination data={result.data} onPage={setPage}/></section>
+  {result.error&&<Notice>{result.error}</Notice>}<section className={`panel finance-report-print${fields.length>8?' finance-report-wide':''}`}><div className="panel-heading"><div><h2>{result.data?.name||'Relatório'}</h2><p>{dateOnly(filters.start)} a {dateOnly(filters.end)} · {result.data?.total||0} registros</p></div><button onClick={()=>location.href='/api/finance/reports/'+report+'.csv?'+rowsQuery}>Exportar CSV</button><button disabled={result.loading||!!result.error||!result.data} onClick={()=>window.print()}>Imprimir</button></div><p className="finance-report-print-note">Silex Business · Página {result.data?.page||1} de {Math.max(1,Math.ceil((result.data?.total||0)/(result.data?.page_size||20)))} · {rows.length} registros nesta página · Impressão dos resultados exibidos.</p><Table headers={fields.map(reportColumn)} loading={result.loading} empty={!rows.length}>{rows.map((row,index)=><tr key={index}>{fields.map(key=><td key={key} data-report-money={key.endsWith('_cents')||undefined}>{formatReportValue(key,row[key],report)}</td>)}</tr>)}</Table>{fields.length>8&&<ReportPrintColumns fields={fields} rows={rows} report={report} name={result.data?.name||'Relatório'} page={result.data?.page||1} pageSize={result.data?.page_size||20}/>}<Pagination data={result.data} onPage={setPage}/></section>
   <section className="panel"><div className="panel-heading"><div><h2>Orçamento mensal por categoria</h2><p>Despesas pagas na competência escolhida, comparadas à meta cadastrada.</p></div><form className="silex-budget-period" onSubmit={e=>{e.preventDefault();setBudgetForm(true)}}><SilexMonthField label="Mês" value={budgetMonth} onChange={setBudgetMonth} /><button type="submit" className="primary"><Plus size={17}/>Nova meta</button></form></div><Table headers={['Categoria / subcategoria','Meta','Realizado','Disponível','Uso']} loading={budget.loading} empty={!budget.data?.length}>{budget.data?.map(row=><tr key={row.id}><td>{row.category_name}<small>{row.subcategory_name}</small></td><td>{money(row.target_cents)}</td><td>{money(row.actual_cents)}</td><td className={row.remaining_cents<0?'negative':'positive'}>{money(row.remaining_cents)}</td><td>{row.percent_used}% <button className="danger" onClick={async()=>{await api(`/finance/budgets/${row.id}`,'DELETE');setVersion(v=>v+1)}}>Desativar</button></td></tr>)}</Table></section>
   {budgetForm&&<BudgetForm year={Number(budgetMonth.slice(0,4))} month={Number(budgetMonth.slice(5,7))} close={()=>setBudgetForm(false)} done={()=>{setBudgetForm(false);setVersion(v=>v+1)}}/>}
  </>;
+}
+/** Wide API records keep every field; print the same loaded rows in readable column bands. */
+function ReportPrintColumns({
+  fields,
+  rows,
+  report,
+  name,
+  page,
+  pageSize,
+}: {
+  fields: string[];
+  rows: Record<string, unknown>[];
+  report: string;
+  name: string;
+  page: number;
+  pageSize: number;
+}) {
+  const bands = Array.from(
+    { length: Math.ceil(fields.length / 6) },
+    (_, index) => fields.slice(index * 6, index * 6 + 6),
+  );
+  return (
+    <div className="finance-report-column-bands">
+      {bands.map((band, index) => (
+        <section className="finance-report-column-band" key={index}>
+          <h3>
+            {name} · Colunas {index * 6 + 1}–
+            {Math.min((index + 1) * 6, fields.length)} de {fields.length}
+          </h3>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" className="finance-report-row-number">
+                  Linha
+                </th>
+                {band.map((key) => (
+                  <th scope="col" key={key}>
+                    {reportColumn(key)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  <th scope="row">{(page - 1) * pageSize + rowIndex + 1}</th>
+                  {band.map((key) => (
+                    <td
+                      key={key}
+                      data-report-money={key.endsWith("_cents") || undefined}
+                    >
+                      {formatReportValue(key, row[key], report)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      ))}
+    </div>
+  );
 }
 const reportLabels:Record<string,string>={id:'ID',entry_id:'ID do título',payment_id:'ID da baixa',description:'Histórico',direction:'Tipo',group:'Agrupamento',posting_date:'Data de lançamento',competence_date:'Competência',due_date:'Vencimento',settled_at:'Quitado em',document:'Documento',category_name:'Categoria',subcategory_name:'Subcategoria',account_name:'Conta',customer_name:'Cliente',supplier_name:'Fornecedor',method:'Forma de pagamento',origin:'Origem',status:'Situação',amount_cents:'Valor líquido',principal_cents:'Principal',interest_cents:'Juros',fine_cents:'Multa',discount_cents:'Desconto',income_cents:'Receitas',expense_cents:'Despesas',net_cents:'Saldo',count:'Quantidade',reversal_of:'ID da baixa estornada',target_cents:'Meta',actual_cents:'Realizado',remaining_cents:'Disponível',year:'Ano',month:'Mês',percent_used:'Percentual usado',notes:'Observações'};
 function reportColumn(key:string){return reportLabels[key]||key.replaceAll('_',' ').replace(/^./,letter=>letter.toUpperCase())}
