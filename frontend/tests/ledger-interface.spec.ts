@@ -346,7 +346,7 @@ test("export and print retain applied criteria and original print template", asy
   await page.emulateMedia({ media: "print" });
   await expect(page.locator(".ledger-print")).toBeVisible();
   await expect(page.locator(".ledger-print h1")).toHaveText(
-    "Livro caixa · Gestão",
+    "Livro caixa · Silex Business",
   );
   await expect(page.locator(".ledger-print tbody tr")).toHaveCount(1);
   await expect(page.locator(".ledger-date-caption").first()).not.toBeVisible();

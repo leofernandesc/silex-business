@@ -514,7 +514,7 @@ export function SaleDetail({
       <div className="receipt">
         <div className="receipt-heading">
           <div>
-            <h2>Gestão</h2>
+            <h2>Silex Business</h2>
             <p>Recibo sem valor fiscal</p>
           </div>
           <Badge status={sale.status} />
