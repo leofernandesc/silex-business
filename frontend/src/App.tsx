@@ -249,7 +249,7 @@ export default function App() {
             </button>
           </div>
         </header>
-        <main id="main-content" tabIndex={-1} key={safePage}>
+        <main id="main-content" tabIndex={-1} key={safePage} className={safePage === "dashboard" ? "silex-overview" : undefined}>
           {error && <Notice>{error}</Notice>}
           {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate} />}
           {safePage === "dashboard" && (
@@ -452,7 +452,7 @@ function DashboardPage({
         </button>
         <ShoppingCart className="banner-icon" />
       </section>
-      <div className="summary-grid overview-summary">
+      <div className="summary-grid overview-summary" role="region" aria-label="Indicadores da Visão Geral" aria-describedby="overview-values-help" tabIndex={0}>
         <SummaryCard
           label="Vendas hoje"
           value={money(d.sales_today_cents)}
@@ -502,6 +502,7 @@ function DashboardPage({
           </>
         )}
       </div>
+      <p id="overview-values-help" className="overview-values-help">Se necessário, deslize ou use as setas para conferir os valores completos.</p>
       <div className="dashboard-grid">
         <section className="panel">
           <div className="panel-heading">

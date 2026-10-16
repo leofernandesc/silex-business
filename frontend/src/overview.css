@@ -17,3 +17,56 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr));
   }
 }
+
+/* SB-07D: content-only reflow; shared shell, cards and print remain unchanged. */
+@media screen {
+  .silex-overview .page-title,
+  .silex-overview .welcome-banner,
+  .silex-overview .panel-heading,
+  .silex-overview .stock-alerts > div,
+  .silex-overview .cash-strip {
+    flex-wrap: wrap;
+  }
+  .silex-overview .page-title > div,
+  .silex-overview .welcome-banner > div,
+  .silex-overview .panel-heading > div,
+  .silex-overview .stock-alerts > div > div,
+  .silex-overview .cash-strip > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .silex-overview :is(.welcome-banner, .panel-heading, .cash-strip) button,
+  .silex-overview .panel-link {
+    max-width: 100%;
+    flex-wrap: wrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .silex-overview .overview-summary {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .silex-overview .overview-summary:focus-visible {
+    outline: 2px solid var(--silex-brand-primary);
+    outline-offset: 2px;
+  }
+  .silex-overview .overview-values-help {
+    display: none;
+  }
+}
+@media screen and (max-width: 300px) {
+  .silex-overview .overview-summary {
+    overflow-x: auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .silex-overview .overview-summary .summary-card {
+    min-width: min-content;
+  }
+  .silex-overview .overview-values-help {
+    display: block;
+    overflow-wrap: anywhere;
+    color: var(--silex-text-muted);
+    font-size: var(--silex-size-caption);
+    margin: -8px 0 16px;
+  }
+}

@@ -6,6 +6,7 @@
   display: grid;
   gap: var(--silex-space-8);
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 .silex-home h1 {
   font-size: var(--silex-size-page);
@@ -233,4 +234,16 @@
     display: grid;
     gap: var(--silex-space-1);
   }
+}
+
+/* SB-07D: keep long greetings, business names and enlarged links in their tracks. */
+.silex-home > *,
+.silex-home__shortcut > span,
+.silex-home__module > span {
+  min-width: 0;
+}
+.silex-home__overview-link {
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
