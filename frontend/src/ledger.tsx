@@ -452,7 +452,7 @@ export function LedgerPage() {
       )}
       {printRows && (
         <section className="ledger-print">
-          <h1>Livro caixa · Gestão</h1>
+          <h1>Livro caixa · Silex Business</h1>
           <p>
             Período: {dateOnly(applied.start)} a {dateOnly(applied.end)} · Base:{" "}
             {applied.date_field === "posting" ? "Lançamento" : "Competência"} ·

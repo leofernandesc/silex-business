@@ -1,0 +1,132 @@
+{
+  "baseline": "bcab34796e4c06395686373144f01e7af20f00a8",
+  "synthetic_only": true,
+  "typecheck_build": "tsc -b && vite build: passed",
+  "frontend": {
+    "Manaus_format_and_date_tests": 37,
+    "UTC_date_tests": 25,
+    "Sao_Paulo_date_tests": 25
+  },
+  "backend": {
+    "Manaus_print_and_financial_regressions": 30,
+    "UTC_print_tests": 14,
+    "Sao_Paulo_print_tests": 14
+  },
+  "browser_comparison": [
+    {
+      "engine": "firefox",
+      "apiEquivalence": true,
+      "csvByteEquivalence": true,
+      "csvCount": 30,
+      "printValuesDatesStatusAndIdentifiersEquivalent": true
+    },
+    {
+      "engine": "chromium",
+      "apiEquivalence": true,
+      "csvByteEquivalence": true,
+      "csvCount": 30,
+      "printValuesDatesStatusAndIdentifiersEquivalent": true
+    }
+  ],
+  "document_states_compared": 16,
+  "page_errors": [],
+  "existing_ledger_print_e2e": "1 passed",
+  "pdfs_a4": [
+    {
+      "file": "baseline-expense.pdf",
+      "pages": 1,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 5390,
+      "large_value_present": false
+    },
+    {
+      "file": "baseline-income.pdf",
+      "pages": 1,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 5817,
+      "large_value_present": false
+    },
+    {
+      "file": "baseline-ledger.pdf",
+      "pages": 1,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 2306,
+      "large_value_present": false
+    },
+    {
+      "file": "baseline-receipt.pdf",
+      "pages": 2,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 5030,
+      "large_value_present": true
+    },
+    {
+      "file": "candidate-expense.pdf",
+      "pages": 1,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 5398,
+      "large_value_present": false
+    },
+    {
+      "file": "candidate-income.pdf",
+      "pages": 1,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 5825,
+      "large_value_present": false
+    },
+    {
+      "file": "candidate-ledger.pdf",
+      "pages": 1,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 2315,
+      "large_value_present": false
+    },
+    {
+      "file": "candidate-receipt.pdf",
+      "pages": 2,
+      "page_size": "595.92 x 842.88 pts (A4)",
+      "text_chars": 5030,
+      "large_value_present": true
+    }
+  ],
+  "report_print_preexisting": [
+    {
+      "variant": "baseline",
+      "firefox": "155.0",
+      "visible": false,
+      "text": "Fluxo de caixa mensal01/10/2026 a 16/10/2026 · 1 registrosExportar CSVImprimirAgrupamentoReceitasDespesasSaldoQuantidadeJurosMultaDesconto10/2026R$ 75,50R$ 0,00R$ 75,502R$ 0,00R$ 0,00R$ 0,001 registro1 de 1",
+      "display": "none"
+    },
+    {
+      "variant": "candidate",
+      "firefox": "155.0",
+      "visible": false,
+      "text": "Fluxo de caixa mensal01/10/2026 a 16/10/2026 · 1 registrosExportar CSVImprimirAgrupamentoReceitasDespesasSaldoQuantidadeJurosMultaDesconto10/2026R$ 75,50R$ 0,00R$ 75,502R$ 0,00R$ 0,00R$ 0,001 registro1 de 1",
+      "display": "none"
+    }
+  ],
+  "limitations": [
+    "Firefox 155.0 and Chromium through installed Brave 155.1.97.57; not a separate Google Chrome installation",
+    "Print media and Chromium A4 PDF rendering; no physical printer or real screen reader",
+    "Monthly report hidden in print media in both versions; not fixed in this scope",
+    "Fixture preparation initially rejected dates before opening balance and future payments, then required explicit synthetic company setup; no product rules changed"
+  ],
+  "preservation": {
+    "baseline": "bcab34796e4c06395686373144f01e7af20f00a8",
+    "tracked_baseline_files": 529,
+    "changed_existing_files": [
+      "backend/app/api.py",
+      "docs/silex-business/PENDENCIAS.md",
+      "frontend/src/ledger.tsx",
+      "frontend/src/sales.tsx",
+      "frontend/tests/ledger-interface.spec.ts"
+    ],
+    "unchanged_existing_files": 524,
+    "restoration_verified": true,
+    "backup_sha256": "da70ffb285ccf5be25e8e25126063ba7385e06988eac55edbd231bfceac9c217",
+    "all_other_backend_functions_ast_identical": true,
+    "api_changed_scope": "Only finance_print presentation and its local date_label; create_app encloses this function",
+    "database": "Only disposable synthetic SQLite used; persistent DB not opened or hash-audited",
+    "main_preserved": true
+  }
+}
