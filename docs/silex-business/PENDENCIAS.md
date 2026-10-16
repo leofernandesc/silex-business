@@ -13,6 +13,7 @@ Registro central a partir do SB-03. A origem detalhada permanece no [relatório 
 | P07 | Repetição de seletores e consumo parcial de tokens | Baixa | **Parcial — piloto de metadados de indicadores no SB-06D.2; demais famílias pendentes** | Outra família, sob autorização própria | Diff pequeno, tokens definidos, comparações sem regressão; sem limpeza global incidental |
 | P08 | Grupo/atalhos financeiros incoerentes com permissão do operador | Média | **Corrigida e validada no SB-03** | SB-03 | Menu e guard usam registro único; operador não vê financeiro/admin; todos os destinos restritos negados; backend responde 403 e impede mutação |
 | P09 | Controles densos e áreas de acionamento | Baixa | **Corrigida e validada nas famílias priorizadas no SB-06C** | SB-06C aprovado; preservado no SB-06E | Alvos medidos, ações compactas 36 px/44 px móvel; demais controles avaliados por 24 px/espaçamento/exceções, sem exigir 44 px universal |
+| C02 | Conteúdo extenso em Home/Visão Geral e ampliação | Média | **Corrigida no escopo validado SB-07D** | Revisão SB-07D | Sete larguras, nomes/descrições íntegros, valores completos e documento contido; em 256/187 com texto ampliado, pan local acessível dos indicadores explicitado |
 
 P03/P08: evidências e critérios em [SB-03](SB-03/RELATORIO.md) e [matriz de testes](SB-03/TESTES.md). A validação de ARIA por DOM/teclado não equivale a homologação com leitor de tela real.
 
@@ -156,3 +157,10 @@ Todos os 20 controles civis declarados e os dois mensais migraram para `SilexDat
 **P05: entrada corrigida no escopo técnico; global parcial.** CSV/impressão ISO continuam preservados e fora do escopo; não houve homologação humana, leitor de tela real ou dispositivo físico. Três locales/três fusos e Firefox/Chromium foram verificados; seleção/limpeza, parcial/inválida, controles mensais, persistência e resultados financeiros comparados. Calendário dentro de Modal preserva P01; zoom nativo Firefox 200/400 e texto ampliado verificados no recorte. Ver [inventário](SB-07C/INVENTARIO-DATAS.md), [arquitetura](SB-07C/ARQUITETURA.md) e [testes](SB-07C/TESTES.md).
 
 P07 permanece parcial. C02 fica aberta para SB-07D, sem correção incidental. V01/T01 continuam em acompanhamento: regressões de atalho/histórico e página pública executadas, sem encerramento das causas históricas. P01/P02/P03/P04/P06/P08/P09/V02/R02/C01 preservam seus limites anteriores. Não há declaração de conformidade WCAG integral, multitenancy ou prontidão comercial. Sem push, merge ou deploy.
+
+
+### SB-07D — C02
+
+**C02 corrigida nos cenários conhecidos e na matriz documentada.** A saudação da Home impunha mínimo de 269 px, produzindo documento 281 em 256/187 e 550 com texto 200%. Quebra de conteúdo e mínimos locais corrigem o caso, sem mudar nomes. A Visão Geral conserva os indicadores; em larguras adicionais, números maiores que o espaço disponível permanecem inteiros numa região rolável por Tab/setas, sem rolagem horizontal do documento ou redução de fonte. Textos/ações do banner e painéis refluem. Dez pares normais em 1440/1024/768/375/320 são idênticos; 336 estados/168 pares e zoom Firefox real 200/400 foram verificados. Isso não equivale a conformidade WCAG global.
+
+P05 permanece exatamente no estado SB-07C: entradas civis/mensais corrigidas tecnicamente; CSV/impressão ISO e homologação humana/assistiva pendentes. P07 parcial, V01/T01 em acompanhamento. Leitor real e dispositivo físico continuam pendentes. P01/P02/P03/P04/P06/P08/P09/R02/C01/V02 preservam seus limites comprovados. Os três testes antigos de sessão expirada foram reconstruídos e passaram em SQLite descartável, sem mudar autenticação. Ver [relatório SB-07D](SB-07D/RELATORIO.md), [matriz](SB-07D/MATRIZ-REFLOW.md) e [testes](SB-07D/TESTES.md).
