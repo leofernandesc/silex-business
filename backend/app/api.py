@@ -25,6 +25,7 @@ from . import reporting as R
 from . import schemas as S
 from . import services as V
 from .db import ROOT, build_engine, session_factory
+from .deployment import Deployment, HEALTH_HOST
 from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, Session, StockMovement, Subcategory, Supplier, User, now
 
 passwords = PasswordHasher()
@@ -65,16 +66,24 @@ def admin(user=Depends(current_user)):
 
 
 def create_app(engine=None, serve_frontend=True):
+    deployment = Deployment.from_env()
     app = FastAPI(title="Gestão", version="0.1.0", docs_url=None, redoc_url=None, openapi_url="/api/openapi.json")
+    if deployment.railway:
+        expected = deployment.database_url()
+        if engine is not None and str(engine.url) != expected:
+            raise RuntimeError("O banco informado difere do volume configurado.")
     app.state.engine = engine if engine is not None else build_engine()
     app.state.sessions = session_factory(app.state.engine)
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=[deployment.public_host, HEALTH_HOST] if deployment.railway else ["127.0.0.1", "localhost", "testserver"], www_redirect=False)
 
     @app.middleware("http")
     async def browser_boundary(request, call_next):
+        if deployment.railway and request.headers.get("host", "").split(":")[0] == HEALTH_HOST:
+            if request.method != "GET" or request.url.path != "/api/health":
+                return JSONResponse({"detail": "Host não permitido"}, status_code=400)
         if request.method in ("POST", "PUT", "PATCH", "DELETE"):
             origin = request.headers.get("origin")
-            allowed = {str(request.base_url).rstrip("/"), "http://127.0.0.1:5173", "http://localhost:5173"}
+            allowed = {deployment.public_origin} if deployment.railway else {str(request.base_url).rstrip("/"), "http://127.0.0.1:5173", "http://localhost:5173"}
             if (origin and origin not in allowed) or request.headers.get("sec-fetch-site") == "cross-site":
                 return JSONResponse({"detail": "Origem da solicitação não permitida"}, status_code=403)
         response = await call_next(request)
@@ -108,6 +117,21 @@ def create_app(engine=None, serve_frontend=True):
 
     @app.get("/api/health")
     def health(db=Depends(get_db, scope="function")):
+        if deployment.railway:
+            from alembic.config import Config
+            from alembic.script import ScriptDirectory
+            from alembic.runtime.migration import MigrationContext
+            try:
+                from sqlalchemy.engine import make_url
+                if not Path(make_url(deployment.database_url()).database).is_file():
+                    raise ValueError()
+                expected_heads = set(ScriptDirectory.from_config(Config(str(ROOT / "backend" / "alembic.ini"))).get_heads())
+                with app.state.engine.connect() as connection:
+                    actual_heads = set(MigrationContext.configure(connection).get_current_heads())
+                if actual_heads != expected_heads:
+                    raise ValueError()
+            except Exception:
+                return JSONResponse({"detail": "Aplicação ainda não está pronta"}, status_code=503)
         db.execute(text("SELECT 1"))
         return {"status": "ok", "version": "0.1.0"}
 
@@ -166,7 +190,7 @@ def create_app(engine=None, serve_frontend=True):
                 db.delete(previous_session)
         token = secrets.token_urlsafe(40)
         db.add(Session(token_hash=hashlib.sha256(token.encode()).hexdigest(), user_id=user.id, expires_at=now() + timedelta(hours=12)))
-        response.set_cookie(COOKIE, token, httponly=True, samesite="strict", max_age=43200, secure=False, path="/")
+        response.set_cookie(COOKIE, token, httponly=True, samesite="strict", max_age=43200, secure=deployment.railway, path="/")
         V.audit(db, user, "login", "user", user.id)
         return V.data(user)
 
@@ -178,7 +202,7 @@ def create_app(engine=None, serve_frontend=True):
     def logout(request: Request, response: Response, db=Depends(get_db, scope="function"), user=Depends(current_user)):
         session = db.get(Session, hashlib.sha256(request.cookies[COOKIE].encode()).hexdigest())
         db.delete(session)
-        response.delete_cookie(COOKIE, path="/")
+        response.delete_cookie(COOKIE, path="/", secure=deployment.railway, httponly=True, samesite="strict")
         return {"ok": True}
 
     @app.get("/api/users")

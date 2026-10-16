@@ -16,6 +16,7 @@ from sqlalchemy import func, select, text
 
 from .api import passwords
 from .db import ROOT, build_engine, session_factory
+from .deployment import Deployment
 from .models import Account, Customer, FinanceEntry, Product, Sale, User
 from .schemas import Finalize, ItemInput, SaleInput
 from .services import active_cash, create_sale, default_records, finalize_sale, move_stock, today
@@ -45,6 +46,8 @@ def create_admin():
 
 
 def seed():
+    if Deployment.from_env().railway:
+        raise SystemExit("seed-demo não é permitido na instância pública Railway.")
     from .models import CashSession, Category
     with session_factory(build_engine())() as db:
         db.execute(text("BEGIN IMMEDIATE"))
