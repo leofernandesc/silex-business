@@ -6,21 +6,31 @@
 
 Um serviço: frontend React compilado servido pelo FastAPI junto da API, um processo Uvicorn, SQLite local ao serviço e anexos BLOB no mesmo banco. Login/perfis/regras do ERP existentes. Acesso pela URL HTTPS Railway com credenciais individuais; somente dados fictícios. Sem PostgreSQL, VPN, serviços auxiliares ou recursos multiempresa. Nenhum código financeiro, frontend operacional, CSV ou impressão foi alterado nesta preparação.
 
-## 2. Recursos a criar manualmente
+## 2. Recursos e configuração manual no painel
 
-Após autorização: um projeto/serviço vazio, uma réplica numa região e um volume de Trial montado em `/data`. Configurar volume/variáveis antes de iniciar a aplicação. Não conectar uma origem com deploy automático nem ativar PR environments; fornecer o código aprovado por um envio manual autorizado. Não criar banco gerenciado, cartão, plano pago ou mais serviços.
+Após autorização, criar um projeto e um único serviço, configurar uma réplica numa região e anexar um volume de Trial montado em `/data`. Nenhum recurso será criado por arquivo de configuração versionado: a Railway marcou Config as Code como depreciado e não permite novos serviços nesse formato ([documentação Config as Code](https://docs.railway.com/config-as-code)). Portanto, preencher e conferir cada opção abaixo no painel do serviço antes do primeiro deploy.
+
+- **Build:** escolher o builder Dockerfile, manter a raiz do repositório como root directory e usar o arquivo `Dockerfile` da raiz. A Railway detecta esse nome/caminho padrão ([Dockerfiles](https://docs.railway.com/builds/dockerfiles)).
+- **Start:** deixar o comando da imagem, `python -m app.start`, sem override.
+- **Pre-deploy:** nenhum comando.
+- **Healthcheck:** path `/api/health`, timeout inicial de 120 segundos.
+- **Restart:** selecionar `On Failure`. Usar limite de 3 tentativas se o painel permitir; o Trial pode impor o limite da plataforma (a documentação atual indica até 10 reinícios nessa política), então conferir e registrar o valor efetivo ([política de reinício](https://docs.railway.com/deployments/restart-policy)).
+- **Réplicas:** uma única réplica.
+- **Volume:** montar o diretório persistente em `/data`.
+
+Registrar uma conferência dessas opções no painel antes de iniciar o primeiro deploy; nenhum deploy ou acesso à conta faz parte desta preparação. Configurar volume/variáveis antes de iniciar a aplicação. Não conectar uma origem com deploy automático nem ativar PR environments; fornecer o código aprovado por um envio manual autorizado. Não criar banco gerenciado, cartão, plano pago ou mais serviços.
 
 Confirmar no painel o crédito/prazo restantes, disponibilidade de SSH, CPU/RAM e volume. A documentação pública pode divergir dos limites efetivos da conta. Manter o limite de **0,5 GB de RAM observado pelo proprietário** até comprovação explícita no painel; não aumentá-lo automaticamente. Uma réplica é obrigatória; o lock do volume também impede dois processos de aplicação simultâneos.
 
 ## 3. Build
 
-Raiz do repositório, `Dockerfile` detectado ou builder `DOCKERFILE` em `railway.toml`. Duas etapas: Node 22 instala `npm ci` pelo lockfile e executa `npm run build` (TypeScript + Vite); Python 3.12 instala as versões já fixadas em `backend/requirements.txt`. Bases oficiais fixadas por digest; runtime recebe somente backend/migrações e frontend compilado, sem Node/node_modules.
+No painel do serviço, selecionar o builder Dockerfile e manter o root directory na raiz do repositório; o arquivo padrão `Dockerfile` será detectado. O projeto não depende de `railway.toml` nem de outra configuração Config as Code. Duas etapas: Node 22 instala `npm ci` pelo lockfile e executa `npm run build` (TypeScript + Vite); Python 3.12 instala as versões já fixadas em `backend/requirements.txt`. Bases oficiais fixadas por digest; runtime recebe somente backend/migrações e frontend compilado, sem Node/node_modules. Consulte também a documentação do [comando de start](https://docs.railway.com/deployments/start-command).
 
 Não definir build command adicional. Não usar `make setup` na Railway: ele inclui migração. `.dockerignore` e os COPY explícitos excluem Git, dados, dependências do computador, backups e relatórios. O build não cria banco nem precisa do volume. O builder usa heap Node explícito de 320 MiB; esse ajuste não é copiado ao runtime Python. Teste local opcional com Docker já instalado: `docker build -t silex-railway-trial:test .` (não publica imagem).
 
 ## 4. Start
 
-Usar o CMD da imagem: `python -m app.start`, sem override no primeiro deploy. Não definir pre-deploy command. O entrypoint verifica configuração, volume real gravável, PORT e frontend; adquire lock, aplica Alembic, recusa contas demo e substitui o processo por Uvicorn em `0.0.0.0:$PORT`, um worker. Erro interrompe o start sem apagar/recriar o banco. Lock persiste durante o servidor; reiniciar não remove dados.
+No painel, deixar o start command vazio para usar o CMD da imagem: `python -m app.start`; não definir pre-deploy command. Configurar o healthcheck `/api/health` com timeout inicial de 120 segundos, `On Failure` e uma réplica, conforme a conferência da seção 2. O entrypoint verifica configuração, volume real gravável, PORT e frontend; adquire lock, aplica Alembic, recusa contas demo e substitui o processo por Uvicorn em `0.0.0.0:$PORT`, um worker. Erro interrompe o start sem apagar/recriar o banco. Lock persiste durante o servidor; reiniciar não remove dados.
 
 ## 5. Volume
 
