@@ -1,0 +1,25 @@
+{
+  "baseline_commit": "0ba57307a301328141bce907a0e57ca0f7f5c3dd",
+  "tracked_baseline_files": 544,
+  "unchanged_baseline_files": 541,
+  "changed_baseline_files": [
+    "docs/silex-business/PENDENCIAS.md",
+    "frontend/src/financePlanning.tsx",
+    "frontend/src/styles.css"
+  ],
+  "restoration_verified": true,
+  "backend_and_dependencies_unchanged": true,
+  "persistent_database_opened": false,
+  "files": {
+    "frontend/src/styles.css": {
+      "baseline_sha256": "c3fa7bb6e93d061e3db0798f1d7d5e07dcc80781e461afefdc56879bd1fe740b",
+      "candidate_sha256": "37e893bcd1581afd090cb5f2eb97e6b913c61aacb371bf82546b27b4dc2ef0da",
+      "restored_baseline_sha256": "c3fa7bb6e93d061e3db0798f1d7d5e07dcc80781e461afefdc56879bd1fe740b"
+    },
+    "frontend/src/financePlanning.tsx": {
+      "baseline_sha256": "7457af5632d303837e46181b931ca057bbbe67c1428d13f781c0e2d68e1e1658",
+      "candidate_sha256": "19436eec6ee7e39b1ce87c0c807173c72500baf69b1696962c7eddb9751c0ffe",
+      "restored_baseline_sha256": "7457af5632d303837e46181b931ca057bbbe67c1428d13f781c0e2d68e1e1658"
+    }
+  }
+}
