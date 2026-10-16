@@ -16,7 +16,9 @@ for(const percent of [200,400]){
  await t.focus();await t.scrollIntoViewIfNeeded();row.nativeGeometry=await t.evaluate(e=>{const r=e.getBoundingClientRect();return{rect:r.toJSON(),dpr:devicePixelRatio,innerX:window.mozInnerScreenX,innerY:window.mozInnerScreenY}});const g=row.nativeGeometry;
  await p.evaluate(()=>window.__pointerEvents=[]);
  key('click',Math.round((g.innerX+g.rect.x+g.rect.width/2)*g.dpr),Math.round((g.innerY+g.rect.y+g.rect.height/2)*g.dpr));
- await p.waitForFunction(()=>window.__pointerEvents.length>0);row.nativeEvents=await p.evaluate(()=>window.__pointerEvents);row.nativeOpened=await p.locator('.silex-date-popover').count()>0;await p.screenshot({path:E+'/screenshots/native-pointer-'+percent+'.png'});rows.push(row);fs.writeFileSync(E+'/pointer-diagnosis.json',JSON.stringify(rows,null,2));
+ await p.waitForFunction(()=>window.__pointerEvents.length>0);row.nativeEvents=await p.evaluate(()=>window.__pointerEvents);row.nativeOpened=await p.locator('.silex-date-popover').count()>0;
+ if(row.nativeOpened){row.calendarScroll=await p.locator('.silex-date-popover').evaluate(e=>({height:e.clientHeight,scrollHeight:e.scrollHeight,overflowY:getComputedStyle(e).overflowY}));row.keyboard=[];for(const keyName of ['Shift+Tab','Shift+Tab','Shift+Tab','Tab','Tab','Tab','Tab']){await p.keyboard.press(keyName);row.keyboard.push(await p.evaluate(()=>{const e=document.activeElement,r=e.getBoundingClientRect();return{name:e.getAttribute('aria-label')||e.textContent?.slice(0,80),role:e.getAttribute('role'),insideCalendar:!!e.closest('.silex-date-popover'),top:r.top,bottom:r.bottom,viewportHeight:innerHeight,visibleVertically:r.top>=-1&&r.bottom<=innerHeight+1}}));}}
+ await p.screenshot({path:E+'/screenshots/native-pointer-'+percent+'.png'});rows.push(row);fs.writeFileSync(E+'/pointer-diagnosis.json',JSON.stringify(rows,null,2));
  if(row.nativeOpened)await p.keyboard.press('Escape');await p.keyboard.press('Escape');
 }key('0');console.log('Pointer diagnosis recorded');
 }finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});
