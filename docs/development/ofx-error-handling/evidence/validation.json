@@ -1,0 +1,240 @@
+{
+  "baseline": "0377ab31dd2330655dbcc61fa6491e7f79e0fd93",
+  "synthetic_only": true,
+  "baseline_probe": [
+    {
+      "scenario": "queries",
+      "route": "/app",
+      "alerts": 0,
+      "expiredEvents": 0,
+      "unhandled": [],
+      "emptyHistory": 1
+    },
+    {
+      "scenario": "upload401",
+      "route": "/app",
+      "alerts": 1,
+      "expiredEvents": 0,
+      "unhandled": [],
+      "emptyHistory": 0
+    },
+    {
+      "scenario": "reopen404",
+      "route": "/app",
+      "alerts": 0,
+      "expiredEvents": 0,
+      "unhandled": [
+        "Extrato fictício indisponível"
+      ],
+      "emptyHistory": 0
+    },
+    {
+      "scenario": "suggestions-ignore503",
+      "route": "/app",
+      "alerts": 0,
+      "expiredEvents": 0,
+      "unhandled": [
+        "Erro controlado"
+      ],
+      "emptyHistory": 0
+    }
+  ],
+  "runs": [
+    {
+      "run": "functional-baseline",
+      "expected": 1,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "functional-candidate",
+      "expected": 1,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "errors",
+      "expected": 34,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "operations-final",
+      "expected": 13,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "firefox",
+      "expected": 2,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "navigation",
+      "expected": 3,
+      "unexpected": 1,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "navigation-baseline-fixture",
+      "expected": 0,
+      "unexpected": 1,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "navigation-baseline-fixed",
+      "expected": 1,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "run": "final-extra",
+      "expected": 2,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    }
+  ],
+  "frontend_unit_tests": 32,
+  "backend_tests": 4,
+  "typescript_and_build": true,
+  "distinct_F01_scenarios_covered": 38,
+  "financial_baseline_candidate_identical": true,
+  "financial_result": {
+    "upload": 201,
+    "initialPending": 4,
+    "requests": [
+      {
+        "entry_id": 6,
+        "principal_cents": 2200,
+        "interest_cents": 100,
+        "fine_cents": 50,
+        "discount_cents": 100
+      },
+      {
+        "create_title": true,
+        "category_id": 3,
+        "subcategory_id": 3,
+        "customer_id": null
+      },
+      {
+        "create_title": true,
+        "category_id": 2,
+        "subcategory_id": 2,
+        "supplier_id": null
+      },
+      {
+        "ignore": true,
+        "reason": "Movimento fictício ignorado"
+      }
+    ],
+    "resolutionStatuses": [
+      [
+        "matched",
+        "pending",
+        "pending",
+        "pending"
+      ],
+      [
+        "matched",
+        "posted",
+        "pending",
+        "pending"
+      ],
+      [
+        "matched",
+        "posted",
+        "posted",
+        "pending"
+      ],
+      [
+        "matched",
+        "posted",
+        "posted",
+        "ignored"
+      ]
+    ],
+    "date": "2026-10-16",
+    "final": {
+      "status": "complete",
+      "pending": 0,
+      "amounts": [
+        -2250,
+        1234,
+        -350,
+        -1
+      ],
+      "dates": [
+        "2026-10-16",
+        "2026-10-16",
+        "2026-10-16",
+        "2026-10-16"
+      ]
+    },
+    "balanceDelta": -1366,
+    "title": {
+      "status": "paid",
+      "amount_cents": 2200,
+      "remaining_cents": 0
+    },
+    "replayStatus": 200,
+    "duplicate": {
+      "duplicates": 4,
+      "pending": 0,
+      "states": [
+        "duplicate",
+        "duplicate",
+        "duplicate",
+        "duplicate"
+      ]
+    },
+    "duplicateRejected": 409
+  },
+  "fixture_issue": "Historical login test expected Empresa Privada de Teste. Missing fixture reproduced on both versions; passed on both after preparing it, with no product or assertion changes.",
+  "protection": {
+    "baseline_tracked_files": 558,
+    "unchanged_baseline_files_before_docs": 555,
+    "dashboard_reports_budget_source_sha256": "188b0130b6140caf23313cf8894e645113247b4da14a6abfd146bcbb3bb5a8ae",
+    "backend_css_dates_navigation_ui_dependencies_unchanged": true,
+    "restoration_verified": true,
+    "archive_sha256": "26a01571126dbef10b9587ca5cba6357e3c7cea8f4a19ed1615616fa50a40bf8",
+    "files": {
+      "frontend/src/api.test.ts": {
+        "baseline": "19a7f253a693282f4c5e45c25c884473a704bd9e7fe9a66e5b405bb46112dcd1",
+        "candidate": "5328b82557a575e20e5130b98f50864447197b4cded2c3d56fd6f367a1452ef7",
+        "restored": "19a7f253a693282f4c5e45c25c884473a704bd9e7fe9a66e5b405bb46112dcd1"
+      },
+      "frontend/src/api.ts": {
+        "baseline": "4a000aa05a7b272c864750b5fb913465887c9d0c0710947d717a4942a78e7eaf",
+        "candidate": "6474ba2d21801dd0b72bfa0b7398f4f9f761e74d0db363f3a68e75158dc88c65",
+        "restored": "4a000aa05a7b272c864750b5fb913465887c9d0c0710947d717a4942a78e7eaf"
+      },
+      "frontend/src/financePlanning.tsx": {
+        "baseline": "19436eec6ee7e39b1ce87c0c807173c72500baf69b1696962c7eddb9751c0ffe",
+        "candidate": "d29a8c4e7e9f901be13333ebbe63b8b996a61428c7af4716db356ca861d4d604",
+        "restored": "19436eec6ee7e39b1ce87c0c807173c72500baf69b1696962c7eddb9751c0ffe"
+      },
+      "docs/silex-business/PENDENCIAS.md": {
+        "baseline": "ad263cc8312f30588152f57a16a17df939e626ff119ffc369cac3c37e4f53639",
+        "candidate": "36764350e13b71d2324bf2bbf7528e8c97e1f0f615f1f906d9f1dd18e25746c3",
+        "restored": "ad263cc8312f30588152f57a16a17df939e626ff119ffc369cac3c37e4f53639"
+      }
+    },
+    "final_modified_baseline_files": [
+      "docs/silex-business/PENDENCIAS.md",
+      "frontend/src/api.test.ts",
+      "frontend/src/api.ts",
+      "frontend/src/financePlanning.tsx"
+    ],
+    "final_unchanged_baseline_files": 554
+  }
+}

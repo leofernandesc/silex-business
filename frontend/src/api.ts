@@ -12,12 +12,19 @@ export async function api<T>(
   method = "GET",
   body?: unknown,
 ): Promise<T> {
-  const generation = sessionGeneration;
-  const response = await fetch("/api" + path, {
+  return apiRequest<T>(path, {
     method,
-    credentials: "same-origin",
     headers: body ? { "Content-Type": "application/json" } : {},
     body: body ? JSON.stringify(body) : undefined,
+  });
+}
+
+/** JSON responses with the existing session guard, also for binary request bodies. */
+export async function apiRequest<T>(path: string, init: RequestInit): Promise<T> {
+  const generation = sessionGeneration;
+  const response = await fetch("/api" + path, {
+    ...init,
+    credentials: "same-origin",
   });
   if (!response.ok) {
     let message = "Não foi possível concluir a operação";
