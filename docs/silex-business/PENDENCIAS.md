@@ -197,4 +197,8 @@ P07 permanece parcial; V01/T01 em acompanhamento. As demais correções mantêm 
 
 32 unitários, quatro backend existentes, 38 cenários F01 distintos em Chromium, comparação financeira baseline/candidata e regressões dirigidas de Firefox/navegação. Uma falha inicial de fixture de login foi reproduzida no baseline e passou nas duas versões após preparar a empresa fictícia exigida pelo teste, sem alterar asserções/produto. Payloads, FITIDs, duplicidade, datas e resultados financeiros preservados. Sem mudanças em backend, CSS, Dashboard, relatórios, impressão ou CSV. [Relatório, reprodução e evidências](../development/ofx-error-handling/README.md).
 
-F02 permanece pendente; P05 parcial; P07 dívida técnica controlada; V01/T01 em acompanhamento; IMP01 corrigida e integrada. Leitor de tela real e dispositivos físicos continuam sem homologação. Não se declara prontidão comercial.
+### F02 — disponibilidade dos dados no Dashboard Financeiro
+
+**Corrigida e validada tecnicamente neste incremento.** Carregamento, erro e sucesso são estados distintos: indicadores não apresentam valores antigos ou zeros artificiais enquanto a consulta está pendente ou falha; gráficos, classificações e contas também não simulam resultados vazios. Zeros retornados por consulta bem-sucedida continuam visíveis. Fórmulas, filtros, payloads e API foram preservados. Evidência e limites em [relatório F02](../development/finance-dashboard-error-state/README.md).
+
+P05 permanece parcial; P07 é dívida técnica controlada; V01/T01 seguem em acompanhamento; IMP01 e F01 permanecem corrigidas e integradas. Leitor de tela real e dispositivos físicos continuam sem homologação. Não se declara prontidão comercial.
