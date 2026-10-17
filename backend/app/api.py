@@ -26,7 +26,7 @@ from . import schemas as S
 from . import services as V
 from .db import ROOT, build_engine, session_factory
 from .deployment import Deployment, HEALTH_HOST
-from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, Session, StockMovement, Subcategory, Supplier, User, now
+from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, CustomerServiceDetails, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, Session, StockMovement, Subcategory, Supplier, User, now
 
 passwords = PasswordHasher()
 COOKIE = "gestao_session"
@@ -261,24 +261,67 @@ def create_app(engine=None, serve_frontend=True):
 
     @app.get("/api/customers")
     def customers(q: str = "", active: bool | None = None, search_field: str = "all", page: int = PAGE, page_size: int = SIZE, db=Depends(get_db, scope="function"), user=Depends(current_user)):
-        return V.page(db, customer_query(q, active, search_field), page, page_size)
+        result = V.page(db, customer_query(q, active, search_field), page, page_size)
+        customer_details_data(db, result["items"], user)
+        return result
+
+    def customer_details_allowed(user):
+        # Use the identity resolved from the authenticated session, never input data.
+        return user.username == "sammya.admin" and user.role == "admin"
+
+    def customer_values(payload, user):
+        if "service_details" in payload.model_fields_set and not customer_details_allowed(user):
+            V.fail("Dados do serviço indisponíveis para esta conta", 403)
+        return payload.model_dump(exclude={"service_details"})
+
+    def save_customer_details(db, row, payload, user):
+        if payload.service_details is None:
+            return
+        details = db.scalar(select(CustomerServiceDetails).where(
+            CustomerServiceDetails.customer_id == row.id, CustomerServiceDetails.user_id == user.id))
+        if details is None:
+            details = CustomerServiceDetails(customer_id=row.id, user_id=user.id)
+            db.add(details)
+        for key, value in payload.service_details.model_dump(exclude_unset=True).items():
+            setattr(details, key, value)
+        db.flush()
+
+    def customer_details_data(db, items, user):
+        if customer_details_allowed(user) and items:
+            details = {d.customer_id: d for d in db.scalars(select(CustomerServiceDetails).where(
+                CustomerServiceDetails.user_id == user.id,
+                CustomerServiceDetails.customer_id.in_([r["id"] for r in items])))}
+            for item in items:
+                row = details.get(item["id"])
+                item["service_details"] = {
+                    "start_address": row.start_address if row else "",
+                    "end_address": row.end_address if row else "",
+                    "service_type": row.service_type if row else None,
+                }
 
     @app.post("/api/customers", status_code=201)
     def create_customer(payload: S.CustomerInput, db=Depends(get_db, scope="function"), user=Depends(current_user)):
-        row = Customer(**payload.model_dump())
+        row = Customer(**customer_values(payload, user))
         db.add(row)
         db.flush()
+        save_customer_details(db, row, payload, user)
         V.audit(db, user, "create", "customer", row.id)
-        return V.data(row)
+        result = V.data(row)
+        customer_details_data(db, [result], user)
+        return result
 
     @app.put("/api/customers/{identifier}")
     def edit_customer(identifier: int, payload: S.CustomerInput, db=Depends(get_db, scope="function"), user=Depends(current_user)):
+        values = customer_values(payload, user)
         row = V.get(db, Customer, identifier)
-        for field, value in payload.model_dump().items():
+        for field, value in values.items():
             setattr(row, field, value)
         db.flush()
+        save_customer_details(db, row, payload, user)
         V.audit(db, user, "update", "customer", row.id)
-        return V.data(row)
+        result = V.data(row)
+        customer_details_data(db, [result], user)
+        return result
 
     @app.get("/api/products")
     def products(q: str = "", active: bool | None = None, kind: str | None = None, group_name: str = "", page: int = PAGE, page_size: int = SIZE, db=Depends(get_db, scope="function"), user=Depends(current_user)):

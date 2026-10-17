@@ -255,7 +255,7 @@ export default function App() {
           {safePage === "dashboard" && (
             <DashboardPage user={user} navigate={navigate} />
           )}{" "}
-          {safePage === "customers" && <Customers />}{" "}
+          {safePage === "customers" && <Customers user={user} />}{" "}
           {safePage === "products" && <Products user={user} />}{" "}
           {safePage === "stock" && <StockPage />}{" "}
           {safePage === "cash" && <CashPage />}{" "}

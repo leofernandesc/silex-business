@@ -14,6 +14,11 @@ export type CompanySettings = {
   email: string;
   address: string;
 };
+export type CustomerServiceDetails = {
+  start_address: string;
+  end_address: string;
+  service_type: "local" | "interstate" | null;
+};
 export type Customer = {
   id: number;
   name: string;
@@ -30,6 +35,7 @@ export type Customer = {
   city: string;
   state: string;
   active: boolean;
+  service_details?: CustomerServiceDetails;
 };
 export type Product = {
   id: number;
