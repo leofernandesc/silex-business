@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { api, exportCsv, query } from "./api";
 import { money, quantity, parseDecimal, decimalInput } from "./format";
-import type { Customer, Product, Page, User } from "./types";
+import type { Customer, CustomerServiceDetails, Product, Page, User } from "./types";
 import {
   useLoad,
   PageTitle,
@@ -19,7 +19,17 @@ import {
   Badge,
 } from "./ui";
 
-export function Customers() {
+function CustomerContact({ customer }: { customer: Customer }) {
+  const location = [customer.city, customer.state].filter(Boolean).join(" / ");
+  return <>
+    {customer.contact_name || location || "—"}
+    {customer.contact_name && location && <small>{location}</small>}
+    {(customer.phone || customer.email) && <small>{[customer.phone, customer.email].filter(Boolean).join(" · ")}</small>}
+  </>;
+}
+
+export function Customers({ user }: { user: User }) {
+  const serviceDetailsEnabled = user.username === "sammya.admin" && user.role === "admin";
   const [q, setQ] = useState(""),
     [searchField, setSearchField] = useState("all"),
     [active, setActive] = useState("true"),
@@ -84,8 +94,7 @@ export function Customers() {
               </td>
               <td>{row.document || "—"}</td>
               <td>
-                {row.contact_name || row.phone || "—"}
-                <small>{[row.phone, row.email].filter(Boolean).join(" · ")}</small>
+                <CustomerContact customer={row} />
               </td>
               <td>
                 <Badge status={row.active ? "active" : "inactive"} />
@@ -107,6 +116,7 @@ export function Customers() {
       {editing !== undefined && (
         <CustomerForm
           customer={editing}
+          serviceDetailsEnabled={serviceDetailsEnabled}
           close={() => setEditing(undefined)}
           done={() => {
             setEditing(undefined);
@@ -119,10 +129,12 @@ export function Customers() {
 }
 function CustomerForm({
   customer,
+  serviceDetailsEnabled,
   close,
   done,
 }: {
   customer: Customer | null;
+  serviceDetailsEnabled: boolean;
   close: () => void;
   done: () => void;
 }) {
@@ -139,7 +151,10 @@ function CustomerForm({
     [neighborhood, setNeighborhood] = useState(customer?.neighborhood || ""),
     [city, setCity] = useState(customer?.city || ""),
     [state, setState] = useState(customer?.state || ""),
-    [active, setActive] = useState(customer?.active ?? true);
+    [active, setActive] = useState(customer?.active ?? true),
+    [startAddress, setStartAddress] = useState(customer?.service_details?.start_address || ""),
+    [endAddress, setEndAddress] = useState(customer?.service_details?.end_address || ""),
+    [serviceType, setServiceType] = useState<CustomerServiceDetails["service_type"]>(customer?.service_details?.service_type ?? null);
   return (
     <Modal title={customer ? "Editar cliente" : "Novo cliente"} close={close}>
       <Form
@@ -148,7 +163,9 @@ function CustomerForm({
           await api(
             "/customers" + (customer ? "/" + customer.id : ""),
             customer ? "PUT" : "POST",
-            { name, document: document || null, email, phone, contact_name: contactName, address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state, active },
+            { name, document: document || null, email, phone, contact_name: contactName, address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state, active,
+              ...(serviceDetailsEnabled ? { service_details: { start_address: startAddress, end_address: endAddress, service_type: serviceType } } : {}),
+            },
           );
           done();
         }}
@@ -226,6 +243,24 @@ function CustomerForm({
             Cliente ativo
           </label>
         </div>
+        {serviceDetailsEnabled && <section aria-label="Dados do serviço">
+          <h3>Dados do serviço</h3>
+          <div className="form-grid">
+            <Field label="Endereço inicial" span>
+              <textarea maxLength={2000} value={startAddress} onChange={(e) => setStartAddress(e.target.value)} />
+            </Field>
+            <Field label="Endereço final" span>
+              <textarea maxLength={2000} value={endAddress} onChange={(e) => setEndAddress(e.target.value)} />
+            </Field>
+            <Field label="Tipo de serviço">
+              <select value={serviceType ?? ""} onChange={(e) => setServiceType((e.target.value || null) as CustomerServiceDetails["service_type"])}>
+                <option value="">Não informado</option>
+                <option value="local">Local</option>
+                <option value="interstate">Interestadual</option>
+              </select>
+            </Field>
+          </div>
+        </section>}
       </Form>
     </Modal>
   );

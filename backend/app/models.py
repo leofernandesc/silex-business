@@ -66,6 +66,21 @@ class Customer(Base):
     active: Mapped[bool] = mapped_column(Boolean, default=True)
 
 
+class CustomerServiceDetails(Base):
+    """Account-specific metadata; never part of generic customer serialization."""
+    __tablename__ = "customer_service_details"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    customer_id: Mapped[int] = mapped_column(ForeignKey("customers.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    start_address: Mapped[str] = mapped_column(String(2000), default="")
+    end_address: Mapped[str] = mapped_column(String(2000), default="")
+    service_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    __table_args__ = (
+        UniqueConstraint("customer_id", "user_id"),
+        CheckConstraint("service_type IS NULL OR service_type IN ('local', 'interstate')"),
+    )
+
+
 class Product(Base):
     __tablename__ = "products"
     id: Mapped[int] = mapped_column(primary_key=True)

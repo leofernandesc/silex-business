@@ -243,7 +243,7 @@ print(json.dumps(result))"""
             assert failed.returncode != 0
             preservation = "import sqlite3; c=sqlite3.connect('file:/data/gestao.sqlite3?mode=ro',uri=True); assert c.execute('SELECT amount_cents FROM finance_entries').fetchone()==(123456789,); assert c.execute('SELECT COUNT(*) FROM users').fetchone()==(2,)"
             command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", IMAGE, "-c", preservation)
-            known_demo = "import sqlite3; c=sqlite3.connect('/data/gestao.sqlite3'); c.execute(\"UPDATE alembic_version SET version_num='0010'\"); c.execute(\"UPDATE users SET username='demo.admin' WHERE username='pilot.admin'\"); c.commit()"
+            known_demo = f"import sqlite3; c=sqlite3.connect('/data/gestao.sqlite3'); c.execute('UPDATE alembic_version SET version_num=?', ({before['revision'][0][0]!r},)); c.execute(\"UPDATE users SET username='demo.admin' WHERE username='pilot.admin'\"); c.commit()"
             command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", IMAGE, "-c", known_demo)
             demo = command("docker", "run", "--rm", "--network", "none", *mount, *env, IMAGE, check=False)
             assert demo.returncode != 0 and "Banco com contas demo" in demo.stderr

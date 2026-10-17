@@ -57,6 +57,13 @@ class CompanySettingsInput(Input):
         return value.lower()
 
 
+class CustomerServiceInput(Input):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=False)
+    start_address: Annotated[str, Field(max_length=2000)] = ""
+    end_address: Annotated[str, Field(max_length=2000)] = ""
+    service_type: Literal["local", "interstate"] | None = None
+
+
 class CustomerInput(Input):
     name: Annotated[str, Field(min_length=1, max_length=150)]
     document: Annotated[str | None, Field(max_length=20)] = None
@@ -72,6 +79,9 @@ class CustomerInput(Input):
     city: Annotated[str, Field(max_length=100)] = ""
     state: Annotated[str, Field(max_length=2)] = ""
     active: bool = True
+
+    # Omitted/null preserves metadata; clearing uses explicit empty fields.
+    service_details: CustomerServiceInput | None = None
 
     @field_validator("document")
     @classmethod
