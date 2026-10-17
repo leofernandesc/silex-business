@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { Pencil } from "lucide-react";
 import { api, exportCsv, query } from "./api";
 import { money, quantity, parseDecimal, decimalInput } from "./format";
-import type { Customer, CustomerServiceDetails, Product, Page, User } from "./types";
+import type { Customer, CustomerAddress, CustomerServiceDetails, Product, Page, User } from "./types";
+import { customerAddressFields, emptyCustomerAddress, hasCustomerAddress, customerAddressSummary, previousCollectionAddress } from "./customerAddresses";
 import {
   useLoad,
   PageTitle,
@@ -19,8 +20,8 @@ import {
   Badge,
 } from "./ui";
 
-function CustomerContact({ customer }: { customer: Customer }) {
-  const location = [customer.city, customer.state].filter(Boolean).join(" / ");
+function CustomerContact({ customer, showLocation = true }: { customer: Customer; showLocation?: boolean }) {
+  const location = showLocation ? [customer.city, customer.state].filter(Boolean).join(" / ") : "";
   return <>
     {customer.contact_name || location || "—"}
     {customer.contact_name && location && <small>{location}</small>}
@@ -29,7 +30,7 @@ function CustomerContact({ customer }: { customer: Customer }) {
 }
 
 export function Customers({ user }: { user: User }) {
-  const serviceDetailsEnabled = user.username === "sammya.admin" && user.role === "admin";
+  const serviceDetailsEnabled = user.active && user.username === "sammya.admin" && user.role === "admin";
   const [q, setQ] = useState(""),
     [searchField, setSearchField] = useState("all"),
     [active, setActive] = useState("true"),
@@ -78,7 +79,7 @@ export function Customers({ user }: { user: User }) {
             "Código",
             "Nome",
             "Documento",
-            "Contato / cidade",
+            serviceDetailsEnabled ? "Contato" : "Contato / cidade",
             "Situação",
             "Ações",
           ]}
@@ -90,11 +91,14 @@ export function Customers({ user }: { user: User }) {
               <td className="muted">#{row.id}</td>
               <td>
                 <strong>{row.name}</strong>
-                <small>{[row.street, row.address_number, row.neighborhood, row.city, row.state].filter(Boolean).join(", ") || row.address || "Endereço não informado"}</small>
+                {serviceDetailsEnabled ? <>
+                  <small>Coleta: {row.service_details?.collection_address && customerAddressSummary(row.service_details.collection_address) || "Não informada"}</small>
+                  <small>Entrega: {row.service_details?.delivery_address && customerAddressSummary(row.service_details.delivery_address) || "Não informada"}</small>
+                </> : <small>{[row.street, row.address_number, row.neighborhood, row.city, row.state].filter(Boolean).join(", ") || row.address || "Endereço não informado"}</small>}
               </td>
               <td>{row.document || "—"}</td>
               <td>
-                <CustomerContact customer={row} />
+                <CustomerContact customer={row} showLocation={!serviceDetailsEnabled} />
               </td>
               <td>
                 <Badge status={row.active ? "active" : "inactive"} />
@@ -152,8 +156,8 @@ function CustomerForm({
     [city, setCity] = useState(customer?.city || ""),
     [state, setState] = useState(customer?.state || ""),
     [active, setActive] = useState(customer?.active ?? true),
-    [startAddress, setStartAddress] = useState(customer?.service_details?.start_address || ""),
-    [endAddress, setEndAddress] = useState(customer?.service_details?.end_address || ""),
+    [collectionAddress, setCollectionAddress] = useState<CustomerAddress>(() => customer?.service_details?.collection_address ?? emptyCustomerAddress()),
+    [deliveryAddress, setDeliveryAddress] = useState<CustomerAddress>(() => customer?.service_details?.delivery_address ?? emptyCustomerAddress()),
     [serviceType, setServiceType] = useState<CustomerServiceDetails["service_type"]>(customer?.service_details?.service_type ?? null);
   return (
     <Modal title={customer ? "Editar cliente" : "Novo cliente"} close={close}>
@@ -163,13 +167,16 @@ function CustomerForm({
           await api(
             "/customers" + (customer ? "/" + customer.id : ""),
             customer ? "PUT" : "POST",
-            { name, document: document || null, email, phone, contact_name: contactName, address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state, active,
-              ...(serviceDetailsEnabled ? { service_details: { start_address: startAddress, end_address: endAddress, service_type: serviceType } } : {}),
+            { name, document: document || null, email, phone, contact_name: contactName, active,
+              ...(serviceDetailsEnabled
+                ? { service_details: { collection_address: collectionAddress, delivery_address: deliveryAddress, service_type: serviceType } }
+                : { address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state }),
             },
           );
           done();
         }}
       >
+        {serviceDetailsEnabled && <h3>Informações do cliente</h3>}
         <div className="form-grid">
           <Field label="Nome *" span>
             <input
@@ -205,6 +212,11 @@ function CustomerForm({
               onChange={(e) => setEmail(e.target.value)}
             />
           </Field>
+          {serviceDetailsEnabled && <label className="check">
+            <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} />
+            Cliente ativo
+          </label>}
+          {!serviceDetailsEnabled && <>
           {customer?.address && !customer.street && <Notice tone="info">Endereço existente: {customer.address}. Ele será preservado até você substituí-lo pelos campos separados.</Notice>}
           <Field label="CEP">
             <input maxLength={9} value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
@@ -242,16 +254,14 @@ function CustomerForm({
             />
             Cliente ativo
           </label>
+          </>}
         </div>
-        {serviceDetailsEnabled && <section aria-label="Dados do serviço">
-          <h3>Dados do serviço</h3>
-          <div className="form-grid">
-            <Field label="Endereço inicial" span>
-              <textarea maxLength={2000} value={startAddress} onChange={(e) => setStartAddress(e.target.value)} />
-            </Field>
-            <Field label="Endereço final" span>
-              <textarea maxLength={2000} value={endAddress} onChange={(e) => setEndAddress(e.target.value)} />
-            </Field>
+        {serviceDetailsEnabled && <>
+          <CustomerAddressEditor kind="coleta" value={collectionAddress} onChange={setCollectionAddress} previousText={customer?.service_details?.start_address}>
+            {customer && <PreviousCollectionAddress customer={customer} value={collectionAddress} onCopy={setCollectionAddress} />}
+          </CustomerAddressEditor>
+          <CustomerAddressEditor kind="entrega" value={deliveryAddress} onChange={setDeliveryAddress} previousText={customer?.service_details?.end_address} />
+          <div className="customer-service-type">
             <Field label="Tipo de serviço">
               <select value={serviceType ?? ""} onChange={(e) => setServiceType((e.target.value || null) as CustomerServiceDetails["service_type"])}>
                 <option value="">Não informado</option>
@@ -260,10 +270,65 @@ function CustomerForm({
               </select>
             </Field>
           </div>
-        </section>}
+        </>}
       </Form>
     </Modal>
   );
+}
+
+function CustomerAddressEditor({ kind, value, onChange, previousText, children }: {
+  kind: "coleta" | "entrega";
+  value: CustomerAddress;
+  onChange: (address: CustomerAddress) => void;
+  previousText?: string;
+  children?: ReactNode;
+}) {
+  return <fieldset className="customer-address-group">
+    <legend>Endereço de {kind}</legend>
+    <div className="form-grid">
+      {customerAddressFields.map(([key, label, maxLength]) => <Field key={key} label={`${label} da ${kind}`} span={key === "street"}>
+        <input maxLength={maxLength} value={value[key]} onChange={(e) => onChange({ ...value, [key]: key === "state" ? e.target.value.toUpperCase() : e.target.value })} />
+      </Field>)}
+    </div>
+    {previousText && <details className="customer-address-history">
+      <summary>Consultar texto anterior da {kind}</summary>
+      <p>{previousText}</p>
+      <p>Texto preservado. Confira e transcreva os dados nos campos acima. Salvar não altera esta anotação.</p>
+    </details>}
+    {children}
+  </fieldset>;
+}
+
+function PreviousCollectionAddress({ customer, value, onCopy }: {
+  customer: Customer;
+  value: CustomerAddress;
+  onCopy: (address: CustomerAddress) => void;
+}) {
+  const [confirming, setConfirming] = useState(false), [open, setOpen] = useState(false);
+  const opener = useRef<HTMLButtonElement>(null);
+  const original = customerAddressFields.some(([key]) => customer[key].trim()) || customer.address.trim();
+  if (!original) return null;
+  const candidate = previousCollectionAddress(customer);
+  return <details className="customer-address-history" open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+    <summary>Conferir cadastro anterior para coleta</summary>
+    <p>O endereço cadastral anterior está preservado. Aproveite-o somente se corresponder à coleta.</p>
+    <p>{customerAddressSummary(customer)}{customer.address && `\nTexto cadastral anterior: ${customer.address}`}</p>
+    {!hasCustomerAddress(value) && (candidate ? <>
+      <button ref={opener} type="button" onClick={() => setConfirming(true)}>Usar endereço anterior na coleta</button>
+      {confirming && <>
+        <Notice tone="info">{candidate.textOnly
+          ? "O cadastro anterior só possui texto livre. Confirma copiá-lo integralmente para Logradouro da coleta? Revise e distribua os dados nos campos antes de salvar."
+          : "Confirma copiar os campos estruturados do cadastro anterior para a coleta? O cadastro anterior continuará preservado; confira os dados antes de salvar."}</Notice>
+        <div className="actions">
+          <button type="button" onClick={(e) => {
+            const firstField = e.currentTarget.closest("fieldset")?.querySelector<HTMLInputElement>("input");
+            onCopy(candidate.address); setConfirming(false); setOpen(false); firstField?.focus();
+          }}>Confirmar cópia para coleta</button>
+          <button type="button" onClick={() => { setConfirming(false); opener.current?.focus(); }}>Cancelar cópia</button>
+        </div>
+      </>}
+    </> : <Notice tone="info">O texto anterior excede o limite de 180 caracteres do logradouro. Consulte-o e preencha os campos manualmente; nenhum trecho será descartado ou convertido automaticamente.</Notice>)}
+  </details>;
 }
 export function Products({ user }: { user: User }) {
   const [q, setQ] = useState(""),

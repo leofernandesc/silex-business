@@ -57,11 +57,24 @@ class CompanySettingsInput(Input):
         return value.lower()
 
 
+class CustomerAddressInput(Input):
+    # Same optional fields and limits as the existing customer address.
+    postal_code: Annotated[str, Field(max_length=9)] = ""
+    street: Annotated[str, Field(max_length=180)] = ""
+    address_number: Annotated[str, Field(max_length=30)] = ""
+    complement: Annotated[str, Field(max_length=100)] = ""
+    neighborhood: Annotated[str, Field(max_length=100)] = ""
+    city: Annotated[str, Field(max_length=100)] = ""
+    state: Annotated[str, Field(max_length=2)] = ""
+
+
 class CustomerServiceInput(Input):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=False)
     start_address: Annotated[str, Field(max_length=2000)] = ""
     end_address: Annotated[str, Field(max_length=2000)] = ""
     service_type: Literal["local", "interstate"] | None = None
+    collection_address: CustomerAddressInput | None = None
+    delivery_address: CustomerAddressInput | None = None
 
 
 class CustomerInput(Input):

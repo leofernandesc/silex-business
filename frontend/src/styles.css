@@ -2665,6 +2665,27 @@ textarea:focus {
   background: rgb(16 45 92 / 42%);
 }
 
+.silex-customers-page .customer-address-group,
+.silex-customers-page .customer-service-type {
+  margin-top: 20px;
+}
+.silex-customers-page .customer-address-group > legend {
+  padding-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.silex-customers-page .customer-address-history {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.silex-customers-page .customer-address-history summary {
+  cursor: pointer;
+  min-height: 24px;
+}
+.silex-customers-page .customer-address-history p {
+  white-space: pre-wrap;
+}
+
 @media (max-width: 900px) {
   .silex-customers-scroll-hint {
     display: block;

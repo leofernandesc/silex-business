@@ -272,7 +272,9 @@ def create_app(engine=None, serve_frontend=True):
     def customer_values(payload, user):
         if "service_details" in payload.model_fields_set and not customer_details_allowed(user):
             V.fail("Dados do serviço indisponíveis para esta conta", 403)
-        return payload.model_dump(exclude={"service_details"})
+        # The personalized form does not edit the original address. Preserve all
+        # omitted common fields; explicit values still allow normal updates.
+        return payload.model_dump(exclude={"service_details"}, exclude_unset=customer_details_allowed(user))
 
     def save_customer_details(db, row, payload, user):
         if payload.service_details is None:
@@ -282,8 +284,13 @@ def create_app(engine=None, serve_frontend=True):
         if details is None:
             details = CustomerServiceDetails(customer_id=row.id, user_id=user.id)
             db.add(details)
-        for key, value in payload.service_details.model_dump(exclude_unset=True).items():
+        for key, value in payload.service_details.model_dump(exclude_unset=True, exclude={"collection_address", "delivery_address"}).items():
             setattr(details, key, value)
+        for prefix in ("collection", "delivery"):
+            address = getattr(payload.service_details, f"{prefix}_address")
+            if address is not None:
+                for key, value in address.model_dump(exclude_unset=True).items():
+                    setattr(details, f"{prefix}_{key}", value)
         db.flush()
 
     def customer_details_data(db, items, user):
@@ -297,6 +304,10 @@ def create_app(engine=None, serve_frontend=True):
                     "start_address": row.start_address if row else "",
                     "end_address": row.end_address if row else "",
                     "service_type": row.service_type if row else None,
+                    **{f"{prefix}_address": {
+                        name: getattr(row, f"{prefix}_{name}") if row else ""
+                        for name in S.CustomerAddressInput.model_fields
+                    } for prefix in ("collection", "delivery")},
                 }
 
     @app.post("/api/customers", status_code=201)

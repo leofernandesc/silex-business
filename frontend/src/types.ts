@@ -14,10 +14,21 @@ export type CompanySettings = {
   email: string;
   address: string;
 };
+export type CustomerAddress = {
+  postal_code: string;
+  street: string;
+  address_number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+};
 export type CustomerServiceDetails = {
   start_address: string;
   end_address: string;
   service_type: "local" | "interstate" | null;
+  collection_address: CustomerAddress;
+  delivery_address: CustomerAddress;
 };
 export type Customer = {
   id: number;

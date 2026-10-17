@@ -75,6 +75,20 @@ class CustomerServiceDetails(Base):
     start_address: Mapped[str] = mapped_column(String(2000), default="")
     end_address: Mapped[str] = mapped_column(String(2000), default="")
     service_type: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    collection_postal_code: Mapped[str] = mapped_column(String(9), default="")
+    collection_street: Mapped[str] = mapped_column(String(180), default="")
+    collection_address_number: Mapped[str] = mapped_column(String(30), default="")
+    collection_complement: Mapped[str] = mapped_column(String(100), default="")
+    collection_neighborhood: Mapped[str] = mapped_column(String(100), default="")
+    collection_city: Mapped[str] = mapped_column(String(100), default="")
+    collection_state: Mapped[str] = mapped_column(String(2), default="")
+    delivery_postal_code: Mapped[str] = mapped_column(String(9), default="")
+    delivery_street: Mapped[str] = mapped_column(String(180), default="")
+    delivery_address_number: Mapped[str] = mapped_column(String(30), default="")
+    delivery_complement: Mapped[str] = mapped_column(String(100), default="")
+    delivery_neighborhood: Mapped[str] = mapped_column(String(100), default="")
+    delivery_city: Mapped[str] = mapped_column(String(100), default="")
+    delivery_state: Mapped[str] = mapped_column(String(2), default="")
     __table_args__ = (
         UniqueConstraint("customer_id", "user_id"),
         CheckConstraint("service_type IS NULL OR service_type IN ('local', 'interstate')"),
