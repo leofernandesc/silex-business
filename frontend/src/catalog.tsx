@@ -30,7 +30,7 @@ function CustomerContact({ customer, showLocation = true }: { customer: Customer
 }
 
 export function Customers({ user }: { user: User }) {
-  const serviceDetailsEnabled = user.active && user.username === "sammya.admin" && user.role === "admin";
+  const serviceDetailsEnabled = user.active && user.username === "demo.restricted.admin" && user.role === "admin";
   const [q, setQ] = useState(""),
     [searchField, setSearchField] = useState("all"),
     [active, setActive] = useState("true"),
