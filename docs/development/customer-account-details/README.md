@@ -4,7 +4,7 @@ Base: `18833b7886f38e64a371c62da99e7bd6832fd95b`. Alteração restrita a Cliente
 
 ## Implementação
 
-- A sessão existente resolve o usuário no banco a cada chamada. Somente o username **exato** `sammya.admin`, com perfil `admin` e conta ativa, pode ler/gravar os dados especiais. Nome de exibição, cabeçalhos, parâmetros e IDs enviados pelo navegador não concedem acesso. Não há nova permissão global nem criação automática dessa conta.
+- A sessão existente resolve o usuário no banco a cada chamada. Somente o username **exato** `demo.restricted.admin`, com perfil `admin` e conta ativa, pode ler/gravar os dados especiais. Nome de exibição, cabeçalhos, parâmetros e IDs enviados pelo navegador não concedem acesso. Não há nova permissão global nem criação automática dessa conta.
 - A migração aditiva **0011**, após 0010, cria somente `customer_service_details`. Chaves estrangeiras para cliente e usuário, unicidade do par e restrição SQL de tipo. Nenhuma coluna, linha ou regra de `customers` é modificada pela migração.
 - Endereços inicial/final: textos opcionais de até 2.000 caracteres, independentes dos endereços cadastrais. Tipo opcional: `local` → Local; `interstate` → Interestadual; `null` → Não informado.
 - POST/PUT de Clientes aceitam a extensão opcional `service_details`. As três propriedades são `start_address`, `end_address`, `service_type`. O corpo não aceita proprietário. Cliente e extensão são salvos na mesma transação: falha de validação/autorização não produz gravação parcial.
