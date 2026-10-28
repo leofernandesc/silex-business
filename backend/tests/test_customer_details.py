@@ -31,10 +31,10 @@ def expected_details(values):
 @pytest.fixture
 def authorized(env):
     app, admin, _, _ = env
-    response = admin.post("/api/users", json={"username": "sammya.admin", "name": "Conta fictícia", "role": "admin", "password": PASSWORD})
+    response = admin.post("/api/users", json={"username": "demo.restricted.admin", "name": "Conta fictícia", "role": "admin", "password": PASSWORD})
     assert response.status_code == 201
     with TestClient(app) as client:
-        assert client.post("/api/auth/login", json={"username": "sammya.admin", "password": PASSWORD}).status_code == 200
+        assert client.post("/api/auth/login", json={"username": "demo.restricted.admin", "password": PASSWORD}).status_code == 200
         yield client
 
 
@@ -79,14 +79,14 @@ def test_other_identities_cannot_write_or_read_details(env, authorized, who, det
     row = create(authorized, service_details=DETAILS)
     # A matching display name, query string or forged header does not authorize.
     with app.state.sessions() as db:
-        db.scalar(select(User).where(User.username == "admin")).name = "sammya.admin"
+        db.scalar(select(User).where(User.username == "admin")).name = "demo.restricted.admin"
         db.commit()
     client = {"admin": admin, "operator": operator, "anonymous": anonymous}[who]
     expected = 401 if who == "anonymous" else 403
     for method, path in ((client.post, "/api/customers"), (client.put, f"/api/customers/{row['id']}")):
-        response = method(path, json={"name": "Não deve salvar", "service_details": details}, headers={"X-Username": "sammya.admin"})
+        response = method(path, json={"name": "Não deve salvar", "service_details": details}, headers={"X-Username": "demo.restricted.admin"})
         assert response.status_code == expected
-    response = client.get("/api/customers?username=sammya.admin&user_id=1")
+    response = client.get("/api/customers?username=demo.restricted.admin&user_id=1")
     if who == "anonymous":
         assert response.status_code == 401
     else:
@@ -128,22 +128,22 @@ def test_session_rechecks_account_role_and_activation(env, authorized):
     app, _, _, _ = env
     create(authorized, service_details=DETAILS)
     with app.state.sessions() as db:
-        user = db.scalar(select(User).where(User.username == "sammya.admin"))
+        user = db.scalar(select(User).where(User.username == "demo.restricted.admin"))
         user.role = "operator"
         db.commit()
     assert "service_details" not in authorized.get("/api/customers").json()["items"][0]
     assert authorized.post("/api/customers", json={"name": "Proibido", "service_details": DETAILS}).status_code == 403
     with app.state.sessions() as db:
-        db.scalar(select(User).where(User.username == "sammya.admin")).active = False
+        db.scalar(select(User).where(User.username == "demo.restricted.admin")).active = False
         db.commit()
     assert authorized.get("/api/customers").status_code == 401
 
 
 def test_exact_username_with_operator_role_is_not_enabled(env):
     app, admin, _, _ = env
-    assert admin.post("/api/users", json={"username": "sammya.admin", "name": "Fictício", "role": "operator", "password": PASSWORD}).status_code == 201
+    assert admin.post("/api/users", json={"username": "demo.restricted.admin", "name": "Fictício", "role": "operator", "password": PASSWORD}).status_code == 201
     with TestClient(app) as client:
-        client.post("/api/auth/login", json={"username": "sammya.admin", "password": PASSWORD})
+        client.post("/api/auth/login", json={"username": "demo.restricted.admin", "password": PASSWORD})
         assert "service_details" not in create(client)
         assert client.post("/api/customers", json={"name": "Proibido", "service_details": DETAILS}).status_code == 403
 
@@ -152,12 +152,12 @@ def test_metadata_is_bound_to_account_id_and_not_reassigned_by_username(env, aut
     app, admin, _, _ = env
     row = create(authorized, service_details=DETAILS)
     with app.state.sessions() as db:
-        db.scalar(select(User).where(User.username == "sammya.admin")).username = "former.account"
+        db.scalar(select(User).where(User.username == "demo.restricted.admin")).username = "former.account"
         db.commit()
     assert "service_details" not in authorized.get("/api/customers").json()["items"][0]
-    assert admin.post("/api/users", json={"username": "sammya.admin", "name": "Outra conta fictícia", "role": "admin", "password": PASSWORD}).status_code == 201
+    assert admin.post("/api/users", json={"username": "demo.restricted.admin", "name": "Outra conta fictícia", "role": "admin", "password": PASSWORD}).status_code == 201
     with TestClient(app) as replacement:
-        replacement.post("/api/auth/login", json={"username": "sammya.admin", "password": PASSWORD})
+        replacement.post("/api/auth/login", json={"username": "demo.restricted.admin", "password": PASSWORD})
         assert replacement.get("/api/customers").json()["items"][0]["service_details"] == expected_details({"start_address": "", "end_address": "", "service_type": None})
         assert replacement.put(f"/api/customers/{row['id']}", json={"name": row["name"], "service_details": {"service_type": "local"}}).status_code == 200
     with app.state.sessions() as db:
@@ -172,7 +172,7 @@ def test_restart_and_existing_sqlite_backup_preserve_metadata(env, authorized, t
     engine = build_engine(url)
     restarted = create_app(engine, serve_frontend=False)
     with TestClient(restarted) as client:
-        client.post("/api/auth/login", json={"username": "sammya.admin", "password": PASSWORD})
+        client.post("/api/auth/login", json={"username": "demo.restricted.admin", "password": PASSWORD})
         assert client.get("/api/customers").json()["items"][0] == row
     engine.dispose()
     destination = tmp_path / "backup.sqlite3"
@@ -264,7 +264,7 @@ def test_direct_structured_address_access_is_denied_to_other_accounts(env, autho
     expected = 401 if who == "anonymous" else 403
     for method, path in ((client.post, "/api/customers"), (client.put, f"/api/customers/{row['id']}")):
         assert method(path, json={"name": "Não autorizado", "service_details": private}).status_code == expected
-    response = client.get("/api/customers?username=sammya.admin")
+    response = client.get("/api/customers?username=demo.restricted.admin")
     if who == "anonymous":
         assert response.status_code == 401
     else:
@@ -289,7 +289,7 @@ def test_0011_to_0012_preserves_old_addresses_without_assigning_them(tmp_path, m
     config = Config(str(ROOT / "backend" / "alembic.ini"))
     command.upgrade(config, "0011")
     with sqlite3.connect(path) as db:
-        db.execute("INSERT INTO users (name,username,password_hash,role,active) VALUES (?,?,?,?,?)", ("Fictícia", "sammya.admin", "synthetic-not-a-credential", "admin", 1))
+        db.execute("INSERT INTO users (name,username,password_hash,role,active) VALUES (?,?,?,?,?)", ("Fictícia", "demo.restricted.admin", "synthetic-not-a-credential", "admin", 1))
         db.execute("INSERT INTO customers (name,address,phone,email,active,street,city,state) VALUES (?,?,?,?,?,?,?,?)", ("Anterior", "Texto cadastral antigo", "00000000", "", 1, "Rua cadastral antiga", "Manaus", "AM"))
         db.execute("INSERT INTO customer_service_details (customer_id,user_id,start_address,end_address,service_type) VALUES (?,?,?,?,?)", (1, 1, "Origem\n" + "a" * 1993, "Destino antigo", "interstate"))
         tables = dict(db.execute("SELECT name,sql FROM sqlite_master WHERE type='table' AND name != 'alembic_version'"))
@@ -324,7 +324,7 @@ with TestClient(app) as client:
     print(json.dumps({'pid':os.getpid(),'customer':client.get('/api/customers').json()['items'][0]}))
 app.state.engine.dispose()
 """
-    result = subprocess.run([sys.executable, "-c", script], input=json.dumps({"username": "sammya.admin", "password": PASSWORD}),
+    result = subprocess.run([sys.executable, "-c", script], input=json.dumps({"username": "demo.restricted.admin", "password": PASSWORD}),
                             text=True, capture_output=True, check=True, env={**os.environ, "PYTHONPATH": str(ROOT / "backend")})
     loaded = json.loads(result.stdout)
     assert loaded["pid"] != os.getpid()
