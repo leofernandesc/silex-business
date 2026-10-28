@@ -267,7 +267,7 @@ def create_app(engine=None, serve_frontend=True):
 
     def customer_details_allowed(user):
         # Use the identity resolved from the authenticated session, never input data.
-        return user.username == "sammya.admin" and user.role == "admin"
+        return user.username == "demo.restricted.admin" and user.role == "admin"
 
     def customer_values(payload, user):
         if "service_details" in payload.model_fields_set and not customer_details_allowed(user):
