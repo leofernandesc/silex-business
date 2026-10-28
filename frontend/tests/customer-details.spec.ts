@@ -6,7 +6,7 @@ const fixturePassword = "CustomerFixtureOnly#2026";
 async function prepareAccounts(request: APIRequestContext) {
   expect((await request.post("/api/auth/login", { data: { username: "demo.admin", password: "DemoLocal#2026" } })).ok()).toBeTruthy();
   const users = await (await request.get("/api/users")).json();
-  for (const [username, name] of [["sammya.admin", "Avaliadora fictícia"], ["customer.other.admin", "sammya.admin"]]) {
+  for (const [username, name] of [["demo.restricted.admin", "Avaliadora fictícia"], ["customer.other.admin", "demo.restricted.admin"]]) {
     if (!users.some((u: { username: string }) => u.username === username)) {
       expect((await request.post("/api/users", { data: { username, name, password: fixturePassword, role: "admin" } })).status()).toBe(201);
     }
@@ -71,7 +71,7 @@ async function saveCustomer(page: Page, identifier?: number) {
 }
 
 test("exatamente dois endereços completos: criar, editar independentemente e recarregar", async ({ page }, info) => {
-  await login(page, "sammya.admin");
+  await login(page, "demo.restricted.admin");
   const name = `Cliente exclusivo ${info.project.name} ${Date.now()}`;
   await page.getByRole("button", { name: "Novo cliente", exact: true }).click();
   await expectTwoAddressGroups(page);
@@ -152,10 +152,10 @@ test("cadastro anterior exige confirmação e textos 0011 permanecem recuperáve
   const original = await request.post("/api/customers", { data: { name, address: originalText, ...collection } });
   expect(original.status()).toBe(201);
   const customer = await original.json();
-  expect((await request.post("/api/auth/login", { data: { username: "sammya.admin", password: fixturePassword } })).status()).toBe(200);
+  expect((await request.post("/api/auth/login", { data: { username: "demo.restricted.admin", password: fixturePassword } })).status()).toBe(200);
   const oldTexts = { start_address: "Origem anterior\n" + "x".repeat(1900), end_address: "Destino anterior preservado" };
   expect((await request.put(`/api/customers/${customer.id}`, { data: { name, service_details: oldTexts } })).status()).toBe(200);
-  await login(page, "sammya.admin");
+  await login(page, "demo.restricted.admin");
   await page.getByRole("textbox", { name: "Pesquisar", exact: true }).fill(name);
   const row = page.getByRole("row").filter({ has: page.getByText(name, { exact: true }) });
   await expect(row).not.toContainText(originalText);
@@ -198,7 +198,7 @@ test("texto cadastral curto só vai ao logradouro após confirmação explícita
   const name = `Cliente texto ${info.project.name} ${Date.now()}`;
   const source = "Rua fictícia, 99, texto anterior sem interpretação";
   const customer = await (await request.post("/api/customers", { data: { name, address: source } })).json();
-  await login(page, "sammya.admin");
+  await login(page, "demo.restricted.admin");
   await page.getByRole("textbox", { name: "Pesquisar", exact: true }).fill(name);
   await page.getByRole("button", { name: `Editar ${name}`, exact: true }).click();
   await expectTwoAddressGroups(page);
