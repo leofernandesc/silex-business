@@ -4,7 +4,7 @@ Base: `6a5610ff15ad4cfcd810bf2028ab6bb48da5a1d3` (PR #9 integrado). Branch: `fix
 
 ## Experiência final
 
-Para a conta ativa **sammya.admin**, com papel **admin**:
+Para a conta ativa **demo.restricted.admin**, com papel **admin**:
 
 1. Informações do cliente: nome, documento, telefone, contato, e-mail e situação.
 2. **Endereço de coleta**: CEP, logradouro, número, complemento, bairro, cidade e UF.
