@@ -93,3 +93,7 @@ temp/
 .DS_Store
 .idea/
 .vscode/
+
+# Internal working documentation is not part of the public source snapshot.
+# Keep private records and drafts out of future commits by default.
+docs/
