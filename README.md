@@ -1,31 +1,35 @@
-# Gestão
+# Silex Business — ERP de gestão empresarial
 
-Aplicação local em português para avaliar cadastros, estoque, vendas sem emissão fiscal, caixa e financeiro. Inspirada nos fluxos observados no ControlMax, com marca própria e implementação independente. Uma empresa, perfis **administrador** e **operador**, dados fictícios.
+**Status:** projeto em desenvolvimento e validação, com foco em uma solução B2B de gestão para pequenas e médias empresas. O repositório reúne a aplicação, testes e registros das decisões técnicas; ele **não representa, por si só, um SaaS já lançado ou homologado para dados reais**.
 
-**Gestão** é o nome provisório escolhido nesta etapa. O visual e a identidade definitiva serão definidos pelo usuário; o planejamento de aproximação ao ControlMax está em [PLANO_FIDELIDADE_CONTROLMAX.md](docs/PLANO_FIDELIDADE_CONTROLMAX.md).
+## Problema e proposta
 
-## Iniciar neste computador
+Centralizar fluxos de cadastro, estoque, vendas, caixa e controle financeiro em uma aplicação integrada, facilitando a organização da operação de uma empresa.
+
+Este protótipo possui uma instância de empresa por instalação. Funcionalidades multiempresa, assinatura comercial e implantação de produção não devem ser inferidas do código atual.
+
+## Desenvolvimento assistido por IA
+
+Agentes e ferramentas de IA apoiaram as iterações de desenvolvimento, incluindo planejamento de incrementos, implementação, revisão, testes e documentação. **A IA é parte do processo de construção deste software, não uma funcionalidade conversacional anunciada para o usuário final.** As decisões de produto e a aceitação dos resultados dependem de validação humana e dos testes do projeto.
+
+A documentação de [desenvolvimento](docs/development/WORKFLOW.md), [validação](docs/VALIDACAO.md), [piloto](docs/pilot/PLANO.md) e [preparação de deploy](docs/deployment/RAILWAY.md) detalha escopo e limitações. Preparação de deploy não equivale a implantação concluída.
+
+## Executar localmente com dados fictícios
 
 ```bash
-cd /home/leofernandesc/controlmax-inspired
+git clone https://github.com/leofernandesc/silex-business.git
+cd silex-business
 make setup
 make seed-demo
 make build
 make run
 ```
 
-Abra **http://127.0.0.1:8000**. A versão compilada é servida pelo FastAPI junto à API.
+Abra `http://127.0.0.1:8000`. Requer Python 3.12+, Node.js 22.12+ e npm. Use apenas dados fictícios no ambiente de demonstração.
 
-| Conta fictícia | Usuário | Senha exclusiva da demonstração |
-| --- | --- | --- |
-| Administrador | `demo.admin` | `DemoLocal#2026` |
-| Operador | `demo.operador` | `DemoLocal#2026` |
+## Funcionalidades documentadas
 
-As contas acima só são criadas por `make seed-demo`. Não reutilize a senha da aplicação original. Para um banco sem demonstração, execute `make create-admin` e digite usuário, nome e senha no terminal; senhas não são exibidas nem passadas por argumentos.
-
-## Financeiro ampliado neste checkout
-
-As Sprints 8–18 estão implementadas: livro caixa, cadastros financeiros, títulos e baixas, OFX local, dashboard, 26 relatórios, orçamento, Diaristas/Frete com PIX, interface revisada e serviços/pedidos com apuração financeira. Migrações vão até `0010`. No serviço, custo contratado não é pagamento: a geração de títulos é manual, única e não altera saldos até a baixa. Veja [revisão financeira](docs/FINANCEIRO_REVIEW.md), [plano](docs/PLANO_FIDELIDADE_CONTROLMAX.md) e [validação](docs/VALIDACAO.md). O comportamento interno do sistema original sem evidência segue desconhecido; preparação web permanece na Sprint 19.
+As Sprints 8–18 estão implementadas: livro caixa, cadastros financeiros, títulos e baixas, OFX local, dashboard, 26 relatórios, orçamento, Diaristas/Frete com PIX, interface revisada e serviços/pedidos com apuração financeira. Migrações vão até `0010`. No serviço, custo contratado não é pagamento: a geração de títulos é manual, única e não altera saldos até a baixa. Veja [revisão financeira](docs/FINANCEIRO_REVIEW.md), [plano](docs/PLANO_FIDELIDADE_CONTROLMAX.md) e [validação](docs/VALIDACAO.md). O comportamento interno do sistema original sem evidência segue desconhecido; consulte os documentos de piloto e deploy para conhecer o estado atual de publicação.
 
 Para abrir a versão já compilada:
 
