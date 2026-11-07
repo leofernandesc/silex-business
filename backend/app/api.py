@@ -238,9 +238,9 @@ def create_app(engine=None, serve_frontend=True):
                 "email": Customer.email, "contact": Customer.contact_name, "address": Customer.city,
             }
             if search_field == "all":
-                query = query.where(or_(*(field.contains(q, autoescape=True) for field in fields.values())))
+                query = query.where(or_(*(field.contains(S.document_search_term(q) if name == "document" else q, autoescape=True) for name, field in fields.items())))
             elif search_field in fields:
-                query = query.where(fields[search_field].contains(q, autoescape=True))
+                query = query.where(fields[search_field].contains(S.document_search_term(q) if search_field == "document" else q, autoescape=True))
             else:
                 V.fail("Campo de busca inválido", 422)
         if active is not None:

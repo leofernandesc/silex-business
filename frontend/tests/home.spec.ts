@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { expireDisposableSession } from "./disposableSession";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -26,12 +27,12 @@ async function noOverflow(page: Page) {
 test("sessão expirada na Início não revela dados e retorna a home após login", async ({
   page,
 }) => {
-  const envPath = process.env.SILEX_SB04B_ENV;
+  const envPath = process.env.SILEX_E2E_MANIFEST || process.env.SILEX_SB04B_ENV;
   test.skip(!envPath, "Requer manifesto do ambiente descartável SB-04B");
-  const env = JSON.parse(readFileSync(envPath!, "utf8"));
+  const env = process.env.SILEX_E2E_MANIFEST ? null : JSON.parse(readFileSync(envPath!, "utf8"));
   if (
-    !/^\/tmp\/silex-sb04b-/.test(env.work_dir) ||
-    env.persistent_database_used !== false
+    env && (!/^\/tmp\/silex-sb04b-/.test(env.work_dir) ||
+    env.persistent_database_used !== false)
   )
     throw Error("Isolated fixture required");
   await page.goto("/entrar");
@@ -40,7 +41,8 @@ test("sessão expirada na Início não revela dados e retorna a home após login
   const cookie = (await page.context().cookies()).find(
     (c) => c.name === "gestao_session",
   )!;
-  execFileSync("python3", [
+  if (process.env.SILEX_E2E_MANIFEST) await expireDisposableSession(page);
+  else execFileSync("python3", [
     "-c",
     "import sqlite3,sys; c=sqlite3.connect(sys.argv[1]); c.execute('UPDATE sessions SET expires_at=? WHERE token_hash=?',('2000-01-01 00:00:00.000000',sys.argv[2])); c.commit(); c.close()",
     env.work_dir + "/functional.sqlite3",

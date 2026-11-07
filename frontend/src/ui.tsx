@@ -18,7 +18,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { api } from "./api";
+import { apiRequest } from "./api";
 import { labels } from "./format";
 import type { Page } from "./types";
 import { useModalFocus } from "./useModalFocus";
@@ -29,9 +29,10 @@ export function useLoad<T>(path: string, version = 0) {
     [error, setError] = useState("");
   useEffect(() => {
     let active = true;
+    const controller = new AbortController();
     setLoading(true);
     setError("");
-    api<T>(path)
+    apiRequest<T>(path, { method: "GET", signal: controller.signal })
       .then((value) => {
         if (active) setData(value);
       })
@@ -46,6 +47,7 @@ export function useLoad<T>(path: string, version = 0) {
       });
     return () => {
       active = false;
+      controller.abort();
     };
   }, [path, version]);
   return { data, loading, error };
@@ -308,17 +310,21 @@ export function Form({
   children,
   submit = "Salvar",
   cancel,
+  submitClassName = "primary",
 }: {
   onSubmit: () => Promise<void>;
   children: ReactNode;
   submit?: string;
   cancel?: () => void;
+  submitClassName?: string;
 }) {
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const pending = useRef(false);
   async function handle(e: FormEvent) {
     e.preventDefault();
-    if (busy) return;
+    if (pending.current) return;
+    pending.current = true;
     setBusy(true);
     setError("");
     try {
@@ -326,11 +332,12 @@ export function Form({
     } catch (err) {
       setError((err as Error).message);
     } finally {
+      pending.current = false;
       setBusy(false);
     }
   }
   return (
-    <form onSubmit={handle}>
+    <form onSubmit={handle} aria-busy={busy}>
       {error && <Notice>{error}</Notice>}
       <fieldset disabled={busy}>
         {children}
@@ -340,7 +347,7 @@ export function Form({
               Voltar
             </button>
           )}
-          <button className="primary" disabled={busy} type="submit">
+          <button className={submitClassName} disabled={busy} type="submit">
             {busy ? "Salvando..." : submit}
           </button>
         </div>

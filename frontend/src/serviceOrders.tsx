@@ -1,5 +1,5 @@
 import { SilexDatePicker } from "./SilexDatePicker";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Eye, Pencil, Plus, ReceiptText, X } from "lucide-react";
 import { api, query } from "./api";
 import { dateOnly, decimalInput, labels, localDate, money, parseDecimal, quantity } from "./format";
@@ -18,7 +18,11 @@ export function ServiceOrdersPage() {
   const orders = useLoad<Page<ServiceOrder>>("/service-orders?" + query({ q, status, page }), version);
   const reload = () => setVersion((v) => v + 1);
   const saved = () => { setEditing(undefined); setNotice("Serviço/pedido salvo."); reload(); };
-  async function refreshOrder(order: ServiceOrder) { const result = await api<ServiceOrder>(`/service-orders/${order.id}`); setViewing(result); reload(); }
+  async function refreshOrder(order: ServiceOrder) {
+    const result = await api<ServiceOrder>(`/service-orders/${order.id}`);
+    setViewing((current) => current?.id === result.id ? result : current);
+    reload();
+  }
   return <>
     <PageTitle title="Serviços e pedidos" subtitle="Custos contratados, títulos financeiros e resultado por operação.">
       <AddButton onClick={() => { setNotice(""); setEditing(null); }}>Novo serviço/pedido</AddButton>
@@ -50,7 +54,8 @@ export function ServiceOrdersPage() {
       <Pagination data={orders.data} onPage={setPage} />
     </section>
     {editing !== undefined && <ServiceOrderForm order={editing} close={() => setEditing(undefined)} done={saved} />}
-    {viewing && <ServiceOrderDetails order={viewing} close={() => setViewing(null)} refresh={() => void refreshOrder(viewing)} />}
+    {viewing && <ServiceOrderDetails order={viewing} close={() => setViewing(null)} refresh={() => refreshOrder(viewing)}
+      canceled={() => { setViewing(null); setNotice("Serviço cancelado; títulos e baixas foram mantidos no histórico."); reload(); }} />}
     {generating && <GenerateTitlesForm order={generating} close={() => setGenerating(null)} done={() => { setGenerating(null); setNotice("Títulos financeiros gerados e vinculados ao pedido."); reload(); }} />}
     {canceling && <CancelServiceOrderForm order={canceling} close={() => setCanceling(null)} done={() => { setCanceling(null); setNotice("Serviço cancelado; títulos e baixas foram mantidos no histórico."); reload(); }} />}
   </>;
@@ -155,10 +160,20 @@ function GenerateTitlesForm({ order, close, done }: { order: ServiceOrder; close
   </Modal>;
 }
 
-function ServiceOrderDetails({ order, close, refresh }: { order: ServiceOrder; close: () => void; refresh: () => void }) {
+function ServiceOrderDetails({ order, close, refresh, canceled }: { order: ServiceOrder; close: () => void; refresh: () => Promise<void>; canceled: () => void }) {
   const [reason, setReason] = useState("");
+  const [refreshing, setRefreshing] = useState(false), [refreshError, setRefreshError] = useState("");
+  const pending = useRef(false);
+  async function update() {
+    if (pending.current) return;
+    pending.current = true; setRefreshing(true); setRefreshError("");
+    try { await refresh(); }
+    catch { setRefreshError("Não foi possível atualizar o serviço. Os dados abaixo são da última consulta. Tente atualizar novamente."); }
+    finally { pending.current = false; setRefreshing(false); }
+  }
   return <Modal title={`${order.code} · ${order.customer_name}`} close={close} wide><div className="service-order-details">
-    <div className="service-order-detail-heading"><div><h2>{order.description}</h2><p>{dateOnly(order.service_date)} · {statusLabels[order.status]}</p></div><button onClick={refresh}>Atualizar</button></div>
+    <div className="service-order-detail-heading"><div><h2>{order.description}</h2><p>{dateOnly(order.service_date)} · {statusLabels[order.status]}</p></div><button disabled={refreshing} onClick={update}>{refreshing ? "Atualizando…" : "Atualizar"}</button></div>
+    {refreshError && <Notice>{refreshError}</Notice>}
     <div className="summary-grid four service-order-detail-summary">
       <div className="summary-card"><span>Receita prevista</span><strong>{money(order.negotiated_cents)}</strong></div>
       <div className="summary-card"><span>Custos previstos</span><strong>{money(order.expected_cost_cents)}</strong></div>
@@ -173,8 +188,11 @@ function ServiceOrderDetails({ order, close, refresh }: { order: ServiceOrder; c
     <p className="table-scroll-hint">Deslize a tabela para ver todas as colunas.</p>
     <Table headers={["Título", "Direção", "Valor", "Restante", "Situação"]} empty={!order.titles.length}>{order.titles.map((title) => <tr key={title.id}><td>#{title.id} · {title.description}</td><td>{title.direction === "income" ? "Receber" : "Pagar"}</td><td>{money(title.amount_cents)}</td><td>{money(title.remaining_cents)}</td><td><Badge status={title.status} /></td></tr>)}</Table>
     {order.title_run_id && <p className="help">Vencimento {dateOnly(order.title_due_date)} · competência {dateOnly(order.title_competence_date)}. O realizado considera pagamentos e estornos registrados, inclusive baixas parciais.</p>}
-    {order.status !== "canceled" && <Field label="Motivo para cancelar o serviço"><input minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field>}
-    {order.status !== "canceled" && <button className="danger" disabled={reason.trim().length < 3} onClick={async () => { await api(`/service-orders/${order.id}/cancel`, "POST", { reason: reason.trim() }); close(); }}>Cancelar serviço e preservar o histórico</button>}
+    {order.status !== "canceled" && <Form submit="Cancelar serviço e preservar o histórico" submitClassName="danger" onSubmit={async () => {
+      if (reason.trim().length < 3) throw new Error("Informe um motivo com pelo menos três caracteres.");
+      await api(`/service-orders/${order.id}/cancel`, "POST", { reason: reason.trim() });
+      canceled();
+    }}><Field label="Motivo para cancelar o serviço"><input required minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field></Form>}
   </div></Modal>;
 }
 

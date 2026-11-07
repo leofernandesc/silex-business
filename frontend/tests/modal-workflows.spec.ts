@@ -154,9 +154,20 @@ test("Conciliação: revisão, erro existente e Escape preservam acionador e dad
   page,
 }) => {
   await login(page, "finance-reconcile");
+  // Create the statement in this disposable fixture instead of relying on an
+  // import that existed only in a historical developer database.
+  const accounts = await (await page.request.get("/api/accounts")).json();
+  const bank = accounts.find((account: { kind: string; active: boolean }) => account.kind === "bank" && account.active);
+  const filename = "Extrato fictício de foco.ofx";
+  const imported = await page.request.post(`/api/finance/ofx/imports?account_id=${bank.id}`, {
+    headers: { "Content-Type": "application/x-ofx", "X-Statement-Name": encodeURIComponent(filename) },
+    data: Buffer.from(`OFXHEADER:100\nDATA:OFXSGML\nVERSION:102\n\n<OFX><BANKMSGSRSV1><STMTTRNRS><STMTRS><BANKTRANLIST><STMTTRN>\n<TRNTYPE>DEBIT\n<DTPOSTED>20260304120000[-4:AMT]\n<TRNAMT>-42.50\n<FITID>focus-${Date.now()}\n<NAME>Linha ficticia sem titulo\n</STMTTRN></BANKTRANLIST></STMTRS></STMTTRNRS></BANKMSGSRSV1></OFX>`),
+  });
+  expect(imported.ok(), await imported.text()).toBe(true);
+  await page.reload();
   const statement = page
     .getByRole("row")
-    .filter({ hasText: "Extrato ilustrativo SB053A.ofx" });
+    .filter({ hasText: filename });
   await activate(
     page,
     statement.getByRole("button", { name: "Revisar", exact: true }),

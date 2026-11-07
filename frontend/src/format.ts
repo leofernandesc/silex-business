@@ -1,18 +1,19 @@
-export const money = (n: number) =>
-  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
-    n / 100,
-  );
-export const quantity = (n: number) =>
-  new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 3 }).format(n / 1000);
+// Shared immutable formatters avoid constructing Intl objects for every table cell.
+const moneyFormatter = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+const quantityFormatter = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 3 });
+const timestampFormatter = new Intl.DateTimeFormat("pt-BR", {
+  dateStyle: "short", timeStyle: "short", timeZone: "America/Manaus",
+});
+const localDateFormatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/Manaus", year: "numeric", month: "2-digit", day: "2-digit",
+});
+export const money = (n: number) => moneyFormatter.format(n / 100);
+export const quantity = (n: number) => quantityFormatter.format(n / 1000);
 export const dateTime = (value: string | null) => {
   if (!value) return "—";
   const instant = new Date(value);
   if (!Number.isFinite(instant.getTime())) return "—";
-  return new Intl.DateTimeFormat("pt-BR", {
-        dateStyle: "short",
-        timeStyle: "short",
-        timeZone: "America/Manaus",
-      }).format(instant);
+  return timestampFormatter.format(instant);
 };
 /** Civil ISO date only. No Date parsing, timezone conversion or input serialization. */
 export const dateOnly = (value: string | null) => {
@@ -25,13 +26,7 @@ export const dateOnly = (value: string | null) => {
   if (y < 1 || m < 1 || m > 12 || d < 1 || d > days[m - 1]) return "—";
   return `${day}/${month}/${year}`;
 };
-export const localDate = () =>
-  new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Manaus",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date());
+export const localDate = () => localDateFormatter.format(new Date());
 export function parseDecimal(value: string, places: number): number {
   const raw = value.trim().replace(",", ".");
   if (!new RegExp(`^\\d+(?:\\.\\d{1,${places}})?$`).test(raw))

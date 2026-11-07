@@ -38,4 +38,15 @@ describe("Precisão e apresentação", () => {
     expect(dateTime("2026-10-12T04:00:00+00:00")).toContain("00:00");
     expect(dateOnly("2026-10-12")).toBe("12/10/2026");
   });
+  it("keeps the original Intl output for zero, cents, negative and large values", () => {
+    for (const n of [0, 1, -1, 12345, -987654321, 100_000_000_000]) {
+      expect(money(n)).toBe(new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(n / 100));
+      expect(quantity(n)).toBe(new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 3 }).format(n / 1000));
+    }
+    for (const value of ["2024-02-29T03:59:59Z", "2027-01-01T04:00:00Z"]) {
+      expect(dateTime(value)).toBe(new Intl.DateTimeFormat("pt-BR", {
+        dateStyle: "short", timeStyle: "short", timeZone: "America/Manaus",
+      }).format(new Date(value)));
+    }
+  });
 });

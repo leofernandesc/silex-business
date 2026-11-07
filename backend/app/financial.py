@@ -191,8 +191,8 @@ def register(app, get_db, admin):
         query=select(Supplier).order_by(Supplier.id.desc())
         if q:
             fields={'name':Supplier.name,'document':Supplier.document,'phone':Supplier.phone,'email':Supplier.email,'contact':Supplier.contact_name,'address':Supplier.city,'pix':Supplier.pix_key}
-            if search_field=='all':query=query.where(or_(*(column.contains(q,autoescape=True) for column in fields.values())))
-            elif search_field in fields:query=query.where(fields[search_field].contains(q,autoescape=True))
+            if search_field=='all':query=query.where(or_(*(column.contains(S.document_search_term(q) if name=='document' else q,autoescape=True) for name,column in fields.items())))
+            elif search_field in fields:query=query.where(fields[search_field].contains(S.document_search_term(q) if search_field=='document' else q,autoescape=True))
             else:V.fail('Campo de busca inválido',422)
         if kind is not None:
             query=query.where(Supplier.kind == kind)

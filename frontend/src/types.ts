@@ -137,7 +137,7 @@ export type Subcategory = {
 };
 export type SupplierKind = "supplier" | "day_worker" | "subcontracted_freight";
 export type PixInfo = { key_type: string; key: string; holder: string };
-export type Supplier = Customer & {
+export type Supplier = Omit<Customer, "service_details"> & {
   kind: SupplierKind;
   pix_key_type: string;
   pix_key: string;

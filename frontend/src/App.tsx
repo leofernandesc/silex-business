@@ -25,6 +25,7 @@ import {
 import { AuthenticatedHome } from "./home/AuthenticatedHome";
 import type { CompanyStatus } from "./home/model";
 import { api } from "./api";
+import { PasswordInput } from "./formInputs";
 import { canAccessRoute, getRoute, routes } from "./navigation/routes";
 import { useAppNavigation } from "./navigation/useAppNavigation";
 import { useMobileNavigation } from "./navigation/useMobileNavigation";
@@ -395,9 +396,8 @@ function Login({
               />
             </Field>
             <Field label="Senha">
-              <input
+              <PasswordInput
                 required
-                type="password"
                 disabled={logoutPending}
               autoComplete="current-password"
                 value={password}
