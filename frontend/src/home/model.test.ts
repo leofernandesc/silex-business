@@ -32,7 +32,7 @@ describe("SB-04B authenticated home", () => {
         (route) =>
           route.id !== "home" &&
           route.id !== "finance-suppliers" &&
-          (!route.admin || role === "admin"),
+          (!route.admin || role === "admin") && route.id !== "subcontracted-freight",
       );
       expect(navigation.available).toEqual(expected);
       const ids = [

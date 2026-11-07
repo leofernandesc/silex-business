@@ -14,7 +14,7 @@ const quickOrder: readonly RouteId[] = [
   "finance-receivable",
   "service-orders",
 ];
-export function homeNavigation(user: Pick<User, "role"> | null) {
+export function homeNavigation(user: Pick<User, "role" | "capabilities"> | null) {
   const available = routes.filter(
     (route) =>
       route.id !== "home" &&

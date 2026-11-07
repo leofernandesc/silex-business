@@ -113,7 +113,7 @@ export default function PublicPage() {
             <h3>Serviços e operações</h3>
             <p>
               Organize serviços e pedidos, vincule custos e consulte os títulos
-              gerados. Cadastre diaristas e frete subcontratado com suas chaves
+              gerados. Cadastre fornecedores e prestadores com suas chaves
               PIX para consulta na rotina financeira.
             </p>
           </div>

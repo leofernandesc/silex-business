@@ -38,6 +38,10 @@ def data(obj):
         elif isinstance(value, date):
             value = value.isoformat()
         result[column.name] = value
+    if isinstance(obj, User):
+        from .capabilities import has_transport
+        result.pop("transport_operations", None)
+        result["capabilities"] = ["transport_operations"] if has_transport(obj) else []
     return result
 
 

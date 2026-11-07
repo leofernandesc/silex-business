@@ -271,12 +271,12 @@ export default function App() {
           {safePage === "finance" && <LedgerPage />}
           {safePage === "finance-dashboard" && <FinanceOverview navigate={navigate} />}
           {safePage === "finance-reconcile" && <FinanceReconciliation />}
-          {safePage === "finance-reports" && <FinanceReports />}
+          {safePage === "finance-reports" && <FinanceReports user={user} />}
           {safePage === "finance-payable" && (
-            <FinancePage initialDirection="expense" />
+            <FinancePage user={user} initialDirection="expense" />
           )}
           {safePage === "finance-receivable" && (
-            <FinancePage initialDirection="income" />
+            <FinancePage user={user} initialDirection="income" />
           )}
           {safePage === "finance-accounts" && (
             <FinanceCatalog kind="accounts" />
@@ -293,7 +293,7 @@ export default function App() {
           {safePage === "users" && <UsersPage current={user} />}{" "}
           {safePage === "audit" && <AuditPage />}
           {safePage === "company-settings" && user.role === "admin" && <CompanySettingsPage onSaved={setCompany} />}
-          {safePage === "service-orders" && user.role === "admin" && <ServiceOrdersPage />}
+          {safePage === "service-orders" && user.role === "admin" && <ServiceOrdersPage user={user} />}
         </main>
         <footer className="app-footer">
           <span>Silex Business · Gestão empresarial</span>

@@ -19,6 +19,7 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(Text)
     role: Mapped[str] = mapped_column(String(20))
     active: Mapped[bool] = mapped_column(Boolean, default=True)
+    transport_operations: Mapped[bool] = mapped_column(Boolean, default=False, server_default=text("0"))
     __table_args__ = (CheckConstraint("role IN ('admin', 'operator')"),)
 
 
