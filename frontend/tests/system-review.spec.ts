@@ -27,7 +27,7 @@ for (const width of [1440, 1024, 768, 375, 320]) {
     const current = await (await page.request.get("/api/auth/me")).json();
     for (const route of routes.filter(route => canAccessRoute(current, route.id))) {
       await openReadyRoute(page,route);
-      await expect(page.locator("main h1")).toBeVisible();
+      await expect(page.locator(".app-shell main h1")).toBeVisible();
       await expect(
         page.getByText(
           /Carregando (registros|informações financeiras|identificação da empresa)/,

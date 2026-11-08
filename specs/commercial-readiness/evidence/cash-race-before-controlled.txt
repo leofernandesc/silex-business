@@ -1,0 +1,40 @@
+[WebServer] INFO:     Started server process [628707]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 1 test using 1 worker
+
+(node:628709) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [mobile] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível (1.0m)
+
+
+  1) [mobile] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Abrir meu caixa', exact: true })
+
+
+      3 | async function reach(page: Page, locator: Locator) {
+      4 |   for (let i = 0; i < 400; i++) {
+    > 5 |     if (await locator.evaluate((e) => e === document.activeElement)) return;
+        |                       ^
+      6 |     const reverse = await locator.evaluate((e) =>
+      7 |       Boolean(
+      8 |         document.activeElement &&
+        at reach (/home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:5:23)
+        at activate (/home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:21:9)
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:330:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/modal-workflows-Caixa-conf-2c518--e-mantém-destino-acessível-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/modal-workflows-Caixa-conf-2c518--e-mantém-destino-acessível-mobile/error-context.md
+
+  1 failed
+    [mobile] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível

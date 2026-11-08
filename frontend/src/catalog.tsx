@@ -85,7 +85,7 @@ export function Customers({ user }: { user: User }) {
             "Situação",
             "Ações",
           ]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!result.data?.items.length}
         >
           {result.data?.items.map((row) => (
@@ -386,7 +386,7 @@ export function Products({ user }: { user: User }) {
             "Situação",
             "Ações",
           ]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!result.data?.items.length}
         >
           {result.data?.items.map((row) => (

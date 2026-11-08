@@ -1,0 +1,121 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.12kB done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#2 DONE 0.2s
+
+#3 [internal] load metadata for docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 569B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [runtime 1/8] FROM docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258 0.2s done
+#6 DONE 0.2s
+
+#7 [frontend 1/8] FROM docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+#7 resolve docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392 0.2s done
+#7 DONE 0.2s
+
+#5 [internal] load build context
+#5 transferring context: 158.23kB 0.0s done
+#5 DONE 0.1s
+
+#8 [runtime 2/8] WORKDIR /app
+#8 CACHED
+
+#9 [runtime 3/8] COPY backend/requirements.txt /app/backend/requirements.txt
+#9 CACHED
+
+#10 [frontend 2/8] WORKDIR /build/frontend
+#10 CACHED
+
+#11 [frontend 3/8] COPY frontend/package.json frontend/package-lock.json ./
+#11 CACHED
+
+#12 [frontend 4/8] RUN npm ci --no-audit --no-fund
+#12 CACHED
+
+#13 [runtime 4/8] RUN pip install --no-cache-dir -r /app/backend/requirements.txt
+#13 CACHED
+
+#14 [runtime 5/8] COPY backend/app/ /app/backend/app/
+#14 DONE 1.6s
+
+#15 [frontend 5/8] COPY frontend/src/ ./src/
+#15 DONE 2.1s
+
+#16 [runtime 6/8] COPY backend/migrations/ /app/backend/migrations/
+#16 DONE 1.6s
+
+#17 [frontend 6/8] COPY frontend/public/ ./public/
+#17 DONE 1.1s
+
+#18 [frontend 7/8] COPY frontend/index.html frontend/tsconfig.json frontend/vite.config.ts ./
+#18 ...
+
+#19 [runtime 7/8] COPY backend/alembic.ini /app/backend/alembic.ini
+#19 DONE 0.2s
+
+#18 [frontend 7/8] COPY frontend/index.html frontend/tsconfig.json frontend/vite.config.ts ./
+#18 DONE 0.2s
+
+#20 [frontend 8/8] RUN npm run build
+#20 1.079
+#20 1.079 > gestao-local@0.1.0 build
+#20 1.079 > tsc -b && vite build
+#20 1.079
+#20 18.92 vite v7.3.7 building client environment for production...
+#20 19.10 transforming...
+#20 27.98 ✓ 3115 modules transformed.
+#20 28.37 rendering chunks...
+#20 28.71 computing gzip size...
+#20 28.74 dist/index.html                        0.60 kB │ gzip:   0.37 kB
+#20 28.74 dist/assets/PublicPage-DkWOma6T.css   11.83 kB │ gzip:   2.49 kB
+#20 28.74 dist/assets/App-BKWIgUwf.css          38.73 kB │ gzip:   5.34 kB
+#20 28.74 dist/assets/index-Cis4Wmyo.css        46.51 kB │ gzip:  10.33 kB
+#20 28.74 dist/assets/x-LtoYwwOl.js              3.44 kB │ gzip:   1.58 kB
+#20 28.74 dist/assets/PublicPage-ymxBwrNC.js    12.04 kB │ gzip:   3.61 kB
+#20 28.74 dist/assets/index-BEDWHjKV.js        228.42 kB │ gzip:  71.69 kB
+#20 28.74 dist/assets/App-D6g_OAp6.js          438.88 kB │ gzip: 132.68 kB
+#20 28.74 ✓ built in 9.76s
+#20 DONE 28.9s
+
+#21 [runtime 8/8] COPY --from=frontend /build/frontend/dist /app/frontend/dist
+#21 DONE 0.0s
+
+#22 exporting to image
+#22 exporting layers
+#22 exporting layers 0.3s done
+#22 exporting manifest sha256:ed1378e6f3068cf4c6ae8eec1d6141b9264c629a31d8b69d71fa1dee375b3fdf 0.0s done
+#22 exporting config sha256:65469c2a29a237ca85155b05058cb00e7e4a6f96722ea6b8a3a64ec7baf5120b done
+#22 exporting attestation manifest sha256:ad178cf04e75c7dcca96fe9ff796f7170ddf6d1b9d721bc0f33c43c8c68c1a98 0.0s done
+#22 exporting manifest list sha256:abae1c76ef261abee8a60582b00ea6271f6cad41b3e56337dc6d85942aef3f38 0.0s done
+#22 naming to docker.io/library/silex-commercial-readiness:final-audit done
+#22 unpacking to docker.io/library/silex-commercial-readiness:final-audit 0.1s done
+#22 DONE 0.4s
+Browser HTTPS: public page, protected return, login, dashboard, book cash, logout and Secure cookie passed.
+{
+  "mount_required": true,
+  "no_demo_seed": true,
+  "admin_cli_no_password_echo": true,
+  "restart_equal": true,
+  "fresh_container_equal": true,
+  "attachments_restored": true,
+  "single_instance_lock": true,
+  "migration_failure_stops": true,
+  "demo_database_rejected": true,
+  "forged_proxy_headers_rejected": true,
+  "runtime_memory_limit_MiB": 470,
+  "memory_peak_bytes_including_cli": 142028800
+}
+{"idle_sample_memory": "72.13MiB / 470MiB", "idle_sample_cpu": "0.11%"}

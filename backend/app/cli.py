@@ -7,12 +7,15 @@ import hashlib
 import io
 import tempfile
 import zipfile
+import sys
+import warnings
 from datetime import timedelta
 from pathlib import Path
 
 from alembic import command
 from alembic.config import Config
 from sqlalchemy import func, select, text
+from sqlalchemy.exc import IntegrityError
 
 from .api import passwords
 from .db import ROOT, build_engine, session_factory
@@ -31,17 +34,34 @@ def migrate():
 
 
 def create_admin():
+    if not sys.stdin.isatty():
+        raise SystemExit("Execute create-admin em um terminal interativo com entrada protegida.")
     username = input("Usuário administrador: ").strip().lower()
     name = input("Nome: ").strip()
-    password = getpass.getpass("Senha (mínimo 10 caracteres): ")
-    confirmation = getpass.getpass("Repita a senha: ")
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", getpass.GetPassWarning)
+            password = getpass.getpass("Senha (mínimo 10 caracteres): ")
+            confirmation = getpass.getpass("Repita a senha: ")
+    except getpass.GetPassWarning:
+        raise SystemExit("Não foi possível obter entrada protegida; nenhuma conta foi criada.") from None
     from .schemas import UserInput
-    values = UserInput(username=username, name=name, password=password, role="admin")
+    from pydantic import ValidationError
+    try:
+        values = UserInput(username=username, name=name, password=password, role="admin")
+    except ValidationError:
+        raise SystemExit("Confira usuário, nome e senha (mínimo 10 caracteres). Nenhuma conta foi criada.") from None
     if password != confirmation:
         raise SystemExit("As senhas não coincidem")
     with session_factory(build_engine())() as db:
+        if db.scalar(select(User.id).where(User.username == values.username.lower())):
+            raise SystemExit("Usuário já cadastrado; nenhuma conta foi alterada.")
         db.add(User(name=values.name, username=values.username.lower(), password_hash=passwords.hash(password), role="admin"))
-        db.commit()
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            raise SystemExit("Não foi possível criar o administrador; confira se o usuário já existe.") from None
     print("Administrador criado. Senha não gravada em arquivos.")
 
 

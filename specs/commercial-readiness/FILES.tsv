@@ -1,0 +1,125 @@
+status	arquivo	módulo	justificativa
+M	.github/workflows/integration-tests.yml	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	backend/app/api.py	Backend financeiro/HTTP	Limite de recepção e chave de quitação vinculada ao título
+M	backend/app/cli.py	Administração	Entrada protegida e erros sem senha/parâmetros SQL
+M	backend/app/reporting.py	Relatórios	Período, classificação, base temporal e filtro de orçamento explícito
+A	backend/app/request_limits.py	HTTP	Limites reais de bytes e prazo antes do parsing
+M	backend/migrations/env.py	Migração	Transação física SQLite e rollback de DDL
+A	backend/tests/test_admin_cli_safety.py	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	backend/tests/test_commercial_reports.py	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	backend/tests/test_financial_stage1.py	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	backend/tests/test_migration_recovery.py	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	backend/tests/test_pr_diff_gate.py	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	backend/tests/test_request_body_limits.py	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/package-lock.json	Dependência de teste	Somente axe-core/playwright exato e lockfile, sem dependência de runtime
+M	frontend/package.json	Dependência de teste	Somente axe-core/playwright exato e lockfile, sem dependência de runtime
+A	frontend/playwright.commercial.config.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/playwright.financial-stage1.config.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/playwright.integration.config.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/playwright.review.config.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/playwright.transport.config.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/src/App.tsx	Login	Main e título visível em desktop/móvel
+M	frontend/src/api.test.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/src/api.ts	HTTP frontend	Sessão preservada, deadline, erros seguros e download CSV
+M	frontend/src/catalog.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/finance.tsx	Pagar/Receber	Parsing estrito, retry de filtros, feedback e foco durante consultas auxiliares
+M	frontend/src/financeCatalog.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/financePlanning.tsx	Relatórios/OFX	Propagação de erro, CSV central, impressão e detalhes/data de apresentação
+M	frontend/src/ledger.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/navigation/useAppNavigation.ts	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/operations.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/partners.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+A	frontend/src/reportValues.test.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	frontend/src/resourceValidation.test.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	frontend/src/resourceValidation.ts	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/sales.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/serviceOrders.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+M	frontend/src/styles.css	CSS local	Somente semântica visual do login e quebra de faixas de impressão
+M	frontend/src/ui.tsx	UI compartilhada	Snapshot por chave, retry e estados de tabela/consulta
+M	frontend/src/users.tsx	Interface	Propagar erro/retry ou validar resposta, preservando fluxo e contratos
+A	frontend/tests/commercial-a11y.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	frontend/tests/commercial-lookups.spec.ts	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	frontend/tests/commercial-readiness.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	frontend/tests/commercial-report-values.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/tests/financial-stage1.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/tests/forms-review.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/tests/integration-reports.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/tests/integrationTest.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/tests/modal-workflows.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+M	frontend/tests/system-review.spec.ts	Testes/fixture	Regressão dirigida ou execução reproduzível sem relaxar regras de negócio
+A	scripts/check_pr_diff.py	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+M	scripts/check_railway.py	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+A	scripts/compare_commercial_finance.py	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+A	scripts/inspect_commercial_pdf.py	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+A	scripts/inventory_commercial_backend.py	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+A	scripts/inventory_commercial_ui.mjs	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+M	scripts/railway_browser.mjs	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+A	scripts/validate_commercial_readiness.py	Instrumentos	Validação/reprodução/inspeção em ambiente descartável
+A	specs/commercial-readiness/BACKEND-INVENTORY.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/BASELINE.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/CHECKSUMS.sha256	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/DEFECTS.md	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/FILES.tsv	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/FINAL-REVIEW.md	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/FLOW-VALIDATION.md	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/RELEASE-CHECKLIST.md	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/UI-INVENTORY-BEFORE.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/UI-INVENTORY.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/aux-before.txt	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/aux-before.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/axe-chromium-desktop.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/axe-chromium-mobile.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/axe-firefox-desktop.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/axe-firefox-mobile.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/backend-final.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/build-final.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/cash-race-after-chromium.txt	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/cash-race-after-firefox.txt	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/cash-race-before-controlled.txt	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/cash-race-before-controlled.txt.gz	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/chromium-304.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/chromium-306.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/chromium-306.txt	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/chromium-before-fix-full.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/chromium-before-fix-full.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/ci-initial.json	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/components-chromium.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/components-firefox.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/dashboard-error.png	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/dashboard-mobile.png	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/date-like-before.txt	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/date-like-before.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/deployment-reference.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/docker-recovery.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/docker-recovery.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/final-directed.txt	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/final-directed.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/finance-chromium.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/finance-comparison.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/finance-firefox.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/firefox-306.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/firefox-306.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/frontend-final.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/frontend-final.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/git-fsck.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/index.html	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/log-provenance.json	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/npm-advisories.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/preservation.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/python-advisories.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/refs-preserved.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
+A	specs/commercial-readiness/evidence/report-a4-check.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-after-a4.pdf	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-before-a4.pdf	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-details-after.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-details-after.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/report-details-before.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-details-before.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/report-e2e-after.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-first-page.png	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-last-page.png	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/report-nested-a4.pdf	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/secret-scan.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/source-checkpoint.json	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/transport-chromium.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/transport-firefox.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais

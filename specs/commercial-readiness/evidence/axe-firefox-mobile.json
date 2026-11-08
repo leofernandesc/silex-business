@@ -1,0 +1,110 @@
+[
+  {
+    "surface": "login",
+    "violations": []
+  },
+  {
+    "surface": "home",
+    "violations": []
+  },
+  {
+    "surface": "dashboard",
+    "violations": []
+  },
+  {
+    "surface": "customers",
+    "violations": []
+  },
+  {
+    "surface": "products",
+    "violations": []
+  },
+  {
+    "surface": "suppliers",
+    "violations": []
+  },
+  {
+    "surface": "day-workers",
+    "violations": []
+  },
+  {
+    "surface": "subcontracted-freight",
+    "violations": []
+  },
+  {
+    "surface": "stock",
+    "violations": []
+  },
+  {
+    "surface": "pos",
+    "violations": []
+  },
+  {
+    "surface": "sales",
+    "violations": []
+  },
+  {
+    "surface": "service-orders",
+    "violations": []
+  },
+  {
+    "surface": "cash",
+    "violations": []
+  },
+  {
+    "surface": "finance-dashboard",
+    "violations": []
+  },
+  {
+    "surface": "finance",
+    "violations": []
+  },
+  {
+    "surface": "finance-reconcile",
+    "violations": []
+  },
+  {
+    "surface": "finance-payable",
+    "violations": []
+  },
+  {
+    "surface": "finance-receivable",
+    "violations": []
+  },
+  {
+    "surface": "finance-accounts",
+    "violations": []
+  },
+  {
+    "surface": "finance-categories",
+    "violations": []
+  },
+  {
+    "surface": "finance-subcategories",
+    "violations": []
+  },
+  {
+    "surface": "finance-reports",
+    "violations": []
+  },
+  {
+    "surface": "users",
+    "violations": []
+  },
+  {
+    "surface": "audit",
+    "violations": []
+  },
+  {
+    "surface": "company-settings",
+    "violations": []
+  },
+  {
+    "surface": "finance-suppliers",
+    "violations": []
+  },
+  {
+    "surface": "customer-dialog",
+    "violations": []
+  }
+]

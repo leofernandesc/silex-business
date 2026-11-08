@@ -231,5 +231,10 @@ test('page two print preserves current rows, long text, IDs and full cents on A4
  const bands=section.locator('.finance-report-column-bands');await expect(bands).toBeVisible();
  for(const value of data.items){await expect(bands).toContainText(value.description);await expect(bands).toContainText(new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(value.amount_cents/100));}
  for(const value of firstPage.items)expect(data.items.map((r:any)=>r.id)).not.toContain(value.id);
- if(browserName==='chromium')await page.pdf({path:'../docs/evidence/system-review/page-two-large-a4.pdf',format:'A4',printBackground:true});
+ if(browserName==='chromium'){
+  const pdf=await page.pdf({path:'../docs/evidence/system-review/page-two-large-a4.pdf',format:'A4',printBackground:true});
+  // Actual PDF page objects: the three-row synthetic document previously wasted eight pages.
+  expect((pdf.toString('latin1').match(/\/Type \/Page\b/g)||[]).length).toBeLessThanOrEqual(4);
+ }
+
 });

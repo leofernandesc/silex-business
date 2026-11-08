@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { api, apiRequest, ApiError, resetSessionRequests } from "./api";
+import { api, apiRequest, ApiError, resetSessionRequests, REQUEST_TIMEOUT_MS } from "./api";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -13,7 +13,7 @@ describe("binary requests share the existing HTTP/session handling", () => {
     const fetch = vi.fn().mockResolvedValue(new Response('{"id":7}'));
     vi.stubGlobal("fetch", fetch);
     expect(await apiRequest("/finance/ofx/imports?account_id=2", { method: "POST", headers, body })).toEqual({ id: 7 });
-    expect(fetch).toHaveBeenCalledExactlyOnceWith("/api/finance/ofx/imports?account_id=2", { method: "POST", headers, body, credentials: "same-origin" });
+    expect(fetch).toHaveBeenCalledExactlyOnceWith("/api/finance/ofx/imports?account_id=2", { method: "POST", headers, body, signal:expect.any(AbortSignal), credentials: "same-origin" });
   });
   it.each([400, 401, 403, 404, 422, 500, 503])("preserves HTTP %i and never retries the body", async status => {
     const dispatchEvent = vi.fn(); vi.stubGlobal("window", { dispatchEvent });
@@ -50,7 +50,7 @@ describe("binary requests share the existing HTTP/session handling", () => {
     const dispatchEvent = vi.fn(); vi.stubGlobal("window", { dispatchEvent });
     const failure = new TypeError("Failed to fetch"), fetch = vi.fn().mockRejectedValue(failure);
     vi.stubGlobal("fetch", fetch);
-    await expect(apiRequest("/finance/ofx/imports", { method: "POST" })).rejects.toBe(failure);
+    await expect(apiRequest("/finance/ofx/imports", { method: "POST" })).rejects.toMatchObject({status:0,message:expect.stringContaining("conectar")});
     expect(fetch).toHaveBeenCalledTimes(1); expect(dispatchEvent).not.toHaveBeenCalled();
   });
 });
@@ -126,4 +126,37 @@ describe("existing cookie API and session events", () => {
     await expect(pending).rejects.toMatchObject({ status: 401 });
     expect(dispatchEvent).not.toHaveBeenCalled();
   });
+});
+
+describe('bounded and safe failures across all API consumers',()=>{
+ afterEach(()=>vi.useRealTimers());
+ it.each([409,429])('preserves HTTP %i and performs no retry',async status=>{
+  const fetch=vi.fn().mockResolvedValue(new Response('{"detail":"Mensagem de negócio"}',{status}));vi.stubGlobal('fetch',fetch);
+  await expect(api('/customers','POST',{})).rejects.toMatchObject({status,message:'Mensagem de negócio'});expect(fetch).toHaveBeenCalledTimes(1);
+ });
+ it.each([{detail:[]},{detail:[{loc:['body','name'],msg:'invalid'}]}])('normalizes structured validation without object stringification',async ({detail})=>{
+  vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response(JSON.stringify({detail}),{status:422})));
+  await expect(api('/customers','POST',{})).rejects.toMatchObject({status:422,message:'Confira os campos informados.'});
+ });
+ it.each(['<html>synthetic diagnostic</html>','Traceback\nnot-real-private-field','SELECT name FROM private_table'])('suppresses server diagnostics',async detail=>{
+  vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response(JSON.stringify({detail}),{status:500})));
+  await expect(api('/customers')).rejects.toMatchObject({status:500,message:'Não foi possível concluir a operação'});
+ });
+ it('rejects successful non-JSON without exposing response text',async()=>{
+  vi.stubGlobal('fetch',vi.fn().mockResolvedValue(new Response('<html>synthetic private data</html>')));
+  await expect(api('/customers')).rejects.toMatchObject({status:200,message:'Resposta inválida do servidor. Tente novamente.'});
+ });
+ it('aborts stalled mutations on deadline, warns about unknown result and never replays',async()=>{
+  vi.useFakeTimers();
+  const fetch=vi.fn((_url,init)=>new Promise((_resolve,reject)=>init.signal.addEventListener('abort',()=>reject(new DOMException('stopped','AbortError')))));
+  vi.stubGlobal('fetch',fetch);
+  const assertion=expect(api('/finance','POST',{amount_cents:101})).rejects.toMatchObject({status:0,message:expect.stringContaining('Consulte o resultado')});
+  await vi.advanceTimersByTimeAsync(REQUEST_TIMEOUT_MS+1);await assertion;
+  expect(fetch).toHaveBeenCalledTimes(1);expect(fetch.mock.calls[0][1].signal.aborted).toBe(true);expect(vi.getTimerCount()).toBe(0);
+ });
+ it('forwards caller cancellation and clears its deadline',async()=>{
+  vi.useFakeTimers();const controller=new AbortController(),failure=new DOMException('cancelled','AbortError');
+  vi.stubGlobal('fetch',vi.fn((_url,init)=>new Promise((_r,reject)=>init.signal.addEventListener('abort',()=>reject(failure)))));
+  const assertion=expect(apiRequest('/customers',{signal:controller.signal})).rejects.toBe(failure);controller.abort();await assertion;expect(vi.getTimerCount()).toBe(0);
+ });
 });

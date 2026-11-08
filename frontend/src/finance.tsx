@@ -31,6 +31,7 @@ import {
   Pagination,
   SummaryCard,
   useLoad,
+  LoadFeedback,
 } from "./ui";
 
 import { LedgerTable } from "./ledgerPresentation";
@@ -61,7 +62,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
   const summary = !result.loading && !result.error ? result.data?.summary : undefined;
   const stateDetail = result.loading ? "Consultando dados…" : "Dados indisponíveis";
   const update = (field: keyof FinanceFilters, value: string) => setDraft((current) => ({ ...current, [field]: value }));
-  function apply(next = draft) { syncFinancialSearch("titles",{...next,direction:initialDirection || next.direction}); setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); }
+  function apply(next = draft) { syncFinancialSearch("titles",{...next,direction:initialDirection || next.direction}); setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); refresh(value=>value+1); }
   function quickPeriod(value: string) {
     const { start, end } = titlePeriodRange(value);
     const next = { ...draft, start, end };
@@ -72,11 +73,12 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
   const title = initialDirection === "income" ? "Contas a Receber" : initialDirection === "expense" ? "Contas a Pagar" : "Lançamentos (Despesa/Receita)";
   return <div className="silex-accounts">
     <PageTitle title={title} subtitle={initialDirection === "income" ? "Acompanhe recebimentos, vencimentos e baixas." : initialDirection === "expense" ? "Acompanhe pagamentos, vencimentos e beneficiários." : "Livro financeiro com filtros, comprovantes e histórico de pagamentos."}>
-      <button onClick={() => setSettings(true)}><Settings2 size={15} /> Contas e categorias</button>
+      <button disabled={!!accounts.error||!!categories.error} onClick={() => setSettings(true)}><Settings2 size={15} /> Contas e categorias</button>
       <button onClick={() => window.open("/api/finance/print?" + query(filters), "_blank", "noopener,noreferrer")}><Printer size={15} /> Imprimir</button>
       <ExportButton onClick={() => exportCsv("finance", filters)} />
-      <button className={initialDirection === "expense" ? "accounts-new-expense" : "primary"} onClick={() => setAdding(true)}><Plus size={17} />{initialDirection === "expense" ? "Nova despesa" : initialDirection === "income" ? "Nova receita" : "Novo lançamento"}</button>
+      <button disabled={!!accounts.error||!!categories.error} className={initialDirection === "expense" ? "accounts-new-expense" : "primary"} onClick={() => setAdding(true)}><Plus size={17} />{initialDirection === "expense" ? "Nova despesa" : initialDirection === "income" ? "Nova receita" : "Novo lançamento"}</button>
     </PageTitle>
+    <LoadFeedback resource={accounts} label="contas"/><LoadFeedback resource={categories} label="categorias"/><LoadFeedback resource={suppliers} label="beneficiários"/>
     <p className="help" aria-label="Filtros aplicados">Filtros aplicados: {temporalSummary(filters)}</p>
     <div className="summary-grid finance-summary-grid" aria-busy={result.loading}>
       <SummaryCard label="Saldo pendente" value={summary ? money(summary.pending_cents) : "—"} detail={!summary ? stateDetail : initialDirection === "income" ? "Principal a receber neste filtro." : initialDirection === "expense" ? "Principal a pagar neste filtro." : "Principal pendente no recorte aplicado."} tone="blue" icon={<ArrowDownLeft />} />
@@ -107,7 +109,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
       </form>
       {result.error && <Notice>{result.error}</Notice>}
       <div className="panel-heading finance-table-heading"><h2>Lançamentos <span className="muted">({summary ? result.data?.total : "—"})</span></h2><label className="inline-field">Itens por página<select value={String(pageSize)} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></div>
-      {!result.error && <LedgerTable headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
+      {!result.error && <LedgerTable headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} error={result.error} empty={!result.data?.items.length}>
         {result.data?.items.map((row) => <tr key={row.id}>
           <td><strong>{row.description}</strong><small>{row.direction === "income" ? row.customer_name : row.supplier_name || `Título #${row.id}`}</small>{row.supplier_kind && row.supplier_kind !== "supplier" && <small>{partnerKinds[row.supplier_kind]}</small>}{row.service_order_code && <small>Serviço/pedido {row.service_order_code}</small>}{row.recurrence_count > 1 && <small>Ocorrência {row.recurrence_index}/{row.recurrence_count}</small>}{row.document && <small>Doc. {row.document}</small>}</td>
           <td><Badge status={row.direction} /></td><td>{row.account_name}<small>{row.category_name}</small></td>
@@ -118,10 +120,13 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
       </LedgerTable>}
       <Pagination data={result.error ? null : result.data} onPage={setPage} />
     </section>
+    {adding && (!accounts.data || !categories.data) && <Modal title="Carregando cadastro financeiro" close={()=>setAdding(false)}><LoadFeedback resource={accounts} label="contas"/><LoadFeedback resource={categories} label="categorias"/></Modal>}
     {adding && accounts.data && categories.data && <EntryForm accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} initialDirection={initialDirection || "income"} fixedDirection={Boolean(initialDirection)} close={() => setAdding(false)} done={done} />}
+    {settling && !accounts.data && <Modal title="Carregando contas para pagamento" close={()=>setSettling(null)}><LoadFeedback resource={accounts} label="contas"/></Modal>}
     {settling && accounts.data && <SettleForm entry={settling} accounts={accounts.data.filter((a) => a.active)} close={() => setSettling(null)} done={done} />}
     {historyEntry && <PaymentHistory entry={historyEntry} close={() => setHistoryEntry(null)} done={() => { setHistoryEntry(null); refresh(version + 1); }} />}
     {canceling && <CancelForm entry={canceling} close={() => setCanceling(null)} done={done} />}
+    {settings && (!accounts.data || !categories.data) && <Modal title="Carregando configurações financeiras" close={()=>setSettings(false)}><LoadFeedback resource={accounts} label="contas"/><LoadFeedback resource={categories} label="categorias"/></Modal>}
     {settings && accounts.data && categories.data && <FinanceSettings accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} close={() => setSettings(false)} refresh={() => refresh(version + 1)} />}
   </div>;
 }
@@ -129,8 +134,9 @@ function EntryForm({ accounts, categories, initialDirection='income', fixedDirec
   const [description,setDescription]=useState(''),[direction,setDirection]=useState(initialDirection),[value,setValue]=useState(''),[account,setAccount]=useState(String(accounts.find(a=>a.kind==='bank')?.id||accounts[0]?.id||'')),[category,setCategory]=useState(String(categories.find(c=>c.direction==='both'||c.direction===initialDirection)?.id||categories[0]?.id||'')),[subcategory,setSubcategory]=useState(''),[due,setDue]=useState(localDate()),[competence,setCompetence]=useState(localDate()),[document,setDocument]=useState(''),[customer,setCustomer]=useState(''),[supplier,setSupplier]=useState(''),[q,setQ]=useState(''),[count,setCount]=useState('1'),[frequency,setFrequency]=useState('monthly');
   const customers=useLoad<Page<Customer>>('/customers?'+query({q,active:true,page_size:100})),suppliers=useLoad<Page<Supplier>>('/suppliers?'+query({q,active:true,page_size:100})),subcats=useLoad<Subcategory[]>('/subcategories');
   const categoryChoices=categories.filter(c=>c.active&&(c.direction==='both'||c.direction===direction)),subChoices=(subcats.data||[]).filter(x=>x.active&&x.category_id===Number(category));
-  const num=Number(count),endDate=due?new Date(due+'T12:00:00Z'):null;
+  const num=Number(count);let recurrenceAmount:number|null=null;try{recurrenceAmount=parseDecimal(value,2);}catch{/* Preview unavailable; submission stays strict. */}
   return <Modal title={direction==='income'?'Nova conta a receber':'Nova conta a pagar'} close={close}><Form cancel={close} submit={num>1?'Criar títulos recorrentes':'Criar título'} onSubmit={async()=>{await api('/finance','POST',{description,direction,amount_cents:parseDecimal(value,2),account_id:Number(account),category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,customer_id:direction==='income'&&customer?Number(customer):null,supplier_id:direction==='expense'&&supplier?Number(supplier):null,due_date:due,competence_date:competence,document,recurrence_count:num,recurrence_frequency:frequency});done();}}>
+    <LoadFeedback resource={direction==='income'?customers:suppliers} label={direction==='income'?'clientes':'beneficiários'}/><LoadFeedback resource={subcats} label="subcategorias"/>
     <div className="form-grid">
       <Field label="Histórico *" span><input autoFocus required maxLength={180} value={description} onChange={e=>setDescription(e.target.value)}/></Field>
       {!fixedDirection?<Field label="Tipo"><select value={direction} onChange={e=>{setDirection(e.target.value);setCustomer('');setSupplier('');const next=categories.find(c=>c.active&&(c.direction==='both'||c.direction===e.target.value));if(next)setCategory(String(next.id));}}><option value="income">Receita / a receber</option><option value="expense">Despesa / a pagar</option></select></Field>:<Field label="Tipo"><input readOnly value={direction==='income'?'Receita / a receber':'Despesa / a pagar'}/></Field>}
@@ -146,21 +152,22 @@ function EntryForm({ accounts, categories, initialDirection='income', fixedDirec
       <Field label="Quantidade de títulos *"><input required type="number" min="1" max="60" value={count} onChange={e=>setCount(e.target.value)}/></Field>
       {num>1&&<Field label="Frequência"><select value={frequency} onChange={e=>setFrequency(e.target.value)}><option value="daily">Diária</option><option value="weekly">Semanal</option><option value="monthly">Mensal</option><option value="yearly">Anual</option></select></Field>}
     </div>
-    {num>1&&<Notice tone="info">Serão criados {num} títulos de {money((()=>{try{return parseDecimal(value,2)}catch{return 0}})())} cada, a partir de {dateOnly(due)}. Total da série: {money((()=>{try{return parseDecimal(value,2)*num}catch{return 0}})())}.</Notice>}
+    {num>1&&<Notice tone="info">Serão criados {num} títulos de {recurrenceAmount===null?'—':money(recurrenceAmount)} cada, a partir de {dateOnly(due)}. Total da série: {recurrenceAmount===null?'—':money(recurrenceAmount*num)}.</Notice>}
     {direction==='expense'&&suppliers.data?.items.filter(v=>String(v.id)===supplier&&v.pix_key).map(v=><PixDetails key={v.id} name={v.name} pix={{key_type:v.pix_key_type,key:v.pix_key,holder:v.pix_holder}}/>)}
     <p className="help">Criar título não altera saldo de caixa ou conta. O saldo muda quando uma baixa é registrada.</p>
   </Form></Modal>;
 }
 function SettleForm({entry,accounts,close,done}:{entry:Entry;accounts:Account[];close:()=>void;done:()=>void}) {
   const current=accounts.find(a=>a.id===entry.account_id),[method,setMethod]=useState(current?.kind==='cash'?'cash':'pix'),[account,setAccount]=useState(String(current?.active?entry.account_id:accounts.find(a=>a.kind==='bank')?.id||'')),[principal,setPrincipal]=useState((entry.remaining_cents/100).toFixed(2).replace('.',',')),[interest,setInterest]=useState('0,00'),[fine,setFine]=useState('0,00'),[discount,setDiscount]=useState('0,00'),[key]=useState(()=>crypto.randomUUID());
-  const principalCents=(()=>{try{return parseDecimal(principal,2)}catch{return 0}})(),interestCents=(()=>{try{return parseDecimal(interest,2)}catch{return 0}})(),fineCents=(()=>{try{return parseDecimal(fine,2)}catch{return 0}})(),discountCents=(()=>{try{return parseDecimal(discount,2)}catch{return 0}})(),total=principalCents+interestCents+fineCents-discountCents;
+  const parsed=(()=>{try{return {principalCents:parseDecimal(principal,2),interestCents:interest.trim()?parseDecimal(interest,2):0,fineCents:fine.trim()?parseDecimal(fine,2):0,discountCents:discount.trim()?parseDecimal(discount,2):0};}catch{return null;}})();
+  const total=parsed?parsed.principalCents+parsed.interestCents+parsed.fineCents-parsed.discountCents:null;
   function changeMethod(value:string){setMethod(value);setAccount(String(accounts.find(a=>a.active&&a.kind===(value==='cash'?'cash':'bank'))?.id||''));}
-  const full=principalCents===entry.remaining_cents&&interestCents===0&&fineCents===0&&discountCents===0;
-  return <Modal title="Registrar quitação" close={close}><Form cancel={close} submit={full?'Confirmar quitação integral':'Registrar pagamento parcial'} onSubmit={async()=>{await api(`/finance/${entry.id}/settle`,'POST',{method,account_id:Number(account),principal_cents:principalCents,interest_cents:interestCents,fine_cents:fineCents,discount_cents:discountCents,request_key:key});done();}}>
+  const full=parsed&&parsed.principalCents===entry.remaining_cents&&parsed.interestCents===0&&parsed.fineCents===0&&parsed.discountCents===0;
+  return <Modal title="Registrar quitação" close={close}><Form cancel={close} submit={full?'Confirmar quitação integral':'Registrar pagamento parcial'} onSubmit={async()=>{if(!parsed)throw new Error('Confira os valores dos campos de pagamento.');const {principalCents,interestCents,fineCents,discountCents}=parsed;await api(`/finance/${entry.id}/settle`,'POST',{method,account_id:Number(account),principal_cents:principalCents,interest_cents:interestCents,fine_cents:fineCents,discount_cents:discountCents,request_key:key});done();}}>
     <p><strong>{entry.description}</strong></p><div className="totals grand"><span>Principal restante</span><strong>{money(entry.remaining_cents)}</strong></div>
     {entry.direction==='expense'&&method==='pix'&&entry.supplier_pix&&<PixDetails name={entry.supplier_name} pix={entry.supplier_pix}/>}
     <div className="form-grid"><Field label="Principal nesta baixa (R$) *"><input required inputMode="decimal" value={principal} onChange={e=>setPrincipal(e.target.value)}/></Field><Field label="Juros (R$)"><input inputMode="decimal" value={interest} onChange={e=>setInterest(e.target.value)}/></Field><Field label="Multa (R$)"><input inputMode="decimal" value={fine} onChange={e=>setFine(e.target.value)}/></Field><Field label="Desconto (R$)"><input inputMode="decimal" value={discount} onChange={e=>setDiscount(e.target.value)}/></Field><Field label="Pagamento"><select value={method} onChange={e=>changeMethod(e.target.value)}>{['cash','pix','card'].map(m=><option key={m} value={m}>{labels[m]}</option>)}</select></Field><Field label="Conta *"><select required value={account} onChange={e=>setAccount(e.target.value)}>{accounts.filter(a=>a.active&&a.kind===(method==='cash'?'cash':'bank')).map(a=><option key={a.id} value={a.id}>{a.name}</option>)}</select></Field></div>
-    <p className="totals"><span>Total recebido/pago</span><strong>{money(total)}</strong></p><p className="help">Juros e multa sugeridos nas taxas da conta ficam para ajuste manual. A baixa em dinheiro usa o caixa aberto e reduz o saldo esperado.</p>
+    <p className="totals"><span>Total recebido/pago</span><strong>{total===null?'—':money(total)}</strong></p><p className="help">Juros e multa sugeridos nas taxas da conta ficam para ajuste manual. A baixa em dinheiro usa o caixa aberto e reduz o saldo esperado.</p>
   </Form></Modal>;
 }
 

@@ -1,0 +1,15 @@
+[WebServer] INFO:     Started server process [629462]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 2 tests using 1 worker
+
+(node:629464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível (1.7s)
+(node:629608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [mobile] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível (1.6s)
+
+  2 passed (8.4s)

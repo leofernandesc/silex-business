@@ -1,0 +1,42 @@
+Migrações aplicadas.
+/home/leofernandesc/silex-commercial-readiness/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+
+Running 30 tests using 1 worker
+
+(node:516434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/financial-stage1.spec.ts:53:1 › integer-cent values reconcile; open, overdue, due-window and realized shortcuts retain their criteria (12.3s)
+  ✓   2 [desktop] › tests/financial-stage1.spec.ts:139:1 › applied versus draft period; pending/failure hides old values, retry recovers, empty input does not silently change query (5.4s)
+  ✓   3 [desktop] › tests/financial-stage1.spec.ts:204:3 › unavailable 500 never becomes zero or an empty successful table (1.8s)
+  ✓   4 [desktop] › tests/financial-stage1.spec.ts:204:3 › unavailable 503 never becomes zero or an empty successful table (2.1s)
+  ✓   5 [desktop] › tests/financial-stage1.spec.ts:204:3 › unavailable network never becomes zero or an empty successful table (1.9s)
+  ✓   6 [desktop] › tests/financial-stage1.spec.ts:204:3 › unavailable invalid-json never becomes zero or an empty successful table (2.2s)
+  ✓   7 [desktop] › tests/financial-stage1.spec.ts:204:3 › unavailable malformed never becomes zero or an empty successful table (1.7s)
+  ✓   8 [desktop] › tests/financial-stage1.spec.ts:231:1 › genuine zero with a registered account differs from no account; auxiliary due failure is independent (2.0s)
+  ✓   9 [desktop] › tests/financial-stage1.spec.ts:292:1 › a late response from a prior query cannot replace newer applied results (4.7s)
+  ✓  10 [desktop] › tests/financial-stage1.spec.ts:345:1 › title and movement errors hide counts and balances; operator still cannot enter financial modules (4.0s)
+  ✓  11 [desktop] › tests/financial-stage1.spec.ts:381:1 › keyboard shortcut focus, monthly alternative table and tablet/text enlargement remain usable (2.3s)
+  ✓  12 [desktop] › tests/financial-stage1.spec.ts:455:5 › civil presets in UTC › all five title presets send Manaus dates and preserve filtered navigation (9.4s)
+  ✓  13 [desktop] › tests/financial-stage1.spec.ts:455:5 › civil presets in America/Manaus › all five title presets send Manaus dates and preserve filtered navigation (8.8s)
+  ✓  14 [desktop] › tests/financial-stage1.spec.ts:455:5 › civil presets in Asia/Tokyo › all five title presets send Manaus dates and preserve filtered navigation (9.5s)
+  ✓  15 [desktop] › tests/financial-stage1.spec.ts:455:5 › civil presets in America/Los_Angeles › all five title presets send Manaus dates and preserve filtered navigation (6.5s)
+(node:519239) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  16 [mobile] › tests/financial-stage1.spec.ts:53:1 › integer-cent values reconcile; open, overdue, due-window and realized shortcuts retain their criteria (11.0s)
+  ✓  17 [mobile] › tests/financial-stage1.spec.ts:139:1 › applied versus draft period; pending/failure hides old values, retry recovers, empty input does not silently change query (5.8s)
+  ✓  18 [mobile] › tests/financial-stage1.spec.ts:204:3 › unavailable 500 never becomes zero or an empty successful table (1.5s)
+  ✓  19 [mobile] › tests/financial-stage1.spec.ts:204:3 › unavailable 503 never becomes zero or an empty successful table (1.6s)
+  ✓  20 [mobile] › tests/financial-stage1.spec.ts:204:3 › unavailable network never becomes zero or an empty successful table (1.6s)
+  ✓  21 [mobile] › tests/financial-stage1.spec.ts:204:3 › unavailable invalid-json never becomes zero or an empty successful table (1.6s)
+  ✓  22 [mobile] › tests/financial-stage1.spec.ts:204:3 › unavailable malformed never becomes zero or an empty successful table (1.5s)
+  ✓  23 [mobile] › tests/financial-stage1.spec.ts:231:1 › genuine zero with a registered account differs from no account; auxiliary due failure is independent (1.7s)
+  ✓  24 [mobile] › tests/financial-stage1.spec.ts:292:1 › a late response from a prior query cannot replace newer applied results (4.1s)
+  ✓  25 [mobile] › tests/financial-stage1.spec.ts:345:1 › title and movement errors hide counts and balances; operator still cannot enter financial modules (3.1s)
+  ✓  26 [mobile] › tests/financial-stage1.spec.ts:381:1 › keyboard shortcut focus, monthly alternative table and tablet/text enlargement remain usable (1.6s)
+  ✓  27 [mobile] › tests/financial-stage1.spec.ts:455:5 › civil presets in UTC › all five title presets send Manaus dates and preserve filtered navigation (7.0s)
+  ✓  28 [mobile] › tests/financial-stage1.spec.ts:455:5 › civil presets in America/Manaus › all five title presets send Manaus dates and preserve filtered navigation (7.8s)
+  ✓  29 [mobile] › tests/financial-stage1.spec.ts:455:5 › civil presets in Asia/Tokyo › all five title presets send Manaus dates and preserve filtered navigation (7.9s)
+  ✓  30 [mobile] › tests/financial-stage1.spec.ts:455:5 › civil presets in America/Los_Angeles › all five title presets send Manaus dates and preserve filtered navigation (7.1s)
+
+  30 passed (2.4m)

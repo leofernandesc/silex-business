@@ -22,6 +22,7 @@ import {
   SearchBox,
   Table,
   useLoad,
+  LoadFeedback,
 } from "./ui";
 
 type Kind = "accounts" | "categories" | "subcategories" | "suppliers";
@@ -125,7 +126,7 @@ export function FinanceCatalog({ kind }: { kind: Kind }) {
             "Situação",
             "Ações",
           ]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!rows.length}
         >
           {rows.map((r) => (
@@ -194,6 +195,7 @@ export function FinanceCatalog({ kind }: { kind: Kind }) {
           kind={kind}
           row={editing}
           categories={categories.data || []}
+          categoryLookup={categories}
           close={() => {
             setAdding(false);
             setEditing(null);
@@ -205,12 +207,14 @@ export function FinanceCatalog({ kind }: { kind: Kind }) {
   );
 }
 function CatalogForm({
+  categoryLookup,
   kind,
   row,
   categories,
   close,
   done,
 }: {
+  categoryLookup: {loading:boolean;error:string;reload:()=>void};
   kind: Kind;
   row: Row | null;
   categories: Category[];
@@ -246,9 +250,11 @@ function CatalogForm({
       title={`${row ? "Editar" : kind === "suppliers" ? "Novo" : "Nova"} ${singular[kind]}`}
       close={close}
     >
+      {kind==="subcategories"&&<LoadFeedback resource={categoryLookup} label="categorias"/>}
       <Form
         cancel={close}
         onSubmit={async () => {
+          if(kind==="subcategories"&&(categoryLookup.loading||categoryLookup.error))throw new Error("Consulte as categorias antes de salvar a subcategoria.");
           let extra = {};
           if (kind === "accounts") {
             const raw = opening.trim();

@@ -1,0 +1,3662 @@
+{
+  "registered_routes": [
+    {
+      "path": "/api/accounts/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "register.<locals>.edit_account",
+      "dependencies": {
+        "call": "register.<locals>.edit_account",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/categories/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "register.<locals>.edit_category",
+      "dependencies": {
+        "call": "register.<locals>.edit_category",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/ofx/imports",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.list_ofx_imports",
+      "dependencies": {
+        "call": "register.<locals>.list_ofx_imports",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/ofx/imports",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.import_ofx",
+      "dependencies": {
+        "call": "register.<locals>.import_ofx",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/ofx/imports/{identifier}",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.ofx_detail",
+      "dependencies": {
+        "call": "register.<locals>.ofx_detail",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/ofx/imports/{import_id}/items/{item_id}/suggestions",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.ofx_suggestions",
+      "dependencies": {
+        "call": "register.<locals>.ofx_suggestions",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/ofx/imports/{import_id}/items/{item_id}/confirm",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.confirm_ofx",
+      "dependencies": {
+        "call": "register.<locals>.confirm_ofx",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/subcategories",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.subcategories",
+      "dependencies": {
+        "call": "register.<locals>.subcategories",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/subcategories",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.create_subcategory",
+      "dependencies": {
+        "call": "register.<locals>.create_subcategory",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/subcategories/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "register.<locals>.edit_subcategory",
+      "dependencies": {
+        "call": "register.<locals>.edit_subcategory",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/suppliers",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.suppliers",
+      "dependencies": {
+        "call": "register.<locals>.suppliers",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/suppliers",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.create_supplier",
+      "dependencies": {
+        "call": "register.<locals>.create_supplier",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/suppliers/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "register.<locals>.edit_supplier",
+      "dependencies": {
+        "call": "register.<locals>.edit_supplier",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/movements",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.movements",
+      "dependencies": {
+        "call": "register.<locals>.movements",
+        "dependencies": [
+          {
+            "call": "register.<locals>.filter_dependency",
+            "dependencies": []
+          },
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/movements",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.create_movement",
+      "dependencies": {
+        "call": "register.<locals>.create_movement",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/{identifier}/attachments",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.add_entry_attachment",
+      "dependencies": {
+        "call": "register.<locals>.add_entry_attachment",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/payments/{identifier}/attachments",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.add_payment_attachment",
+      "dependencies": {
+        "call": "register.<locals>.add_payment_attachment",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/attachments/{identifier}",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.download_attachment",
+      "dependencies": {
+        "call": "register.<locals>.download_attachment",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/payments/{identifier}/reverse",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.reverse_title_payment",
+      "dependencies": {
+        "call": "register.<locals>.reverse_title_payment",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/movements/{identifier}/reverse",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.reverse_movement",
+      "dependencies": {
+        "call": "register.<locals>.reverse_movement",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/movements.csv",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.csv_movements",
+      "dependencies": {
+        "call": "register.<locals>.csv_movements",
+        "dependencies": [
+          {
+            "call": "register.<locals>.filter_dependency",
+            "dependencies": []
+          },
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/reports/catalog",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.report_catalog",
+      "dependencies": {
+        "call": "register.<locals>.report_catalog",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/budgets",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.budgets",
+      "dependencies": {
+        "call": "register.<locals>.budgets",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/budgets",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.save_budget",
+      "dependencies": {
+        "call": "register.<locals>.save_budget",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/budgets/{identifier}",
+      "methods": [
+        "DELETE"
+      ],
+      "handler": "register.<locals>.deactivate_budget",
+      "dependencies": {
+        "call": "register.<locals>.deactivate_budget",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/dashboard",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.finance_dashboard",
+      "dependencies": {
+        "call": "register.<locals>.finance_dashboard",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/reports/{slug}.csv",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.finance_report_csv",
+      "dependencies": {
+        "call": "register.<locals>.finance_report_csv",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/reports/{slug}",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.finance_report",
+      "dependencies": {
+        "call": "register.<locals>.finance_report",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/service-orders",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.list_service_orders",
+      "dependencies": {
+        "call": "register.<locals>.list_service_orders",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/service-orders",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.create_service_order",
+      "dependencies": {
+        "call": "register.<locals>.create_service_order",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/service-orders/{identifier}",
+      "methods": [
+        "GET"
+      ],
+      "handler": "register.<locals>.get_service_order",
+      "dependencies": {
+        "call": "register.<locals>.get_service_order",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/service-orders/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "register.<locals>.update_service_order",
+      "dependencies": {
+        "call": "register.<locals>.update_service_order",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/service-orders/{identifier}/generate-titles",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.generate_service_order_titles",
+      "dependencies": {
+        "call": "register.<locals>.generate_service_order_titles",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/service-orders/{identifier}/cancel",
+      "methods": [
+        "POST"
+      ],
+      "handler": "register.<locals>.cancel_service_order",
+      "dependencies": {
+        "call": "register.<locals>.cancel_service_order",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/health",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.health",
+      "dependencies": {
+        "call": "create_app.<locals>.health",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/company-settings",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.get_company_settings",
+      "dependencies": {
+        "call": "create_app.<locals>.get_company_settings",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/company-settings",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "create_app.<locals>.put_company_settings",
+      "dependencies": {
+        "call": "create_app.<locals>.put_company_settings",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/auth/login",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.login",
+      "dependencies": {
+        "call": "create_app.<locals>.login",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/auth/me",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.me",
+      "dependencies": {
+        "call": "create_app.<locals>.me",
+        "dependencies": [
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/auth/logout",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.logout",
+      "dependencies": {
+        "call": "create_app.<locals>.logout",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/users",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.users",
+      "dependencies": {
+        "call": "create_app.<locals>.users",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/users",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_user",
+      "dependencies": {
+        "call": "create_app.<locals>.create_user",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/users/{identifier}/toggle",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.toggle_user",
+      "dependencies": {
+        "call": "create_app.<locals>.toggle_user",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/customers",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.customers",
+      "dependencies": {
+        "call": "create_app.<locals>.customers",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/customers",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_customer",
+      "dependencies": {
+        "call": "create_app.<locals>.create_customer",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/customers/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "create_app.<locals>.edit_customer",
+      "dependencies": {
+        "call": "create_app.<locals>.edit_customer",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/products",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.products",
+      "dependencies": {
+        "call": "create_app.<locals>.products",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/products",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_product",
+      "dependencies": {
+        "call": "create_app.<locals>.create_product",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/products/{identifier}",
+      "methods": [
+        "PUT"
+      ],
+      "handler": "create_app.<locals>.edit_product",
+      "dependencies": {
+        "call": "create_app.<locals>.edit_product",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/stock-movements",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.stock",
+      "dependencies": {
+        "call": "create_app.<locals>.stock",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/stock-movements",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_stock",
+      "dependencies": {
+        "call": "create_app.<locals>.create_stock",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/cash-sessions",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.cash_sessions",
+      "dependencies": {
+        "call": "create_app.<locals>.cash_sessions",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/cash-sessions/current",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.current_cash",
+      "dependencies": {
+        "call": "create_app.<locals>.current_cash",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/cash-sessions",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.open_cash",
+      "dependencies": {
+        "call": "create_app.<locals>.open_cash",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/cash-sessions/{identifier}/close",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.close_cash",
+      "dependencies": {
+        "call": "create_app.<locals>.close_cash",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/sales",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.sales",
+      "dependencies": {
+        "call": "create_app.<locals>.sales",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/sales",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_sale",
+      "dependencies": {
+        "call": "create_app.<locals>.create_sale",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/sales/{identifier}",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.sale",
+      "dependencies": {
+        "call": "create_app.<locals>.sale",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/sales/{identifier}/finalize",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.finalize",
+      "dependencies": {
+        "call": "create_app.<locals>.finalize",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/sales/{identifier}/cancel",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.cancel",
+      "dependencies": {
+        "call": "create_app.<locals>.cancel",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/accounts",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.accounts",
+      "dependencies": {
+        "call": "create_app.<locals>.accounts",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/accounts",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_account",
+      "dependencies": {
+        "call": "create_app.<locals>.create_account",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/categories",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.categories",
+      "dependencies": {
+        "call": "create_app.<locals>.categories",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/categories",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_category",
+      "dependencies": {
+        "call": "create_app.<locals>.create_category",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.finance",
+      "dependencies": {
+        "call": "create_app.<locals>.finance",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/print",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.finance_print",
+      "dependencies": {
+        "call": "create_app.<locals>.finance_print",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.create_finance",
+      "dependencies": {
+        "call": "create_app.<locals>.create_finance",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/{identifier}/settle",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.settle",
+      "dependencies": {
+        "call": "create_app.<locals>.settle",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/finance/{identifier}/cancel",
+      "methods": [
+        "POST"
+      ],
+      "handler": "create_app.<locals>.cancel_finance",
+      "dependencies": {
+        "call": "create_app.<locals>.cancel_finance",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/dashboard",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.dashboard",
+      "dependencies": {
+        "call": "create_app.<locals>.dashboard",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/audit",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.audit",
+      "dependencies": {
+        "call": "create_app.<locals>.audit",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "admin",
+            "dependencies": [
+              {
+                "call": "current_user",
+                "dependencies": [
+                  {
+                    "call": "get_db",
+                    "dependencies": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/reports/{report}.csv",
+      "methods": [
+        "GET"
+      ],
+      "handler": "create_app.<locals>.report",
+      "dependencies": {
+        "call": "create_app.<locals>.report",
+        "dependencies": [
+          {
+            "call": "get_db",
+            "dependencies": []
+          },
+          {
+            "call": "current_user",
+            "dependencies": [
+              {
+                "call": "get_db",
+                "dependencies": []
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "openapi_schemas": {
+    "AccountInput": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "cash",
+            "bank"
+          ],
+          "title": "Kind"
+        },
+        "opening_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": -100000000000.0,
+          "title": "Opening Cents",
+          "default": 0
+        },
+        "opening_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Opening Date"
+        },
+        "bank": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Bank",
+          "default": ""
+        },
+        "branch": {
+          "type": "string",
+          "maxLength": 40,
+          "title": "Branch",
+          "default": ""
+        },
+        "number": {
+          "type": "string",
+          "maxLength": 60,
+          "title": "Number",
+          "default": ""
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "title": "Notes",
+          "default": ""
+        },
+        "interest_bps": {
+          "type": "integer",
+          "maximum": 10000.0,
+          "minimum": 0.0,
+          "title": "Interest Bps",
+          "default": 0
+        },
+        "fine_bps": {
+          "type": "integer",
+          "maximum": 10000.0,
+          "minimum": 0.0,
+          "title": "Fine Bps",
+          "default": 0
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "kind"
+      ],
+      "title": "AccountInput"
+    },
+    "AttachmentInput": {
+      "properties": {
+        "filename": {
+          "type": "string",
+          "maxLength": 180,
+          "minLength": 1,
+          "title": "Filename"
+        },
+        "content_type": {
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Content Type"
+        },
+        "content_base64": {
+          "type": "string",
+          "maxLength": 7000000,
+          "minLength": 4,
+          "title": "Content Base64"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "filename",
+        "content_type",
+        "content_base64"
+      ],
+      "title": "AttachmentInput"
+    },
+    "CashClose": {
+      "properties": {
+        "counted_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Counted Cents"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "counted_cents"
+      ],
+      "title": "CashClose"
+    },
+    "CashOpen": {
+      "properties": {
+        "opening_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Opening Cents"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "opening_cents"
+      ],
+      "title": "CashOpen"
+    },
+    "CategoryInput": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "income",
+            "expense",
+            "both"
+          ],
+          "title": "Direction",
+          "default": "both"
+        },
+        "classification": {
+          "type": "string",
+          "enum": [
+            "operating",
+            "investment",
+            "financing"
+          ],
+          "title": "Classification",
+          "default": "operating"
+        },
+        "result_group": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Result Group",
+          "default": ""
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "title": "CategoryInput"
+    },
+    "CompanySettingsInput": {
+      "properties": {
+        "brand_name": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 1,
+          "title": "Brand Name",
+          "default": "Gestão"
+        },
+        "company_name": {
+          "type": "string",
+          "maxLength": 150,
+          "title": "Company Name",
+          "default": ""
+        },
+        "company_document": {
+          "type": "string",
+          "maxLength": 20,
+          "title": "Company Document",
+          "default": ""
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40,
+          "title": "Phone",
+          "default": ""
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 180,
+          "title": "Email",
+          "default": ""
+        },
+        "address": {
+          "type": "string",
+          "maxLength": 300,
+          "title": "Address",
+          "default": ""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "title": "CompanySettingsInput"
+    },
+    "CustomerAddressInput": {
+      "properties": {
+        "postal_code": {
+          "type": "string",
+          "maxLength": 9,
+          "title": "Postal Code",
+          "default": ""
+        },
+        "street": {
+          "type": "string",
+          "maxLength": 180,
+          "title": "Street",
+          "default": ""
+        },
+        "address_number": {
+          "type": "string",
+          "maxLength": 30,
+          "title": "Address Number",
+          "default": ""
+        },
+        "complement": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Complement",
+          "default": ""
+        },
+        "neighborhood": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Neighborhood",
+          "default": ""
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "City",
+          "default": ""
+        },
+        "state": {
+          "type": "string",
+          "maxLength": 2,
+          "title": "State",
+          "default": ""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "title": "CustomerAddressInput"
+    },
+    "CustomerInput": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 150,
+          "minLength": 1,
+          "title": "Name"
+        },
+        "document": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 20
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Document"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 180,
+          "title": "Email",
+          "default": ""
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40,
+          "title": "Phone",
+          "default": ""
+        },
+        "contact_name": {
+          "type": "string",
+          "maxLength": 120,
+          "title": "Contact Name",
+          "default": ""
+        },
+        "address": {
+          "type": "string",
+          "maxLength": 300,
+          "title": "Address",
+          "default": ""
+        },
+        "postal_code": {
+          "type": "string",
+          "maxLength": 9,
+          "title": "Postal Code",
+          "default": ""
+        },
+        "street": {
+          "type": "string",
+          "maxLength": 180,
+          "title": "Street",
+          "default": ""
+        },
+        "address_number": {
+          "type": "string",
+          "maxLength": 30,
+          "title": "Address Number",
+          "default": ""
+        },
+        "complement": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Complement",
+          "default": ""
+        },
+        "neighborhood": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Neighborhood",
+          "default": ""
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "City",
+          "default": ""
+        },
+        "state": {
+          "type": "string",
+          "maxLength": 2,
+          "title": "State",
+          "default": ""
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        },
+        "service_details": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/CustomerServiceInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "title": "CustomerInput"
+    },
+    "CustomerServiceInput": {
+      "properties": {
+        "start_address": {
+          "type": "string",
+          "maxLength": 2000,
+          "title": "Start Address",
+          "default": ""
+        },
+        "end_address": {
+          "type": "string",
+          "maxLength": 2000,
+          "title": "End Address",
+          "default": ""
+        },
+        "service_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "local",
+                "interstate"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Service Type"
+        },
+        "collection_address": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/CustomerAddressInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "delivery_address": {
+          "anyOf": [
+            {
+              "$ref": "#/components/schemas/CustomerAddressInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "title": "CustomerServiceInput"
+    },
+    "Finalize": {
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "cash",
+            "pix",
+            "card",
+            "credit"
+          ],
+          "title": "Method"
+        },
+        "due_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Due Date"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "method"
+      ],
+      "title": "Finalize"
+    },
+    "FinanceInput": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "maxLength": 180,
+          "minLength": 1,
+          "title": "Description"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "income",
+            "expense"
+          ],
+          "title": "Direction"
+        },
+        "amount_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "exclusiveMinimum": 0.0,
+          "title": "Amount Cents"
+        },
+        "account_id": {
+          "type": "integer",
+          "title": "Account Id"
+        },
+        "category_id": {
+          "type": "integer",
+          "title": "Category Id"
+        },
+        "customer_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Customer Id"
+        },
+        "supplier_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Supplier Id"
+        },
+        "subcategory_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Subcategory Id"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Due Date"
+        },
+        "competence_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Competence Date"
+        },
+        "document": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Document",
+          "default": ""
+        },
+        "recurrence_count": {
+          "type": "integer",
+          "maximum": 60.0,
+          "minimum": 1.0,
+          "title": "Recurrence Count",
+          "default": 1
+        },
+        "recurrence_frequency": {
+          "type": "string",
+          "enum": [
+            "daily",
+            "weekly",
+            "monthly",
+            "yearly"
+          ],
+          "title": "Recurrence Frequency",
+          "default": "monthly"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "description",
+        "direction",
+        "amount_cents",
+        "account_id",
+        "category_id",
+        "due_date"
+      ],
+      "title": "FinanceInput"
+    },
+    "HTTPValidationError": {
+      "properties": {
+        "detail": {
+          "items": {
+            "$ref": "#/components/schemas/ValidationError"
+          },
+          "type": "array",
+          "title": "Detail"
+        }
+      },
+      "type": "object",
+      "title": "HTTPValidationError"
+    },
+    "ItemInput": {
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "title": "Product Id"
+        },
+        "quantity_milli": {
+          "type": "integer",
+          "maximum": 1000000000.0,
+          "exclusiveMinimum": 0.0,
+          "title": "Quantity Milli"
+        },
+        "unit_price_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Unit Price Cents"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "product_id",
+        "quantity_milli",
+        "unit_price_cents"
+      ],
+      "title": "ItemInput"
+    },
+    "Login": {
+      "properties": {
+        "username": {
+          "type": "string",
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Username"
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Password"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "title": "Login"
+    },
+    "MonthlyBudgetInput": {
+      "properties": {
+        "year": {
+          "type": "integer",
+          "maximum": 2200.0,
+          "minimum": 2000.0,
+          "title": "Year"
+        },
+        "month": {
+          "type": "integer",
+          "maximum": 12.0,
+          "minimum": 1.0,
+          "title": "Month"
+        },
+        "category_id": {
+          "type": "integer",
+          "title": "Category Id"
+        },
+        "subcategory_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Subcategory Id"
+        },
+        "target_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "exclusiveMinimum": 0.0,
+          "title": "Target Cents"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 300,
+          "title": "Notes",
+          "default": ""
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "year",
+        "month",
+        "category_id",
+        "target_cents"
+      ],
+      "title": "MonthlyBudgetInput"
+    },
+    "MovementInput": {
+      "properties": {
+        "description": {
+          "type": "string",
+          "maxLength": 180,
+          "minLength": 1,
+          "title": "Description"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "income",
+            "expense"
+          ],
+          "title": "Direction"
+        },
+        "amount_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "exclusiveMinimum": 0.0,
+          "title": "Amount Cents"
+        },
+        "account_id": {
+          "type": "integer",
+          "title": "Account Id"
+        },
+        "subcategory_id": {
+          "type": "integer",
+          "title": "Subcategory Id"
+        },
+        "supplier_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Supplier Id"
+        },
+        "posting_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Posting Date"
+        },
+        "competence_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Competence Date"
+        },
+        "document": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Document",
+          "default": ""
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "cash",
+            "pix",
+            "card"
+          ],
+          "title": "Method",
+          "default": "pix"
+        },
+        "request_key": {
+          "type": "string",
+          "maxLength": 80,
+          "minLength": 16,
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "title": "Request Key"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "description",
+        "direction",
+        "amount_cents",
+        "account_id",
+        "subcategory_id",
+        "posting_date",
+        "competence_date",
+        "request_key"
+      ],
+      "title": "MovementInput"
+    },
+    "OfxConfirm": {
+      "properties": {
+        "entry_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Entry Id"
+        },
+        "create_title": {
+          "type": "boolean",
+          "title": "Create Title",
+          "default": false
+        },
+        "category_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Category Id"
+        },
+        "subcategory_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Subcategory Id"
+        },
+        "supplier_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Supplier Id"
+        },
+        "customer_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Customer Id"
+        },
+        "principal_cents": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 100000000000.0,
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Principal Cents"
+        },
+        "interest_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Interest Cents",
+          "default": 0
+        },
+        "fine_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Fine Cents",
+          "default": 0
+        },
+        "discount_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Discount Cents",
+          "default": 0
+        },
+        "ignore": {
+          "type": "boolean",
+          "title": "Ignore",
+          "default": false
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 300,
+          "title": "Reason",
+          "default": ""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "title": "OfxConfirm"
+    },
+    "PaymentReversal": {
+      "properties": {
+        "reason": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Reason"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "reason"
+      ],
+      "title": "PaymentReversal"
+    },
+    "ProductInput": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Code"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 180,
+          "minLength": 1,
+          "title": "Description"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "product",
+            "service"
+          ],
+          "title": "Kind",
+          "default": "product"
+        },
+        "group_name": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Group Name",
+          "default": ""
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 12,
+          "minLength": 1,
+          "title": "Unit",
+          "default": "UN"
+        },
+        "barcode": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 60
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Barcode"
+        },
+        "price_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Price Cents"
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "code",
+        "description",
+        "price_cents"
+      ],
+      "title": "ProductInput"
+    },
+    "Reason": {
+      "properties": {
+        "reason": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Reason"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "reason"
+      ],
+      "title": "Reason"
+    },
+    "SaleInput": {
+      "properties": {
+        "customer_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Customer Id"
+        },
+        "discount_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Discount Cents",
+          "default": 0
+        },
+        "items": {
+          "items": {
+            "$ref": "#/components/schemas/ItemInput"
+          },
+          "type": "array",
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Items"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "title": "SaleInput"
+    },
+    "ServiceOrderCancellationInput": {
+      "properties": {
+        "reason": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Reason"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "reason"
+      ],
+      "title": "ServiceOrderCancellationInput"
+    },
+    "ServiceOrderCostInput": {
+      "properties": {
+        "supplier_id": {
+          "type": "integer",
+          "title": "Supplier Id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "day_worker",
+            "subcontracted_freight"
+          ],
+          "title": "Kind"
+        },
+        "quantity_milli": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 1000000000.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Quantity Milli"
+        },
+        "agreed_amount_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "exclusiveMinimum": 0.0,
+          "title": "Agreed Amount Cents"
+        },
+        "details": {
+          "type": "string",
+          "maxLength": 300,
+          "title": "Details",
+          "default": ""
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "supplier_id",
+        "kind",
+        "agreed_amount_cents"
+      ],
+      "title": "ServiceOrderCostInput"
+    },
+    "ServiceOrderInput": {
+      "properties": {
+        "customer_id": {
+          "type": "integer",
+          "title": "Customer Id"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Description"
+        },
+        "service_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Service Date"
+        },
+        "negotiated_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "exclusiveMinimum": 0.0,
+          "title": "Negotiated Cents"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "scheduled",
+            "in_progress",
+            "completed"
+          ],
+          "title": "Status",
+          "default": "draft"
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "title": "Notes",
+          "default": ""
+        },
+        "costs": {
+          "items": {
+            "$ref": "#/components/schemas/ServiceOrderCostInput"
+          },
+          "type": "array",
+          "maxItems": 100,
+          "title": "Costs",
+          "default": []
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "customer_id",
+        "description",
+        "service_date",
+        "negotiated_cents"
+      ],
+      "title": "ServiceOrderInput"
+    },
+    "ServiceOrderTitleGenerationInput": {
+      "properties": {
+        "account_id": {
+          "type": "integer",
+          "title": "Account Id"
+        },
+        "due_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Due Date"
+        },
+        "competence_date": {
+          "type": "string",
+          "format": "date",
+          "title": "Competence Date"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "account_id",
+        "due_date",
+        "competence_date"
+      ],
+      "title": "ServiceOrderTitleGenerationInput"
+    },
+    "Settle": {
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "cash",
+            "pix",
+            "card",
+            "ofx"
+          ],
+          "title": "Method"
+        },
+        "account_id": {
+          "type": "integer",
+          "title": "Account Id"
+        },
+        "principal_cents": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 100000000000.0,
+              "exclusiveMinimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Principal Cents"
+        },
+        "interest_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Interest Cents",
+          "default": 0
+        },
+        "fine_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Fine Cents",
+          "default": 0
+        },
+        "discount_cents": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Discount Cents",
+          "default": 0
+        },
+        "posting_date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Posting Date"
+        },
+        "request_key": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 80,
+              "minLength": 16,
+              "pattern": "^[a-zA-Z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Request Key"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "method",
+        "account_id"
+      ],
+      "title": "Settle"
+    },
+    "StockInput": {
+      "properties": {
+        "product_id": {
+          "type": "integer",
+          "title": "Product Id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "opening",
+            "in",
+            "out",
+            "inventory"
+          ],
+          "title": "Kind"
+        },
+        "quantity_milli": {
+          "type": "integer",
+          "maximum": 100000000000.0,
+          "minimum": 0.0,
+          "title": "Quantity Milli"
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 300,
+          "minLength": 3,
+          "title": "Reason"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "product_id",
+        "kind",
+        "quantity_milli",
+        "reason"
+      ],
+      "title": "StockInput"
+    },
+    "SubcategoryInput": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Name"
+        },
+        "category_id": {
+          "type": "integer",
+          "title": "Category Id"
+        },
+        "affects_result": {
+          "type": "boolean",
+          "title": "Affects Result",
+          "default": true
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "category_id"
+      ],
+      "title": "SubcategoryInput"
+    },
+    "SupplierInput": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 150,
+          "minLength": 1,
+          "title": "Name"
+        },
+        "document": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 20
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Document"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 180,
+          "title": "Email",
+          "default": ""
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 40,
+          "title": "Phone",
+          "default": ""
+        },
+        "contact_name": {
+          "type": "string",
+          "maxLength": 120,
+          "title": "Contact Name",
+          "default": ""
+        },
+        "address": {
+          "type": "string",
+          "maxLength": 300,
+          "title": "Address",
+          "default": ""
+        },
+        "postal_code": {
+          "type": "string",
+          "maxLength": 9,
+          "title": "Postal Code",
+          "default": ""
+        },
+        "street": {
+          "type": "string",
+          "maxLength": 180,
+          "title": "Street",
+          "default": ""
+        },
+        "address_number": {
+          "type": "string",
+          "maxLength": 30,
+          "title": "Address Number",
+          "default": ""
+        },
+        "complement": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Complement",
+          "default": ""
+        },
+        "neighborhood": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "Neighborhood",
+          "default": ""
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 100,
+          "title": "City",
+          "default": ""
+        },
+        "state": {
+          "type": "string",
+          "maxLength": 2,
+          "title": "State",
+          "default": ""
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active",
+          "default": true
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "supplier",
+            "day_worker",
+            "subcontracted_freight"
+          ],
+          "title": "Kind",
+          "default": "supplier"
+        },
+        "pix_key_type": {
+          "type": "string",
+          "enum": [
+            "",
+            "cpf",
+            "cnpj",
+            "email",
+            "phone",
+            "random"
+          ],
+          "title": "Pix Key Type",
+          "default": ""
+        },
+        "pix_key": {
+          "type": "string",
+          "maxLength": 77,
+          "title": "Pix Key",
+          "default": ""
+        },
+        "pix_holder": {
+          "type": "string",
+          "maxLength": 150,
+          "title": "Pix Holder",
+          "default": ""
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500,
+          "title": "Notes",
+          "default": ""
+        },
+        "default_rate_cents": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 100000000000.0,
+              "minimum": 0.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Default Rate Cents"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "title": "SupplierInput"
+    },
+    "UserInput": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Name"
+        },
+        "username": {
+          "type": "string",
+          "maxLength": 80,
+          "minLength": 3,
+          "pattern": "^[a-zA-Z0-9_.-]+$",
+          "title": "Username"
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 10,
+          "title": "Password"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "operator"
+          ],
+          "title": "Role",
+          "default": "operator"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "username",
+        "password"
+      ],
+      "title": "UserInput"
+    },
+    "ValidationError": {
+      "properties": {
+        "loc": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "type": "array",
+          "title": "Location"
+        },
+        "msg": {
+          "type": "string",
+          "title": "Message"
+        },
+        "type": {
+          "type": "string",
+          "title": "Error Type"
+        },
+        "input": {
+          "title": "Input"
+        },
+        "ctx": {
+          "type": "object",
+          "title": "Context"
+        }
+      },
+      "type": "object",
+      "required": [
+        "loc",
+        "msg",
+        "type"
+      ],
+      "title": "ValidationError"
+    }
+  },
+  "declarations_previously_inventoried": 73,
+  "registered_operations": 72,
+  "only_in_runtime": [],
+  "only_in_previous_declarations": [
+    [
+      "GET",
+      "/{path:path}"
+    ]
+  ],
+  "scope": "Real disposable schema; generic dynamic CSV declarations expand at runtime. All dependency guards recorded, identity/capability behavior validated in tests."
+}

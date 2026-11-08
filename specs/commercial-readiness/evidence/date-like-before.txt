@@ -1,0 +1,33 @@
+
+> gestao-local@0.1.0 test
+> vitest run --run src/reportValues.test.ts
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-commercial-readiness/frontend
+
+ ❯ src/reportValues.test.ts (9 tests | 1 failed) 12ms
+   × date-like descriptions, documents and category names keep their identity 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/reportValues.test.ts > date-like descriptions, documents and category names keep their identity
+AssertionError: expected '01/01/2027' to be '2027-01-01' // Object.is equality
+
+Expected: "2027-01-01"
+Received: "01/01/2027"
+
+ ❯ src/reportValues.test.ts:22:116
+     20| });
+     21| it('date-like descriptions, documents and category names keep their id…
+     22|  for(const key of ['description','document','group'])expect(formatRepo…
+       |                                                                                                                    ^
+     23| });
+     24| it('daily report group dates remain Brazilian civil dates',()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 8 passed (9)
+   Start at  08:23:11
+   Duration  854ms (transform 225ms, setup 0ms, import 730ms, tests 12ms, environment 0ms)

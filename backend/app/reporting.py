@@ -61,7 +61,7 @@ def register(app,get_db,admin):
 
     @app.get('/api/finance/reports/catalog')
     def report_catalog(db=DB,user=ADMIN):
-        return [{'id':key,'name':name,'source':source,'date_basis':'competence' if group in ('competence','result-month','charges-month','discount-month') else 'posting'} for key,name,source,group,direction in REPORTS]
+        return [{'id':key,'name':name,'source':source,'date_basis':'competence' if group in ('competence','result-month','charges-month','discount-month','budget') else 'due' if source=='titles' and group!='document' else 'posting'} for key,name,source,group,direction in REPORTS]
 
     @app.get('/api/finance/budgets')
     def budgets(year:int=Query(ge=2000,le=2200),month:int=Query(ge=1,le=12),supplier_kind:str|None=None,db=DB,user=ADMIN):
@@ -136,6 +136,7 @@ def register(app,get_db,admin):
         if category_id:criteria.append(E.category_id==category_id)
         if supplier_kind:criteria.append(E.supplier_id.in_(select(SU.id).where(SU.kind==supplier_kind)))
         if direction:criteria.append(E.direction==direction)
+        if group=='result-month':criteria.append(or_(SC.id.is_(None),SC.affects_result.is_(True)))
         if group=='partial':criteria.append(func.abs(P.principal_cents)<E.amount_cents)
         if group=='reversal':criteria.append(P.reversal_of.is_not(None))
         if group in ('charges-month','discount-month'):
@@ -166,6 +167,7 @@ def register(app,get_db,admin):
             query=payment_report(db,slug,start,end,account_id,category_id,supplier_kind)
             return rows_page(db,query,page,page_size)
         if source=='budget':
+            if account_id is not None:V.fail('Orçamento é global por categoria; filtro de conta não se aplica',422)
             q=select(MonthlyBudget).where(MonthlyBudget.active)
             if start:q=q.where(or_(MonthlyBudget.year>start.year,and_(MonthlyBudget.year==start.year,MonthlyBudget.month>=start.month)))
             if end:q=q.where(or_(MonthlyBudget.year<end.year,and_(MonthlyBudget.year==end.year,MonthlyBudget.month<=end.month)))
@@ -187,7 +189,8 @@ def register(app,get_db,admin):
         elif group=='competence':
             if start:q=q.where(FinanceEntry.competence_date>=start)
             if end:q=q.where(FinanceEntry.competence_date<=end)
-        elif group=='document':q=q.where(FinanceEntry.document!='')
+        elif group=='document':
+            q=V.date_window(q.where(FinanceEntry.document!=''),FinanceEntry.created_at,start,end)
         if account_id:q=q.where(FinanceEntry.account_id==account_id)
         if category_id:q=q.where(FinanceEntry.category_id==category_id)
         if supplier_kind:q=q.where(FinanceEntry.supplier_id.in_(select(Supplier.id).where(Supplier.kind==supplier_kind)))

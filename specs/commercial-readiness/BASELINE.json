@@ -1,0 +1,16 @@
+{
+  "refs": {
+    "main": "7214ad2543e0e980366a386b27cc7bbb39eddb32",
+    "origin/main": "7214ad2543e0e980366a386b27cc7bbb39eddb32",
+    "integration/erp-full-regression": "9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82",
+    "origin/integration/erp-full-regression": "9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82",
+    "fix/transport-module-capability": "5aa52150ea0c64c01cb37ed53099899359ddbcbf",
+    "feat/finance-enterprise-stage1": "288ba61d377054e5bac2872d9663e002fe76491c",
+    "fix/forms-usability-system-review": "6c873d07cdfcbbf4f6bcdefc17e827a2b48cc439"
+  },
+  "worktree": "silex-commercial-readiness",
+  "branch": "fix/erp-commercial-readiness",
+  "workspace_clean_at_start": true,
+  "railway_deployment_sha": "unverified; no Railway account, service or persistent database accessed",
+  "historical_deployment_reference": "191ed179e2c7f8b2a3e53ddd1aca422e4168cdf0"
+}

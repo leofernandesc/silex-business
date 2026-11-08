@@ -1,0 +1,2465 @@
+{
+  "method": "Independent TypeScript compiler AST; static affordances are not runtime validation.",
+  "routes": [
+    {
+      "id": "home",
+      "title": "Início",
+      "group": "PRINCIPAL",
+      "admin": "false"
+    },
+    {
+      "id": "dashboard",
+      "title": "Visão geral",
+      "group": "PRINCIPAL",
+      "admin": "false"
+    },
+    {
+      "id": "customers",
+      "title": "Clientes",
+      "group": "cadastros",
+      "admin": "false"
+    },
+    {
+      "id": "products",
+      "title": "Produtos ou Serviços",
+      "group": "cadastros",
+      "admin": "false"
+    },
+    {
+      "id": "suppliers",
+      "title": "Fornecedores",
+      "group": "cadastros",
+      "admin": "true"
+    },
+    {
+      "id": "day-workers",
+      "title": "Diaristas",
+      "group": "cadastros",
+      "admin": "true"
+    },
+    {
+      "id": "subcontracted-freight",
+      "title": "Frete Subcontratado",
+      "group": "cadastros",
+      "admin": "true"
+    },
+    {
+      "id": "stock",
+      "title": "Estoque",
+      "group": "movimentacoes",
+      "admin": "true"
+    },
+    {
+      "id": "pos",
+      "title": "Frente de Caixa",
+      "group": "movimentacoes",
+      "admin": "false"
+    },
+    {
+      "id": "sales",
+      "title": "Vendas",
+      "group": "movimentacoes",
+      "admin": "false"
+    },
+    {
+      "id": "service-orders",
+      "title": "Serviços e pedidos",
+      "group": "movimentacoes",
+      "admin": "true"
+    },
+    {
+      "id": "cash",
+      "title": "Controle de caixa",
+      "group": "movimentacoes",
+      "admin": "false"
+    },
+    {
+      "id": "finance-dashboard",
+      "title": "Dashboard",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance",
+      "title": "Lançamento (Despesa/Receita)",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-reconcile",
+      "title": "Conciliação Bancária",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-payable",
+      "title": "Contas a Pagar",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-receivable",
+      "title": "Contas a Receber",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-accounts",
+      "title": "Cadastro de Contas",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-categories",
+      "title": "Categorias",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-subcategories",
+      "title": "SubCategorias",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "finance-reports",
+      "title": "Relatórios Financeiros",
+      "group": "financeiro",
+      "admin": "true"
+    },
+    {
+      "id": "users",
+      "title": "Usuários",
+      "group": "administracao",
+      "admin": "true"
+    },
+    {
+      "id": "audit",
+      "title": "Histórico de operações",
+      "group": "administracao",
+      "admin": "true"
+    },
+    {
+      "id": "company-settings",
+      "title": "Empresa e identidade",
+      "group": "administracao",
+      "admin": "true"
+    },
+    {
+      "id": "finance-suppliers",
+      "title": "Fornecedores",
+      "group": "cadastros",
+      "admin": "true"
+    }
+  ],
+  "actions": [
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 133,
+      "tag": "a",
+      "label": "<a className=\"skip-link\" inert={mobile} href=\"#main-content\" onClick={(e) => { e.preventDefault(); document.getElementById(\"main-content\")?.focus(); }} > Pular para o conteúdo </a>",
+      "handlers": [
+        "onClick={(e) => {\n          e.preventDefault();\n          document.getElementById(\"main-content\")?.focus();\n        }}"
+      ],
+      "href": "href=\"#main-content\""
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 159,
+      "tag": "button",
+      "label": "<button className=\"mobile-only icon-button\" aria-label=\"Fechar menu\" onClick={() => mobileMenu.setOpen(false)} > <X /> </button>",
+      "handlers": [
+        "onClick={() => mobileMenu.setOpen(false)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 177,
+      "tag": "button",
+      "label": "<button key={m.key} className={`nav-item ${(safePage === m.key) ? \"active\" : \"\"}`} aria-current={safePage === m.key ? \"page\" : undefined} onClick={() => navigate(m.key)}> <m.icon s",
+      "handlers": [
+        "onClick={() => navigate(m.key)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 187,
+      "tag": "button",
+      "label": "<button className=\"nav-group-toggle\" aria-expanded={expanded} aria-controls={`nav-group-${group.key}`} onClick={() => setOpenGroups((current) => ({ ...current, [group.key]: !curren",
+      "handlers": [
+        "onClick={() => setOpenGroups((current) => ({ ...current, [group.key]: !current[group.key] }))}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 193,
+      "tag": "button",
+      "label": "<button className={`nav-item ${(safePage === m.key) ? \"active\" : \"\"}`} aria-current={safePage === m.key ? \"page\" : undefined} onClick={() => navigate(m.key)} > <m.icon size={17} />",
+      "handlers": [
+        "onClick={() => navigate(m.key)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 203,
+      "tag": "button",
+      "label": "<button key={item.key} className={`nav-item ${safePage === item.key ? \"active\" : \"\"}`} aria-current={safePage === item.key ? \"page\" : undefined} onClick={() => navigate(item.key)}>",
+      "handlers": [
+        "onClick={() => navigate(item.key)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 218,
+      "tag": "button",
+      "label": "<button className=\"mobile-only icon-button\" aria-label=\"Abrir menu\" ref={mobileMenu.opener} aria-expanded={mobile} aria-controls=\"app-navigation\" aria-haspopup=\"dialog\" onClick={()",
+      "handlers": [
+        "onClick={() => mobileMenu.setOpen(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 244,
+      "tag": "button",
+      "label": "<button className=\"icon-button\" aria-label=\"Sair\" onClick={session.logout} > <LogOut size={18} /> </button>",
+      "handlers": [
+        "onClick={session.logout}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 376,
+      "tag": "button",
+      "label": "<button type=\"button\" disabled={logoutBusy} onClick={retryLogout}>Concluir saída no servidor</button>",
+      "handlers": [
+        "onClick={retryLogout}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 377,
+      "tag": "Form",
+      "label": "<Form submit=\"Entrar\" onSubmit={async () => { if (logoutPending) throw new Error(\"Conclua a saída no servidor antes de entrar novamente.\"); onLogin( await api<User>(\"/auth/login\", ",
+      "handlers": [
+        "onSubmit={async () => {\n              if (logoutPending) throw new Error(\"Conclua a saída no servidor antes de entrar novamente.\");\n              onLogin(\n                await api<User>(\"/auth/login\", \"POST\", { username, password }),\n              );\n              setPassword(\"\");\n            }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 450,
+      "tag": "button",
+      "label": "<button onClick={() => navigate(\"pos\")}> Iniciar venda <ArrowRight size={18} /> </button>",
+      "handlers": [
+        "onClick={() => navigate(\"pos\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 513,
+      "tag": "button",
+      "label": "<button className=\"text-button\" onClick={() => navigate(\"sales\")}> Ver todas <ArrowRight size={15} /> </button>",
+      "handlers": [
+        "onClick={() => navigate(\"sales\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 524,
+      "tag": "button",
+      "label": "<button className=\"text-button\" onClick={() => setView(s)}> #{s.id} · {s.customer_name} </button>",
+      "handlers": [
+        "onClick={() => setView(s)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 565,
+      "tag": "button",
+      "label": "<button className=\"panel-link\" onClick={() => navigate(\"products\")}> Consultar catálogo <ArrowRight size={16} /> </button>",
+      "handlers": [
+        "onClick={() => navigate(\"products\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 582,
+      "tag": "button",
+      "label": "<button onClick={() => navigate(\"cash\")}> Gerenciar caixa <ArrowRight size={16} /> </button>",
+      "handlers": [
+        "onClick={() => navigate(\"cash\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 53,
+      "tag": "ExportButton",
+      "label": "<PageTitle title=\"Clientes\" subtitle=\"Relacionamentos e dados para suas vendas.\" > <ExportButton onClick={() => exportCsv(\"customers\", filters)} /> <AddButton onClick={() => setEdi",
+      "handlers": [
+        "onClick={() => exportCsv(\"customers\", filters)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 54,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setEditing(null)}>Novo cliente</AddButton>",
+      "handlers": [
+        "onClick={() => setEditing(null)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 109,
+      "tag": "button",
+      "label": "<button className=\"icon-button\" aria-label={`Editar ${row.name}`} onClick={() => setEditing(row)} > <Pencil size={17} /> </button>",
+      "handlers": [
+        "onClick={() => setEditing(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 166,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async () => { await api( \"/customers\" + (customer ? \"/\" + customer.id : \"\"), customer ? \"PUT\" : \"POST\", { name, document: document || null, email, ph",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(\n            \"/customers\" + (customer ? \"/\" + customer.id : \"\"),\n            customer ? \"PUT\" : \"POST\",\n            { name, document: document || null, email, phone, contact_name: contactName, active,\n              ...(serviceDetailsEnabled\n                ? { service_details: { collection_address: collectionAddress, delivery_address: deliveryAddress, service_type: serviceType } }\n                : { address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state }),\n            },\n          );\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 317,
+      "tag": "button",
+      "label": "<button ref={opener} type=\"button\" onClick={() => setConfirming(true)}>Usar endereço anterior na coleta</button>",
+      "handlers": [
+        "onClick={() => setConfirming(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 323,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={(e) => { const firstField = e.currentTarget.closest(\"fieldset\")?.querySelector<HTMLInputElement>(\"input\"); onCopy(candidate.address); setConfirming(f",
+      "handlers": [
+        "onClick={(e) => {\n            const firstField = e.currentTarget.closest(\"fieldset\")?.querySelector<HTMLInputElement>(\"input\");\n            onCopy(candidate.address); setConfirming(false); setOpen(false); firstField?.focus();\n          }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 327,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={() => { setConfirming(false); opener.current?.focus(); }}>Cancelar cópia</button>",
+      "handlers": [
+        "onClick={() => { setConfirming(false); opener.current?.focus(); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 352,
+      "tag": "ExportButton",
+      "label": "<PageTitle title=\"Produtos ou Serviços\" subtitle=\"Seu catálogo, preços e disponibilidade em um só lugar.\" > <ExportButton onClick={() => exportCsv(\"products\", filters)} /> {user.ro",
+      "handlers": [
+        "onClick={() => exportCsv(\"products\", filters)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 354,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setEditing(null)}>Novo item</AddButton>",
+      "handlers": [
+        "onClick={() => setEditing(null)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 414,
+      "tag": "button",
+      "label": "<button className=\"icon-button\" aria-label={`Editar ${row.description}`} onClick={() => setEditing(row)} > <Pencil size={17} /> </button>",
+      "handlers": [
+        "onClick={() => setEditing(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 462,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async () => { await api( \"/products\" + (product ? \"/\" + product.id : \"\"), product ? \"PUT\" : \"POST\", { code, description, kind, group_name: groupName,",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(\n            \"/products\" + (product ? \"/\" + product.id : \"\"),\n            product ? \"PUT\" : \"POST\",\n            {\n              code,\n              description,\n              kind,\n              group_name: groupName,\n              unit,\n              barcode: barcode || null,\n              price_cents: parseDecimal(price, 2),\n              active,\n            },\n          );\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 76,
+      "tag": "button",
+      "label": "<button disabled={!!accounts.error||!!categories.error} onClick={() => setSettings(true)}><Settings2 size={15} /> Contas e categorias</button>",
+      "handlers": [
+        "onClick={() => setSettings(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 77,
+      "tag": "button",
+      "label": "<button onClick={() => window.open(\"/api/finance/print?\" + query(filters), \"_blank\", \"noopener,noreferrer\")}><Printer size={15} /> Imprimir</button>",
+      "handlers": [
+        "onClick={() => window.open(\"/api/finance/print?\" + query(filters), \"_blank\", \"noopener,noreferrer\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 78,
+      "tag": "ExportButton",
+      "label": "<PageTitle title={title} subtitle={initialDirection === \"income\" ? \"Acompanhe recebimentos, vencimentos e baixas.\" : initialDirection === \"expense\" ? \"Acompanhe pagamentos, vencime",
+      "handlers": [
+        "onClick={() => exportCsv(\"finance\", filters)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 79,
+      "tag": "button",
+      "label": "<button disabled={!!accounts.error||!!categories.error} className={initialDirection === \"expense\" ? \"accounts-new-expense\" : \"primary\"} onClick={() => setAdding(true)}><Plus size={",
+      "handlers": [
+        "onClick={() => setAdding(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 91,
+      "tag": "button",
+      "label": "<button key={key} className={period === key ? \"selected\" : \"\"} onClick={() => key === \"custom\" ? setPeriod(key) : key === \"all\" ? (() => { const next = { ...draft, start: \"\", end: ",
+      "handlers": [
+        "onClick={() => key === \"custom\" ? setPeriod(key) : key === \"all\" ? (() => { const next = { ...draft, start: \"\", end: \"\" }; setDraft(next); setPeriod(key); apply(next); })() : quickPeriod(key)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 94,
+      "tag": "button",
+      "label": "<button key={key || \"all\"} className={filters.status === key ? \"selected\" : \"\"} onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}>{label}</bu",
+      "handlers": [
+        "onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 96,
+      "tag": "form",
+      "label": "<form className=\"finance-filter-grid\" onSubmit={(e) => { e.preventDefault(); apply(); }}> <label className=\"inline-field\">Buscar por<select value={draft.search_field} onChange={(e)",
+      "handlers": [
+        "onSubmit={(e) => { e.preventDefault(); apply(); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 108,
+      "tag": "button",
+      "label": "<button type=\"submit\" className=\"primary finance-search-button\"><Search size={14} /> Pesquisar</button>",
+      "handlers": [],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 118,
+      "tag": "button",
+      "label": "<button onClick={() => setSettling(row)}>{row.status === \"partial\" ? \"Nova baixa\" : \"Quitar\"}</button>",
+      "handlers": [
+        "onClick={() => setSettling(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 118,
+      "tag": "button",
+      "label": "<button onClick={() => setHistoryEntry(row)}><HistoryIcon size={14} /> Baixas ({row.payments.length})</button>",
+      "handlers": [
+        "onClick={() => setHistoryEntry(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 118,
+      "tag": "button",
+      "label": "<button className=\"danger\" onClick={() => setCanceling(row)}>Cancelar</button>",
+      "handlers": [
+        "onClick={() => setCanceling(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 138,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit={num>1?'Criar títulos recorrentes':'Criar título'} onSubmit={async()=>{await api('/finance','POST',{description,direction,amount_cents:parseDecimal(valu",
+      "handlers": [
+        "onSubmit={async()=>{await api('/finance','POST',{description,direction,amount_cents:parseDecimal(value,2),account_id:Number(account),category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,customer_id:direction==='income'&&customer?Number(customer):null,supplier_id:direction==='expense'&&supplier?Number(supplier):null,due_date:due,competence_date:competence,document,recurrence_count:num,recurrence_frequency:frequency});done();}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 166,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit={full?'Confirmar quitação integral':'Registrar pagamento parcial'} onSubmit={async()=>{if(!parsed)throw new Error('Confira os valores dos campos de paga",
+      "handlers": [
+        "onSubmit={async()=>{if(!parsed)throw new Error('Confira os valores dos campos de pagamento.');const {principalCents,interestCents,fineCents,discountCents}=parsed;await api(`/finance/${entry.id}/settle`,'POST',{method,account_id:Number(account),principal_cents:principalCents,interest_cents:interestCents,fine_cents:fineCents,discount_cents:discountCents,request_key:key});done();}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 187,
+      "tag": "button",
+      "label": "<button className=\"danger\" disabled={reversing!==null||reason.trim().length<3} onClick={()=>void reverse(p.id)}>{reversing===p.id?'Estornando…':'Estornar baixa'}</button>",
+      "handlers": [
+        "onClick={()=>void reverse(p.id)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 196,
+      "tag": "a",
+      "label": "<a key={a.id} href={`/api/finance/attachments/${a.id}`} download>{a.original_name} · {(a.size_bytes/1024).toFixed(0)} KB</a>",
+      "handlers": [],
+      "href": "href={`/api/finance/attachments/${a.id}`}"
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 211,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Confirmar cancelamento\" onSubmit={async () => { await api(`/finance/${entry.id}/cancel`, \"POST\", { reason }); done(); }} > <p> {entry.description} · {m",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(`/finance/${entry.id}/cancel`, \"POST\", { reason });\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 256,
+      "tag": "button",
+      "label": "<button className={tab === \"accounts\" ? \"selected\" : \"\"} onClick={() => { setTab(\"accounts\"); setName(\"\"); }} > Contas </button>",
+      "handlers": [
+        "onClick={() => {\n            setTab(\"accounts\");\n            setName(\"\");\n          }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 265,
+      "tag": "button",
+      "label": "<button className={tab === \"categories\" ? \"selected\" : \"\"} onClick={() => { setTab(\"categories\"); setName(\"\"); }} > Categorias </button>",
+      "handlers": [
+        "onClick={() => {\n            setTab(\"categories\");\n            setName(\"\");\n          }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 297,
+      "tag": "Form",
+      "label": "<Form key={tab} submit={tab === \"accounts\" ? \"Adicionar conta\" : \"Adicionar categoria\"} onSubmit={async () => { await api( \"/\" + tab, \"POST\", tab === \"accounts\" ? { name, kind } : ",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(\n            \"/\" + tab,\n            \"POST\",\n            tab === \"accounts\" ? { name, kind } : { name },\n          );\n          setName(\"\");\n          refresh();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financeCatalog.tsx",
+      "line": 93,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setAdding(true)}> {kind === \"suppliers\" ? \"Novo fornecedor\" : `Nova ${singular[kind]}`} </AddButton>",
+      "handlers": [
+        "onClick={() => setAdding(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financeCatalog.tsx",
+      "line": 179,
+      "tag": "button",
+      "label": "<button onClick={() => setEditing(r)} aria-label={`Editar ${r.name}`} > Editar </button>",
+      "handlers": [
+        "onClick={() => setEditing(r)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financeCatalog.tsx",
+      "line": 254,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async () => { if(kind===\"subcategories\"&&(categoryLookup.loading||categoryLookup.error))throw new Error(\"Consulte as categorias antes de salvar a sub",
+      "handlers": [
+        "onSubmit={async () => {\n          if(kind===\"subcategories\"&&(categoryLookup.loading||categoryLookup.error))throw new Error(\"Consulte as categorias antes de salvar a subcategoria.\");\n          let extra = {};\n          if (kind === \"accounts\") {\n            const raw = opening.trim();\n            const signed = raw.startsWith(\"-\")\n              ? -parseDecimal(raw.slice(1), 2)\n              : parseDecimal(raw, 2);\n            extra = {\n              kind: accountKind,\n              opening_cents: signed,\n              opening_date: openingDate,\n              bank,\n              branch,\n              number,\n              notes,\n              interest_bps: parseDecimal(interest, 2),\n              fine_bps: parseDecimal(fine, 2),\n            };\n          }\n          if (kind === \"categories\")\n            extra = { direction, classification, result_group: group };\n          if (kind === \"subcategories\")\n            extra = { category_id: Number(category), affects_result: affects };\n          if (kind === \"suppliers\")\n            extra = { document: document || null, email, phone, address };\n          await api(\n            \"/\" + kind + (row ? \"/\" + row.id : \"\"),\n            row ? \"PUT\" : \"POST\",\n            { name, active, ...extra },\n          );\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 72,
+      "tag": "button",
+      "label": "<button disabled={!!busy||resolving} onClick={()=>{if(!resolvePending.current)void reloadStatement(row.id)}}>Revisar</button>",
+      "handlers": [
+        "onClick={()=>{if(!resolvePending.current)void reloadStatement(row.id)}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 77,
+      "tag": "button",
+      "label": "<button disabled={disabled} onClick={()=>choose(item)}>Revisar / confirmar</button>",
+      "handlers": [
+        "onClick={()=>choose(item)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 106,
+      "tag": "form",
+      "label": "<form className=\"panel toolbar report-filters\" onSubmit={e=>{e.preventDefault();setFilters({start:from,end:to,account_id:report==='budget-actual'?'':account,category_id:category,su",
+      "handlers": [
+        "onSubmit={e=>{e.preventDefault();setFilters({start:from,end:to,account_id:report==='budget-actual'?'':account,category_id:category,supplier_kind:supplierKind});setPage(1);setVersion(v=>v+1);}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 106,
+      "tag": "button",
+      "label": "<button className=\"primary\">Gerar relatório</button>",
+      "handlers": [],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 109,
+      "tag": "ExportButton",
+      "label": "<div className=\"panel-heading\"><div><h2>{reportData?.name||catalog.data?.find(item=>item.id===report)?.name||'Relatório'}</h2><p>{dateOnly(filters.start)} a {dateOnly(filters.end)}",
+      "handlers": [
+        "onClick={()=>downloadCsv('/finance/reports/'+report+'.csv?'+rowsQuery,'financeiro-'+report+'.csv')}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 109,
+      "tag": "button",
+      "label": "<button disabled={result.loading||!!result.error||!result.data} onClick={()=>window.print()}>Imprimir</button>",
+      "handlers": [
+        "onClick={()=>window.print()}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 110,
+      "tag": "form",
+      "label": "<form className=\"silex-budget-period\" onSubmit={e=>{e.preventDefault();setBudgetForm(true)}}><SilexMonthField label=\"Mês\" min=\"2000-01\" max=\"2200-12\" value={budgetMonth} onChange={",
+      "handlers": [
+        "onSubmit={e=>{e.preventDefault();setBudgetForm(true)}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 110,
+      "tag": "button",
+      "label": "<button type=\"submit\" className=\"primary\"><Plus size={17}/>Nova meta</button>",
+      "handlers": [],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 110,
+      "tag": "button",
+      "label": "<button className=\"danger\" disabled={deactivating!==null} onClick={()=>void deactivateBudget(row.id)}>{deactivating===row.id?'Desativando…':'Desativar'}</button>",
+      "handlers": [
+        "onClick={()=>void deactivateBudget(row.id)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 181,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async()=>{if(categories.loading||categories.error||subs.loading||subs.error)throw new Error('Consulte categorias e subcategorias antes de salvar a me",
+      "handlers": [
+        "onSubmit={async()=>{if(categories.loading||categories.error||subs.loading||subs.error)throw new Error('Consulte categorias e subcategorias antes de salvar a meta.');const raw=target.trim().replace(',','.');if(!/^\\d+(\\.\\d{1,2})?$/.test(raw))throw new Error('Informe a meta em reais.');const [whole,frac='']=raw.split('.');const cents=Number(BigInt(whole)*100n+BigInt(frac.padEnd(2,'0')));await api('/finance/budgets','POST',{year,month,category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,target_cents:cents,notes});done()}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 203,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Atualizar extrato\" onSubmit={()=>resolve()}>{null}</Form>",
+      "handlers": [
+        "onSubmit={()=>resolve()}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 203,
+      "tag": "button",
+      "label": "<button className={mode==='match'?'selected':''} onClick={()=>setMode('match')}>Conciliar título</button>",
+      "handlers": [
+        "onClick={()=>setMode('match')}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 203,
+      "tag": "button",
+      "label": "<button className={mode==='new'?'selected':''} onClick={()=>{if(mode!=='new'){setNewFieldsReady(false);setMode('new')}}}>Criar lançamento</button>",
+      "handlers": [
+        "onClick={()=>{if(mode!=='new'){setNewFieldsReady(false);setMode('new')}}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 205,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Confirmar conciliação\" onSubmit={async()=>{if(operationPending.current)return;let body:Record<string,unknown>;if(mode==='match'){if(candidates.loading|",
+      "handlers": [
+        "onSubmit={async()=>{if(operationPending.current)return;let body:Record<string,unknown>;if(mode==='match'){if(candidates.loading||candidates.error||!candidates.data)throw new Error('As sugestões estão indisponíveis. Reabra o movimento antes de confirmar.');if(!entry||!candidates.data.some(c=>String(c.entry.id)===entry))throw new Error('Selecione um título pendente.');const cents=(v:string)=>{const x=v.trim().replace(',','.');if(!/^\\d+(\\.\\d{1,2})?$/.test(x))throw new Error('Valor inválido.');const [w,f='']=x.split('.');return Number(BigInt(w)*100n+BigInt(f.padEnd(2,'0')))};body={entry_id:Number(entry),principal_cents:principal?cents(principal):undefined,interest_cents:interest?cents(interest):0,fine_cents:fine?cents(fine):0,discount_cents:discount?cents(discount):0};}else{if(!newFieldsReady)throw new Error('Os dados do lançamento estão indisponíveis. Reabra o movimento antes de confirmar.');if(!category||!subcategory)throw new Error('Selecione categoria e subcategoria.');body={create_title:true,category_id:Number(category),subcategory_id:Number(subcategory),[direction==='income'?'customer_id':'supplier_id']:party?Number(party):null};}await resolve(body);}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 207,
+      "tag": "button",
+      "label": "<button className=\"danger\" disabled={reason.trim().length<3} onClick={()=>{if(reason.trim().length<3)return;void resolve({ignore:true,reason:reason.trim()}).catch(e=>setActionError",
+      "handlers": [
+        "onClick={()=>{if(reason.trim().length<3)return;void resolve({ignore:true,reason:reason.trim()}).catch(e=>setActionError((e as Error).message));}}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 65,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref( direction === \"income\" ? \"finance-receivable\" : \"finance-payable\", { direction, status: \"pending\", date_field: \"due\", start",
+      "handlers": [],
+      "href": "href={financialHref(\n            direction === \"income\" ? \"finance-receivable\" : \"finance-payable\",\n            { direction, status: \"pending\", date_field: \"due\", start, end },\n          )}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 143,
+      "tag": "form",
+      "label": "<form className=\"panel toolbar dashboard-period\" onSubmit={(e) => { e.preventDefault(); update(); }} > <SilexDatePicker label=\"De\" value={start} onChange={(value) => setStart(value",
+      "handlers": [
+        "onSubmit={(e) => {\n          e.preventDefault();\n          update();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 160,
+      "tag": "button",
+      "label": "<button className=\"primary\">Atualizar</button>",
+      "handlers": [],
+      "href": null
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 204,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance\", { direction: \"income\", date_field: \"posting\", ...applied, })} > Consultar entradas realizadas </a>",
+      "handlers": [],
+      "href": "href={financialHref(\"finance\", {\n                  direction: \"income\",\n                  date_field: \"posting\",\n                  ...applied,\n                })}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 225,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance\", { direction: \"expense\", date_field: \"posting\", ...applied, })} > Consultar saídas realizadas </a>",
+      "handlers": [],
+      "href": "href={financialHref(\"finance\", {\n                  direction: \"expense\",\n                  date_field: \"posting\",\n                  ...applied,\n                })}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 269,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance-receivable\", { direction: \"income\", status: \"pending\", date_field: \"due\", start: \"\", end: \"\", })} > Consultar a rec",
+      "handlers": [],
+      "href": "href={financialHref(\"finance-receivable\", {\n                    direction: \"income\",\n                    status: \"pending\",\n                    date_field: \"due\",\n                    start: \"\",\n                    end: \"\",\n                  })}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 281,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance-receivable\", { direction: \"income\", status: \"overdue\", date_field: \"due\", start: \"\", end: \"\", })} > Consultar receb",
+      "handlers": [],
+      "href": "href={financialHref(\"finance-receivable\", {\n                    direction: \"income\",\n                    status: \"overdue\",\n                    date_field: \"due\",\n                    start: \"\",\n                    end: \"\",\n                  })}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 309,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance-payable\", { direction: \"expense\", status: \"pending\", date_field: \"due\", start: \"\", end: \"\", })} > Consultar a pagar",
+      "handlers": [],
+      "href": "href={financialHref(\"finance-payable\", {\n                    direction: \"expense\",\n                    status: \"pending\",\n                    date_field: \"due\",\n                    start: \"\",\n                    end: \"\",\n                  })}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 321,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance-payable\", { direction: \"expense\", status: \"overdue\", date_field: \"due\", start: \"\", end: \"\", })} > Consultar pagamen",
+      "handlers": [],
+      "href": "href={financialHref(\"finance-payable\", {\n                    direction: \"expense\",\n                    status: \"overdue\",\n                    date_field: \"due\",\n                    start: \"\",\n                    end: \"\",\n                  })}"
+    },
+    {
+      "file": "frontend/src/financialOverview.tsx",
+      "line": 513,
+      "tag": "a",
+      "label": "<a className=\"dashboard-query-link\" href={financialHref(\"finance\", { date_field: \"posting\", start: \"\", end: \"\", })} > Abrir livro caixa </a>",
+      "handlers": [],
+      "href": "href={financialHref(\"finance\", {\n              date_field: \"posting\",\n              start: \"\",\n              end: \"\",\n            })}"
+    },
+    {
+      "file": "frontend/src/formInputs.tsx",
+      "line": 30,
+      "tag": "button",
+      "label": "<button type=\"button\" aria-label={visible ? \"Ocultar senha\" : \"Mostrar senha\"} aria-controls={id} aria-pressed={visible} disabled={props.disabled} onPointerDown={(event) => event.p",
+      "handlers": [
+        "onClick={() => setVisible((current) => !current)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/home/AuthenticatedHome.tsx",
+      "line": 93,
+      "tag": "a",
+      "label": "<a key={route.id} className={className} href={appUrl(route.id)} data-home-route={route.id} onClick={(event) => follow(event, route.id)} > {icon && <Icon size={21} aria-hidden=\"true",
+      "handlers": [
+        "onClick={(event) => follow(event, route.id)}"
+      ],
+      "href": "href={appUrl(route.id)}"
+    },
+    {
+      "file": "frontend/src/home/AuthenticatedHome.tsx",
+      "line": 228,
+      "tag": "a",
+      "label": "<a className=\"silex-home__overview-link\" href={appUrl(navigation.overview.id)} data-home-route={navigation.overview.id} onClick={(event) => follow(event, navigation.overview!.id)} ",
+      "handlers": [
+        "onClick={(event) => follow(event, navigation.overview!.id)}"
+      ],
+      "href": "href={appUrl(navigation.overview.id)}"
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 141,
+      "tag": "button",
+      "label": "<button disabled={printing || result.loading || !!result.error} onClick={print} > <Printer size={16} /> {printing ? \"Preparando…\" : \"Imprimir\"} </button>",
+      "handlers": [
+        "onClick={print}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 148,
+      "tag": "ExportButton",
+      "label": "<PageTitle title=\"Lançamentos (Despesa/Receita)\" subtitle=\"Livro caixa: entradas e saídas efetivas por conta.\" > <button disabled={printing || result.loading || !!result.error} onC",
+      "handlers": [
+        "onClick={() => {\n            return downloadCsv(\"/finance/movements.csv?\" + query(applied),\"livro-caixa.csv\");\n          }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 153,
+      "tag": "button",
+      "label": "<button className=\"ledger-new-expense\" onClick={() => setAdding(\"expense\")} > <Plus size={17} /> Nova despesa </button>",
+      "handlers": [
+        "onClick={() => setAdding(\"expense\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 160,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setAdding(\"income\")}>Nova receita</AddButton>",
+      "handlers": [
+        "onClick={() => setAdding(\"income\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 166,
+      "tag": "button",
+      "label": "<button key={p} aria-pressed={preset === p} className={preset === p ? \"selected\" : \"\"} onClick={() => { setPreset(p); if (p !== \"Personalizado\") { const range = periodRange(p); set",
+      "handlers": [
+        "onClick={() => {\n                setPreset(p);\n                if (p !== \"Personalizado\") {\n                  const range = periodRange(p);\n                  setDraft({ ...draft, ...range });\n                  apply({ ...applied, ...range });\n                }\n              }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 232,
+      "tag": "button",
+      "label": "<button key={a.id} aria-pressed={applied.account_id === (a.id ? String(a.id) : \"\")} className={ applied.account_id === (a.id ? String(a.id) : \"\") ? \"selected\" : \"\" } onClick={() =>",
+      "handlers": [
+        "onClick={() => {\n                const f = { ...applied, account_id: a.id ? String(a.id) : \"\" };\n                setDraft({ ...draft, account_id: f.account_id });\n                apply(f);\n              }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 255,
+      "tag": "form",
+      "label": "<form className=\"panel ledger-filters\" onSubmit={(e) => { e.preventDefault(); apply(); }} > <Field label=\"Busca\"> <select value={draft.search_field} onChange={(e) => change(\"search",
+      "handlers": [
+        "onSubmit={(e) => {\n          e.preventDefault();\n          apply();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 351,
+      "tag": "button",
+      "label": "<button type=\"submit\" className=\"primary\"> <Search size={15} /> Pesquisar </button>",
+      "handlers": [],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 434,
+      "tag": "button",
+      "label": "<button className=\"danger\" onClick={() => setReverse(row)} > Estornar </button>",
+      "handlers": [
+        "onClick={() => setReverse(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 569,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Salvar lançamento\" onSubmit={async () => { if(lookups.some(({resource})=>resource.loading||resource.error))throw new Error(\"Consulte contas, categorias",
+      "handlers": [
+        "onSubmit={async () => {\n          if(lookups.some(({resource})=>resource.loading||resource.error))throw new Error(\"Consulte contas, categorias e subcategorias antes de salvar o lançamento.\");\n          await api(\"/finance/movements\", \"POST\", {\n            description,\n            direction,\n            amount_cents: parseDecimal(value, 2),\n            account_id: Number(account),\n            subcategory_id: Number(sub),\n            posting_date: posting,\n            competence_date: competence,\n            document,\n            supplier_id:\n              direction === \"expense\" && supplier ? Number(supplier) : null,\n            method: selected?.kind === \"cash\" ? \"cash\" : method,\n            request_key: requestKey,\n          });\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 705,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Confirmar estorno\" onSubmit={async () => { await api(`/finance/movements/${row.id}/reverse`, \"POST\", { reason, }); done(); }} > <p className=\"silex-led",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(`/finance/movements/${row.id}/reverse`, \"POST\", {\n            reason,\n          });\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 54,
+      "tag": "ExportButton",
+      "label": "<PageTitle title=\"Movimentações de estoque\" subtitle=\"Entradas, saídas e ajustes com histórico preservado.\" > <ExportButton onClick={() => exportCsv(\"stock\", filters)} /> <AddButto",
+      "handlers": [
+        "onClick={() => exportCsv(\"stock\", filters)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 55,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setModal(true)}>Novo lançamento</AddButton>",
+      "handlers": [
+        "onClick={() => setModal(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 146,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async () => { if(result.loading||result.error)throw new Error(\"Aguarde uma consulta válida de produtos antes de lançar o estoque.\"); await api(\"/stoc",
+      "handlers": [
+        "onSubmit={async () => {\n          if(result.loading||result.error)throw new Error(\"Aguarde uma consulta válida de produtos antes de lançar o estoque.\");\n          await api(\"/stock-movements\", \"POST\", {\n            product_id: Number(product),\n            kind,\n            quantity_milli: parseDecimal(qty, 3),\n            reason,\n          });\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 247,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setOpening(true)}> Abrir meu caixa </AddButton>",
+      "handlers": [
+        "onClick={() => setOpening(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 252,
+      "tag": "button",
+      "label": "<button className=\"primary\" onClick={() => setClosing(current.data)}> Fechar meu caixa </button>",
+      "handlers": [
+        "onClick={() => setClosing(current.data)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 331,
+      "tag": "button",
+      "label": "<button onClick={() => setClosing(row)}>Fechar</button>",
+      "handlers": [
+        "onClick={() => setClosing(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 350,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Confirmar abertura\" onSubmit={async () => { await api(\"/cash-sessions\", \"POST\", { opening_cents: parseDecimal(value, 2), }); done(); }} > <Field label=",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(\"/cash-sessions\", \"POST\", {\n            opening_cents: parseDecimal(value, 2),\n          });\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 394,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Confirmar fechamento\" onSubmit={async () => { await api(`/cash-sessions/${cash.id}/close`, \"POST\", { counted_cents: parseDecimal(value, 2), }); done();",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(`/cash-sessions/${cash.id}/close`, \"POST\", {\n            counted_cents: parseDecimal(value, 2),\n          });\n          done();\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/partners.tsx",
+      "line": 30,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={async () => { try { await navigator.clipboard.writeText(pix.key); setFailed(false); setFeedback(\"Chave copiada. Confira o titular no seu banco antes ",
+      "handlers": [
+        "onClick={async () => {\n        try {\n          await navigator.clipboard.writeText(pix.key);\n          setFailed(false);\n          setFeedback(\"Chave copiada. Confira o titular no seu banco antes de pagar.\");\n        } catch {\n          setFailed(true);\n          setFeedback(\"Selecione e copie a chave no campo abaixo.\");\n        }\n      }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/partners.tsx",
+      "line": 61,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => { setMessage(\"\"); setAdding(true); }}>Novo {definition.singular}</AddButton>",
+      "handlers": [
+        "onClick={() => { setMessage(\"\"); setAdding(true); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/partners.tsx",
+      "line": 83,
+      "tag": "button",
+      "label": "<button aria-label={\"Editar \" + row.name} onClick={() => { setMessage(\"\"); setEditing(row); }}>Editar</button>",
+      "handlers": [
+        "onClick={() => { setMessage(\"\"); setEditing(row); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/partners.tsx",
+      "line": 109,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async () => { await api(\"/suppliers\" + (row ? \"/\" + row.id : \"\"), row ? \"PUT\" : \"POST\", { kind, name, document: document || null, phone, email, conta",
+      "handlers": [
+        "onSubmit={async () => {\n      await api(\"/suppliers\" + (row ? \"/\" + row.id : \"\"), row ? \"PUT\" : \"POST\", {\n        kind, name, document: document || null, phone, email, contact_name: contactName, address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state, notes, active,\n        default_rate_cents: defaultRate.trim() ? parseDecimal(defaultRate, 2) : null,\n        pix_key_type: pixType, pix_key: pixType ? pixKey : \"\", pix_holder: pixType ? pixHolder : \"\",\n      });\n      done();\n    }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/public/PublicHeader.tsx",
+      "line": 46,
+      "tag": "a",
+      "label": "<a className=\"silex-public__brand-link\" href=\"/\" aria-label=\"Silex Business — página inicial\" > <Brand width={176} /> </a>",
+      "handlers": [],
+      "href": "href=\"/\""
+    },
+    {
+      "file": "frontend/src/public/PublicHeader.tsx",
+      "line": 53,
+      "tag": "button",
+      "label": "<button ref={trigger} type=\"button\" className=\"silex-public__menu-toggle\" aria-expanded={!compact || open} aria-controls=\"public-navigation\" aria-label={ open ? \"Fechar navegação p",
+      "handlers": [
+        "onClick={() => setOpen((value) => !value)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/public/PublicHeader.tsx",
+      "line": 78,
+      "tag": "a",
+      "label": "<a key={section.id} href={`#${section.id}`} onClick={() => { setOpen(false); document .getElementById(section.id) ?.focus({ preventScroll: true }); }} > {section.label} </a>",
+      "handlers": [
+        "onClick={() => {\n              setOpen(false);\n              document\n                .getElementById(section.id)\n                ?.focus({ preventScroll: true });\n            }}"
+      ],
+      "href": "href={`#${section.id}`}"
+    },
+    {
+      "file": "frontend/src/public/PublicHeader.tsx",
+      "line": 92,
+      "tag": "a",
+      "label": "<a className=\"silex-public__button silex-public__button--primary silex-public__header-enter\" href=\"/entrar\" > Entrar </a>",
+      "handlers": [],
+      "href": "href=\"/entrar\""
+    },
+    {
+      "file": "frontend/src/public/PublicPage.tsx",
+      "line": 41,
+      "tag": "a",
+      "label": "<a className=\"silex-public__skip\" href=\"#public-content\"> Pular para o conteúdo </a>",
+      "handlers": [],
+      "href": "href=\"#public-content\""
+    },
+    {
+      "file": "frontend/src/public/PublicPage.tsx",
+      "line": 67,
+      "tag": "a",
+      "label": "<a className=\"silex-public__button silex-public__button--primary\" href=\"/entrar\" > Acessar o sistema <ArrowRight aria-hidden=\"true\" size={18} /> </a>",
+      "handlers": [],
+      "href": "href=\"/entrar\""
+    },
+    {
+      "file": "frontend/src/public/PublicPage.tsx",
+      "line": 73,
+      "tag": "a",
+      "label": "<a className=\"silex-public__button\" href=\"#modulos\"> Conhecer os módulos </a>",
+      "handlers": [],
+      "href": "href=\"#modulos\""
+    },
+    {
+      "file": "frontend/src/public/PublicPage.tsx",
+      "line": 185,
+      "tag": "a",
+      "label": "<a className=\"silex-public__button silex-public__button--light\" href=\"/entrar\" > Entrar no sistema <ArrowRight aria-hidden=\"true\" size={18} /> </a>",
+      "handlers": [],
+      "href": "href=\"/entrar\""
+    },
+    {
+      "file": "frontend/src/public/PublicPage.tsx",
+      "line": 200,
+      "tag": "a",
+      "label": "<a href={`#${section.id}`} key={section.id}> {section.label} </a>",
+      "handlers": [],
+      "href": "href={`#${section.id}`}"
+    },
+    {
+      "file": "frontend/src/public/PublicPage.tsx",
+      "line": 204,
+      "tag": "a",
+      "label": "<a href=\"/entrar\">Entrar</a>",
+      "handlers": [],
+      "href": "href=\"/entrar\""
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 154,
+      "tag": "button",
+      "label": "<button onClick={() => navigate(\"sales\")}>Histórico de vendas</button>",
+      "handlers": [
+        "onClick={() => navigate(\"sales\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 157,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={cash.reload}>Tentar novamente</button>",
+      "handlers": [
+        "onClick={cash.reload}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 161,
+      "tag": "button",
+      "label": "<button onClick={() => navigate(\"cash\")}>Abrir caixa</button>",
+      "handlers": [
+        "onClick={() => navigate(\"cash\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 186,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={products.reload}>Tentar novamente</button>",
+      "handlers": [
+        "onClick={products.reload}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 190,
+      "tag": "button",
+      "label": "<button key={p.id} className=\"product-tile\" disabled={ !!draft || saving || (p.kind === \"product\" && p.stock_milli === 0) } onClick={() => add(p)} > <div className=\"tile-top\"> <spa",
+      "handlers": [
+        "onClick={() => add(p)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 229,
+      "tag": "Form",
+      "label": "<Form submit={draft ? \"Repetir finalização\" : \"Finalizar venda\"} onSubmit={async () => { if (saving) throw new Error(\"Aguarde o salvamento\"); if (cash.loading || cash.error) throw ",
+      "handlers": [
+        "onSubmit={async () => {\n              if (saving) throw new Error(\"Aguarde o salvamento\");\n              if (cash.loading || cash.error) throw new Error(\"Consulte a situação do caixa antes de finalizar\");\n              if (!cash.data)\n                throw new Error(\"Abra seu caixa antes de finalizar\");\n              const s = await ensureDraft();\n              const result = await api<Sale>(\n                `/sales/${s.id}/finalize`,\n                \"POST\",\n                { method, due_date: method === \"credit\" ? due : null },\n              );\n              setView(result);\n              reset();\n            }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 291,
+      "tag": "button",
+      "label": "<button type=\"button\" className=\"icon-button danger\" aria-label={`Remover ${row.product.description}`} onClick={() => setCart((rows) => rows.filter((_, n) => n !== i)) } > <Trash2 ",
+      "handlers": [
+        "onClick={() =>\n                            setCart((rows) => rows.filter((_, n) => n !== i))\n                          }"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 343,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={customers.reload}>Tentar novamente</button>",
+      "handlers": [
+        "onClick={customers.reload}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 361,
+      "tag": "button",
+      "label": "<button type=\"button\" className=\"save-draft\" disabled={!cart.length || saving} onClick={save} > {saving ? \"Salvando...\" : \"Salvar rascunho\"} </button>",
+      "handlers": [
+        "onClick={save}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 416,
+      "tag": "ExportButton",
+      "label": "<PageTitle title=\"Vendas\" subtitle=\"Rascunhos, vendas concluídas e cancelamentos.\" > <ExportButton onClick={() => exportCsv(\"sales\", filters)} /> <button className=\"primary\" onClic",
+      "handlers": [
+        "onClick={() => exportCsv(\"sales\", filters)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 417,
+      "tag": "button",
+      "label": "<button className=\"primary\" onClick={() => navigate(\"pos\")}> Nova venda </button>",
+      "handlers": [
+        "onClick={() => navigate(\"pos\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 475,
+      "tag": "button",
+      "label": "<button className=\"icon-button\" aria-label={`Ver venda ${s.id}`} onClick={() => setView(s)} > <Eye size={18} /> </button>",
+      "handlers": [
+        "onClick={() => setView(s)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 578,
+      "tag": "button",
+      "label": "<button onClick={() => window.print()}> <Printer size={17} /> Imprimir recibo </button>",
+      "handlers": [
+        "onClick={() => window.print()}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 585,
+      "tag": "button",
+      "label": "<button className=\"danger\" onClick={() => setCanceling(!canceling)}> Cancelar venda </button>",
+      "handlers": [
+        "onClick={() => setCanceling(!canceling)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 591,
+      "tag": "Form",
+      "label": "<Form submit=\"Confirmar cancelamento\" onSubmit={async () => { const result = await api<Sale>(`/sales/${sale.id}/cancel`, \"POST\", { reason, }); setCanceling(false); onChange(result)",
+      "handlers": [
+        "onSubmit={async () => {\n            const result = await api<Sale>(`/sales/${sale.id}/cancel`, \"POST\", {\n              reason,\n            });\n            setCanceling(false);\n            onChange(result);\n          }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 613,
+      "tag": "Form",
+      "label": "<Form submit=\"Finalizar rascunho\" onSubmit={async () => { onChange( await api<Sale>(`/sales/${sale.id}/finalize`, \"POST\", { method, due_date: method === \"credit\" ? due : null, }), ",
+      "handlers": [
+        "onSubmit={async () => {\n            onChange(\n              await api<Sale>(`/sales/${sale.id}/finalize`, \"POST\", {\n                method,\n                due_date: method === \"credit\" ? due : null,\n              }),\n            );\n          }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 30,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => { setNotice(\"\"); setEditing(null); }}>Novo serviço/pedido</AddButton>",
+      "handlers": [
+        "onClick={() => { setNotice(\"\"); setEditing(null); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 48,
+      "tag": "button",
+      "label": "<button aria-label={`Ver ${row.code}`} onClick={() => setViewing(row)}><Eye size={14} /> Ver</button>",
+      "handlers": [
+        "onClick={() => setViewing(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 49,
+      "tag": "button",
+      "label": "<button aria-label={`Editar ${row.code}`} onClick={() => setEditing(row)}><Pencil size={14} /> Editar</button>",
+      "handlers": [
+        "onClick={() => setEditing(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 50,
+      "tag": "button",
+      "label": "<button onClick={() => setGenerating(row)}><ReceiptText size={14} /> Gerar títulos</button>",
+      "handlers": [
+        "onClick={() => setGenerating(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 52,
+      "tag": "button",
+      "label": "<button className=\"danger\" onClick={() => setCanceling(row)}>Cancelar</button>",
+      "handlers": [
+        "onClick={() => setCanceling(row)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 92,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit={order ? \"Salvar alterações\" : \"Cadastrar serviço\"} onSubmit={async () => { const payload = { customer_id: Number(customer), description, service_date: ",
+      "handlers": [
+        "onSubmit={async () => {\n      const payload = {\n        customer_id: Number(customer), description, service_date: serviceDate,\n        negotiated_cents: parseDecimal(revenue, 2), status, notes,\n        costs: costs.map((cost) => ({\n          kind: cost.kind, supplier_id: Number(cost.supplier_id),\n          quantity_milli: cost.kind === \"day_worker\" ? parseDecimal(cost.days, 3) : null,\n          agreed_amount_cents: parseDecimal(cost.amount, 2), details: cost.details,\n        })),\n      };\n      await api(order ? `/service-orders/${order.id}` : \"/service-orders\", order ? \"PUT\" : \"POST\", payload);\n      done();\n    }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 113,
+      "tag": "button",
+      "label": "<button type=\"button\" disabled={locked} onClick={() => addCost(\"day_worker\")}><Plus size={14} /> Adicionar diarista</button>",
+      "handlers": [
+        "onClick={() => addCost(\"day_worker\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 113,
+      "tag": "button",
+      "label": "<button type=\"button\" disabled={locked} onClick={() => addCost(\"subcontracted_freight\")}><Plus size={14} /> Adicionar frete</button>",
+      "handlers": [
+        "onClick={() => addCost(\"subcontracted_freight\")}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 118,
+      "tag": "button",
+      "label": "<button className=\"icon-button service-cost-remove\" type=\"button\" aria-label=\"Remover custo\" disabled={locked} onClick={() => setCosts((current) => current.filter((item) => item.ke",
+      "handlers": [
+        "onClick={() => setCosts((current) => current.filter((item) => item.key !== cost.key))}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 153,
+      "tag": "Form",
+      "label": "<Form cancel={close} submit=\"Confirmar geração de títulos\" onSubmit={async () => { await api(`/service-orders/${order.id}/generate-titles`, \"POST\", { account_id: Number(account), d",
+      "handlers": [
+        "onSubmit={async () => { await api(`/service-orders/${order.id}/generate-titles`, \"POST\", { account_id: Number(account), due_date: dueDate, competence_date: competence }); done(); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 177,
+      "tag": "button",
+      "label": "<button disabled={refreshing} onClick={update}>{refreshing ? \"Atualizando…\" : \"Atualizar\"}</button>",
+      "handlers": [
+        "onClick={update}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 194,
+      "tag": "Form",
+      "label": "<Form processingText=\"Cancelando serviço...\" submit=\"Cancelar serviço e preservar o histórico\" submitClassName=\"danger\" onSubmit={async () => { if (reason.trim().length < 3) throw ",
+      "handlers": [
+        "onSubmit={async () => {\n      if (reason.trim().length < 3) throw new Error(\"Informe um motivo com pelo menos três caracteres.\");\n      await api(`/service-orders/${order.id}/cancel`, \"POST\", { reason: reason.trim() });\n      canceled();\n    }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 204,
+      "tag": "Form",
+      "label": "<Form processingText=\"Cancelando serviço...\" cancel={close} submit=\"Confirmar cancelamento\" onSubmit={async () => { await api(`/service-orders/${order.id}/cancel`, \"POST\", { reason",
+      "handlers": [
+        "onSubmit={async () => { await api(`/service-orders/${order.id}/cancel`, \"POST\", { reason }); done(); }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/settings.tsx",
+      "line": 13,
+      "tag": "button",
+      "label": "<button onClick={() => setVersion((current) => current + 1)}>Tentar novamente</button>",
+      "handlers": [
+        "onClick={() => setVersion((current) => current + 1)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/settings.tsx",
+      "line": 21,
+      "tag": "Form",
+      "label": "<Form submit=\"Salvar identificação\" onSubmit={async () => { setError(\"\"); setSaved(false); try { const result = await api<CompanySettings>(\"/company-settings\", \"PUT\", { brand_name:",
+      "handlers": [
+        "onSubmit={async () => {\n          setError(\"\"); setSaved(false);\n          try { const result = await api<CompanySettings>(\"/company-settings\", \"PUT\", { brand_name: value.brand_name, company_name: value.company_name, company_document: value.company_document, phone: value.phone, email: value.email, address: value.address }); setValue(result); onSaved(result); setSaved(true); }\n          catch (e) { setError((e as Error).message); }\n        }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 68,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={resource.reload}>Tentar novamente: {label}</button>",
+      "handlers": [
+        "onClick={resource.reload}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 100,
+      "tag": "button",
+      "label": "<button className=\"primary\" onClick={onClick}> <Plus size={17} /> {children} </button>",
+      "handlers": [
+        "onClick={onClick}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 109,
+      "tag": "button",
+      "label": "<button type=\"button\" disabled={busy} onClick={()=>void exportFile()}><Download size={16}/>{busy?'Exportando...':'Exportar CSV'}</button>",
+      "handlers": [
+        "onClick={()=>void exportFile()}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 183,
+      "tag": "button",
+      "label": "<button aria-label=\"Página anterior\" disabled={data.page <= 1} onClick={() => onPage(data.page - 1)} > <ChevronLeft size={16} /> </button>",
+      "handlers": [
+        "onClick={() => onPage(data.page - 1)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 193,
+      "tag": "button",
+      "label": "<button aria-label=\"Próxima página\" disabled={data.page >= pages} onClick={() => onPage(data.page + 1)} > <ChevronRight size={16} /> </button>",
+      "handlers": [
+        "onClick={() => onPage(data.page + 1)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 239,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={onRetry}>Tentar novamente</button>",
+      "handlers": [
+        "onClick={onRetry}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 286,
+      "tag": "button",
+      "label": "<button type=\"button\" aria-label=\"Fechar janela\" onClick={close}> <X size={20} /> </button>",
+      "handlers": [
+        "onClick={close}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 347,
+      "tag": "form",
+      "label": "<form onSubmit={handle} aria-busy={busy}> {error && <Notice>{error}</Notice>} <fieldset disabled={busy}> {children} <div className=\"form-actions\"> {cancel && ( <button type=\"button",
+      "handlers": [
+        "onSubmit={handle}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 353,
+      "tag": "button",
+      "label": "<button type=\"button\" onClick={cancel}> Voltar </button>",
+      "handlers": [
+        "onClick={cancel}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 357,
+      "tag": "button",
+      "label": "<button className={submitClassName} disabled={busy} type=\"submit\"> {busy ? processingText : submit} </button>",
+      "handlers": [],
+      "href": null
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 31,
+      "tag": "AddButton",
+      "label": "<AddButton onClick={() => setAdding(true)}>Novo usuário</AddButton>",
+      "handlers": [
+        "onClick={() => setAdding(true)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 56,
+      "tag": "button",
+      "label": "<button onClick={() => setTarget(u)}> {u.active ? \"Desativar\" : \"Reativar\"} </button>",
+      "handlers": [
+        "onClick={() => setTarget(u)}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 79,
+      "tag": "Form",
+      "label": "<Form submit=\"Confirmar\" cancel={() => setTarget(null)} onSubmit={async () => { await api(`/users/${target.id}/toggle`, \"POST\"); setTarget(null); refresh(version + 1); }} > <p> {ta",
+      "handlers": [
+        "onSubmit={async () => {\n              await api(`/users/${target.id}/toggle`, \"POST\");\n              setTarget(null);\n              refresh(version + 1);\n            }}"
+      ],
+      "href": null
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 108,
+      "tag": "Form",
+      "label": "<Form cancel={close} onSubmit={async () => { await api(\"/users\", \"POST\", { name, username, password, role }); done(); }} > <div className=\"form-grid\"> <Field label=\"Nome *\" span> <",
+      "handlers": [
+        "onSubmit={async () => {\n          await api(\"/users\", \"POST\", { name, username, password, role });\n          done();\n        }}"
+      ],
+      "href": null
+    }
+  ],
+  "calls": [
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 94,
+      "kind": "api",
+      "arguments": [
+        "\"/company-settings\""
+      ]
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 382,
+      "kind": "api",
+      "arguments": [
+        "\"/auth/login\"",
+        "\"POST\"",
+        "{ username, password }"
+      ]
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 428,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/dashboard\""
+      ]
+    },
+    {
+      "file": "frontend/src/api.ts",
+      "line": 12,
+      "kind": "apiRequest",
+      "arguments": [
+        "path",
+        "{method, headers:body ? {\"Content-Type\":\"application/json\"} : {},body:body ? JSON.stringify(body) : undefined}"
+      ]
+    },
+    {
+      "file": "frontend/src/api.ts",
+      "line": 33,
+      "kind": "fetch",
+      "arguments": [
+        "'/api'+path",
+        "{...init,signal:controller.signal,credentials:'same-origin'}"
+      ]
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 43,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/customers?\" + query({ ...filters, page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 53,
+      "kind": "exportCsv",
+      "arguments": [
+        "\"customers\"",
+        "filters"
+      ]
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 169,
+      "kind": "api",
+      "arguments": [
+        "\"/customers\" + (customer ? \"/\" + customer.id : \"\")",
+        "customer ? \"PUT\" : \"POST\"",
+        "{ name, document: document || null, email, phone, contact_name: contactName, active,\n              ...(serviceDetailsEnabled\n                ? { service_details: { collection_address: collectionAddress, delivery_address: deliveryAddress, service_type: serviceType } }\n                : { address, pos"
+      ]
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 342,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/products?\" + query({ q, active, kind, group_name: groupName, page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 352,
+      "kind": "exportCsv",
+      "arguments": [
+        "\"products\"",
+        "filters"
+      ]
+    },
+    {
+      "file": "frontend/src/catalog.tsx",
+      "line": 465,
+      "kind": "api",
+      "arguments": [
+        "\"/products\" + (product ? \"/\" + product.id : \"\")",
+        "product ? \"PUT\" : \"POST\"",
+        "{\n              code,\n              description,\n              kind,\n              group_name: groupName,\n              unit,\n              barcode: barcode || null,\n              price_cents: parseDecimal(price, 2),\n              active,\n            }"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 60,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/accounts\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 60,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/categories\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 61,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/suppliers?page_size=100\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 78,
+      "kind": "exportCsv",
+      "arguments": [
+        "\"finance\"",
+        "filters"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 135,
+      "kind": "useLoad",
+      "arguments": [
+        "'/customers?'+query({q,active:true,page_size:100})"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 135,
+      "kind": "useLoad",
+      "arguments": [
+        "'/suppliers?'+query({q,active:true,page_size:100})"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 135,
+      "kind": "useLoad",
+      "arguments": [
+        "'/subcategories'"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 138,
+      "kind": "api",
+      "arguments": [
+        "'/finance'",
+        "'POST'",
+        "{description,direction,amount_cents:parseDecimal(value,2),account_id:Number(account),category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,customer_id:direction==='income'&&customer?Number(customer):null,supplier_id:direction==='expense'&&supplier?Number(supplier):null,due"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 166,
+      "kind": "api",
+      "arguments": [
+        "`/finance/${entry.id}/settle`",
+        "'POST'",
+        "{method,account_id:Number(account),principal_cents:principalCents,interest_cents:interestCents,fine_cents:fineCents,discount_cents:discountCents,request_key:key}"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 180,
+      "kind": "api",
+      "arguments": [
+        "`/finance/payments/${id}/reverse`",
+        "'POST'",
+        "{reason:reason.trim()}"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 195,
+      "kind": "api",
+      "arguments": [
+        "path",
+        "'POST'",
+        "{filename:file.name,content_type:file.type,content_base64:btoa(binary)}"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 215,
+      "kind": "api",
+      "arguments": [
+        "`/finance/${entry.id}/cancel`",
+        "\"POST\"",
+        "{ reason }"
+      ]
+    },
+    {
+      "file": "frontend/src/finance.tsx",
+      "line": 301,
+      "kind": "api",
+      "arguments": [
+        "\"/\" + tab",
+        "\"POST\"",
+        "tab === \"accounts\" ? { name, kind } : { name }"
+      ]
+    },
+    {
+      "file": "frontend/src/financeCatalog.tsx",
+      "line": 63,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/\" +\n        kind +\n        (kind === \"suppliers\" ? \"?\" + query({ q, active, page }) : \"\")",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/financeCatalog.tsx",
+      "line": 69,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/categories\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/financeCatalog.tsx",
+      "line": 282,
+      "kind": "api",
+      "arguments": [
+        "\"/\" + kind + (row ? \"/\" + row.id : \"\")",
+        "row ? \"PUT\" : \"POST\"",
+        "{ name, active, ...extra }"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 39,
+      "kind": "useLoad",
+      "arguments": [
+        "'/accounts'",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 39,
+      "kind": "useLoad",
+      "arguments": [
+        "'/finance/ofx/imports?'+query({page:importPage,page_size:50})",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 48,
+      "kind": "apiRequest",
+      "arguments": [
+        "'/finance/ofx/imports?'+query({account_id:Number(account)})",
+        "{method:'POST',headers:{'Content-Type':'application/x-ofx','X-Statement-Name':encodeURIComponent(file.name)},body:file}"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 56,
+      "kind": "api",
+      "arguments": [
+        "`/finance/ofx/imports/${id}`"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 80,
+      "kind": "useLoad",
+      "arguments": [
+        "'/categories'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 80,
+      "kind": "useLoad",
+      "arguments": [
+        "'/subcategories'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 80,
+      "kind": "useLoad",
+      "arguments": [
+        "direction==='income'?'/customers?active=true&page_size=100':'/suppliers?active=true&page_size=100'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 91,
+      "kind": "useLoad",
+      "arguments": [
+        "'/finance/reports/catalog'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 91,
+      "kind": "useLoad",
+      "arguments": [
+        "'/accounts'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 91,
+      "kind": "useLoad",
+      "arguments": [
+        "'/categories'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 91,
+      "kind": "useLoad",
+      "arguments": [
+        "'/finance/reports/'+report+'?'+query({...filters,page})",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 91,
+      "kind": "useLoad",
+      "arguments": [
+        "'/finance/budgets?'+query({year:Number(budgetMonth.slice(0,4)),month:Number(budgetMonth.slice(5,7)),supplier_kind:filters.supplier_kind})",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 100,
+      "kind": "api",
+      "arguments": [
+        "`/finance/budgets/${id}`",
+        "'DELETE'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 180,
+      "kind": "useLoad",
+      "arguments": [
+        "'/categories'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 180,
+      "kind": "useLoad",
+      "arguments": [
+        "'/subcategories'"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 181,
+      "kind": "api",
+      "arguments": [
+        "'/finance/budgets'",
+        "'POST'",
+        "{year,month,category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,target_cents:cents,notes}"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 185,
+      "kind": "useLoad",
+      "arguments": [
+        "`/finance/ofx/imports/${statementId}/items/${item.id}/suggestions`"
+      ]
+    },
+    {
+      "file": "frontend/src/financePlanning.tsx",
+      "line": 194,
+      "kind": "api",
+      "arguments": [
+        "`/finance/ofx/imports/${statementId}/items/${item.id}/confirm`",
+        "'POST'",
+        "body"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 89,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/accounts\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 90,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/categories\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 91,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/subcategories\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 115,
+      "kind": "api",
+      "arguments": [
+        "\"/finance/movements?\" +\n            query({ ...applied, page: next, page_size: 100 })"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 559,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/suppliers?\" + query({ q: supplierQuery, active: true, page_size: 100 })"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 574,
+      "kind": "api",
+      "arguments": [
+        "\"/finance/movements\"",
+        "\"POST\"",
+        "{\n            description,\n            direction,\n            amount_cents: parseDecimal(value, 2),\n            account_id: Number(account),\n            subcategory_id: Number(sub),\n            posting_date: posting,\n            competence_date: competence,\n            document,\n            supplier"
+      ]
+    },
+    {
+      "file": "frontend/src/ledger.tsx",
+      "line": 709,
+      "kind": "api",
+      "arguments": [
+        "`/finance/movements/${row.id}/reverse`",
+        "\"POST\"",
+        "{\n            reason,\n          }"
+      ]
+    },
+    {
+      "file": "frontend/src/navigation/useAppNavigation.ts",
+      "line": 100,
+      "kind": "api",
+      "arguments": [
+        "\"/auth/me\""
+      ]
+    },
+    {
+      "file": "frontend/src/navigation/useAppNavigation.ts",
+      "line": 202,
+      "kind": "api",
+      "arguments": [
+        "\"/auth/logout\"",
+        "\"POST\""
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 40,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/stock-movements?\" + query({ ...filters, page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 54,
+      "kind": "exportCsv",
+      "arguments": [
+        "\"stock\"",
+        "filters"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 139,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/products?\" + query({ q, active: true, page_size: 100 })"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 150,
+      "kind": "api",
+      "arguments": [
+        "\"/stock-movements\"",
+        "\"POST\"",
+        "{\n            product_id: Number(product),\n            kind,\n            quantity_milli: parseDecimal(qty, 3),\n            reason,\n          }"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 232,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/cash-sessions/current\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 233,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/cash-sessions?\" + query({ page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 354,
+      "kind": "api",
+      "arguments": [
+        "\"/cash-sessions\"",
+        "\"POST\"",
+        "{\n            opening_cents: parseDecimal(value, 2),\n          }"
+      ]
+    },
+    {
+      "file": "frontend/src/operations.tsx",
+      "line": 398,
+      "kind": "api",
+      "arguments": [
+        "`/cash-sessions/${cash.id}/close`",
+        "\"POST\"",
+        "{\n            counted_cents: parseDecimal(value, 2),\n          }"
+      ]
+    },
+    {
+      "file": "frontend/src/partners.tsx",
+      "line": 54,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/suppliers?\" + query({ kind, q, active, search_field: searchField, page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/partners.tsx",
+      "line": 110,
+      "kind": "api",
+      "arguments": [
+        "\"/suppliers\" + (row ? \"/\" + row.id : \"\")",
+        "row ? \"PUT\" : \"POST\"",
+        "{\n        kind, name, document: document || null, phone, email, contact_name: contactName, address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state, notes, active,\n        default_rate_cents: defaultRate.trim() ? parseDecimal(defaultRate, 2) : nu"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 60,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/products?\" + query({ q, active: true, page_size: 100 })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 64,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/customers?\" + query({ q: customerQ, active: true, page_size: 100 })"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 67,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/cash-sessions/current\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 122,
+      "kind": "api",
+      "arguments": [
+        "\"/sales\"",
+        "\"POST\"",
+        "{\n      customer_id: customer ? Number(customer) : null,\n      discount_cents: parseDecimal(discount, 2),\n      items: cart.map((r) => ({\n        product_id: r.product.id,\n        quantity_milli: parseDecimal(r.qty, 3),\n        unit_price_cents: parseDecimal(r.price, 2),\n      })),\n    }"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 237,
+      "kind": "api",
+      "arguments": [
+        "`/sales/${s.id}/finalize`",
+        "\"POST\"",
+        "{ method, due_date: method === \"credit\" ? due : null }"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 402,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/sales?\" + query({ ...filters, page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 416,
+      "kind": "exportCsv",
+      "arguments": [
+        "\"sales\"",
+        "filters"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 594,
+      "kind": "api",
+      "arguments": [
+        "`/sales/${sale.id}/cancel`",
+        "\"POST\"",
+        "{\n              reason,\n            }"
+      ]
+    },
+    {
+      "file": "frontend/src/sales.tsx",
+      "line": 617,
+      "kind": "api",
+      "arguments": [
+        "`/sales/${sale.id}/finalize`",
+        "\"POST\"",
+        "{\n                method,\n                due_date: method === \"credit\" ? due : null,\n              }"
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 20,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/service-orders?\" + query({ q, status, page })",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 24,
+      "kind": "api",
+      "arguments": [
+        "`/service-orders/${order.id}`"
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 67,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/customers?active=true&page_size=100\""
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 68,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/suppliers?active=true&page_size=100\""
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 102,
+      "kind": "api",
+      "arguments": [
+        "order ? `/service-orders/${order.id}` : \"/service-orders\"",
+        "order ? \"PUT\" : \"POST\"",
+        "payload"
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 149,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/accounts\""
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 153,
+      "kind": "api",
+      "arguments": [
+        "`/service-orders/${order.id}/generate-titles`",
+        "\"POST\"",
+        "{ account_id: Number(account), due_date: dueDate, competence_date: competence }"
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 196,
+      "kind": "api",
+      "arguments": [
+        "`/service-orders/${order.id}/cancel`",
+        "\"POST\"",
+        "{ reason: reason.trim() }"
+      ]
+    },
+    {
+      "file": "frontend/src/serviceOrders.tsx",
+      "line": 204,
+      "kind": "api",
+      "arguments": [
+        "`/service-orders/${order.id}/cancel`",
+        "\"POST\"",
+        "{ reason }"
+      ]
+    },
+    {
+      "file": "frontend/src/settings.tsx",
+      "line": 12,
+      "kind": "api",
+      "arguments": [
+        "\"/company-settings\""
+      ]
+    },
+    {
+      "file": "frontend/src/settings.tsx",
+      "line": 23,
+      "kind": "api",
+      "arguments": [
+        "\"/company-settings\"",
+        "\"PUT\"",
+        "{ brand_name: value.brand_name, company_name: value.company_name, company_document: value.company_document, phone: value.phone, email: value.email, address: value.address }"
+      ]
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "line": 38,
+      "kind": "apiRequest",
+      "arguments": [
+        "path",
+        "{ method: \"GET\", signal: controller.signal }"
+      ]
+    },
+    {
+      "file": "frontend/src/useFinancialSnapshot.ts",
+      "line": 26,
+      "kind": "apiRequest",
+      "arguments": [
+        "path",
+        "{ signal: abort.signal }"
+      ]
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 24,
+      "kind": "useLoad",
+      "arguments": [
+        "\"/users\"",
+        "version"
+      ]
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 83,
+      "kind": "api",
+      "arguments": [
+        "`/users/${target.id}/toggle`",
+        "\"POST\""
+      ]
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 111,
+      "kind": "api",
+      "arguments": [
+        "\"/users\"",
+        "\"POST\"",
+        "{ name, username, password, role }"
+      ]
+    },
+    {
+      "file": "frontend/src/users.tsx",
+      "line": 172,
+      "kind": "useLoad",
+      "arguments": [
+        "`/audit?page=${page}`"
+      ]
+    }
+  ]
+}

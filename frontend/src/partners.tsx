@@ -68,7 +68,7 @@ export function PartnerRegistry({ kind }: { kind: SupplierKind }) {
         <ActiveFilter value={active} onChange={value => { setActive(value); setPage(1); }} />
       </div>
       {result.error && <Notice>{result.error}</Notice>}
-      <Table headers={["Nome", "CPF / CNPJ", "Contato / cidade", "PIX", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
+      <Table headers={["Nome", "CPF / CNPJ", "Contato / cidade", "PIX", "Situação", "Ações"]} loading={result.loading} error={result.error} onRetry={result.reload} empty={!result.data?.items.length}>
         {result.data?.items.map(row => <tr key={row.id}>
           <td><strong>{row.name}</strong>{row.notes && <small>{row.notes}</small>}{row.default_rate_cents != null && <small>Referência {money(row.default_rate_cents)}</small>}</td>
           <td>{row.document || "Não informado"}</td>

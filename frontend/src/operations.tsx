@@ -17,6 +17,7 @@ import {
   ExportButton,
   Field,
   Form,
+  LoadFeedback,
   Modal,
   Notice,
   PageTitle,
@@ -93,7 +94,7 @@ export function StockPage() {
             "Responsável",
             "Data",
           ]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!result.data?.items.length}
         >
           {result.data?.items.map((row) => (
@@ -141,9 +142,11 @@ function StockForm({ close, done }: { close: () => void; done: () => void }) {
   const selected = result.data?.items.find((p) => p.id === Number(product));
   return (
     <Modal title="Novo lançamento de estoque" close={close}>
+      <LoadFeedback resource={result} label="produtos"/>
       <Form
         cancel={close}
         onSubmit={async () => {
+          if(result.loading||result.error)throw new Error("Aguarde uma consulta válida de produtos antes de lançar o estoque.");
           await api("/stock-movements", "POST", {
             product_id: Number(product),
             kind,
@@ -168,6 +171,7 @@ function StockForm({ close, done }: { close: () => void; done: () => void }) {
             <select
               required
               value={product}
+              disabled={result.loading||!!result.error}
               onChange={(e) => setProduct(e.target.value)}
             >
               <option value="">Selecione um produto</option>
@@ -297,7 +301,7 @@ export function CashPage() {
             "Diferença",
             "Ações",
           ]}
-          loading={history.loading}
+          loading={history.loading} error={history.error} onRetry={history.reload}
           empty={!history.data?.items.length}
         >
           {history.data?.items.map((row) => (

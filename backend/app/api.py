@@ -26,6 +26,7 @@ from . import schemas as S
 from . import services as V
 from .db import ROOT, build_engine, session_factory
 from .deployment import Deployment, HEALTH_HOST
+from .request_limits import RequestBodyLimit
 from .capabilities import has_transport, transport_kind, transport_supplier
 from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, CustomerServiceDetails, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, Session, StockMovement, Subcategory, Supplier, User, now
 
@@ -75,6 +76,7 @@ def create_app(engine=None, serve_frontend=True):
             raise RuntimeError("O banco informado difere do volume configurado.")
     app.state.engine = engine if engine is not None else build_engine()
     app.state.sessions = session_factory(app.state.engine)
+    app.add_middleware(RequestBodyLimit)
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=[deployment.public_host, HEALTH_HOST] if deployment.railway else ["127.0.0.1", "localhost", "testserver"], www_redirect=False)
 
     @app.middleware("http")
@@ -617,6 +619,7 @@ def create_app(engine=None, serve_frontend=True):
         if payload.request_key:
             prior=db.scalar(select(Payment).where(Payment.request_key==payload.request_key))
             if prior:
+                if prior.entry_id != entry.id: V.fail('Chave de quitação já utilizada em outro título')
                 if prior.request_hash != fingerprint: V.fail('Chave de quitação já usada com outros dados')
                 return V.finance_data(db,V.get(db,FinanceEntry,prior.entry_id))
         V.settle_entry(db, entry, payload.method, V.get(db, Account, payload.account_id), user, payload.posting_date, principal_cents=payload.principal_cents,interest_cents=payload.interest_cents,fine_cents=payload.fine_cents,discount_cents=payload.discount_cents,request_key=payload.request_key,request_hash=fingerprint if payload.request_key else None)

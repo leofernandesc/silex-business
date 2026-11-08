@@ -1,0 +1,109 @@
+[WebServer] INFO:     Started server process [624084]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 3 tests using 1 worker
+
+(node:624086) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-reports auxiliary categories failure is visible in its form and retry restores choices (5.9s)
+(node:624249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-subcategories auxiliary categories failure is visible in its form and retry restores choices (5.7s)
+(node:624391) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance auxiliary categories failure is visible in its form and retry restores choices (5.9s)
+
+
+  1) [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-reports auxiliary categories failure is visible in its form and retry restores choices
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog').getByRole('alert').first()
+    Expected substring: "Categorias indisponíveis"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog').getByRole('alert').first() with timeout 5000ms
+      - waiting for getByRole('dialog').getByRole('alert').first()
+
+
+      3 |  expect((await page.request.post('/api/auth/login',{data:{username:'demo.admin',password:'DemoLocal#2026'}})).ok()).toBe(true);
+      4 |  await page.route('**/api/categories',r=>r.fulfill({status:503,json:{detail:'Categorias indisponíveis (fixture).'}}));await page.goto('/app#'+route);await page.getByRole('button',{name:button,exact:true}).click();
+    > 5 |  const dialog=page.getByRole('dialog');await expect(dialog.getByRole('alert').first()).toContainText('Categorias indisponíveis');
+        |                                                                                        ^
+      6 |  await page.unroute('**/api/categories');await dialog.getByRole('button',{name:'Tentar novamente: categorias',exact:true}).click();await expect(dialog.getByRole('alert')).toHaveCount(0);
+      7 |  const control=route==='finance'?'Subcategoria *':'Categoria *';await expect.poll(()=>dialog.getByLabel(control,{exact:true}).locator('option').count()).toBeGreaterThan(1);
+      8 |  await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/commercial-lookups.spec.ts:5:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/commercial-lookups-finance-0ed70--and-retry-restores-choices-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/commercial-lookups-finance-0ed70--and-retry-restores-choices-desktop/error-context.md
+
+  2) [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-subcategories auxiliary categories failure is visible in its form and retry restores choices
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog').getByRole('alert').first()
+    Expected substring: "Categorias indisponíveis"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog').getByRole('alert').first() with timeout 5000ms
+      - waiting for getByRole('dialog').getByRole('alert').first()
+
+
+      3 |  expect((await page.request.post('/api/auth/login',{data:{username:'demo.admin',password:'DemoLocal#2026'}})).ok()).toBe(true);
+      4 |  await page.route('**/api/categories',r=>r.fulfill({status:503,json:{detail:'Categorias indisponíveis (fixture).'}}));await page.goto('/app#'+route);await page.getByRole('button',{name:button,exact:true}).click();
+    > 5 |  const dialog=page.getByRole('dialog');await expect(dialog.getByRole('alert').first()).toContainText('Categorias indisponíveis');
+        |                                                                                        ^
+      6 |  await page.unroute('**/api/categories');await dialog.getByRole('button',{name:'Tentar novamente: categorias',exact:true}).click();await expect(dialog.getByRole('alert')).toHaveCount(0);
+      7 |  const control=route==='finance'?'Subcategoria *':'Categoria *';await expect.poll(()=>dialog.getByLabel(control,{exact:true}).locator('option').count()).toBeGreaterThan(1);
+      8 |  await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/commercial-lookups.spec.ts:5:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/commercial-lookups-finance-3f1ca--and-retry-restores-choices-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/commercial-lookups-finance-3f1ca--and-retry-restores-choices-desktop/error-context.md
+
+  3) [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance auxiliary categories failure is visible in its form and retry restores choices
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('dialog').getByRole('alert').first()
+    Expected substring: "Categorias indisponíveis"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('dialog').getByRole('alert').first() with timeout 5000ms
+      - waiting for getByRole('dialog').getByRole('alert').first()
+
+
+      3 |  expect((await page.request.post('/api/auth/login',{data:{username:'demo.admin',password:'DemoLocal#2026'}})).ok()).toBe(true);
+      4 |  await page.route('**/api/categories',r=>r.fulfill({status:503,json:{detail:'Categorias indisponíveis (fixture).'}}));await page.goto('/app#'+route);await page.getByRole('button',{name:button,exact:true}).click();
+    > 5 |  const dialog=page.getByRole('dialog');await expect(dialog.getByRole('alert').first()).toContainText('Categorias indisponíveis');
+        |                                                                                        ^
+      6 |  await page.unroute('**/api/categories');await dialog.getByRole('button',{name:'Tentar novamente: categorias',exact:true}).click();await expect(dialog.getByRole('alert')).toHaveCount(0);
+      7 |  const control=route==='finance'?'Subcategoria *':'Categoria *';await expect.poll(()=>dialog.getByLabel(control,{exact:true}).locator('option').count()).toBeGreaterThan(1);
+      8 |  await page.keyboard.press('Escape');await expect(dialog).toHaveCount(0);
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/commercial-lookups.spec.ts:5:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/commercial-lookups-finance-a6f86--and-retry-restores-choices-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/commercial-lookups-finance-a6f86--and-retry-restores-choices-desktop/error-context.md
+
+  3 failed
+    [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-reports auxiliary categories failure is visible in its form and retry restores choices
+    [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-subcategories auxiliary categories failure is visible in its form and retry restores choices
+    [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance auxiliary categories failure is visible in its form and retry restores choices

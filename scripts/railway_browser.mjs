@@ -20,10 +20,11 @@ try {
   await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page.locator('.silex-financial-dashboard')).toBeVisible();
   await expect(page.locator('.silex-financial-dashboard')).toHaveAttribute('aria-busy', 'false');
-  await expect(page.locator('.summary-card')).toHaveCount(6);
+  // Stage 1 exposes six core indicators plus two upcoming-due cards.
+  await expect(page.locator('.summary-card')).toHaveCount(8);
   const cookie = (await context.cookies()).find(c => c.name === 'gestao_session');
   if (!cookie?.secure || !cookie.httpOnly || cookie.sameSite !== 'Strict') throw new Error('Cookie flags');
-  await page.getByRole('button', { name: 'Abrir livro caixa', exact: true }).click();
+  await page.getByRole('link', { name: 'Abrir livro caixa', exact: true }).click();
   await expect(page).toHaveURL(/#finance$/);
   const logout = page.waitForResponse(r => new URL(r.url()).pathname === '/api/auth/logout');
   await page.getByRole('button', { name: 'Sair', exact: true }).click();

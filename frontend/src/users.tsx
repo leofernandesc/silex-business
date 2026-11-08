@@ -34,7 +34,7 @@ export function UsersPage({ current }: { current: User }) {
         {result.error && <Notice>{result.error}</Notice>}
         <Table
           headers={["Nome", "Usuário", "Perfil", "Situação", "Ações"]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!result.data?.length}
         >
           {result.data?.map((u) => (
@@ -181,7 +181,7 @@ export function AuditPage() {
         <Table
           headers={["Código", "Usuário", "Ação", "Registro", "Data"]}
           empty={!result.data?.items.length}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
         >
           {result.data?.items.map((r) => (
             <tr key={r.id}>

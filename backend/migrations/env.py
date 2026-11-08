@@ -12,7 +12,11 @@ if context.is_offline_mode():
         context.run_migrations()
 else:
     engine = build_engine()
-    with engine.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata, render_as_batch=True)
+    with engine.begin() as connection:
+        # SQLite's legacy driver does not BEGIN for DDL. Start a real transaction
+        # before any migration so schema and alembic_version roll back together.
+        connection.exec_driver_sql("BEGIN IMMEDIATE")
+        context.configure(connection=connection, target_metadata=target_metadata,
+                          render_as_batch=True, transactional_ddl=True)
         with context.begin_transaction():
             context.run_migrations()

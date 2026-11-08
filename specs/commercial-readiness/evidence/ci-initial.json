@@ -1,0 +1,56 @@
+{
+  "run_id": 42480807089,
+  "head": "2040e051204245abbf7b8f093ea54033aa331c15",
+  "url": "https://github.com/leofernandesc/silex-business/actions/runs/42480807089",
+  "results": {
+    "diff": "passed",
+    "core": {
+      "backend": 288,
+      "frontend": 234,
+      "negative_diff_gate": 7,
+      "build": "passed"
+    },
+    "chromium": {
+      "matrix": {
+        "passed": 311,
+        "failed": 1,
+        "total": 312,
+        "retries": 0
+      },
+      "complements": "not executed after failed matrix"
+    },
+    "firefox": {
+      "matrix": {
+        "passed": 312,
+        "failed": 0,
+        "total": 312,
+        "retries": 0
+      },
+      "finance": 30,
+      "transport": 8,
+      "date_and_focus_components": 35
+    }
+  },
+  "failure": "Mobile cash focus test selected its branch with isVisible before the current cash lookup was ready; controlled delayed lookup reproduced the same 60000ms failure. No product change was required.",
+  "log_summaries": {
+    "diff": [
+      "2026-11-08T12:33:28.0064774Z {\"ok\": true, \"base\": \"9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82\", \"head\": \"2040e051204245abbf7b8f093ea54033aa331c15\", \"merge_base\": \"9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82\", \"changed_files\": 119, \"working_tree_only_check\": false}"
+    ],
+    "core": [
+      "2026-11-08T12:35:18.1124170Z 288 passed, 1 warning in 82.53s (0:01:22)",
+      "2026-11-08T12:35:24.0367428Z  Test Files  20 passed (20)",
+      "2026-11-08T12:35:24.0368081Z       Tests  234 passed (234)",
+      "2026-11-08T12:35:31.3104139Z 7 passed, 1 warning in 0.32s"
+    ],
+    "chromium": [
+      "2026-11-08T12:45:22.7720982Z   1 failed",
+      "2026-11-08T12:45:22.7722201Z   311 passed (10.9m)"
+    ],
+    "firefox": [
+      "2026-11-08T12:46:12.1449860Z   312 passed (11.9m)",
+      "2026-11-08T12:48:06.8893633Z   30 passed (1.8m)",
+      "2026-11-08T12:48:30.7532931Z   8 passed (20.0s)",
+      "2026-11-08T12:50:53.9917106Z   35 passed (2.4m)"
+    ]
+  }
+}

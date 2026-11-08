@@ -9,10 +9,10 @@ export default defineConfig({
   outputDir: "test-results-financial-stage1",
   use: {
     baseURL: "http://127.0.0.1:8025",
-    browserName: "chromium",
+    browserName: process.env.SILEX_INTEGRATION_BROWSER === "firefox" ? "firefox" : "chromium",
     locale: "en-US",
     timezoneId: "America/Manaus",
-    launchOptions: process.env.SILEX_CHROMIUM_PATH
+    launchOptions: process.env.SILEX_INTEGRATION_BROWSER === "firefox" ? {} : process.env.SILEX_CHROMIUM_PATH
       ? { executablePath: process.env.SILEX_CHROMIUM_PATH }
       : {},
     screenshot: "only-on-failure",

@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { LedgerTable } from "./ledgerPresentation";
 import "./ledger.css";
-import { api, query } from "./api";
+import { downloadCsv, api, query } from "./api";
 import { dateOnly, localDate, money, parseDecimal } from "./format";
 import { presets, periodRange } from "./financeDates";
 import type {
@@ -38,6 +38,7 @@ import {
   Pagination,
   SummaryCard,
   useLoad,
+  LoadFeedback,
 } from "./ui";
 
 type Filters = {
@@ -93,6 +94,7 @@ export function LedgerPage() {
   function apply(filters = draft) {
     syncFinancialSearch("movements",filters);
     setApplied({ ...filters });
+    setVersion(value=>value+1);
     setPage(1);
     setPrintRows(null);
   }
@@ -145,7 +147,7 @@ export function LedgerPage() {
         </button>
         <ExportButton
           onClick={() => {
-            location.href = "/api/finance/movements.csv?" + query(applied);
+            return downloadCsv("/finance/movements.csv?" + query(applied),"livro-caixa.csv");
           }}
         />
         <button
@@ -211,7 +213,7 @@ export function LedgerPage() {
           icon={<List />}
         />
       </div>
-      {accounts.error && <Notice>{accounts.error}</Notice>}
+      <LoadFeedback resource={accounts} label="contas"/><LoadFeedback resource={categories} label="categorias"/><LoadFeedback resource={subcategories} label="subcategorias"/>
       <div className="account-balances">
         <p>
           Saldo atual das contas · clique para filtrar · inclui saldo inicial e
@@ -382,7 +384,7 @@ export function LedgerPage() {
           </div>
         ) : (
           <LedgerTable
-            loading={result.loading}
+            loading={result.loading} error={result.error} onRetry={()=>setVersion(value=>value+1)}
             empty={false}
             headers={[
               "Data / competência",
@@ -445,6 +447,7 @@ export function LedgerPage() {
       </section>
       {adding && (
         <MovementForm
+          lookups={[{label:"contas",resource:accounts},{label:"categorias",resource:categories},{label:"subcategorias",resource:subcategories}]}
           direction={adding}
           accounts={(accounts.data || []).filter((a) => a.active)}
           categories={(categories.data || []).filter((c) => c.active)}
@@ -515,6 +518,7 @@ export function LedgerPage() {
   );
 }
 function MovementForm({
+  lookups,
   direction,
   accounts,
   categories,
@@ -522,6 +526,7 @@ function MovementForm({
   close,
   done,
 }: {
+  lookups:{label:string;resource:{loading:boolean;error:string;reload:()=>void}}[];
   direction: string;
   accounts: Account[];
   categories: Category[];
@@ -560,10 +565,12 @@ function MovementForm({
       title={direction === "income" ? "Nova receita" : "Nova despesa"}
       close={close}
     >
+      {lookups.map(({label,resource})=><LoadFeedback key={label} resource={resource} label={label}/>)}
       <Form
         cancel={close}
         submit="Salvar lançamento"
         onSubmit={async () => {
+          if(lookups.some(({resource})=>resource.loading||resource.error))throw new Error("Consulte contas, categorias e subcategorias antes de salvar o lançamento.");
           await api("/finance/movements", "POST", {
             description,
             direction,

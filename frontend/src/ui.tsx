@@ -1,6 +1,7 @@
 import { SilexDatePicker } from "./SilexDatePicker";
 import {
   cloneElement,
+  useCallback,
   isValidElement,
   useEffect,
   useId,
@@ -19,38 +20,32 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { apiRequest } from "./api";
+import { validResource } from "./resourceValidation";
 import { labels } from "./format";
 import type { Page } from "./types";
 import { useModalFocus } from "./useModalFocus";
 
 export function useLoad<T>(path: string, version = 0) {
-  const [data, setData] = useState<T | null>(null),
-    [loading, setLoading] = useState(true),
-    [error, setError] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  const reload = useCallback(() => setAttempt(value => value + 1), []);
+  const key = JSON.stringify([path, version, attempt]);
+  const pending = { key, data: null as T | null, loading: true, error: "" };
+  const [state, setState] = useState(pending);
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
-    setLoading(true);
-    setError("");
+    setState({ key, data: null, loading: true, error: "" });
     apiRequest<T>(path, { method: "GET", signal: controller.signal })
-      .then((value) => {
-        if (active) setData(value);
+      .then(value => {
+        if (!validResource(path,value)) throw new Error("Resposta inválida do servidor. Tente novamente.");
+        if (active) setState({key,data:value,loading:false,error:""});
       })
-      .catch((e) => {
-        if (active) {
-          setError(e.message);
-          setData(null);
-        }
-      })
-      .finally(() => {
-        if (active) setLoading(false);
+      .catch(error => {
+        if (active) setState({key,data:null,loading:false,error:(error as Error).message});
       });
-    return () => {
-      active = false;
-      controller.abort();
-    };
-  }, [path, version]);
-  return { data, loading, error };
+    return () => { active = false; controller.abort(); };
+  }, [path, key]);
+  return { ...(state.key === key ? state : pending), reload };
 }
 export function Notice({
   children,
@@ -67,6 +62,10 @@ export function Notice({
       {children}
     </div>
   );
+}
+/** Contextual lookup state: unavailable is never described as an empty catalogue. */
+export function LoadFeedback({resource,label}:{resource:{loading:boolean;error:string;reload:()=>void};label:string}){
+  return resource.loading?<p role="status">Carregando {label}…</p>:resource.error?<><Notice>{label}: {resource.error}</Notice><button type="button" onClick={resource.reload}>Tentar novamente: {label}</button></>:null;
 }
 export function Badge({ status }: { status: string }) {
   return <span className={`badge ${status}`}>{labels[status] || status}</span>;
@@ -104,13 +103,10 @@ export function AddButton({
     </button>
   );
 }
-export function ExportButton({ onClick }: { onClick: () => void }) {
-  return (
-    <button onClick={onClick}>
-      <Download size={16} />
-      Exportar CSV
-    </button>
-  );
+export function ExportButton({onClick}:{onClick:()=>void|Promise<void>}) {
+  const [busy,setBusy]=useState(false),[error,setError]=useState('');const pending=useRef(false);
+  async function exportFile(){if(pending.current)return;pending.current=true;setBusy(true);setError('');try{await onClick();}catch(error){setError((error as Error).message);}finally{pending.current=false;setBusy(false);}}
+  return <><button type="button" disabled={busy} onClick={()=>void exportFile()}><Download size={16}/>{busy?'Exportando...':'Exportar CSV'}</button>{error&&<Notice>{error}</Notice>}</>;
 }
 export function SearchBox({
   value,
@@ -209,15 +205,19 @@ export function Table({
   headers,
   empty,
   loading,
+  error,
+  onRetry,
   children,
 }: {
   headers: string[];
   empty: boolean;
   loading?: boolean;
+  error?: string;
+  onRetry?: () => void;
   children: ReactNode;
 }) {
   return (
-    <div className="table-wrap" tabIndex={0} aria-label="Tabela de registros">
+    <div className="table-wrap" tabIndex={0} aria-label="Tabela de registros" aria-busy={loading || undefined}>
       <table>
         <thead>
           <tr>
@@ -233,6 +233,11 @@ export function Table({
                 <div className="empty">Carregando registros...</div>
               </td>
             </tr>
+          ) : error ? (
+            <tr><td colSpan={headers.length}><div className="empty" role="status">
+              <strong>Dados indisponíveis</strong><span>A consulta não foi concluída.</span>
+              {onRetry && <button type="button" onClick={onRetry}>Tentar novamente</button>}
+            </div></td></tr>
           ) : empty ? (
             <tr>
               <td colSpan={headers.length}>

@@ -1,8 +1,6 @@
 name: Integration core tests
 on:
   pull_request:
-    branches: [main]
-    paths: ["backend/**", "frontend/**", "scripts/**", ".github/workflows/**"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -10,13 +8,45 @@ concurrency:
   group: integration-tests-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  diff:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    outputs:
+      runtime: ${{ steps.scope.outputs.runtime }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Validate complete PR diff, whitespace, merge markers and conflicts
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before || github.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python scripts/check_pr_diff.py --base "$BASE_SHA" --head "$HEAD_SHA"
+      - id: scope
+        name: Keep documentation-only PRs lightweight
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before || github.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python - <<'PYTHON'
+          import os,subprocess
+          paths=subprocess.check_output(['git','diff','--name-only',os.environ['BASE_SHA']+'...'+os.environ['HEAD_SHA']],text=True).splitlines()
+          runtime=os.environ['GITHUB_EVENT_NAME']=='workflow_dispatch' or any(p.startswith(('backend/','frontend/','scripts/','.github/workflows/')) for p in paths)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:out.write('runtime='+str(runtime).lower()+'\n')
+          PYTHON
   core:
+    needs: diff
+    if: needs.diff.outputs.runtime == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: '3.12'
@@ -35,5 +65,57 @@ jobs:
         run: npm test --prefix frontend
       - name: TypeScript and build (no deployment)
         run: npm run build --prefix frontend
-      - name: Whitespace check
-        run: git diff --check
+      - name: Prove rejection of invalid committed diffs in disposable repositories
+        run: PYTHONPATH=backend .venv/bin/python -m pytest backend/tests/test_pr_diff_gate.py -q
+
+  browsers:
+    needs: diff
+    if: needs.diff.outputs.runtime == 'true'
+    name: Full E2E / ${{ matrix.browser }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install exact dependencies and build
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r backend/requirements.txt
+          npm ci --prefix frontend
+          npm run build --prefix frontend
+      - name: Install matched browser on disposable runner
+        working-directory: frontend
+        run: npx --no-install playwright install --with-deps "${{ matrix.browser }}"
+      - name: Complete matrix, one batch, no retries and disposable SQLite per test
+        working-directory: frontend
+        env:
+          SILEX_INTEGRATION_BROWSER: ${{ matrix.browser }}
+        run: npx --no-install playwright test --config playwright.integration.config.ts
+
+      - name: Directed financial states, navigation and civil timezones
+        env:
+          SILEX_INTEGRATION_BROWSER: ${{ matrix.browser }}
+          SILEX_FINANCIAL_EVIDENCE_DIR: /tmp/silex-financial-ci-evidence
+        run: .venv/bin/python scripts/check_financial_stage1.py
+      - name: Specialized module journeys in a separate disposable fixture
+        env:
+          SILEX_INTEGRATION_BROWSER: ${{ matrix.browser }}
+        run: .venv/bin/python scripts/check_transport_module.py
+      - name: Date fields and modal focus components
+        working-directory: frontend
+        env:
+          SILEX_REVIEW_BROWSER: ${{ matrix.browser }}
+        run: npx --no-install playwright test --config playwright.components-review.config.ts

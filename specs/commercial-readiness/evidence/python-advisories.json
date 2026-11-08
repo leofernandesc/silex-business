@@ -1,0 +1,7 @@
+{
+  "source": "https://api.osv.dev/v1/querybatch",
+  "packages": 32,
+  "findings": [],
+  "tooling_update": "Isolated venv pip upgraded from 24.0 to 26.3 after known advisories; application requirement pins unchanged.",
+  "limitations": "Known advisory scan, not a pentest."
+}

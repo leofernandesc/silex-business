@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Silex Business — revisão da candidata</title>
+<style>body{font:1rem/1.6 system-ui,sans-serif;max-width:70rem;margin:auto;padding:1.2rem;color:#172038;background:#f4f6fa}figure{margin:1.5rem 0}img{max-width:100%;height:auto;border:1px solid #b9c3d0}a{color:#174b91}figcaption{font-weight:600}code{overflow-wrap:anywhere}</style>
+<h1>Revisão de prontidão — evidências sintéticas</h1>
+<p>Capturas reais de testes locais, banco descartável e dados fictícios. Não representam a Railway, clientes reais, homologação humana, impressão física ou aprovação comercial.</p>
+<p><a href="../FINAL-REVIEW.md">Relatório</a> · <a href="../DEFECTS.md">Defeitos</a> · <a href="../FLOW-VALIDATION.md">Fluxos</a> · <a href="../RELEASE-CHECKLIST.md">Liberação futura</a></p>
+<figure><figcaption>Dashboard financeiro — Firefox, 375 px, fixture do teste dirigido.</figcaption><img src="dashboard-mobile.png" alt="Indicadores e atalhos financeiros com dados fictícios no navegador Firefox em largura móvel"></figure>
+<figure><figcaption>Falha controlada HTTP — dados indisponíveis, sem saldos zero inventados.</figcaption><img src="dashboard-error.png" alt="Dashboard com mensagem de falha de consulta e indicadores indisponíveis"></figure>
+<h2>Relatório extenso: mesmos três registros da página 2, 39 campos</h2>
+<p><a href="report-before-a4.pdf">Antes: oito páginas A4</a> · <a href="report-after-a4.pdf">Depois: quatro páginas A4</a> · <a href="report-a4-check.json">Texto e limites físicos conferidos</a>. Campos e fontes preservados; faixas pequenas são mantidas juntas, com identificadores de linha. O primeiro grupo com descrição longa pode continuar entre páginas.</p>
+<figure><figcaption>Primeira página do PDF da candidata.</figcaption><img src="report-first-page.png" alt="Primeira faixa do relatório A4 com descrição longa, IDs e valores monetários completos"></figure>
+<figure><figcaption>Última faixa completa, com os três registros identificados.</figcaption><img src="report-last-page.png" alt="Faixa final com valores de saldo pendente, colunas de comprovantes e baixas"></figure>
+<p><a href="report-nested-a4.pdf">Relatório com baixa parcial e comprovante fictício</a>: conteúdo textual selecionável, datas e valores em português; nenhum objeto é convertido para “[object Object]”. PDF gerado por Chromium; Firefox foi validado em mídia print, sem declaração de impressão física.</p>
+<h2>Execuções e preservação</h2>
+<p><a href="firefox-306.json">Matriz Firefox completa</a> · <a href="chromium-306.json">Matriz Chromium final</a> · <a href="backend-final.txt">Backend</a> · <a href="frontend-final.txt">Frontend</a> · <a href="docker-recovery.txt">Container/backup/restauração</a> · <a href="finance-comparison.json">124 comparações financeiras</a> · <a href="secret-scan.json">Varredura de segredos sem valores</a>.</p>
+<p>Resultados de CI pertencem ao HEAD do Draft PR. Consulte seus checks e descrição. Automação e galeria não certificam WCAG, acessibilidade assistiva, ausência absoluta de bugs ou isolamento entre empresas.</p>
+</html>

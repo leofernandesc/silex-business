@@ -1,0 +1,23 @@
+{
+  "source": "npm audit --json",
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "dependencies": {
+      "prod": 18,
+      "dev": 150,
+      "optional": 53,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 167
+    }
+  },
+  "vulnerabilities": {},
+  "scope": "Exact lockfile, including dev tools. Not a pentest."
+}

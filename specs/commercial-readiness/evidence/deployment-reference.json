@@ -1,0 +1,17 @@
+{
+  "source": "Public GitHub deployment metadata; no Railway request",
+  "id": 7133817113,
+  "sha": "191ed179e2c7f8b2a3e53ddd1aca422e4168cdf0",
+  "created_at": "2026-10-17T02:48:17Z",
+  "states": [
+    {
+      "state": "success",
+      "created_at": "2026-10-17T02:48:49Z"
+    },
+    {
+      "state": "in_progress",
+      "created_at": "2026-10-17T02:48:17Z"
+    }
+  ],
+  "runtime_sha_verified": false
+}

@@ -1,0 +1,84 @@
+{
+  "base": "9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82",
+  "protected_files": {
+    "backend/app/capabilities.py": {
+      "unchanged": true,
+      "sha256": "49d5b00469f3c17eab9dadf840b9389918b198b62fa52ce72410346feb60db05"
+    },
+    "backend/app/models.py": {
+      "unchanged": true,
+      "sha256": "b8017168c57e34f70598b44017a37bddfd94d980078897cc63167e043967d3df"
+    },
+    "backend/app/schemas.py": {
+      "unchanged": true,
+      "sha256": "92d140c6869ce6ae598f1da26d28143fdf0f719d2db020af6cc38c0c79c9a9b6"
+    },
+    "backend/app/services.py": {
+      "unchanged": true,
+      "sha256": "6d17dca116fa7719f7c7ae53ab821583b5a0768c37dc2105fedb71078c60b202"
+    },
+    "backend/app/financial.py": {
+      "unchanged": true,
+      "sha256": "ba97d04a602107cbb40deee34ceae2e08cc38fa7691faf0097fd6832ab8abd19"
+    },
+    "backend/app/service_orders.py": {
+      "unchanged": true,
+      "sha256": "bbfe08955fb8ef033deb7fad6648f32fa5ec18706e8cee01778fcf666d043db5"
+    },
+    "backend/app/transport_admin.py": {
+      "unchanged": true,
+      "sha256": "71c042cbeb2328558a17b907099e8263acb22d11efa12357588f21d9a8d8a2ef"
+    },
+    "backend/app/deployment.py": {
+      "unchanged": true,
+      "sha256": "372747cd8a6dea3cb9d619bfb99f22a61d5ce2c84ec1bb6188f758b26d46d7d6"
+    },
+    "backend/app/start.py": {
+      "unchanged": true,
+      "sha256": "393b2161ad5f06e430f3a5e4bea74e41c21b8787f537307a211c7e0a8302b3d5"
+    },
+    "frontend/src/civilDates.ts": {
+      "unchanged": true,
+      "sha256": "eb5cecda9a1eb356d895a2ed783cc49137a75b5515add1575dbf60af7b6a4a18"
+    },
+    "frontend/src/SilexDatePicker.tsx": {
+      "unchanged": true,
+      "sha256": "4bb2f91c73f4ed8b18bb21d0109ab125cacef1f144c030b75d2cf7c3f0b2f324"
+    },
+    "frontend/src/SilexMonthField.tsx": {
+      "unchanged": true,
+      "sha256": "e0564acf9ceb4f5a10121b1682e821fe1eb1f6bc66b78e39c55d65d2d14aef05"
+    },
+    "frontend/src/capabilities.ts": {
+      "unchanged": true,
+      "sha256": "7b8029863fd132f7374493c78406b81f3e9669cd852f989a24e98c4d4b5b1bcb"
+    },
+    "frontend/src/navigation/routes.ts": {
+      "unchanged": true,
+      "sha256": "5cf23e5805e6014292cd6f9fede995b5d121b88412f99bb5fd5a747f54d343bd"
+    },
+    "Dockerfile": {
+      "unchanged": true,
+      "sha256": "292a8346454154074114183a01f732acb69c9c793869507d2b76d93e99bd0fad"
+    },
+    "backend/requirements.txt": {
+      "unchanged": true,
+      "sha256": "6e9853f0a0c8efdcadc7e00fdabd9a50cc0630686175999f44eff972610b3d81"
+    }
+  },
+  "authentication_functions_unchanged_by_ast": {
+    "current_user": true,
+    "admin": true,
+    "login": true,
+    "logout": true,
+    "get_db": true
+  },
+  "changed_financial_scope": "report predicates/date-basis and settlement idempotency resource guard; exact arithmetic comparison in finance-comparison.json",
+  "persistent_operations": {
+    "database_access": false,
+    "migration": false,
+    "provisioning": false,
+    "deployment": false,
+    "ownership_transfer": false
+  }
+}

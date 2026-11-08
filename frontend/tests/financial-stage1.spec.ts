@@ -429,6 +429,8 @@ test("keyboard shortcut focus, monthly alternative table and tablet/text enlarge
 });
 
 for (const scenario of [
+  {zone:"UTC",instant:"2028-03-01T02:30:00Z",day:"2028-02-29",week:"2028-02-28",month:"2028-02-01",previous:["2028-01-01","2028-01-31"],year:"2028-01-01"},
+  {zone:"America/Manaus",instant:"2027-01-01T03:30:00Z",day:"2026-12-31",week:"2026-12-28",month:"2026-12-01",previous:["2026-11-01","2026-11-30"],year:"2026-01-01"},
   {
     zone: "Asia/Tokyo",
     instant: "2026-11-01T02:30:00Z",

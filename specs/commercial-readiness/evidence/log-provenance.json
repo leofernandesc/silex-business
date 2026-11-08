@@ -1,0 +1,65 @@
+[
+  {
+    "readable_log": "chromium-before-fix-full.txt",
+    "original_gzip": "chromium-before-fix-full.txt.gz",
+    "original_sha256": "ff302a160160c89e8b4e9ad10111f3d68820c0b2a2b237f238c1ad3c345a0065",
+    "readable_sha256": "bbb287c80cb063cbf03a186fdd8e5ecf0d84fa6445ea7a49beeeced4376008de",
+    "transformation": "Trailing whitespace and empty EOF lines removed only in the readable copy; original bytes preserved losslessly in gzip. Test results/values are unchanged."
+  },
+  {
+    "readable_log": "docker-recovery.txt",
+    "original_gzip": "docker-recovery.txt.gz",
+    "original_sha256": "d5299a70f2f331181c699c67e2dbe45306b4ff4089523defa4bdbbfe2cb2a7a9",
+    "readable_sha256": "2856fdff64571895359b7c2f1447a2b8d45a1c031ad6098b39c430ea4e22c6fc",
+    "transformation": "Trailing whitespace and empty EOF lines removed only in the readable copy; original bytes preserved losslessly in gzip. Test results/values are unchanged."
+  },
+  {
+    "readable_log": "report-details-after.txt",
+    "original_gzip": "report-details-after.txt.gz",
+    "original_sha256": "e444dc04121868b917820ec1c8f583c57c61352402980bec2a455586ce3afef3",
+    "readable_sha256": "de0a559d657757e59b8df3870e7eec63d8abab6e4f73219251ab68a33cf9d58a",
+    "transformation": "Trailing whitespace and empty EOF lines removed only in the readable copy; original bytes preserved losslessly in gzip. Test results/values are unchanged."
+  },
+  {
+    "readable_log": "report-details-before.txt",
+    "original_gzip": "report-details-before.txt.gz",
+    "original_sha256": "355311ff0094af9f35a8c0c8a83c62e680aef66239ec27dae18339e483dfbccf",
+    "readable_sha256": "5bac8d0383e03e3caafe98abe9943e4470b8a7bc2b8b1e2626ed4b44dc30c262",
+    "transformation": "Trailing whitespace and empty EOF lines removed only in the readable copy; original bytes preserved losslessly in gzip. Test results/values are unchanged."
+  },
+  {
+    "readable_log": "frontend-final.txt",
+    "original_gzip": "frontend-final.txt.gz",
+    "original_sha256": "d6bbd9c9a961dddb2cfdc5e59a92203066858b6aabe0e0e98759f2bc67f58966",
+    "readable_sha256": "abe8cbaad5e40e36cfa944b8861b133c3a973d921fc9a56c9fae48ca8fe0e8f0",
+    "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
+  },
+  {
+    "readable_log": "aux-before.txt",
+    "original_gzip": "aux-before.txt.gz",
+    "original_sha256": "385fe2f4a6062c7b39cfa5a729a3205c61e163ad44b12fb3f1a73e19c6dd5cb3",
+    "readable_sha256": "4a5809abe2b764a6bf90e78380983549cad82a69eb693639ae47bf0e719ea453",
+    "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
+  },
+  {
+    "readable_log": "final-directed.txt",
+    "original_gzip": "final-directed.txt.gz",
+    "original_sha256": "fda695b52040fee7d20f8abcf303ab22f54f2075f52a130ac6eb4257d02782a2",
+    "readable_sha256": "fda695b52040fee7d20f8abcf303ab22f54f2075f52a130ac6eb4257d02782a2",
+    "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
+  },
+  {
+    "readable_log": "date-like-before.txt",
+    "original_gzip": "date-like-before.txt.gz",
+    "original_sha256": "e323b15a567b1aa5eeb4ac120e23706ca540cda2f3e1da323258afe58667fd92",
+    "readable_sha256": "5dbac2a3a0e16f861d9a9a2485429b98931b17ff2434abc83a0af1e7b9db73cc",
+    "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
+  },
+  {
+    "readable_log": "cash-race-before-controlled.txt",
+    "original_gzip": "cash-race-before-controlled.txt.gz",
+    "original_sha256": "158fd09e1f7a3c6ed0dfbdd4924c668a33288a26e20177cebf9566b483e44347",
+    "readable_sha256": "1848c0eb8c724fb7a8da0161cc3bc35cc6e4146ca0b59c954459c592957fea75",
+    "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
+  }
+]
