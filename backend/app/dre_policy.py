@@ -36,7 +36,7 @@ class RecognizedFact:
             raise ValueError('Origem ou data econômica inválida')
 
 
-def statement(facts, confirmed_components=(), incomplete_components=()):
+def statement(facts, confirmed_components=(), incomplete_components=(), not_applicable_components=()):
     """Coverage assertions attest completeness, including confirmed absence, per period.
 
     Incomplete source/classification overrides any declaration of completeness.
@@ -48,19 +48,22 @@ def statement(facts, confirmed_components=(), incomplete_components=()):
         seen.add(fact.key);amounts[fact.dre_line_code]+=fact.amount_cents;counts[fact.dre_line_code]+=1
     complete=set(confirmed_components); incomplete=set(incomplete_components)
     if (complete|incomplete)-set(BASE_LINES):raise ValueError('Componente desconhecido')
+    not_applicable=set(not_applicable_components)
+    if not_applicable-set(BASE_LINES) or any(counts[c] for c in not_applicable):raise ValueError('Componente não aplicável possui fatos ou código inválido')
     rows={}
     for code in BASE_LINES:
         status='complete' if code in complete and code not in incomplete else 'partial' if counts[code] else 'unavailable'
-        rows[code]={'code':code,'known_amount_cents':amounts[code] if counts[code] or status=='complete' else None,
-                    'final_amount_cents':amounts[code] if status=='complete' else None,
+        if code in not_applicable and code not in incomplete:status='not_applicable'
+        rows[code]={'code':code,'known_amount_cents':amounts[code] if counts[code] or status in ('complete','not_applicable') else None,
+                    'final_amount_cents':amounts[code] if status in ('complete','not_applicable') else None,
                     'coverage_status':status,'contributing_facts':counts[code]}
     for code,deps in DEPENDENCIES.items():
-        valid=all(rows[d]['coverage_status']=='complete' for d in deps)
+        valid=all(rows[d]['coverage_status'] in ('complete','not_applicable') for d in deps)
         available=all(rows[d]['known_amount_cents'] is not None for d in deps)
         known=sum(rows[d]['known_amount_cents']*sign for d,sign in zip(deps,SIGNS[code])) if available else None
         rows[code]={'code':code,'known_amount_cents':known,'final_amount_cents':known if valid else None,
                     'coverage_status':'complete' if valid else 'partial' if available else 'unavailable',
-                    'missing_components':[d for d in deps if rows[d]['coverage_status']!='complete']}
+                    'missing_components':[d for d in deps if rows[d]['coverage_status'] not in ('complete','not_applicable')]}
     margins={}
     revenue=rows['RL']['final_amount_cents']
     for key in ('LB','EBIT','EBITDA','LL'):

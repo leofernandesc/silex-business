@@ -26,3 +26,11 @@ def test_unknown_is_not_zero_and_duplicate_is_rejected():
     fact=RecognizedFact('sale:1:principal','sale',1,'principal',date(2026,11,8),100001,'RB','finalized')
     with pytest.raises(ValueError,match='duplicado'):statement([fact,fact])
     assert next(r for r in statement([fact],BASE_LINES,['CD'])['lines'] if r['code']=='LB')['final_amount_cents'] is None
+
+
+def test_non_applicable_components_are_explicit_not_inferred():
+    result=statement([],BASE_LINES,not_applicable_components=['DA'])
+    assert next(r for r in result['lines'] if r['code']=='DA')['coverage_status']=='not_applicable'
+    assert next(r for r in result['lines'] if r['code']=='EBITDA')['final_amount_cents']==0
+    fact=RecognizedFact('manual:1','finance_entry',1,'principal',date(2026,11,8),100,'DA','synthetic')
+    with pytest.raises(ValueError,match='não aplicável'):statement([fact],BASE_LINES,not_applicable_components=['DA'])

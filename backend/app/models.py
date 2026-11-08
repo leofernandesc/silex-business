@@ -451,6 +451,7 @@ class DreAssertion(Base):
     __tablename__ = 'dre_component_assertions'
     id: Mapped[int] = mapped_column(primary_key=True)
     line_code: Mapped[str] = mapped_column(String(20))
+    assertion_kind: Mapped[str] = mapped_column(String(30), default='complete', server_default='complete')
     start: Mapped[date] = mapped_column(Date)
     end: Mapped[date] = mapped_column(Date)
     source_fingerprint: Mapped[str] = mapped_column(String(64))

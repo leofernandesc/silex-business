@@ -28,7 +28,7 @@ from .db import ROOT, build_engine, session_factory
 from .deployment import Deployment, HEALTH_HOST
 from .request_limits import RequestBodyLimit
 from .capabilities import has_transport, transport_kind, transport_supplier
-from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, CustomerServiceDetails, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, Session, StockMovement, Subcategory, Supplier, User, now
+from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, CustomerServiceDetails, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, ServiceOrder, ServiceOrderCost, Session, StockMovement, Subcategory, Supplier, User, now
 
 passwords = PasswordHasher()
 COOKIE = "gestao_session"
@@ -644,7 +644,15 @@ def create_app(engine=None, serve_frontend=True):
         result = {"date": V.today().isoformat(), "sales_today_cents": sum(s.total_cents for s in today_sales), "sales_today_count": len(today_sales), "sales_month_cents": sum(s.total_cents for s in monthly_sales), "active_products": db.scalar(select(func.count(Product.id)).where(Product.active)), "low_stock": [V.data(p) for p in db.scalars(select(Product).where(Product.active, Product.kind == "product", Product.stock_milli < 5000).limit(8))], "recent_sales": [V.sale_data(db, s) for s in db.scalars(sale_query_.order_by(Sale.finalized_at.desc()).limit(5))], "cash": None, "receivable_cents": None, "payable_cents": None, "overdue_cents": None}
         cash = db.scalar(select(CashSession).where(CashSession.user_id == user.id, CashSession.status == "open"))
         result["cash"] = V.cash_data(db, cash) if cash else None
+        result['service_counts'] = None
         if user.role == "admin":
+            service_query=select(ServiceOrder.status,func.count(ServiceOrder.id)).group_by(ServiceOrder.status)
+            restricted_order_ids=select(ServiceOrderCost.service_order_id).where(ServiceOrderCost.kind=='subcontracted_freight')
+            if has_transport(user):
+                service_query=service_query.where(or_(ServiceOrder.id.not_in(restricted_order_ids),ServiceOrder.user_id==user.id))
+            else:
+                service_query=service_query.where(ServiceOrder.id.not_in(restricted_order_ids))
+            result['service_counts']={status:count for status,count in db.execute(service_query)}
             pending = V.open_title_principal(db)
             result["receivable_cents"] = sum(amount for row,amount in pending if row.direction == 'income')
             result["payable_cents"] = sum(amount for row,amount in pending if row.direction == 'expense')
@@ -691,6 +699,9 @@ def create_app(engine=None, serve_frontend=True):
             record = transform(row)
             writer.writerow([csv_value(key, record.get(key)) for key, _ in fields])
         return Response("\ufeff" + output.getvalue(), media_type="text/csv; charset=utf-8", headers={"Content-Disposition": f'attachment; filename="{report}.csv"'})
+
+    from . import dre
+    dre.register(app, get_db, admin)
 
     if serve_frontend:
         dist = ROOT / "frontend" / "dist"
