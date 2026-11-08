@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Copy } from "lucide-react";
 import { api, query } from "./api";
+import { DocumentInput, PostalCodeInput } from "./formInputs";
 import { decimalInput, money, parseDecimal } from "./format";
 import type { Page, PixInfo, Supplier, SupplierKind } from "./types";
 import {
@@ -71,7 +72,10 @@ export function PartnerRegistry({ kind }: { kind: SupplierKind }) {
         {result.data?.items.map(row => <tr key={row.id}>
           <td><strong>{row.name}</strong>{row.notes && <small>{row.notes}</small>}{row.default_rate_cents != null && <small>Referência {money(row.default_rate_cents)}</small>}</td>
           <td>{row.document || "Não informado"}</td>
-          <td>{row.contact_name || row.phone || "Não informado"}<small>{[row.phone, row.email, [row.city, row.state].filter(Boolean).join("/")].filter(Boolean).join(" · ")}</small></td>
+          <td>{row.contact_name || [row.city, row.state].filter(Boolean).join(" / ") || "—"}
+            {row.contact_name && (row.city || row.state) && <small>{[row.city, row.state].filter(Boolean).join(" / ")}</small>}
+            {(row.phone || row.email) && <small>{[row.phone, row.email].filter(Boolean).join(" · ")}</small>}
+          </td>
           <td><span className="pix-key">{row.pix_key || "Não cadastrado"}</span>
             {row.pix_key && <small>{pixTypes[row.pix_key_type]} · {row.pix_holder}</small>}
           </td>
@@ -114,7 +118,7 @@ function PartnerForm({ kind, row, close, done }: { kind: SupplierKind; row: Supp
         <Field label={kind === "day_worker" ? "Nome completo *" : kind === "supplier" ? "Nome *" : "Nome / razão social *"} span>
           <input autoFocus required maxLength={150} value={name} onChange={event => setName(event.target.value)} />
         </Field>
-        <Field label="CPF / CNPJ"><input maxLength={20} value={document} onChange={event => setDocument(event.target.value)} /></Field>
+        <Field label="CPF / CNPJ"><DocumentInput value={document} onValueChange={setDocument} /></Field>
         <Field label="Telefone"><input type="tel" maxLength={40} value={phone} onChange={event => setPhone(event.target.value)} /></Field>
         <Field label="Pessoa de contato"><input maxLength={120} value={contactName} onChange={event => setContactName(event.target.value)} /></Field>
         <Field label="E-mail"><input type="email" maxLength={180} value={email} onChange={event => setEmail(event.target.value)} /></Field>
@@ -122,7 +126,7 @@ function PartnerForm({ kind, row, close, done }: { kind: SupplierKind; row: Supp
           <option value="true">Ativo</option><option value="false">Inativo</option>
         </select></Field>
         {row?.address && !row.street && <Notice tone="info">Endereço existente: {row.address}. O texto original será preservado.</Notice>}
-        <Field label="CEP"><input maxLength={9} value={postalCode} onChange={event => setPostalCode(event.target.value)} /></Field>
+        <Field label="CEP"><PostalCodeInput value={postalCode} onValueChange={setPostalCode} /></Field>
         <Field label="Logradouro" span><input maxLength={180} value={street} onChange={event => setStreet(event.target.value)} /></Field>
         <Field label="Número"><input maxLength={30} value={addressNumber} onChange={event => setAddressNumber(event.target.value)} /></Field>
         <Field label="Complemento"><input maxLength={100} value={complement} onChange={event => setComplement(event.target.value)} /></Field>

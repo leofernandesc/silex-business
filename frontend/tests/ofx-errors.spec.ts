@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Route } from '@playwright/test';
+import { test, expect, type Page, type Route } from './integrationTest';
 
 // These responses are synthetic. Successful financial contracts are also exercised
 // against the real disposable backend by reconciliation-interface.spec.ts.

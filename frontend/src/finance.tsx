@@ -1,5 +1,11 @@
+import { hasTransport } from "./capabilities";
+import type { User } from "./types";
+import {useFinancialSnapshot} from "./useFinancialSnapshot";
+import {validTitlePage} from "./financialData";
+import { titlePeriodRange } from "./financeDates";
+import { initialFinancialSearch, syncFinancialSearch, temporalSummary } from "./financialNavigation";
 import { SilexDatePicker } from "./SilexDatePicker";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks, Plus } from "lucide-react";
 import { api, exportCsv, query } from "./api";
 import { dateOnly, localDate, money, parseDecimal, labels } from "./format";
@@ -38,31 +44,26 @@ type FinanceFilters = {
 type FinanceSummary = { pending_cents: number; overdue_cents: number; due_7_days_cents: number; count: number };
 type FinancePageResult = Page<Entry> & { summary: FinanceSummary };
 
-export function FinancePage({ initialDirection = "" }: { initialDirection?: string }) {
+export function FinancePage({ initialDirection = "", user }: { initialDirection?: string; user: User }) {
   const today = localDate();
-  const initial: FinanceFilters = { q: "", status: "", direction: initialDirection, account_id: "", category_id: "", supplier_id: "", supplier_kind: "", document: "", search_field: "history", start: `${today.slice(0, 8)}01`, end: today, date_field: "due" };
+  const initial: FinanceFilters = { q: "", status: "", direction: initialDirection, account_id: "", category_id: "", supplier_id: "", supplier_kind: "", document: "", search_field: "history", start: `${today.slice(0, 8)}01`, end: today, date_field: "due", ...initialFinancialSearch("titles"), ...(initialDirection ? {direction:initialDirection} : {}) };
   const [draft, setDraft] = useState<FinanceFilters>(initial);
   const [filters, setFilters] = useState<FinanceFilters>(initial);
   const [pageSize, setPageSize] = useState(20);
-  const [period, setPeriod] = useState("month");
+  const [period, setPeriod] = useState(() => Object.keys(initialFinancialSearch("titles")).length ? "custom" : "month");
   const [page, setPage] = useState(1), [version, refresh] = useState(0),
     [adding, setAdding] = useState(false), [settings, setSettings] = useState(false),
     [settling, setSettling] = useState<Entry | null>(null), [canceling, setCanceling] = useState<Entry | null>(null),
     [historyEntry, setHistoryEntry] = useState<Entry | null>(null);
-  const result = useLoad<FinancePageResult>("/finance?" + query({ ...filters, page, page_size: pageSize }), version),
+  const result = useFinancialSnapshot<FinancePageResult>("/finance?" + query({ ...filters, page, page_size: pageSize }), version, validTitlePage),
     accounts = useLoad<Account[]>("/accounts", version), categories = useLoad<Category[]>("/categories", version),
     suppliers = useLoad<Page<Supplier>>("/suppliers?page_size=100", version);
+  const summary = !result.loading && !result.error ? result.data?.summary : undefined;
+  const stateDetail = result.loading ? "Consultando dados…" : "Dados indisponíveis";
   const update = (field: keyof FinanceFilters, value: string) => setDraft((current) => ({ ...current, [field]: value }));
-  function apply(next = draft) { setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); }
+  function apply(next = draft) { syncFinancialSearch("titles",{...next,direction:initialDirection || next.direction}); setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); }
   function quickPeriod(value: string) {
-    const now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    let start = "", end = "";
-    if (value === "today") start = end = iso(today);
-    if (value === "week") { const monday = new Date(today); monday.setDate(today.getDate() - ((today.getDay() + 6) % 7)); start = iso(monday); end = iso(today); }
-    if (value === "month") { start = iso(new Date(today.getFullYear(), today.getMonth(), 1)); end = iso(today); }
-    if (value === "previous") { start = iso(new Date(today.getFullYear(), today.getMonth() - 1, 1)); end = iso(new Date(today.getFullYear(), today.getMonth(), 0)); }
-    if (value === "year") { start = iso(new Date(today.getFullYear(), 0, 1)); end = iso(today); }
+    const { start, end } = titlePeriodRange(value);
     const next = { ...draft, start, end };
     setDraft(next); setPeriod(value); apply(next);
   }
@@ -76,18 +77,19 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
       <ExportButton onClick={() => exportCsv("finance", filters)} />
       <button className={initialDirection === "expense" ? "accounts-new-expense" : "primary"} onClick={() => setAdding(true)}><Plus size={17} />{initialDirection === "expense" ? "Nova despesa" : initialDirection === "income" ? "Nova receita" : "Novo lançamento"}</button>
     </PageTitle>
-    <div className="summary-grid finance-summary-grid">
-      <SummaryCard label="Saldo pendente" value={money(result.data?.summary.pending_cents || 0)} detail={initialDirection === "income" ? "Principal a receber neste filtro." : initialDirection === "expense" ? "Principal a pagar neste filtro." : "Principal pendente no recorte aplicado."} tone="blue" icon={<ArrowDownLeft />} />
-      <SummaryCard label="Vencidos" value={money(result.data?.summary.overdue_cents || 0)} detail="Vencimento anterior a hoje." tone="amber" icon={<Clock />} />
-      <SummaryCard label="Vencem em 7 dias" value={money(result.data?.summary.due_7_days_cents || 0)} detail="Hoje até hoje + 7 dias, inclusive." tone="teal" icon={<CalendarClock />} />
-      <SummaryCard label="Lançamentos" value={String(result.data?.summary.count || 0)} detail="Quantidade no filtro, antes da paginação." icon={<ListChecks />} />
+    <p className="help" aria-label="Filtros aplicados">Filtros aplicados: {temporalSummary(filters)}</p>
+    <div className="summary-grid finance-summary-grid" aria-busy={result.loading}>
+      <SummaryCard label="Saldo pendente" value={summary ? money(summary.pending_cents) : "—"} detail={!summary ? stateDetail : initialDirection === "income" ? "Principal a receber neste filtro." : initialDirection === "expense" ? "Principal a pagar neste filtro." : "Principal pendente no recorte aplicado."} tone="blue" icon={<ArrowDownLeft />} />
+      <SummaryCard label="Vencidos" value={summary ? money(summary.overdue_cents) : "—"} detail={summary ? "Vencimento anterior a hoje." : stateDetail} tone="amber" icon={<Clock />} />
+      <SummaryCard label="Vencimentos: hoje e 7 dias seguintes" value={summary ? money(summary.due_7_days_cents) : "—"} detail={summary ? "Data atual do servidor até o 7º dia seguinte, inclusive (8 datas possíveis)." : stateDetail} tone="teal" icon={<CalendarClock />} />
+      <SummaryCard label="Lançamentos" value={summary ? String(summary.count) : "—"} detail={summary ? "Quantidade no filtro, antes da paginação." : stateDetail} icon={<ListChecks />} />
     </div>
     <section className="panel finance-ledger">
       <div className="finance-periods" aria-label="Período rápido">
         {[["today", "Hoje"], ["week", "Semana"], ["month", "Mês"], ["previous", "Mês anterior"], ["year", "Ano"], ["all", "Tudo"], ["custom", "Personalizado"]].map(([key, label]) => <button key={key} className={period === key ? "selected" : ""} onClick={() => key === "custom" ? setPeriod(key) : key === "all" ? (() => { const next = { ...draft, start: "", end: "" }; setDraft(next); setPeriod(key); apply(next); })() : quickPeriod(key)}>{label}</button>)}
       </div>
       <div className="finance-status-tabs" aria-label="Situação dos títulos">
-        {[["", "Todos"], ["open", "Em aberto"], ["partial", "Parciais"], ["paid", "Baixados"], ["overdue", "Vencidos"], ["canceled", "Cancelados"]].map(([key, label]) => <button key={key || "all"} className={filters.status === key ? "selected" : ""} onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}>{label}</button>)}
+        {[["", "Todos"], ["pending", "Pendentes"], ["open", "Sem baixas"], ["partial", "Parciais"], ["paid", "Baixados"], ["overdue", "Vencidos"], ["canceled", "Cancelados"]].map(([key, label]) => <button key={key || "all"} className={filters.status === key ? "selected" : ""} onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}>{label}</button>)}
       </div>
       <form className="finance-filter-grid" onSubmit={(e) => { e.preventDefault(); apply(); }}>
         <label className="inline-field">Buscar por<select value={draft.search_field} onChange={(e) => update("search_field", e.target.value)}><option value="history">Histórico ou documento</option><option value="description">Histórico</option><option value="document">Documento</option><option value="beneficiary">Beneficiário</option></select></label>
@@ -96,16 +98,16 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
         <label className="inline-field">Conta<select value={draft.account_id} onChange={(e) => update("account_id", e.target.value)}><option value="">Todas</option>{accounts.data?.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}</select></label>
         <label className="inline-field">Categoria<select value={draft.category_id} onChange={(e) => update("category_id", e.target.value)}><option value="">Todas</option>{categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
         <label className="inline-field">Beneficiário<select value={draft.supplier_id} onChange={(e) => update("supplier_id", e.target.value)}><option value="">Todos</option>{suppliers.data?.items.map((s) => <option key={s.id} value={s.id}>{s.name} · {partnerKinds[s.kind]}</option>)}</select></label>
-        <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
+        <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).filter(([key]) => key !== "subcontracted_freight" || hasTransport(user)).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
         <label className="inline-field">Documento<input value={draft.document} onChange={(e) => update("document", e.target.value)} maxLength={100} /></label>
-        <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Lançamento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Baixa</option></select></label>
+        <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Vencimento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Quitação integral (registro)</option></select></label>
         <SilexDatePicker label="De" value={draft.start} onChange={(value) => update("start", value)} />
         <SilexDatePicker label="Até" value={draft.end} onChange={(value) => update("end", value)} />
         <button type="submit" className="primary finance-search-button"><Search size={14} /> Pesquisar</button>
       </form>
       {result.error && <Notice>{result.error}</Notice>}
-      <div className="panel-heading finance-table-heading"><h2>Lançamentos <span className="muted">({result.data?.total ?? 0})</span></h2><label className="inline-field">Itens por página<select value={String(pageSize)} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></div>
-      <LedgerTable headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
+      <div className="panel-heading finance-table-heading"><h2>Lançamentos <span className="muted">({summary ? result.data?.total : "—"})</span></h2><label className="inline-field">Itens por página<select value={String(pageSize)} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label></div>
+      {!result.error && <LedgerTable headers={["Histórico", "Tipo", "Conta / categoria", "Vencimento", "Valor", "Situação", "Ações"]} loading={result.loading} empty={!result.data?.items.length}>
         {result.data?.items.map((row) => <tr key={row.id}>
           <td><strong>{row.description}</strong><small>{row.direction === "income" ? row.customer_name : row.supplier_name || `Título #${row.id}`}</small>{row.supplier_kind && row.supplier_kind !== "supplier" && <small>{partnerKinds[row.supplier_kind]}</small>}{row.service_order_code && <small>Serviço/pedido {row.service_order_code}</small>}{row.recurrence_count > 1 && <small>Ocorrência {row.recurrence_index}/{row.recurrence_count}</small>}{row.document && <small>Doc. {row.document}</small>}</td>
           <td><Badge status={row.direction} /></td><td>{row.account_name}<small>{row.category_name}</small></td>
@@ -113,8 +115,8 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
           <td className={`numeric ${row.direction === "income" ? "positive" : "negative"}`}>{money(row.amount_cents)}{row.paid_principal_cents > 0 && row.status !== "paid" && <small>Pago {money(row.paid_principal_cents)} · falta {money(row.remaining_cents)}</small>}</td>
           <td><Badge status={row.status} /></td><td><div className="row-actions">{["open", "partial"].includes(row.status) && <button onClick={() => setSettling(row)}>{row.status === "partial" ? "Nova baixa" : "Quitar"}</button>}{row.payments?.length > 0 && <button onClick={() => setHistoryEntry(row)}><HistoryIcon size={14} /> Baixas ({row.payments.length})</button>}{(row.attachments?.length > 0 || row.payments?.some((p) => p.attachments?.length)) && <span title="Comprovante anexado"><Paperclip size={14} /></span>}{row.status !== "canceled" && !row.sale_id && <button className="danger" onClick={() => setCanceling(row)}>Cancelar</button>}{row.sale_id && <small>Venda #{row.sale_id}</small>}</div></td>
         </tr>)}
-      </LedgerTable>
-      <Pagination data={result.data} onPage={setPage} />
+      </LedgerTable>}
+      <Pagination data={result.error ? null : result.data} onPage={setPage} />
     </section>
     {adding && accounts.data && categories.data && <EntryForm accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} initialDirection={initialDirection || "income"} fixedDirection={Boolean(initialDirection)} close={() => setAdding(false)} done={done} />}
     {settling && accounts.data && <SettleForm entry={settling} accounts={accounts.data.filter((a) => a.active)} close={() => setSettling(null)} done={done} />}
@@ -163,10 +165,19 @@ function SettleForm({entry,accounts,close,done}:{entry:Entry;accounts:Account[];
 }
 
 function PaymentHistory({entry,close,done}:{entry:Entry;close:()=>void;done:()=>void}) {
-  const [reason,setReason]=useState('');
+  const [reason,setReason]=useState(''),[reversing,setReversing]=useState<number|null>(null),[error,setError]=useState('');
+  const pending=useRef(false);
+  async function reverse(id:number){
+    if(pending.current||reason.trim().length<3)return;
+    pending.current=true;setReversing(id);setError('');
+    try{await api(`/finance/payments/${id}/reverse`,'POST',{reason:reason.trim()});done();}
+    catch(e){setError((e as Error).message);}
+    finally{pending.current=false;setReversing(null);}
+  }
   return <Modal title={`Baixas · ${entry.description}`} close={close} wide><p>Total {money(entry.amount_cents)} · Pago em principal {money(entry.paid_principal_cents)} · Restante {money(entry.remaining_cents)}</p>
+    {error&&<Notice>{error}</Notice>}
     <LedgerTable headers={['Data','Forma','Principal / encargos / desconto','Valor líquido','Comprovantes','Ação']} empty={!entry.payments.length}>
-      {entry.payments.map(p=><tr key={p.id}><td>{dateOnly(p.posting_date)}<small>Competência {dateOnly(p.competence_date)}</small>{p.reversal_reason&&<small>Motivo: {p.reversal_reason}</small>}</td><td>{labels[p.method]||p.method}{p.reversal_of&&<small>Estorno</small>}</td><td>{money(p.principal_cents)}<small>Juros {money(p.interest_cents)} · Multa {money(p.fine_cents)} · Desconto {money(p.discount_cents)}</small></td><td className="numeric">{money(p.amount_cents)}</td><td><AttachmentControls attachments={p.attachments||[]} path={`/finance/payments/${p.id}/attachments`} done={done}/></td><td>{!p.reversal_of&&!entry.payments.some(x=>x.reversal_of===p.id)&&<button className="danger" disabled={reason.trim().length<3} onClick={async()=>{await api(`/finance/payments/${p.id}/reverse`,'POST',{reason:reason.trim()});done();}}>Estornar baixa</button>}</td></tr>)}
+      {entry.payments.map(p=><tr key={p.id}><td>{dateOnly(p.posting_date)}<small>Competência {dateOnly(p.competence_date)}</small>{p.reversal_reason&&<small>Motivo: {p.reversal_reason}</small>}</td><td>{labels[p.method]||p.method}{p.reversal_of&&<small>Estorno</small>}</td><td>{money(p.principal_cents)}<small>Juros {money(p.interest_cents)} · Multa {money(p.fine_cents)} · Desconto {money(p.discount_cents)}</small></td><td className="numeric">{money(p.amount_cents)}</td><td><AttachmentControls attachments={p.attachments||[]} path={`/finance/payments/${p.id}/attachments`} done={done}/></td><td>{!p.reversal_of&&!entry.payments.some(x=>x.reversal_of===p.id)&&<button className="danger" disabled={reversing!==null||reason.trim().length<3} onClick={()=>void reverse(p.id)}>{reversing===p.id?'Estornando…':'Estornar baixa'}</button>}</td></tr>)}
     </LedgerTable>
     <Field label="Motivo de estorno"><input minLength={3} maxLength={300} value={reason} onChange={e=>setReason(e.target.value)} placeholder="Informado ao estornar"/></Field>
     <h3>Comprovantes do título</h3><AttachmentControls attachments={entry.attachments||[]} path={`/finance/${entry.id}/attachments`} done={done}/>

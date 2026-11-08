@@ -1,4 +1,5 @@
 import { SilexDatePicker } from "./SilexDatePicker";
+import { DocumentInput } from "./formInputs";
 import { useState } from "react";
 import { api, query } from "./api";
 import {
@@ -424,11 +425,7 @@ function CatalogForm({
           {kind === "suppliers" && (
             <>
               <Field label="CPF / CNPJ">
-                <input
-                  maxLength={20}
-                  value={document}
-                  onChange={(e) => setDocument(e.target.value)}
-                />
+                <DocumentInput value={document} onValueChange={setDocument} />
               </Field>
               <Field label="E-mail">
                 <input

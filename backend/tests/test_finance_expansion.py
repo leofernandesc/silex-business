@@ -130,6 +130,7 @@ def test_finance_filter_summary_uses_full_result_and_seven_day_boundary(env):
     assert result['total'] == result['summary']['count'] == 3
     assert len(result['items']) == 1
     assert result['summary'] == {
+        'as_of_date': today().isoformat(),
         'pending_cents': 55_000,
         'overdue_cents': 10_000,
         'due_7_days_cents': 15_000,
@@ -139,6 +140,7 @@ def test_finance_filter_summary_uses_full_result_and_seven_day_boundary(env):
     due_filter = admin.get('/api/finance', params={**filters, 'q': 'Resumo em sete dias', 'search_field': 'description', 'status': 'partial'}).json()
     assert due_filter['total'] == 1
     assert due_filter['summary'] == {
+        'as_of_date': today().isoformat(),
         'pending_cents': 15_000,
         'overdue_cents': 0,
         'due_7_days_cents': 15_000,
@@ -286,17 +288,19 @@ def test_0003_migration_preserves_existing_payment_and_backfills_principal(tmp_p
     command.upgrade(config, '0003')
     engine = build_engine()
     with session_factory(engine)() as db:
-        user = User(name='Legado', username='legacy', password_hash='hash', role='admin')
-        db.add(user)
+        # This fixture intentionally uses an OLD schema: do not insert a HEAD ORM User.
+        from sqlalchemy import text
+        db.execute(text("INSERT INTO users (name,username,password_hash,role,active) VALUES ('Legado','legacy','synthetic-not-a-credential','admin',1)"))
+        user_id = db.execute(text("SELECT id FROM users WHERE username='legacy'")).scalar_one()
         default_records(db)
         db.flush()
         account = db.scalar(select(Account).where(Account.kind == 'bank'))
         category = db.scalar(select(Category).where(Category.name == 'Outras receitas'))
         db.commit()
     with sqlite3.connect(path) as raw:
-        raw.execute('INSERT INTO finance_entries (description,direction,amount_cents,status,account_id,category_id,user_id,due_date,created_at) VALUES (?,?,?,?,?,?,?,?,?)', ('Título legado', 'income', 4_321, 'paid', account.id, category.id, user.id, '2026-01-01', '2026-01-01 12:00:00'))
+        raw.execute('INSERT INTO finance_entries (description,direction,amount_cents,status,account_id,category_id,user_id,due_date,created_at) VALUES (?,?,?,?,?,?,?,?,?)', ('Título legado', 'income', 4_321, 'paid', account.id, category.id, user_id, '2026-01-01', '2026-01-01 12:00:00'))
         entry_id = raw.execute('SELECT last_insert_rowid()').fetchone()[0]
-        raw.execute('INSERT INTO payments (entry_id,account_id,amount_cents,method,user_id,created_at,posting_date,competence_date) VALUES (?,?,?,?,?,?,?,?)', (entry_id, account.id, 4_321, 'pix', user.id, '2026-01-01 12:00:00', '2026-01-01', '2026-01-01'))
+        raw.execute('INSERT INTO payments (entry_id,account_id,amount_cents,method,user_id,created_at,posting_date,competence_date) VALUES (?,?,?,?,?,?,?,?)', (entry_id, account.id, 4_321, 'pix', user_id, '2026-01-01 12:00:00', '2026-01-01', '2026-01-01'))
         raw.commit()
     command.upgrade(config, 'head')
     with session_factory(engine)() as db:

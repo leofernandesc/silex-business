@@ -1,3 +1,6 @@
+import {useFinancialSnapshot} from "./useFinancialSnapshot";
+import {validMovementPage} from "./financialData";
+import { initialFinancialSearch, syncFinancialSearch, temporalSummary } from "./financialNavigation";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import {
@@ -57,6 +60,7 @@ const initial = (): Filters => ({
   has_attachment: "",
   date_field: "posting",
   ...periodRange("Mês"),
+  ...initialFinancialSearch("movements"),
 });
 const originLabels: Record<string, string> = {
   manual: "Manual",
@@ -68,7 +72,7 @@ const originLabels: Record<string, string> = {
 export function LedgerPage() {
   const [draft, setDraft] = useState(initial),
     [applied, setApplied] = useState(initial),
-    [preset, setPreset] = useState("Mês"),
+    [preset, setPreset] = useState(() => Object.keys(initialFinancialSearch("movements")).length ? "Personalizado" : "Mês"),
     [page, setPage] = useState(1),
     [size, setSize] = useState(20),
     [version, setVersion] = useState(0),
@@ -77,9 +81,9 @@ export function LedgerPage() {
     [printRows, setPrintRows] = useState<Movement[] | null>(null),
     [printError, setPrintError] = useState(""),
     [printing, setPrinting] = useState(false);
-  const result = useLoad<Ledger>(
+  const result = useFinancialSnapshot<Ledger>(
       "/finance/movements?" + query({ ...applied, page, page_size: size }),
-      version,
+      version, validMovementPage,
     ),
     accounts = useLoad<Account[]>("/accounts", version),
     categories = useLoad<Category[]>("/categories", version),
@@ -87,6 +91,7 @@ export function LedgerPage() {
   const change = (name: keyof Filters, value: string) =>
     setDraft({ ...draft, [name]: value });
   function apply(filters = draft) {
+    syncFinancialSearch("movements",filters);
     setApplied({ ...filters });
     setPage(1);
     setPrintRows(null);
@@ -152,6 +157,7 @@ export function LedgerPage() {
         </button>
         <AddButton onClick={() => setAdding("income")}>Nova receita</AddButton>
       </PageTitle>
+      <p className="help" aria-label="Filtros aplicados">Filtros aplicados: {temporalSummary(applied)}</p>
       <div className="period-tabs" aria-label="Período">
         <div className="tabs">
           {presets.map((p) => (
@@ -173,32 +179,32 @@ export function LedgerPage() {
           ))}
         </div>
       </div>
-      <div className="summary-grid ledger-summary">
+      <div className="summary-grid ledger-summary" aria-busy={result.loading}>
         <SummaryCard
           label="Entradas"
-          value={money(summary?.income_cents || 0)}
-          detail="Movimentos no filtro aplicado"
+          value={summary ? money(summary.income_cents) : "—"}
+          detail={summary ? "Movimentos no filtro aplicado" : result.loading ? "Consultando dados…" : "Dados indisponíveis"}
           tone="teal"
           icon={<ArrowDownLeft />}
         />
         <SummaryCard
           label="Saídas"
-          value={money(summary?.expense_cents || 0)}
-          detail="Movimentos no filtro aplicado"
+          value={summary ? money(summary.expense_cents) : "—"}
+          detail={summary ? "Movimentos no filtro aplicado" : result.loading ? "Consultando dados…" : "Dados indisponíveis"}
           tone="amber"
           icon={<ArrowUpRight />}
         />
         <SummaryCard
           label="Saldo do período"
-          value={money(summary?.net_cents || 0)}
-          detail="Entradas menos saídas"
+          value={summary ? money(summary.net_cents) : "—"}
+          detail={summary ? "Entradas menos saídas" : result.loading ? "Consultando dados…" : "Dados indisponíveis"}
           icon={<Scale />}
         />
         <SummaryCard
           label="Lançamentos"
-          value={String(summary?.count || 0)}
+          value={summary ? String(summary.count) : "—"}
           detail={
-            applied.start || applied.end
+            !summary ? (result.loading ? "Consultando dados…" : "Dados indisponíveis") : applied.start || applied.end
               ? `${dateOnly(applied.start)} a ${dateOnly(applied.end)}`
               : "Todo o histórico"
           }
@@ -212,12 +218,12 @@ export function LedgerPage() {
           todo o histórico
         </p>
         <div className="balance-chips">
-          {[
+          {accounts.loading ? <p role="status">Carregando saldos das contas…</p> : accounts.error ? <p>Saldos das contas indisponíveis.</p> : !accounts.data?.length ? <p>Nenhuma conta disponível.</p> : [
             {
               id: 0,
               name: "Todas as contas",
               balance_cents:
-                accounts.data?.reduce((s, a) => s + a.balance_cents, 0) || 0,
+                accounts.data.reduce((s, a) => s + a.balance_cents, 0),
             },
             ...(accounts.data || []),
           ].map((a) => (

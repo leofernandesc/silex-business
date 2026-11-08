@@ -1,4 +1,5 @@
 """Indicadores, orçamentos e os 26 relatórios financeiros locais."""
+from .capabilities import transport_kind
 from calendar import monthrange
 from datetime import date
 
@@ -64,6 +65,7 @@ def register(app,get_db,admin):
 
     @app.get('/api/finance/budgets')
     def budgets(year:int=Query(ge=2000,le=2200),month:int=Query(ge=1,le=12),supplier_kind:str|None=None,db=DB,user=ADMIN):
+        transport_kind(user, supplier_kind)
         if supplier_kind not in (None,'supplier','day_worker','subcontracted_freight'): V.fail('Tipo de beneficiário inválido',422)
         return [budget_result(db,row,supplier_kind) for row in db.scalars(select(MonthlyBudget).where(MonthlyBudget.year==year,MonthlyBudget.month==month,MonthlyBudget.active).order_by(MonthlyBudget.category_id,MonthlyBudget.subcategory_id))]
 
@@ -193,11 +195,13 @@ def register(app,get_db,admin):
 
     @app.get('/api/finance/reports/{slug}.csv')
     def finance_report_csv(slug:str,start:date|None=None,end:date|None=None,account_id:int|None=None,category_id:int|None=None,supplier_kind:str|None=None,db=DB,user=ADMIN):
+        transport_kind(user, supplier_kind)
         from .report_exports import report_csv_response
         return report_csv_response(db,slug,start,end,account_id,category_id,report_result,REPORT_MAP,supplier_kind)
 
     @app.get('/api/finance/reports/{slug}')
     def finance_report(slug:str,start:date|None=None,end:date|None=None,account_id:int|None=None,category_id:int|None=None,supplier_kind:str|None=None,page:int=Query(1,ge=1,le=1_000_000),page_size:int=Query(20,ge=1,le=100),db=DB,user=ADMIN):
+        transport_kind(user, supplier_kind)
         if start and end and start>end:V.fail('Data inicial deve ser anterior à final',422)
         result=report_result(db,slug,start,end,account_id,category_id,page,page_size,supplier_kind)
         return {'id':slug,'name':REPORT_MAP[slug][1],**result}

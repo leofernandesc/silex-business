@@ -1,0 +1,148 @@
+status	file	area_and_reason
+A	.github/workflows/integration-tests.yml	Automacao de testes sem deploy
+A	backend/TRANSPORT_OPERATIONS.md	Dependencias aprovadas ou documentacao tecnica
+M	backend/app/api.py	Backend: capacidade, normalizacao e integridade somente leitura
+A	backend/app/capabilities.py	Capacidade de transporte explicita / 0013
+M	backend/app/cli.py	Backend: capacidade, normalizacao e integridade somente leitura
+M	backend/app/financial.py	Backend: capacidade, normalizacao e integridade somente leitura
+M	backend/app/models.py	Backend: capacidade, normalizacao e integridade somente leitura
+A	backend/app/operational_integrity.py	Backend: capacidade, normalizacao e integridade somente leitura
+M	backend/app/reporting.py	Backend: capacidade, normalizacao e integridade somente leitura
+M	backend/app/schemas.py	Backend: capacidade, normalizacao e integridade somente leitura
+M	backend/app/service_orders.py	Backend: capacidade, normalizacao e integridade somente leitura
+M	backend/app/services.py	Backend: capacidade, normalizacao e integridade somente leitura
+A	backend/app/transport_admin.py	Capacidade de transporte explicita / 0013
+A	backend/migrations/versions/0013_transport_capability.py	Capacidade de transporte explicita / 0013
+M	backend/requirements.txt	Dependencias aprovadas ou documentacao tecnica
+M	backend/tests/test_customer_details.py	Regressao dos contratos e estados
+A	backend/tests/test_dre_specification.py	Regressao dos contratos e estados
+M	backend/tests/test_finance_expansion.py	Regressao dos contratos e estados
+A	backend/tests/test_financial_stage1.py	Regressao dos contratos e estados
+A	backend/tests/test_integration_fixture.py	Regressao dos contratos e estados
+A	backend/tests/test_operational_integrity.py	Regressao dos contratos e estados
+M	backend/tests/test_partners.py	Regressao dos contratos e estados
+A	backend/tests/test_registration.py	Regressao dos contratos e estados
+M	backend/tests/test_service_orders.py	Regressao dos contratos e estados
+A	backend/tests/test_supplier_kind_links.py	Regressao dos contratos e estados
+A	backend/tests/test_transport_capabilities.py	Regressao dos contratos e estados
+M	frontend/package-lock.json	Dependencias aprovadas ou documentacao tecnica
+M	frontend/package.json	Dependencias aprovadas ou documentacao tecnica
+A	frontend/playwright.components-review.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.financial-stage1.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.integration-dates.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.integration-extra.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.integration.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.review.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.transport-legacy.config.ts	E2E, fixtures e matriz por perfil
+A	frontend/playwright.transport.config.ts	E2E, fixtures e matriz por perfil
+M	frontend/src/App.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/capabilities.test.ts	Regressao dos contratos e estados
+A	frontend/src/capabilities.ts	Capacidade de transporte explicita / 0013
+M	frontend/src/catalog.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/finance.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/financeCatalog.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/financeDates.test.ts	Regressao dos contratos e estados
+M	frontend/src/financeDates.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/financePlanning.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/financePresentation.test.ts	Regressao dos contratos e estados
+M	frontend/src/financialDashboard.css	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/financialData.test.ts	Regressao dos contratos e estados
+A	frontend/src/financialData.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/financialNavigation.test.ts	Regressao dos contratos e estados
+A	frontend/src/financialNavigation.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/financialOverview.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/formInputs.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/format.test.ts	Regressao dos contratos e estados
+M	frontend/src/format.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/home/model.test.ts	Regressao dos contratos e estados
+M	frontend/src/home/model.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/inputPresentation.test.ts	Regressao dos contratos e estados
+A	frontend/src/inputPresentation.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/ledger.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/navigation/routes.test.ts	Regressao dos contratos e estados
+M	frontend/src/navigation/routes.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/navigation/useAppNavigation.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/operations.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/partners.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/public/ProductDemo.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/public/PublicPage.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/serviceOrders.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/settings.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/styles.css	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/types.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/ui.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/src/useFinancialSnapshot.ts	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+M	frontend/src/users.tsx	Frontend integrado: estados financeiros, filtros, formularios e capacidade
+A	frontend/tests/actions-review.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/app.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/customer-details.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/dashboard-interface.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/disposableSession.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/financial-stage1.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/financial-states-review.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/forms-review.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/home.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/integration-dates.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/integration-reports.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/integration.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/integrationTest.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/modal-focus.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/modal-workflows.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/navigation.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/ofx-errors.spec.ts	E2E, fixtures e matriz por perfil
+M	frontend/tests/public.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/routeReadiness.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/system-review.spec.ts	E2E, fixtures e matriz por perfil
+A	frontend/tests/transport-module.spec.ts	E2E, fixtures e matriz por perfil
+A	scripts/check_financial_stage1.py	Instrumentos locais reproduziveis
+A	scripts/check_transport_module.py	Capacidade de transporte explicita / 0013
+A	scripts/compare_financial_stage1.py	Instrumentos locais reproduziveis
+A	scripts/compare_integrated_finance.py	Instrumentos locais reproduziveis
+M	scripts/e2e_server.py	Instrumentos locais reproduziveis
+A	scripts/inventory_integration.py	Instrumentos locais reproduziveis
+A	scripts/reset_integration_fixture.py	Instrumentos locais reproduziveis
+A	scripts/validate_erp_integration.py	Instrumentos locais reproduziveis
+A	specs/financial-stage1/CHECKSUMS.sha256	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/DRE.md	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/INTEGRATION.md	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/NEXT-STAGES.md	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/PUBLICATION.md	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/README.md	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/REVIEW-CHECKSUMS.sha256	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/REVIEW-DATES.md	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/dre-examples.json	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/comparison-initial-timestamp-drift.json	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/dashboard-desktop.png	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/dashboard-mobile.png	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/error-desktop.png	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/error-mobile.png	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/financial-comparison.json	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/index.html	Documentacao/evidencia financeira aprovada
+A	specs/financial-stage1/evidence/validation-summary.json	Documentacao/evidencia financeira aprovada
+A	specs/integration/BASELINE.json	Inventario e comprovacao da integracao
+A	specs/integration/CHECKSUMS.sha256	Manifesto da integracao (sem auto-hash)
+A	specs/integration/FILES.tsv	Inventario e comprovacao da integracao
+A	specs/integration/FLOW-MATRIX.md	Inventario e comprovacao da integracao
+A	specs/integration/FULL-REGRESSION.md	Inventario e comprovacao da integracao
+A	specs/integration/INVENTORY.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/authorization-preservation.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/backend.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/browser-recheck.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/browser.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/build.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/components.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/dashboard-mobile.png	Inventario e comprovacao da integracao
+A	specs/integration/evidence/earlier-executions.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/error-desktop.png	Inventario e comprovacao da integracao
+A	specs/integration/evidence/finance-comparison.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/financial-stage1.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/frontend.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/index.html	Inventario e comprovacao da integracao
+A	specs/integration/evidence/monthly-a4.pdf	Inventario e comprovacao da integracao
+A	specs/integration/evidence/page-two-large-a4.pdf	Inventario e comprovacao da integracao
+A	specs/integration/evidence/reports.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/sensitive-review.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/source-preservation.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/test-results.json	Inventario e comprovacao da integracao
+A	specs/integration/evidence/timezones.txt	Inventario e comprovacao da integracao
+A	specs/integration/evidence/transport.txt	Inventario e comprovacao da integracao

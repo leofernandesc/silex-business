@@ -1,0 +1,18 @@
+Migrações aplicadas.
+
+Running 8 tests using 1 worker
+
+(node:294898) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium-desktop] › tests/transport-module.spec.ts:10:1 › Demo retains general ERP, denies transport URL and API, and keeps generic forms (3.0s)
+  ✓  2 [chromium-desktop] › tests/transport-module.spec.ts:24:1 › Sammya receives full structured addresses, persistence, service types and freight controls (3.3s)
+  ✓  3 [chromium-desktop] › tests/transport-module.spec.ts:40:1 › Other administrator and operator cannot use the module through the backend or a hidden URL (2.1s)
+  ✓  4 [chromium-desktop] › tests/transport-module.spec.ts:48:1 › Historical transport finance remains readable while specialized order edits stay blocked (2.8s)
+(node:295669) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 [chromium-mobile] › tests/transport-module.spec.ts:10:1 › Demo retains general ERP, denies transport URL and API, and keeps generic forms (3.0s)
+  ✓  6 [chromium-mobile] › tests/transport-module.spec.ts:24:1 › Sammya receives full structured addresses, persistence, service types and freight controls (3.0s)
+  ✓  7 [chromium-mobile] › tests/transport-module.spec.ts:40:1 › Other administrator and operator cannot use the module through the backend or a hidden URL (2.0s)
+  ✓  8 [chromium-mobile] › tests/transport-module.spec.ts:48:1 › Historical transport finance remains readable while specialized order edits stay blocked (2.5s)
+
+  8 passed (25.3s)

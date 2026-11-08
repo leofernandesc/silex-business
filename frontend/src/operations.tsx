@@ -227,6 +227,7 @@ export function CashPage() {
     [closing, setClosing] = useState<Cash | null>(null);
   const current = useLoad<Cash | null>("/cash-sessions/current", version),
     history = useLoad<Page<Cash>>("/cash-sessions?" + query({ page }), version);
+  const currentReady = !current.loading && !current.error;
   function done() {
     setOpening(false);
     setClosing(null);
@@ -238,12 +239,12 @@ export function CashPage() {
         title="Controle de caixa"
         subtitle="Acompanhe o dinheiro físico e a conferência de cada turno."
       >
-        {!current.loading && !current.data && (
+        {currentReady && !current.data && (
           <AddButton onClick={() => setOpening(true)}>
             Abrir meu caixa
           </AddButton>
         )}
-        {current.data && (
+        {currentReady && current.data && (
           <button className="primary" onClick={() => setClosing(current.data)}>
             Fechar meu caixa
           </button>
@@ -253,9 +254,9 @@ export function CashPage() {
       <div className="summary-grid three">
         <SummaryCard
           label="Meu caixa"
-          value={current.data ? "Aberto" : "Fechado"}
+          value={!currentReady ? "—" : current.data ? "Aberto" : "Fechado"}
           detail={
-            current.data
+            !currentReady ? (current.loading ? "Consultando caixa…" : "Dados indisponíveis") : current.data
               ? `Aberto em ${dateTime(current.data.opened_at)}`
               : "Abra um turno para finalizar vendas."
           }
@@ -263,15 +264,15 @@ export function CashPage() {
         />
         <SummaryCard
           label="Fundo de abertura"
-          value={money(current.data?.opening_cents || 0)}
-          detail="Valor inicial; não é receita."
+          value={currentReady ? money(current.data?.opening_cents || 0) : "—"}
+          detail={currentReady ? "Valor inicial; não é receita." : current.loading ? "Consultando caixa…" : "Dados indisponíveis"}
           tone="teal"
           icon={<ArrowDownLeft />}
         />
         <SummaryCard
           label="Dinheiro esperado"
-          value={money(current.data?.expected_cents || 0)}
-          detail="Fundo + entradas − saídas em dinheiro."
+          value={currentReady ? money(current.data?.expected_cents || 0) : "—"}
+          detail={currentReady ? "Fundo + entradas − saídas em dinheiro." : current.loading ? "Consultando caixa…" : "Dados indisponíveis"}
           tone="amber"
           icon={<ArrowUpRight />}
         />

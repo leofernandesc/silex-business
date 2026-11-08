@@ -1,6 +1,8 @@
+import { hasTransport } from "./capabilities";
 import { useRef, useState, type ReactNode } from "react";
 import { Pencil } from "lucide-react";
 import { api, exportCsv, query } from "./api";
+import { DocumentInput, PostalCodeInput } from "./formInputs";
 import { money, quantity, parseDecimal, decimalInput } from "./format";
 import type { Customer, CustomerAddress, CustomerServiceDetails, Product, Page, User } from "./types";
 import { customerAddressFields, emptyCustomerAddress, hasCustomerAddress, customerAddressSummary, previousCollectionAddress } from "./customerAddresses";
@@ -30,7 +32,7 @@ function CustomerContact({ customer, showLocation = true }: { customer: Customer
 }
 
 export function Customers({ user }: { user: User }) {
-  const serviceDetailsEnabled = user.active && user.username === "demo.restricted.admin" && user.role === "admin";
+  const serviceDetailsEnabled = user.active && hasTransport(user);
   const [q, setQ] = useState(""),
     [searchField, setSearchField] = useState("all"),
     [active, setActive] = useState("true"),
@@ -188,14 +190,11 @@ function CustomerForm({
             />
           </Field>
           <Field label="CPF / CNPJ">
-            <input
-              maxLength={20}
-              value={document}
-              onChange={(e) => setDocument(e.target.value)}
-            />
+            <DocumentInput value={document} onValueChange={setDocument} />
           </Field>
           <Field label="Telefone">
             <input
+              type="tel"
               maxLength={40}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -219,7 +218,7 @@ function CustomerForm({
           {!serviceDetailsEnabled && <>
           {customer?.address && !customer.street && <Notice tone="info">Endereço existente: {customer.address}. Ele será preservado até você substituí-lo pelos campos separados.</Notice>}
           <Field label="CEP">
-            <input maxLength={9} value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
+            <PostalCodeInput value={postalCode} onValueChange={setPostalCode} />
           </Field>
           <Field label="Logradouro" span>
             <input maxLength={180} value={street} onChange={(e) => setStreet(e.target.value)} />
@@ -287,7 +286,8 @@ function CustomerAddressEditor({ kind, value, onChange, previousText, children }
     <legend>Endereço de {kind}</legend>
     <div className="form-grid">
       {customerAddressFields.map(([key, label, maxLength]) => <Field key={key} label={`${label} da ${kind}`} span={key === "street"}>
-        <input maxLength={maxLength} value={value[key]} onChange={(e) => onChange({ ...value, [key]: key === "state" ? e.target.value.toUpperCase() : e.target.value })} />
+        {key === "postal_code" ? <PostalCodeInput value={value[key]} onValueChange={(postal_code) => onChange({ ...value, postal_code })} />
+          : <input maxLength={maxLength} value={value[key]} onChange={(e) => onChange({ ...value, [key]: key === "state" ? e.target.value.toUpperCase() : e.target.value })} />}
       </Field>)}
     </div>
     {previousText && <details className="customer-address-history">

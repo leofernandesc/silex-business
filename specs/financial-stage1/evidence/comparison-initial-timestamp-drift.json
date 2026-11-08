@@ -1,0 +1,76 @@
+{
+  "base": "7214ad2543e0e980366a386b27cc7bbb39eddb32",
+  "snapshots": 2,
+  "comparisons": 124,
+  "json_comparisons": 68,
+  "csv_byte_comparisons": 56,
+  "mismatches": [
+    "before-reversal:/finance/reports/receivable-open.csv",
+    "after-reversal:/finance/reports/payable-open.csv",
+    "before-reversal:/finance/reports/titles-competence.csv",
+    "before-reversal:/finance/reports/titles-due.csv",
+    "after-reversal:/finance/reports/titles-competence.csv",
+    "before-reversal:/finance/reports/documents.csv",
+    "before-reversal:/finance/reports/receivable-overdue.csv",
+    "before-reversal:/finance/reports/payable-open.csv",
+    "after-reversal:/finance/reports/receivable-overdue.csv",
+    "after-reversal:/finance/reports/receivable-open.csv",
+    "after-reversal:/finance/reports/documents.csv",
+    "after-reversal:/finance/reports/payable-overdue.csv",
+    "before-reversal:/finance/reports/payable-overdue.csv",
+    "after-reversal:/finance/reports/titles-due.csv"
+  ],
+  "reports_component_unchanged": true,
+  "ofx_component_unchanged": true,
+  "protected": {
+    "backend/app/reporting.py": {
+      "sha256": "20b685b4bd911d78be3613392144de3c8ee9ebfdf8dadf97e5eb45c7fa8fb75a",
+      "unchanged": true
+    },
+    "backend/app/services.py": {
+      "sha256": "a10f66f37c9dedb84f2d6d8a6c4036b6fa89b7d20e99c5d35b7915ff6c40b983",
+      "unchanged": true
+    },
+    "backend/app/financial.py": {
+      "sha256": "3e82014cc4bcd989d92212e25c9aeba6c926574b7c2c890864db4059d8e1a2c9",
+      "unchanged": true
+    },
+    "backend/app/models.py": {
+      "sha256": "0fdc0f93fd2ea0d7e262b3bdaa1459e3e26b93a6c102747f14e4eab93529d199",
+      "unchanged": true
+    },
+    "backend/app/schemas.py": {
+      "sha256": "befee20bb560d8cedb2d8d1af3aad9ff234651ef05461a4c2c0d5b35467ee7d2",
+      "unchanged": true
+    },
+    "frontend/src/api.ts": {
+      "sha256": "6474ba2d21801dd0b72bfa0b7398f4f9f761e74d0db363f3a68e75158dc88c65",
+      "unchanged": true
+    },
+    "frontend/src/SilexDatePicker.tsx": {
+      "sha256": "4bb2f91c73f4ed8b18bb21d0109ab125cacef1f144c030b75d2cf7c3f0b2f324",
+      "unchanged": true
+    },
+    "frontend/src/SilexMonthField.tsx": {
+      "sha256": "e0564acf9ceb4f5a10121b1682e821fe1eb1f6bc66b78e39c55d65d2d14aef05",
+      "unchanged": true
+    },
+    "frontend/src/civilDates.ts": {
+      "sha256": "eb5cecda9a1eb356d895a2ed783cc49137a75b5515add1575dbf60af7b6a4a18",
+      "unchanged": true
+    },
+    "frontend/package.json": {
+      "sha256": "84e6620ec42704c0bc5fd7a2dc24387d0ea0fe7680ede58802b84ac8bf043b73",
+      "unchanged": true
+    },
+    "frontend/package-lock.json": {
+      "sha256": "0ea77b07a4d72393f69a531616d66248cbf3e6e2713982cb11ab809352a06c37",
+      "unchanged": true
+    },
+    "backend/requirements.txt": {
+      "sha256": "a6a019e596b5d38c3c01cf7c0b5ca72a0aec5d81e4a61dbda2b747be459dfcfb",
+      "unchanged": true
+    }
+  },
+  "normalization": "Only volatile registration/event timestamp keys; additive summary.as_of_date omitted. Civil dates, cents, IDs and CSV bytes compared unchanged."
+}

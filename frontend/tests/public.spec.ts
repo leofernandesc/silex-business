@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./integrationTest";
 
 const privateCompany = "Empresa Privada de Teste";
 async function checkPublic(page: Page) {

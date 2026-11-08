@@ -11,7 +11,7 @@ describe.each([
   (direction, title, action) => {
     const html = () =>
       renderToStaticMarkup(
-        createElement(FinancePage, { initialDirection: direction }),
+        createElement(FinancePage, { initialDirection: direction, user: { id: 1, name: "Generic", username: "demo.restricted.admin", role: "admin", active: true, capabilities: [] } }),
       );
     it("keeps the title, fixed direction and appropriate creation hierarchy", () => {
       const rendered = html();

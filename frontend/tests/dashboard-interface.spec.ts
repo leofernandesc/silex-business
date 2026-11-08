@@ -245,7 +245,23 @@ test("chart keeps twelve months and original heights; textual alternative and ke
 test("complete small, negative and large amounts survive text 200 percent and zoom", async ({
   page,
 }) => {
-  await open(page);
+  // Synthetic presentation values; do not depend on an old, separately seeded database.
+  await page.addInitScript(() => {
+    const original = window.fetch.bind(window);
+    window.fetch = async (input, init) => {
+      const response = await original(input, init);
+      if (String(input).startsWith("/api/finance/dashboard") && response.ok) {
+        const data = await response.json();
+        data.income_cents = 123456789;
+        data.expense_cents = 234567890;
+        data.net_cents = data.income_cents - data.expense_cents;
+        return new Response(JSON.stringify(data), { headers: { "Content-Type": "application/json" } });
+      }
+      return response;
+    };
+  });
+  await signIn(page);
+  await expect(page.locator(".silex-financial-dashboard")).toHaveAttribute("aria-busy", "false");
   const viewport = page.viewportSize()!;
   const check = async (documentFits = true) => {
     const result = await page
@@ -384,8 +400,9 @@ test("loading, error and empty accounts are presentation states without new quer
   await enterDate(page, "De", "2025-01-01");
   await page.getByRole("button", { name: "Atualizar", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText(
-    "Erro ilustrativo de consulta",
+    "Não foi possível consultar os dados do Dashboard Financeiro",
   );
+  await expect(page.locator(".summary-card strong")).toHaveText(Array(6).fill("—"));
   await expect(page.locator(".silex-financial-dashboard")).toHaveAttribute(
     "aria-busy",
     "false",

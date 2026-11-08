@@ -1,0 +1,250 @@
+{
+  "refs": {
+    "main": "7214ad2543e0e980366a386b27cc7bbb39eddb32",
+    "transport": "5aa52150ea0c64c01cb37ed53099899359ddbcbf",
+    "financial": "288ba61d377054e5bac2872d9663e002fe76491c",
+    "forms": "6c873d07cdfcbbf4f6bcdefc17e827a2b48cc439"
+  },
+  "changed_files": {
+    "transport": [
+      "backend/TRANSPORT_OPERATIONS.md",
+      "backend/app/api.py",
+      "backend/app/capabilities.py",
+      "backend/app/cli.py",
+      "backend/app/financial.py",
+      "backend/app/models.py",
+      "backend/app/reporting.py",
+      "backend/app/service_orders.py",
+      "backend/app/services.py",
+      "backend/app/transport_admin.py",
+      "backend/migrations/versions/0013_transport_capability.py",
+      "backend/tests/test_customer_details.py",
+      "backend/tests/test_finance_expansion.py",
+      "backend/tests/test_partners.py",
+      "backend/tests/test_service_orders.py",
+      "backend/tests/test_supplier_kind_links.py",
+      "backend/tests/test_transport_capabilities.py",
+      "frontend/playwright.transport-legacy.config.ts",
+      "frontend/playwright.transport.config.ts",
+      "frontend/src/App.tsx",
+      "frontend/src/capabilities.test.ts",
+      "frontend/src/capabilities.ts",
+      "frontend/src/catalog.tsx",
+      "frontend/src/finance.tsx",
+      "frontend/src/financePlanning.tsx",
+      "frontend/src/financePresentation.test.ts",
+      "frontend/src/home/model.test.ts",
+      "frontend/src/home/model.ts",
+      "frontend/src/navigation/routes.test.ts",
+      "frontend/src/navigation/routes.ts",
+      "frontend/src/public/ProductDemo.tsx",
+      "frontend/src/public/PublicPage.tsx",
+      "frontend/src/serviceOrders.tsx",
+      "frontend/src/types.ts",
+      "frontend/src/users.tsx",
+      "frontend/tests/customer-details.spec.ts",
+      "frontend/tests/transport-module.spec.ts",
+      "scripts/check_transport_module.py",
+      "scripts/e2e_server.py"
+    ],
+    "financial": [
+      "backend/app/api.py",
+      "backend/tests/test_dre_specification.py",
+      "backend/tests/test_finance_expansion.py",
+      "backend/tests/test_financial_stage1.py",
+      "frontend/playwright.financial-stage1.config.ts",
+      "frontend/src/finance.tsx",
+      "frontend/src/financeDates.test.ts",
+      "frontend/src/financeDates.ts",
+      "frontend/src/financePlanning.tsx",
+      "frontend/src/financialDashboard.css",
+      "frontend/src/financialData.test.ts",
+      "frontend/src/financialData.ts",
+      "frontend/src/financialNavigation.test.ts",
+      "frontend/src/financialNavigation.ts",
+      "frontend/src/financialOverview.tsx",
+      "frontend/src/ledger.tsx",
+      "frontend/src/navigation/useAppNavigation.ts",
+      "frontend/src/useFinancialSnapshot.ts",
+      "frontend/tests/financial-stage1.spec.ts",
+      "scripts/check_financial_stage1.py",
+      "scripts/compare_financial_stage1.py",
+      "specs/financial-stage1/CHECKSUMS.sha256",
+      "specs/financial-stage1/DRE.md",
+      "specs/financial-stage1/INTEGRATION.md",
+      "specs/financial-stage1/NEXT-STAGES.md",
+      "specs/financial-stage1/PUBLICATION.md",
+      "specs/financial-stage1/README.md",
+      "specs/financial-stage1/REVIEW-CHECKSUMS.sha256",
+      "specs/financial-stage1/REVIEW-DATES.md",
+      "specs/financial-stage1/dre-examples.json",
+      "specs/financial-stage1/evidence/comparison-initial-timestamp-drift.json",
+      "specs/financial-stage1/evidence/dashboard-desktop.png",
+      "specs/financial-stage1/evidence/dashboard-mobile.png",
+      "specs/financial-stage1/evidence/error-desktop.png",
+      "specs/financial-stage1/evidence/error-mobile.png",
+      "specs/financial-stage1/evidence/financial-comparison.json",
+      "specs/financial-stage1/evidence/index.html",
+      "specs/financial-stage1/evidence/validation-summary.json"
+    ],
+    "forms": [
+      "backend/app/api.py",
+      "backend/app/financial.py",
+      "backend/app/schemas.py",
+      "backend/requirements.txt",
+      "backend/tests/test_registration.py",
+      "frontend/package-lock.json",
+      "frontend/package.json",
+      "frontend/playwright.components-review.config.ts",
+      "frontend/playwright.review.config.ts",
+      "frontend/src/App.tsx",
+      "frontend/src/catalog.tsx",
+      "frontend/src/finance.tsx",
+      "frontend/src/financeCatalog.tsx",
+      "frontend/src/financePlanning.tsx",
+      "frontend/src/formInputs.tsx",
+      "frontend/src/format.test.ts",
+      "frontend/src/format.ts",
+      "frontend/src/inputPresentation.test.ts",
+      "frontend/src/inputPresentation.ts",
+      "frontend/src/ledger.tsx",
+      "frontend/src/operations.tsx",
+      "frontend/src/partners.tsx",
+      "frontend/src/serviceOrders.tsx",
+      "frontend/src/settings.tsx",
+      "frontend/src/styles.css",
+      "frontend/src/types.ts",
+      "frontend/src/ui.tsx",
+      "frontend/src/users.tsx",
+      "frontend/tests/actions-review.spec.ts",
+      "frontend/tests/customer-details.spec.ts",
+      "frontend/tests/dashboard-interface.spec.ts",
+      "frontend/tests/disposableSession.ts",
+      "frontend/tests/financial-states-review.spec.ts",
+      "frontend/tests/forms-review.spec.ts",
+      "frontend/tests/home.spec.ts",
+      "frontend/tests/modal-focus.spec.ts",
+      "frontend/tests/modal-workflows.spec.ts",
+      "frontend/tests/navigation.spec.ts",
+      "frontend/tests/system-review.spec.ts",
+      "scripts/e2e_server.py"
+    ]
+  },
+  "shared_files": {
+    "backend/app/api.py": [
+      "transport",
+      "financial",
+      "forms"
+    ],
+    "backend/app/financial.py": [
+      "transport",
+      "forms"
+    ],
+    "backend/tests/test_finance_expansion.py": [
+      "transport",
+      "financial"
+    ],
+    "frontend/src/App.tsx": [
+      "transport",
+      "forms"
+    ],
+    "frontend/src/catalog.tsx": [
+      "transport",
+      "forms"
+    ],
+    "frontend/src/finance.tsx": [
+      "transport",
+      "financial",
+      "forms"
+    ],
+    "frontend/src/financePlanning.tsx": [
+      "transport",
+      "financial",
+      "forms"
+    ],
+    "frontend/src/ledger.tsx": [
+      "financial",
+      "forms"
+    ],
+    "frontend/src/serviceOrders.tsx": [
+      "transport",
+      "forms"
+    ],
+    "frontend/src/types.ts": [
+      "transport",
+      "forms"
+    ],
+    "frontend/src/users.tsx": [
+      "transport",
+      "forms"
+    ],
+    "frontend/tests/customer-details.spec.ts": [
+      "transport",
+      "forms"
+    ],
+    "scripts/e2e_server.py": [
+      "transport",
+      "forms"
+    ]
+  },
+  "critical_sha256": {
+    "main": {
+      "backend/app/api.py": "20b3a907aee90d7ef2ac89ba3310064d70983976104a9ae050a8951b38109c19",
+      "backend/app/financial.py": "3e82014cc4bcd989d92212e25c9aeba6c926574b7c2c890864db4059d8e1a2c9",
+      "backend/app/models.py": "0fdc0f93fd2ea0d7e262b3bdaa1459e3e26b93a6c102747f14e4eab93529d199",
+      "backend/app/services.py": "a10f66f37c9dedb84f2d6d8a6c4036b6fa89b7d20e99c5d35b7915ff6c40b983",
+      "backend/app/reporting.py": "20b685b4bd911d78be3613392144de3c8ee9ebfdf8dadf97e5eb45c7fa8fb75a",
+      "frontend/src/api.ts": "6474ba2d21801dd0b72bfa0b7398f4f9f761e74d0db363f3a68e75158dc88c65",
+      "frontend/src/ui.tsx": "03510cc7ba941a268be3092e3b7e0cb823b91c22e22999a8ba6afdb857ad84cf",
+      "frontend/src/finance.tsx": "6dd2905f40568cc79996120cd022502cbbd7ef926aceb7d730537beb9be080bf",
+      "frontend/src/ledger.tsx": "9df2eff23c0b7050ba2895391137b016fcb5768cac192b44540805600d8840ed",
+      "frontend/src/financePlanning.tsx": "7f895f6a8842c7df20cfe43c856434de9dc733ab60ddfd043671f0869d03e506",
+      "frontend/package-lock.json": "0ea77b07a4d72393f69a531616d66248cbf3e6e2713982cb11ab809352a06c37",
+      "backend/requirements.txt": "a6a019e596b5d38c3c01cf7c0b5ca72a0aec5d81e4a61dbda2b747be459dfcfb"
+    },
+    "transport": {
+      "backend/app/api.py": "f11440354410ea1ec1cdf1413342504935c947a689c4360cf0f360e5c3747e38",
+      "backend/app/financial.py": "be9b0984e203b37a078e5fe8a353ba3d065a2696c766827a5a3bc548e797f55c",
+      "backend/app/models.py": "b8017168c57e34f70598b44017a37bddfd94d980078897cc63167e043967d3df",
+      "backend/app/services.py": "6d17dca116fa7719f7c7ae53ab821583b5a0768c37dc2105fedb71078c60b202",
+      "backend/app/reporting.py": "507a089a5a08b8a0ef3a2535cf9a40598f74ba59b933e56d30d3c1851a9fe744",
+      "frontend/src/api.ts": "6474ba2d21801dd0b72bfa0b7398f4f9f761e74d0db363f3a68e75158dc88c65",
+      "frontend/src/ui.tsx": "03510cc7ba941a268be3092e3b7e0cb823b91c22e22999a8ba6afdb857ad84cf",
+      "frontend/src/finance.tsx": "5e81757cbdb1bdc892d20ef12b216ed27f13a9fd4ee9beaf20fa050aa6142885",
+      "frontend/src/ledger.tsx": "9df2eff23c0b7050ba2895391137b016fcb5768cac192b44540805600d8840ed",
+      "frontend/src/financePlanning.tsx": "99b4af97fe802645f19df34b63ba666cc33acf4d948e2c53f758e834b7093312",
+      "frontend/package-lock.json": "0ea77b07a4d72393f69a531616d66248cbf3e6e2713982cb11ab809352a06c37",
+      "backend/requirements.txt": "a6a019e596b5d38c3c01cf7c0b5ca72a0aec5d81e4a61dbda2b747be459dfcfb"
+    },
+    "financial": {
+      "backend/app/api.py": "b59a4aaa901fda3cf35dd02d10d6f4923e77557a1b0661006c3d94ae7836b147",
+      "backend/app/financial.py": "3e82014cc4bcd989d92212e25c9aeba6c926574b7c2c890864db4059d8e1a2c9",
+      "backend/app/models.py": "0fdc0f93fd2ea0d7e262b3bdaa1459e3e26b93a6c102747f14e4eab93529d199",
+      "backend/app/services.py": "a10f66f37c9dedb84f2d6d8a6c4036b6fa89b7d20e99c5d35b7915ff6c40b983",
+      "backend/app/reporting.py": "20b685b4bd911d78be3613392144de3c8ee9ebfdf8dadf97e5eb45c7fa8fb75a",
+      "frontend/src/api.ts": "6474ba2d21801dd0b72bfa0b7398f4f9f761e74d0db363f3a68e75158dc88c65",
+      "frontend/src/ui.tsx": "03510cc7ba941a268be3092e3b7e0cb823b91c22e22999a8ba6afdb857ad84cf",
+      "frontend/src/finance.tsx": "2f6df2f72678137c0af3a380bdfcfb85b3274795990377ecc85939ea11ae2d8c",
+      "frontend/src/ledger.tsx": "0279e12c72ba6248c7f84d929fe4443dd8da068b6be8eab8b28d59b521ef8c1d",
+      "frontend/src/financePlanning.tsx": "f5b456bfaa647a67edcfce70416c2045255d6bff943701fedcc6730ab38d718c",
+      "frontend/package-lock.json": "0ea77b07a4d72393f69a531616d66248cbf3e6e2713982cb11ab809352a06c37",
+      "backend/requirements.txt": "a6a019e596b5d38c3c01cf7c0b5ca72a0aec5d81e4a61dbda2b747be459dfcfb"
+    },
+    "forms": {
+      "backend/app/api.py": "135904b6e594f5767205527309b899db4d4c904e2ae87106c55c4e9b9503cd0d",
+      "backend/app/financial.py": "5000b83470724043edce76ad18c62de7dd0d92935781feb7c7a61095cbb36d92",
+      "backend/app/models.py": "0fdc0f93fd2ea0d7e262b3bdaa1459e3e26b93a6c102747f14e4eab93529d199",
+      "backend/app/services.py": "a10f66f37c9dedb84f2d6d8a6c4036b6fa89b7d20e99c5d35b7915ff6c40b983",
+      "backend/app/reporting.py": "20b685b4bd911d78be3613392144de3c8ee9ebfdf8dadf97e5eb45c7fa8fb75a",
+      "frontend/src/api.ts": "6474ba2d21801dd0b72bfa0b7398f4f9f761e74d0db363f3a68e75158dc88c65",
+      "frontend/src/ui.tsx": "f8ab8bdcd5f56c6d895087ca87b1f021f49818d4caba7a8220b1173c7d1c4621",
+      "frontend/src/finance.tsx": "52b69e7f789d07214f2ee238a60ccd8d82aaf5ca96cab266e6fbb920d1d5edc7",
+      "frontend/src/ledger.tsx": "2c474e70a150c146e7374236ae20fa4e6308da85f992e1b05bd6bb5ce342b70d",
+      "frontend/src/financePlanning.tsx": "b67a8bf878906ba679a3a06bc26c1714451c9392a0399b6c06ab4457e32f861a",
+      "frontend/package-lock.json": "d037bafd70710ef32e0154851d357ee1fe6f7082d6ab8b257f862c772b2f10e2",
+      "backend/requirements.txt": "6e9853f0a0c8efdcadc7e00fdabd9a50cc0630686175999f44eff972610b3d81"
+    }
+  },
+  "original_workspaces": "All three source worktrees clean before integration; no ignored database or environment file read.",
+  "strategy": "Isolated worktree from confirmed main; merge transport, forms, financial sequentially with --no-ff, resolving shared hunks semantically. No original ref is moved."
+}

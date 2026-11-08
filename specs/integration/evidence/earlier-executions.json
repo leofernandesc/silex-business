@@ -1,0 +1,88 @@
+[
+  {
+    "log": "silex-integration-directed.txt",
+    "sha256": "e9919ba79fc4b3c0b451967e90b47e0e05f743130c2d060611149c5db518f9cc",
+    "observed_summaries": [
+      "8 failed, 62 passed, 1 warning in 59.12s"
+    ]
+  },
+  {
+    "log": "silex-integration-integrity.txt",
+    "sha256": "9612ef89e2ead2550249a95157b97b8b0b979de090d5c79912c0d03cb1141964",
+    "observed_summaries": [
+      "7 failed, 4 passed, 1 warning in 8.00s"
+    ]
+  },
+  {
+    "log": "silex-integration-integrity-copy.txt",
+    "sha256": "a8e217a405d4520285de16d8a85288bbb436e4f85000e853071e938db90cbd0b",
+    "observed_summaries": [
+      "11 passed, 1 warning in 8.09s"
+    ]
+  },
+  {
+    "log": "silex-integration-reset.txt",
+    "sha256": "eaebe6aadd9262f191e23d9d5b7ea3ba952663f7dcc95101ae651c02a66a5a2e",
+    "observed_summaries": [
+      "3 passed, 1 warning in 0.05s"
+    ]
+  },
+  {
+    "log": "silex-integration-pilot.txt",
+    "sha256": "75fe557167519388cfd6ce8cb964c65bf32b298e67125d75afee9f2e080a73c3",
+    "observed_summaries": [
+      "  5 failed"
+    ]
+  },
+  {
+    "log": "silex-integration-pilot2.txt",
+    "sha256": "d90cb0970870d124a6d5e96d05b5004e4ecfe4f5a13e62848f6a12c0749792f8",
+    "observed_summaries": [
+      "  5 failed"
+    ]
+  },
+  {
+    "log": "silex-integration-pilot3.txt",
+    "sha256": "7a5a3cac591586286ef43c78d6fa782ce31cff6bbb44a1bfd19ce120d47da546",
+    "observed_summaries": [
+      "  1 failed",
+      "  4 passed (19.7s)"
+    ]
+  },
+  {
+    "log": "silex-integration-cancel.txt",
+    "sha256": "16f1ffecab2559debe008946227b62b9d706150d267073210f4e13cc94e82968",
+    "observed_summaries": [
+      "  1 passed (8.3s)"
+    ]
+  },
+  {
+    "log": "silex-integration-transport.txt",
+    "sha256": "4a80a07e6597bd11e16b46a84e9f5ededd3863bbd596fa13ad7bf0af5aa5d882",
+    "observed_summaries": [
+      "  2 failed",
+      "  6 passed (25.7s)"
+    ]
+  },
+  {
+    "log": "silex-integration-report-recovery-before.txt",
+    "sha256": "ca09e90f6cdc9b094d7364320a2a7ed2e981bb2a0443b562f318c9ffe3a49f69",
+    "observed_summaries": [
+      "  1 failed"
+    ]
+  },
+  {
+    "log": "silex-integration-report-state-before.txt",
+    "sha256": "daa59fdf86209aac8968834aee84c52493acfafc4a101dbf5dcc24f879f56690",
+    "observed_summaries": [
+      "  1 failed"
+    ]
+  },
+  {
+    "log": "silex-integration-budget-state-before.txt",
+    "sha256": "cea368abc643ce5f741f4a1f7a4877bf2a833dcc4e760820d2b4f06bc373f1e7",
+    "observed_summaries": [
+      "  1 failed"
+    ]
+  }
+]

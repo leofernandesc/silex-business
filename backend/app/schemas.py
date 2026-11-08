@@ -10,6 +10,22 @@ Quantity = Annotated[int, Field(strict=True, gt=0, le=1_000_000_000)]
 Name = Annotated[str, Field(min_length=1, max_length=180)]
 
 
+def normalize_tax_document(value: str) -> str:
+    """Presentation punctuation is optional; preserve CNPJ letters and leading zeros.
+
+    This validates the existing document shape, not fiscal registration/check digits.
+    """
+    normalized = re.sub(r'[.\s/\-]', '', value).upper()
+    if not re.fullmatch(r'(?:[0-9]{11}|[A-Z0-9]{12}[0-9]{2})', normalized):
+        raise ValueError('Informe um CPF com 11 dígitos ou um CNPJ com 14 caracteres')
+    return normalized
+
+
+def document_search_term(value: str) -> str:
+    normalized = re.sub(r'[.\s/\-]', '', value).upper()
+    return normalized if re.fullmatch(r'[A-Z0-9]{1,14}', normalized) else value
+
+
 class Input(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
@@ -46,10 +62,7 @@ class CompanySettingsInput(Input):
     def normalize_company_document(cls, value):
         if not value:
             return ""
-        normalized = "".join(c for c in value if c.isdigit())
-        if len(normalized) not in (11, 14):
-            raise ValueError("Documento da empresa deve conter 11 ou 14 dígitos")
-        return normalized
+        return normalize_tax_document(value)
 
     @field_validator("email")
     @classmethod
@@ -77,7 +90,7 @@ class CustomerServiceInput(Input):
     delivery_address: CustomerAddressInput | None = None
 
 
-class CustomerInput(Input):
+class ContactInput(Input):
     name: Annotated[str, Field(min_length=1, max_length=150)]
     document: Annotated[str | None, Field(max_length=20)] = None
     email: Annotated[str, Field(max_length=180)] = ""
@@ -93,18 +106,17 @@ class CustomerInput(Input):
     state: Annotated[str, Field(max_length=2)] = ""
     active: bool = True
 
-    # Omitted/null preserves metadata; clearing uses explicit empty fields.
-    service_details: CustomerServiceInput | None = None
-
     @field_validator("document")
     @classmethod
     def normalize_document(cls, value):
         if not value:
             return None
-        value = "".join(c for c in value if c.isdigit())
-        if len(value) not in (11, 14):
-            raise ValueError("Documento deve ter 11 ou 14 dígitos")
-        return value
+        return normalize_tax_document(value)
+
+
+class CustomerInput(ContactInput):
+    # Omitted/null preserves metadata; this extension belongs only to customers.
+    service_details: CustomerServiceInput | None = None
 
 
 class ProductInput(Input):
@@ -276,23 +288,13 @@ class SubcategoryInput(Input):
     active: bool = True
 
 
-class SupplierInput(CustomerInput):
+class SupplierInput(ContactInput):
     kind: Literal['supplier', 'day_worker', 'subcontracted_freight'] = 'supplier'
     pix_key_type: Literal['', 'cpf', 'cnpj', 'email', 'phone', 'random'] = ''
     pix_key: Annotated[str, Field(max_length=77)] = ''
     pix_holder: Annotated[str, Field(max_length=150)] = ''
     notes: Annotated[str, Field(max_length=500)] = ''
     default_rate_cents: Money | None = None
-
-    @field_validator('document')
-    @classmethod
-    def normalize_document(cls, value):
-        if not value:
-            return None
-        value = re.sub(r'[.\s/\-]', '', value).upper()
-        if not re.fullmatch(r'(?:[0-9]{11}|[A-Z0-9]{12}[0-9]{2})', value):
-            raise ValueError('Informe um CPF com 11 dígitos ou um CNPJ com 14 caracteres')
-        return value
 
     @model_validator(mode='after')
     def normalize_pix(self):

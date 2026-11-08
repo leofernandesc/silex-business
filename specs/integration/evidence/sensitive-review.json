@@ -1,0 +1,8 @@
+{
+  "scope": "Changed and added working-tree files relative to confirmed main, not a new complete historical secret audit",
+  "files_scanned": 147,
+  "suspect_files": [],
+  "sensitive_file_types": [],
+  "gitleaks_available": false,
+  "limits": "Heuristic signature scan plus diff review; known synthetic demo/test credentials are retained only in disposable fixtures. No real credential values are printed."
+}

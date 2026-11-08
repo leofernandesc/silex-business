@@ -1,5 +1,7 @@
+import { hasTransport } from "./capabilities";
 import { useState } from "react";
 import { api } from "./api";
+import { PasswordInput } from "./formInputs";
 import type { User, Page } from "./types";
 import { dateTime, labels } from "./format";
 import {
@@ -44,6 +46,7 @@ export function UsersPage({ current }: { current: User }) {
               <td>{u.username}</td>
               <td>
                 <Badge status={u.role} />
+                {hasTransport(u) && <small>Módulo de transportadora</small>}
               </td>
               <td>
                 <Badge status={u.active ? "active" : "inactive"} />
@@ -137,9 +140,8 @@ function UserForm({ close, done }: { close: () => void; done: () => void }) {
             </select>
           </Field>
           <Field label="Senha *" span>
-            <input
+            <PasswordInput
               required
-              type="password"
               minLength={10}
               maxLength={200}
               autoComplete="new-password"

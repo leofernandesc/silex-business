@@ -25,6 +25,7 @@ import {
 import { AuthenticatedHome } from "./home/AuthenticatedHome";
 import type { CompanyStatus } from "./home/model";
 import { api } from "./api";
+import { PasswordInput } from "./formInputs";
 import { canAccessRoute, getRoute, routes } from "./navigation/routes";
 import { useAppNavigation } from "./navigation/useAppNavigation";
 import { useMobileNavigation } from "./navigation/useMobileNavigation";
@@ -271,12 +272,12 @@ export default function App() {
           {safePage === "finance" && <LedgerPage />}
           {safePage === "finance-dashboard" && <FinanceOverview navigate={navigate} />}
           {safePage === "finance-reconcile" && <FinanceReconciliation />}
-          {safePage === "finance-reports" && <FinanceReports />}
+          {safePage === "finance-reports" && <FinanceReports user={user} />}
           {safePage === "finance-payable" && (
-            <FinancePage initialDirection="expense" />
+            <FinancePage user={user} initialDirection="expense" />
           )}
           {safePage === "finance-receivable" && (
-            <FinancePage initialDirection="income" />
+            <FinancePage user={user} initialDirection="income" />
           )}
           {safePage === "finance-accounts" && (
             <FinanceCatalog kind="accounts" />
@@ -293,7 +294,7 @@ export default function App() {
           {safePage === "users" && <UsersPage current={user} />}{" "}
           {safePage === "audit" && <AuditPage />}
           {safePage === "company-settings" && user.role === "admin" && <CompanySettingsPage onSaved={setCompany} />}
-          {safePage === "service-orders" && user.role === "admin" && <ServiceOrdersPage />}
+          {safePage === "service-orders" && user.role === "admin" && <ServiceOrdersPage user={user} />}
         </main>
         <footer className="app-footer">
           <span>Silex Business · Gestão empresarial</span>
@@ -395,9 +396,8 @@ function Login({
               />
             </Field>
             <Field label="Senha">
-              <input
+              <PasswordInput
                 required
-                type="password"
                 disabled={logoutPending}
               autoComplete="current-password"
                 value={password}

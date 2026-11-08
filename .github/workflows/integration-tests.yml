@@ -1,0 +1,39 @@
+name: Integration core tests
+on:
+  pull_request:
+    branches: [main]
+    paths: ["backend/**", "frontend/**", "scripts/**", ".github/workflows/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: integration-tests-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install pinned dependencies (no seed or persistent database)
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -r backend/requirements.txt
+          npm ci --prefix frontend
+      - name: Backend unit and integration tests (disposable SQLite)
+        run: PYTHONPATH=backend .venv/bin/python -m pytest backend/tests -q
+      - name: Frontend unit tests
+        run: npm test --prefix frontend
+      - name: TypeScript and build (no deployment)
+        run: npm run build --prefix frontend
+      - name: Whitespace check
+        run: git diff --check

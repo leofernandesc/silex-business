@@ -18,7 +18,8 @@ describe("Route availability and compatibility, including SB-04B home", () => {
       group: "PRINCIPAL",
     });
     for (const route of routes) {
-      expect(canAccessRoute({ role: "admin" }, route.id)).toBe(true);
+      expect(canAccessRoute({ role: "admin" }, route.id)).toBe(route.id !== "subcontracted-freight");
+      expect(canAccessRoute({ role: "admin", capabilities: ["transport_operations"] }, route.id)).toBe(true);
       expect(canAccessRoute({ role: "operator" }, route.id)).toBe(!route.admin);
       expect(canAccessRoute(null, route.id)).toBe(false);
       for (const pathname of ["/", "/app", "/app/"]) {

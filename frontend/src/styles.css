@@ -1248,6 +1248,10 @@ dialog > header button {
   width: 100%;
   padding: 13px;
 }
+.password-input { position: relative; min-width: 0; }
+.password-input input { padding-right: 48px; }
+.password-input button { position: absolute; right: 1px; top: 1px; bottom: 1px; width: 42px; min-height: 0; padding: 0; border: 0; background: transparent; }
+
 .login-note {
   display: flex;
   justify-content: center;

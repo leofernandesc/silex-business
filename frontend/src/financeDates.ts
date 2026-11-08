@@ -1,4 +1,36 @@
 import { localDate } from "./format";
+import { civilDate } from "./civilDates";
+import { startOfWeek } from "@internationalized/date";
+
+/** Title presets retain their existing ranges (through today, except the full previous month).
+ * Reference day is the ERP civil date in Manaus, never the browser's local calendar. */
+export function titlePeriodRange(preset: string, reference = localDate()) {
+  const today = civilDate(reference);
+  if (!today) throw new Error("Data de referência inválida");
+  let start = today,
+    end = today;
+  switch (preset) {
+    case "today":
+      break;
+    case "week":
+      start = startOfWeek(today, "pt-BR", "mon");
+      break;
+    case "month":
+      start = today.set({ day: 1 });
+      break;
+    case "previous":
+      end = today.set({ day: 1 }).subtract({ days: 1 });
+      start = end.set({ day: 1 });
+      break;
+    case "year":
+      start = today.set({ month: 1, day: 1 });
+      break;
+    default:
+      throw new Error("Período rápido inválido");
+  }
+  return { start: start.toString(), end: end.toString() };
+}
+
 export const presets = [
   "Hoje",
   "Semana",

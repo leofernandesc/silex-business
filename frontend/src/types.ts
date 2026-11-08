@@ -3,6 +3,7 @@ export type User = {
   name: string;
   username: string;
   role: "admin" | "operator";
+  capabilities?: string[];
   active: boolean;
 };
 export type CompanySettings = {
@@ -137,7 +138,7 @@ export type Subcategory = {
 };
 export type SupplierKind = "supplier" | "day_worker" | "subcontracted_freight";
 export type PixInfo = { key_type: string; key: string; holder: string };
-export type Supplier = Customer & {
+export type Supplier = Omit<Customer, "service_details"> & {
   kind: SupplierKind;
   pix_key_type: string;
   pix_key: string;
@@ -206,6 +207,7 @@ export type ServiceOrderCost = {
   finance_status: string | null;
 };
 export type ServiceOrder = {
+  restricted_transport_costs?: boolean;
   id: number;
   code: string;
   customer_id: number;

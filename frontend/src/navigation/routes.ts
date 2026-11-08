@@ -1,3 +1,4 @@
+import { hasTransport } from "../capabilities";
 import type { User } from "../types";
 
 // Availability mirrors the existing admin/current_user guards; the server authorizes requests.
@@ -114,11 +115,11 @@ export function getRoute(id: string) {
   return routes.find((route) => route.id === id);
 }
 export function canAccessRoute(
-  user: Pick<User, "role"> | null,
+  user: Pick<User, "role" | "capabilities"> | null,
   id: string,
 ): boolean {
   const route = getRoute(id);
-  return Boolean(user && route && (!route.admin || user.role === "admin"));
+  return Boolean(user && route && (!route.admin || user.role === "admin") && (route.id !== "subcontracted-freight" || hasTransport(user)));
 }
 export function appUrl(id: RouteId) {
   return `/app#${id}`;
