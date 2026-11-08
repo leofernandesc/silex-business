@@ -1,0 +1,58 @@
+{
+  "base": "7214ad2543e0e980366a386b27cc7bbb39eddb32",
+  "frontend": {
+    "final_passed": 158,
+    "files": 16,
+    "new_cases": 20
+  },
+  "backend": {
+    "full_run_before_six_spec_cases": {
+      "passed": 147,
+      "failed": 9
+    },
+    "directed_final": {
+      "passed": 11,
+      "new_cases": 9,
+      "existing_cases": 2
+    },
+    "baseline_selected_failure_reproduction": {
+      "failed": 9,
+      "cause": "service_details is an invalid keyword argument for Supplier"
+    },
+    "distinct_coverage_across_runs": {
+      "passed": 153,
+      "preexisting_failed": 9
+    },
+    "note": "Directed runs overlap the general suite; counts are not summed as independent cases."
+  },
+  "browser": {
+    "engine": "Chromium / Brave 157",
+    "locale": "en-US",
+    "timezone": "America/Manaus",
+    "distinct_scenarios": 11,
+    "projects": [
+      "1440x1000",
+      "375x812"
+    ],
+    "distinct_scenario_project_pairs": 22,
+    "initial_run_passed": 20,
+    "additional_keyboard_case_passed": 2,
+    "additional_measurements": [
+      "768px",
+      "375px with computed text font size at 200%"
+    ],
+    "retries": 0,
+    "limitations": [
+      "No Firefox run in this worktree",
+      "No native zoom validation",
+      "No real screen reader or human DRE validation",
+      "No physical device"
+    ],
+    "final_targeted_reexecution_passed": 6
+  },
+  "build": "TypeScript and Vite passed",
+  "persistent_data_accessed": false,
+  "migration_added": false,
+  "merged": false,
+  "deployed": false
+}
