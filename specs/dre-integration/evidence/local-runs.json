@@ -1,0 +1,256 @@
+[
+  {
+    "run": "first-chromium",
+    "stats": {
+      "startTime": "2026-11-08T17:06:42.850Z",
+      "duration": 441671.118,
+      "expected": 75,
+      "skipped": 244,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 75,
+      "timedOut": 1,
+      "failed": 2,
+      "interrupted": 1
+    },
+    "retries": 0,
+    "nonpassing": [
+      {
+        "project": "desktop",
+        "title": "accessible login, all 25 authorized routes and customer dialog",
+        "status": "timedOut",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "home guest, retorno solicitado, login normal e refresh sem indicadores ou consultas extras",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all route guards for demo",
+        "status": "interrupted",
+        "retry": 0
+      }
+    ],
+    "raw_json_sha256": "66e54d50cc20e4eea751eaf20a7672a0b6d3247536645a82c3df7dbe4a7fea98"
+  },
+  {
+    "run": "first-firefox",
+    "stats": {
+      "startTime": "2026-11-08T17:06:53.029Z",
+      "duration": 432534.17500000005,
+      "expected": 63,
+      "skipped": 256,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 63,
+      "failed": 2,
+      "timedOut": 1,
+      "interrupted": 1
+    },
+    "retries": 0,
+    "nonpassing": [
+      {
+        "project": "desktop",
+        "title": "sessão persistente, navegação e tabelas responsivas",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "accessible login, all 25 authorized routes and customer dialog",
+        "status": "timedOut",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "home guest, retorno solicitado, login normal e refresh sem indicadores ou consultas extras",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "atalhos admin: todos os destinos permitidos e cliques reais",
+        "status": "interrupted",
+        "retry": 0
+      }
+    ],
+    "raw_json_sha256": "7056d39a7a926f07d24f84afddbe2e76031ebbd36a8b6c40b52333298fc54e4d"
+  },
+  {
+    "run": "second-chromium",
+    "stats": {
+      "startTime": "2026-11-08T17:50:07.637Z",
+      "duration": 479153.56999999995,
+      "expected": 165,
+      "skipped": 151,
+      "unexpected": 6,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 165,
+      "interrupted": 1,
+      "failed": 6
+    },
+    "retries": 0,
+    "nonpassing": [
+      {
+        "project": "mobile",
+        "title": "financeiro ampliado: recorrência, baixa parcial, comprovante, OFX, painel e relatórios",
+        "status": "interrupted",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all registered screens load without horizontal document overflow at 1440px",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all registered screens load without horizontal document overflow at 1024px",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all registered screens load without horizontal document overflow at 768px",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all registered screens load without horizontal document overflow at 375px",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "all registered screens load without horizontal document overflow at 320px",
+        "status": "failed",
+        "retry": 0
+      }
+    ],
+    "raw_json_sha256": "723ab361cba679c8dd19a28dd92adc7f3a0e43b1538bcba1bf09aff0b08ee050"
+  },
+  {
+    "run": "second-firefox",
+    "stats": {
+      "startTime": "2026-11-08T17:50:25.348Z",
+      "duration": 461982.947,
+      "expected": 105,
+      "skipped": 215,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 105,
+      "failed": 2,
+      "interrupted": 1
+    },
+    "retries": 0,
+    "nonpassing": [
+      {
+        "project": "desktop",
+        "title": "all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "specialized metadata stays private across authorized identities; denied promotion is atomic",
+        "status": "failed",
+        "retry": 0
+      },
+      {
+        "project": "desktop",
+        "title": "retorno adulterado e parâmetro externo não redirecionam para outra origem",
+        "status": "interrupted",
+        "retry": 0
+      }
+    ],
+    "raw_json_sha256": "c8b942dd10ffef7f71d5f36ff1f8ace91a4931ad6e06d5782f837561f4b902f8"
+  },
+  {
+    "run": "directed14-chromium",
+    "stats": {
+      "startTime": "2026-11-08T17:47:25.426Z",
+      "duration": 113928.654,
+      "expected": 14,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 14
+    },
+    "retries": 0,
+    "nonpassing": [],
+    "raw_json_sha256": "39c3b2feed97dec10d8bf3ea18f65530696fd2ab7ee801fbaceca43be3748b51"
+  },
+  {
+    "run": "directed14-firefox",
+    "stats": {
+      "startTime": "2026-11-08T17:47:26.590Z",
+      "duration": 172151.702,
+      "expected": 14,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 14
+    },
+    "retries": 0,
+    "nonpassing": [],
+    "raw_json_sha256": "47a09f74e6ac8e3a1ff0b16bcfef472629a1b19c2f016f13c5d37b39b6b27bac"
+  },
+  {
+    "run": "release26-chromium",
+    "stats": {
+      "startTime": "2026-11-08T17:59:08.904Z",
+      "duration": 111348.194,
+      "expected": 26,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "observed_result_statuses": {
+      "passed": 26
+    },
+    "retries": 0,
+    "nonpassing": [],
+    "raw_json_sha256": "624b6d80803820dfb80c50b6ac4ccb0b283bda526087d6539b2581f568aaadb0"
+  },
+  {
+    "run": "release26-firefox",
+    "stats": {
+      "startTime": "2026-11-08T17:59:10.381Z",
+      "duration": 160195.656,
+      "expected": 26,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "retries": 0,
+    "raw_json_sha256": "5bdcbbc3c1288ad02e73f105aeff3c2553637b24ca071d8491e0ac3ac4eb8a91"
+  }
+]

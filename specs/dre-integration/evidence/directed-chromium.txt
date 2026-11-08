@@ -1,0 +1,39 @@
+[WebServer] INFO:     Started server process [807382]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 26 tests using 1 worker
+
+(node:807882) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (9.1s)
+  ✓   2 [desktop] › tests/dre-integration.spec.ts:56:1 › navigation aliases converge on one home and one financial plan (1.4s)
+  ✓   3 [desktop] › tests/dre-integration.spec.ts:64:1 › service completion persists without auto titles and contextual generation remains confirmed and unique (2.3s)
+  ✓   4 [desktop] › tests/dre-integration.spec.ts:78:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (1.6s)
+  ✓   5 [desktop] › tests/integration-reports.spec.ts:4:1 › all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery (14.0s)
+  ✓   6 [desktop] › tests/integration.spec.ts:104:1 › specialized metadata stays private across authorized identities; denied promotion is atomic (1.0s)
+  ✓   7 [desktop] › tests/navigation.spec.ts:457:1 › retorno adulterado e parâmetro externo não redirecionam para outra origem (1.2s)
+  ✓   8 [desktop] › tests/public.spec.ts:24:1 › público sem sessão: conteúdo, metadados, fontes e nenhuma API ou rastreador (1.7s)
+  ✓   9 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1440px (4.0s)
+  ✓  10 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1024px (4.0s)
+  ✓  11 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 768px (3.4s)
+  ✓  12 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 375px (3.5s)
+  ✓  13 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 320px (3.2s)
+(node:816720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  14 [mobile] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (7.4s)
+  ✓  15 [mobile] › tests/dre-integration.spec.ts:56:1 › navigation aliases converge on one home and one financial plan (1.2s)
+  ✓  16 [mobile] › tests/dre-integration.spec.ts:64:1 › service completion persists without auto titles and contextual generation remains confirmed and unique (2.1s)
+  ✓  17 [mobile] › tests/dre-integration.spec.ts:78:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (1.5s)
+  ✓  18 [mobile] › tests/integration-reports.spec.ts:4:1 › all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery (12.1s)
+  ✓  19 [mobile] › tests/integration.spec.ts:104:1 › specialized metadata stays private across authorized identities; denied promotion is atomic (842ms)
+  ✓  20 [mobile] › tests/navigation.spec.ts:457:1 › retorno adulterado e parâmetro externo não redirecionam para outra origem (1.0s)
+  ✓  21 [mobile] › tests/public.spec.ts:24:1 › público sem sessão: conteúdo, metadados, fontes e nenhuma API ou rastreador (1.7s)
+  ✓  22 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1440px (4.6s)
+  ✓  23 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1024px (5.0s)
+  ✓  24 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 768px (4.9s)
+  ✓  25 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 375px (3.7s)
+  ✓  26 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 320px (3.8s)
+
+  26 passed (1.9m)

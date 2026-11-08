@@ -1,0 +1,82 @@
+{
+  "base": "00fcaa5f869d702dda6ad535d264a0216dd11b65",
+  "code_commit": "76f7013033f87b7990e3820695f9da874354bb91",
+  "protected_files": [
+    {
+      "file": "backend/app/financial.py",
+      "sha256": "ba97d04a602107cbb40deee34ceae2e08cc38fa7691faf0097fd6832ab8abd19",
+      "equal_to_base": true
+    },
+    {
+      "file": "backend/app/db.py",
+      "sha256": "a24bf2234a2addc9c8d488a3b7d532761b15edce85237e5a426414019cc1d7fa",
+      "equal_to_base": true
+    },
+    {
+      "file": "backend/app/cli.py",
+      "sha256": "12c0702fb2178db791e677e6cd862dbdba84a5d753e45106c8906887b1632047",
+      "equal_to_base": true
+    },
+    {
+      "file": "backend/app/capabilities.py",
+      "sha256": "49d5b00469f3c17eab9dadf840b9389918b198b62fa52ce72410346feb60db05",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/src/api.ts",
+      "sha256": "42a114bb61d53f63df9412ae64cf5e7f05327eb2be6417498148697ec4254be7",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/src/ui.tsx",
+      "sha256": "35c3fd763ff6f2b2c85ca27b6e495269e2d331d60369a2d3b98fd517379ad8df",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/src/civilDates.ts",
+      "sha256": "eb5cecda9a1eb356d895a2ed783cc49137a75b5515add1575dbf60af7b6a4a18",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/src/SilexDatePicker.tsx",
+      "sha256": "4bb2f91c73f4ed8b18bb21d0109ab125cacef1f144c030b75d2cf7c3f0b2f324",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/src/SilexMonthField.tsx",
+      "sha256": "e0564acf9ceb4f5a10121b1682e821fe1eb1f6bc66b78e39c55d65d2d14aef05",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/src/styles.css",
+      "sha256": "3e3e30fc013d052572f0e55e21a63da67b9a346fbe8c6e22daf68fae2e65c864",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/package.json",
+      "sha256": "86cd56235ab0c6ea070fe5ceac7a15cadd37d8f4e226abec17cf879d18635adb",
+      "equal_to_base": true
+    },
+    {
+      "file": "frontend/package-lock.json",
+      "sha256": "63826079139cad9cbdbdee0f5a086b4dc6ae98d5365481cad744e4c40b875801",
+      "equal_to_base": true
+    },
+    {
+      "file": "backend/requirements.txt",
+      "sha256": "6e9853f0a0c8efdcadc7e00fdabd9a50cc0630686175999f44eff972610b3d81",
+      "equal_to_base": true
+    }
+  ],
+  "refs": {
+    "main": "7214ad2543e0e980366a386b27cc7bbb39eddb32",
+    "integration/erp-full-regression": "9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82",
+    "fix/erp-commercial-readiness": "00fcaa5f869d702dda6ad535d264a0216dd11b65",
+    "fix/transport-module-capability": "5aa52150ea0c64c01cb37ed53099899359ddbcbf",
+    "feat/finance-enterprise-stage1": "288ba61d377054e5bac2872d9663e002fe76491c",
+    "fix/forms-usability-system-review": "6c873d07cdfcbbf4f6bcdefc17e827a2b48cc439"
+  },
+  "railway_accessed": false,
+  "persistent_database_used": false,
+  "merge_or_deploy_performed": false
+}

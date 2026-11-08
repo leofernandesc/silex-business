@@ -1,0 +1,21 @@
+{
+  "code_commit": "76f7013033f87b7990e3820695f9da874354bb91",
+  "generator": "Chromium 156.0.8078.4",
+  "fixture": "Synthetic, independently generated local SQLite; no Railway",
+  "pages": 2,
+  "media": "A4 portrait",
+  "size_points": [
+    595.92,
+    842.88
+  ],
+  "checks": [
+    "title and Brazilian period present",
+    "known amount R$ 1.000,01 complete",
+    "unknown final amounts remain unavailable",
+    "canonical source ID and economic date preserved",
+    "review controls absent from PDF text",
+    "two rasterized pages visually inspected"
+  ],
+  "physical_printer_tested": false,
+  "assistive_technology_tested": false
+}
