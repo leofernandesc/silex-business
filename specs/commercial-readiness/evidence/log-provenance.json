@@ -54,5 +54,12 @@
     "original_sha256": "e323b15a567b1aa5eeb4ac120e23706ca540cda2f3e1da323258afe58667fd92",
     "readable_sha256": "5dbac2a3a0e16f861d9a9a2485429b98931b17ff2434abc83a0af1e7b9db73cc",
     "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
+  },
+  {
+    "readable_log": "cash-race-before-controlled.txt",
+    "original_gzip": "cash-race-before-controlled.txt.gz",
+    "original_sha256": "158fd09e1f7a3c6ed0dfbdd4924c668a33288a26e20177cebf9566b483e44347",
+    "readable_sha256": "1848c0eb8c724fb7a8da0161cc3bc35cc6e4146ca0b59c954459c592957fea75",
+    "transformation": "Readable copy: trailing whitespace/empty EOF only; raw bytes preserved in gzip."
   }
 ]

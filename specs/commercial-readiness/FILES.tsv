@@ -73,11 +73,16 @@ A	specs/commercial-readiness/evidence/axe-firefox-desktop.json	Evidências/docum
 A	specs/commercial-readiness/evidence/axe-firefox-mobile.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
 A	specs/commercial-readiness/evidence/backend-final.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
 A	specs/commercial-readiness/evidence/build-final.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
+A	specs/commercial-readiness/evidence/cash-race-after-chromium.txt	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/cash-race-after-firefox.txt	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/cash-race-before-controlled.txt	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
+A	specs/commercial-readiness/evidence/cash-race-before-controlled.txt.gz	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
 A	specs/commercial-readiness/evidence/chromium-304.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
 A	specs/commercial-readiness/evidence/chromium-306.json	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
 A	specs/commercial-readiness/evidence/chromium-306.txt	Evidências/documentação	Recibo de validação sintética ou manifesto; sem dados reais
 A	specs/commercial-readiness/evidence/chromium-before-fix-full.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
 A	specs/commercial-readiness/evidence/chromium-before-fix-full.txt.gz	Validação/documentação	Regressão dirigida ou recibo sintético; sem alteração de contratos/dados reais
+A	specs/commercial-readiness/evidence/ci-initial.json	Evidência de teste	Reprodução controlada e resultado real da correção de sincronização; sem dados persistentes
 A	specs/commercial-readiness/evidence/components-chromium.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
 A	specs/commercial-readiness/evidence/components-firefox.txt	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais
 A	specs/commercial-readiness/evidence/dashboard-error.png	Evidências/documentação	Inventário, reprodução, resultados e gates de liberação; sem dados reais

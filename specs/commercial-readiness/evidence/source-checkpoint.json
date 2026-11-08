@@ -117,5 +117,7 @@
     "frontend/src/useModalFocus.ts": "0eea5cb220ecf00da060a8203c838ea99ba9db2de18e656e5c31cf8fa1ff6b94",
     "frontend/src/users.tsx": "85e0e31ef5490008def2d66e16dbbcce85c42a8aa828a25f2352af6db7af779a"
   },
-  "previous_local_full_matrix_commit": "0c06430ce0bcffe338b8edca6effde626c88cebf"
+  "previous_local_full_matrix_commit": "0c06430ce0bcffe338b8edca6effde626c88cebf",
+  "cash_test_sync_commit": "3c6e2b39e0310da53f7e07c64c44e8fdbe458c23",
+  "cash_test_sha256": "713e7095b34c73dcb3b61fa613e6550c335987bac58b192c7bd86e12a10d425e"
 }
