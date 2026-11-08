@@ -1,3 +1,4 @@
+import pytest
 from datetime import date
 from sqlalchemy import select
 from app import services as V
@@ -117,7 +118,7 @@ def test_finalized_sale_has_one_fact_before_and_after_payment(env):
 
 
 def test_transport_sources_not_disclosed_to_generic_or_another_identity(env):
-    app,admin,*_=env
+    app,admin,other,_=env
     from app.models import User,Supplier
     entry=title(admin,'expense',12345)
     with app.state.sessions() as db:
@@ -137,6 +138,15 @@ def test_transport_sources_not_disclosed_to_generic_or_another_identity(env):
     with app.state.sessions() as db:
         actor=db.scalar(select(User).where(User.username=='admin'));actor.transport_operations=True;db.commit()
     assert any(i.get('key')==f"finance_entry:{entry['id']}:principal" for i in admin.get('/api/finance/dre/issues',params=period()).json())
+    with app.state.sessions() as db:
+        second=db.scalar(select(User).where(User.role=='operator'))
+        second.role='admin';second.transport_operations=True;db.commit()
+    assert admin.get(f"/api/finance/dre/source-entry/{entry['id']}").status_code==200
+    assert other.get(f"/api/finance/dre/source-entry/{entry['id']}").status_code==404
+    for path in ('/finance/dre','/finance/dre/items','/finance/dre/issues','/finance/dre/reconciliation','/finance/dre.csv'):
+        response=other.get('/api'+path,params=period())
+        assert response.status_code==200
+        assert '12345' not in response.text and 'Privado fictício' not in response.text
 
 
 def test_concurrent_mapping_confirmations_never_create_two_revisions(env):
@@ -233,3 +243,32 @@ def test_commercial_sale_discount_is_deduction_not_second_principal(env):
     assert len([i for i in after['issues'] if i.get('source_type')=='payment'])==3
     cash=admin.get('/api/finance/dre/reconciliation',params=period()).json()['reconciliation'][0]
     assert (cash['outstanding_principal_cents'],cash['cash_amount_cents_lifetime'])==(4999,4101)
+
+
+@pytest.mark.parametrize('direction',['income','expense'])
+def test_confirmed_fee_components_and_their_reversals_keep_economic_signs(env,direction):
+    _,admin,*_=env
+    entry=title(admin,direction,10001);mapping(admin,entry,'RB' if direction=='income' else 'DO')
+    principal_key=f"finance_entry:{entry['id']}:principal"
+    recognize(admin,principal_key)
+    paid=post(admin,f"/finance/{entry['id']}/settle",{'account_id':entry['account_id'],'method':'pix','principal_cents':4001,'interest_cents':101,'fine_cents':17,'discount_cents':37,'request_key':'dre-economic-fees-'+direction},200)
+    payment=paid['payments'][0]
+    for component in ('interest','fine','discount'):
+        line=('FE' if component=='discount' else 'FI') if direction=='income' else ('FI' if component=='discount' else 'FE')
+        recognize(admin,f"payment:{payment['id']}:{component}",line_code=line)
+    result=admin.get('/api/finance/dre',params=period()).json()
+    fees=[f for f in result['facts'] if f['source_type']=='payment']
+    assert sorted(f['amount_cents'] for f in fees)==[17,37,101]
+    actual=sum(f['amount_cents']*(1 if f['dre_line_code']=='FI' else -1) for f in fees)
+    assert actual==(81 if direction=='income' else -81)
+    reverse=post(admin,f"/finance/payments/{payment['id']}/reverse",{'reason':'Estorno econômico sintético'},200)
+    reversal=next(p for p in reverse['payments'] if p['reversal_of']==payment['id'])
+    for component in ('interest','fine','discount'):
+        line=('FE' if component=='discount' else 'FI') if direction=='income' else ('FI' if component=='discount' else 'FE')
+        recognize(admin,f"payment:{reversal['id']}:{component}",line_code=line)
+    after=admin.get('/api/finance/dre',params=period()).json()
+    assert next(f for f in after['facts'] if f['key']==principal_key)['amount_cents']==10001
+    assert sum(f['amount_cents'] for f in after['facts'] if f['source_type']=='payment')==0
+    cash=admin.get('/api/finance/dre/reconciliation',params=period()).json()['reconciliation'][0]
+    assert cash['cash_amount_cents_lifetime']==0
+    assert cash['outstanding_principal_cents']==10001

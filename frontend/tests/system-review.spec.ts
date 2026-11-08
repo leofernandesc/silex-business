@@ -1,6 +1,6 @@
 import { test, expect } from "./integrationTest";
 import {openReadyRoute} from './routeReadiness';
-import { canAccessRoute, routes } from "../src/navigation/routes";
+import { canAccessRoute, getRoute, routes } from "../src/navigation/routes";
 
 for (const width of [1440, 1024, 768, 375, 320]) {
   test(`all registered screens load without horizontal document overflow at ${width}px`, async ({
@@ -39,7 +39,7 @@ for (const width of [1440, 1024, 768, 375, 320]) {
         document: document.documentElement.scrollWidth,
       }));
       expect(dimensions.document, route.id).toBeLessThanOrEqual(width + 1);
-      await expect(page).toHaveURL(new RegExp(`#${route.id}$`));
+      await expect(page).toHaveURL(new RegExp(`#${getRoute(route.id)?.id}$`));
     }
     expect(failures).toEqual([]);
     expect(errors).toEqual([]);

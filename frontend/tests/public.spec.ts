@@ -22,7 +22,7 @@ async function signIn(page: Page) {
 }
 
 test("público sem sessão: conteúdo, metadados, fontes e nenhuma API ou rastreador", async ({
-  page,
+  page, baseURL,
 }) => {
   const apiRequests: string[] = [],
     external: string[] = [],
@@ -30,7 +30,7 @@ test("público sem sessão: conteúdo, metadados, fontes e nenhuma API ou rastre
   page.on("request", (r) => {
     if (new URL(r.url()).pathname.startsWith("/api/"))
       apiRequests.push(r.url());
-    if (!r.url().startsWith("http://127.0.0.1:8011/")) external.push(r.url());
+    if (!r.url().startsWith(new URL(baseURL!).origin+"/")) external.push(r.url());
   });
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");

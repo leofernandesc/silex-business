@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import {mkdirSync} from 'node:fs';
 import {join} from 'node:path';
 import {test,expect,type Page} from './integrationTest';
@@ -43,9 +44,12 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  const settled=await page.request.post(`/api/finance/${entry.id}/settle`,{data:{account_id:entry.account_id,method:'pix',principal_cents:30001,request_key:'dre-browser-partial-unique'}});expect(settled.ok()).toBe(true);
  const after=await(await page.request.get('/api/finance/dre',{params})).json();expect(after.facts).toEqual(before.facts);
  const download=page.waitForEvent('download');await page.locator('.dre-report').getByRole('button',{name:/CSV/}).click();const file=await download;expect(await file.failure()).toBeNull();
+ expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
  const evidence=process.env.SILEX_DRE_EVIDENCE_DIR;
  if(evidence){mkdirSync(evidence,{recursive:true});await page.screenshot({path:join(evidence,`dre-${info.project.name}-${process.env.SILEX_INTEGRATION_BROWSER||'chromium'}.png`),fullPage:true})}
  await page.emulateMedia({media:'print'});await expect(page.locator('.dre-report')).toBeVisible();await expect(page.locator('.dre-print-facts')).toBeVisible();await expect(page.locator('.dre-report th[scope=row]').filter({hasText:'Lucro líquido gerencial'})).toBeVisible();
+ for(const button of await page.locator('.dre-report button').all())await expect(button).toBeHidden();
+ await expect(page.locator('.dre-lines th').filter({hasText:'Revisão'})).toBeHidden();
  if(evidence&&info.project.name==='desktop'&&process.env.SILEX_INTEGRATION_BROWSER!=='firefox')await page.pdf({path:join(evidence,'dre-partial-a4.pdf'),format:'A4',printBackground:true});
 });
 

@@ -203,8 +203,8 @@ test("budget query failure is not represented as an empty confirmed budget", asy
   await expect(panel).toContainText("Nenhum registro encontrado");
 });
 
-test('all report and CSV endpoints distinguish operator denial from missing session',async({browser})=>{
- const op=await browser.newContext({baseURL:'http://127.0.0.1:8011'}),visitor=await browser.newContext({baseURL:'http://127.0.0.1:8011'}),admin=await browser.newContext({baseURL:'http://127.0.0.1:8011'});
+test('all report and CSV endpoints distinguish operator denial from missing session',async({browser,baseURL})=>{
+ const op=await browser.newContext({baseURL}),visitor=await browser.newContext({baseURL}),admin=await browser.newContext({baseURL});
  try{
   expect((await admin.request.post('/api/auth/login',{data:{username:'demo.admin',password:'DemoLocal#2026'}})).ok()).toBe(true);
   expect((await op.request.post('/api/auth/login',{data:{username:'demo.operador',password:'DemoLocal#2026'}})).ok()).toBe(true);

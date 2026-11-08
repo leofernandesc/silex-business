@@ -455,7 +455,7 @@ test("403 de operação preserva sessão e comunica recusa sem expirar", async (
 });
 
 test("retorno adulterado e parâmetro externo não redirecionam para outra origem", async ({
-  page,
+  page, baseURL,
 }) => {
   await page.addInitScript(
     (key) =>
@@ -467,7 +467,7 @@ test("retorno adulterado e parâmetro externo não redirecionam para outra orige
   );
   await page.goto("/entrar?return=https://example.test");
   await signIn(page);
-  await expect(page).toHaveURL(/127\.0\.0\.1:8011\/app#home$/);
+  await expect(page).toHaveURL(new URL("/app#home",baseURL!).href);
 });
 
 test("P03: mudança de breakpoint conserva foco acessível e desfaz o modo modal", async ({
