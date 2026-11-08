@@ -377,3 +377,15 @@ class MovementInput(Input):
     document: Annotated[str, Field(max_length=100)] = ''
     method: Literal['cash', 'pix', 'card'] = 'pix'
     request_key: Annotated[str, Field(min_length=16, max_length=80, pattern=r'^[a-zA-Z0-9_-]+$')]
+
+
+class ServiceCostIncurrence(Input):
+    cost_id: int
+    incurred_on: date
+
+
+class ServiceCompletionInput(Input):
+    completed_on: date
+    reason: Annotated[str, Field(min_length=5,max_length=500)]
+    request_key: Annotated[str, Field(min_length=16,max_length=80)]
+    incurred_costs: Annotated[list[ServiceCostIncurrence],Field(max_length=100)] = []

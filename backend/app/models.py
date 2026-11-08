@@ -359,6 +359,12 @@ class ServiceOrder(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(DateTime, default=now)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=now)
+    completed_on: Mapped[date | None] = mapped_column(Date, nullable=True)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    completed_by_id: Mapped[int | None] = mapped_column(ForeignKey('users.id'), nullable=True)
+    completion_reason: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    completion_request_key: Mapped[str | None] = mapped_column(String(80), unique=True, nullable=True)
+    completion_request_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     __table_args__ = (
         CheckConstraint("negotiated_cents > 0"),
         CheckConstraint("status IN ('draft', 'scheduled', 'in_progress', 'completed', 'canceled')"),
@@ -375,6 +381,10 @@ class ServiceOrderCost(Base):
     quantity_milli: Mapped[int | None] = mapped_column(Integer, nullable=True)
     agreed_amount_cents: Mapped[int] = mapped_column(Integer)
     details: Mapped[str] = mapped_column(String(300), default="")
+    incurred_on: Mapped[date | None] = mapped_column(Date, nullable=True)
+    incurred_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    incurred_by_id: Mapped[int | None] = mapped_column(ForeignKey('users.id'), nullable=True)
+    incurrence_reason: Mapped[str | None] = mapped_column(String(500), nullable=True)
     __table_args__ = (
         CheckConstraint("kind IN ('day_worker', 'subcontracted_freight')"),
         CheckConstraint("agreed_amount_cents > 0"),

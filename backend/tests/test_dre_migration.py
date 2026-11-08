@@ -18,8 +18,8 @@ def test_upgrade_preserves_previous_schema_and_rows(tmp_path, monkeypatch, previ
         names=[r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name != 'alembic_version'")]
         columns={name:','.join(r[1] for r in db.execute('PRAGMA table_info('+name+')')) for name in names}
         before={name:list(db.execute('SELECT '+columns[name]+' FROM '+name)) for name in names}
-    command.upgrade(cfg,'0014')
-    command.upgrade(cfg,'0014')
+    command.upgrade(cfg,'head')
+    command.upgrade(cfg,'head')
     with sqlite3.connect(path) as db:
         assert all(list(db.execute('SELECT '+columns[name]+' FROM '+name))==rows for name,rows in before.items())
         assert db.execute('PRAGMA integrity_check').fetchone()==('ok',)
@@ -28,6 +28,6 @@ def test_upgrade_preserves_previous_schema_and_rows(tmp_path, monkeypatch, previ
             assert db.execute('SELECT COUNT(*) FROM '+name).fetchone()==(0,)
     # Laboratory rollback before any policy data; never invoked on a persistent database.
     command.downgrade(cfg,'0013')
-    command.upgrade(cfg,'0014')
+    command.upgrade(cfg,'head')
     with sqlite3.connect(path) as db:
         assert all(list(db.execute('SELECT '+columns[name]+' FROM '+name))==rows for name,rows in before.items())
