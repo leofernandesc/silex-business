@@ -6,7 +6,7 @@ import {writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 
-test('accessible login, all 25 authorized routes and customer dialog',async({page},testInfo)=>{
+test('accessible login, every registered authorized route and customer dialog',async({page},testInfo)=>{
  test.setTimeout(240000);
  const findings:any[]=[];
  async function audit(surface:string){const result=await new AxeBuilder({page}).analyze();findings.push({surface,violations:result.violations.map(v=>({id:v.id,impact:v.impact,description:v.description,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))});}

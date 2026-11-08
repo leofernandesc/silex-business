@@ -16,7 +16,7 @@ test('Demo retains general ERP, denies transport URL and API, and keeps generic 
  await expect(page.locator('.customer-address-group')).toHaveCount(0);await expect(page.getByLabel('CEP',{exact:true})).toBeVisible();await expect(page.getByLabel('Tipo de serviço',{exact:true})).toHaveCount(0);
  await page.keyboard.press('Escape');
  await page.goto('/app#service-orders');await page.getByRole('button',{name:'Novo serviço/pedido',exact:true}).click();await expect(page.getByRole('button',{name:'Adicionar diarista'})).toBeVisible();await expect(page.getByRole('button',{name:'Adicionar frete'})).toHaveCount(0);await expect(page.getByRole('dialog')).not.toContainText(/\bfrete\b/i);
- await page.goto('/app#subcontracted-freight');await expect(page).toHaveURL(/#dashboard$/);
+ await page.goto('/app#subcontracted-freight');await expect(page).toHaveURL(/#home$/);
  expect((await page.request.get('/api/suppliers?kind=subcontracted_freight')).status()).toBe(403);
  expect((await page.request.post('/api/customers',{data:{name:'Forbidden',service_details:{service_type:'local'}}})).status()).toBe(403);
 });
@@ -40,7 +40,7 @@ test('Sammya receives full structured addresses, persistence, service types and 
 test('Other administrator and operator cannot use the module through the backend or a hidden URL',async({page})=>{
  for(const username of ['generic.admin','generic.operator']){
   await login(page,username);expect((await page.request.get('/api/suppliers?kind=subcontracted_freight')).status()).toBe(403);
-  await page.goto('/app#subcontracted-freight');await expect(page).toHaveURL(/#dashboard$/);
+  await page.goto('/app#subcontracted-freight');await expect(page).toHaveURL(/#home$/);
   await page.request.post('/api/auth/logout');
  }
 });

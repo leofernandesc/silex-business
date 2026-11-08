@@ -89,7 +89,7 @@ function OfxNewFields({direction,category,setCategory,subcategory,setSubcategory
 export {FinanceOverview} from "./financialOverview";
 
 export function FinanceReports({user}:{user:User}){
- const today=localDate(),initial=readDrePeriod(location.search),[selected,setSelected]=useState(initial?'dre':'cash-monthly'),[period,setPeriod]=useState(initial||{start:today.slice(0,7)+'-01',end:today});
+ const today=localDate(),initial=readDrePeriod(typeof location==="undefined"?"":location.search),[selected,setSelected]=useState(initial?'dre':'cash-monthly'),[period,setPeriod]=useState(initial||{start:today.slice(0,7)+'-01',end:today});
  useEffect(()=>{if(selected==='dre')history.replaceState(history.state,'',dreHref(period));else {const u=new URL(location.href);['dre_view','dre_start','dre_end'].forEach(k=>u.searchParams.delete(k));history.replaceState(history.state,'',u.pathname+u.search+u.hash)}},[selected,period]);
  return selected==='dre'?<DreReport period={period} onPeriod={setPeriod} onLegacy={setSelected}/>:<LegacyFinanceReports key={selected} user={user} initialReport={selected} initialPeriod={period} onDre={p=>{setPeriod(p);setSelected('dre')}}/>;
 }

@@ -60,7 +60,7 @@ def sources(db,user):
         output.append({'key':key,'source_type':kind,'source_id':identifier,'component':component,'entry_ids':[e.id for e in group],
                        'category_id':entry.category_id,'subcategory_id':entry.subcategory_id,'amount_cents':amount,
                        'candidate_date':entry.competence_date,'economic_date':economic_date,'automatic':automatic,'issues':issues,
-                       'direction':entry.direction,'commercial_discount_cents':sales[identifier].discount_cents if kind=='sale' and identifier in sales else 0, 'canceled_on':entry.canceled_at.date() if entry.canceled_at else None})
+                       'direction':entry.direction,'commercial_discount_cents':sales[identifier].discount_cents if kind=='sale' and identifier in sales else 0, 'canceled_on':entry.canceled_at.replace(tzinfo=timezone.utc).astimezone(V.TZ).date() if entry.canceled_at else None})
     entries_by_id={e.id:e for e in entries}
     visible_entries={i for src in output for i in src['entry_ids']}
     for payment in db.scalars(select(Payment)):
@@ -93,5 +93,10 @@ def sources(db,user):
                        'category_id':None,'subcategory_id':None,'amount_cents':cost.agreed_amount_cents,'candidate_date':getattr(order,'completed_on',None) or order.service_date,
                        'economic_date':None,'automatic':False,'issues':['cost_title_required'],'direction':'expense','commercial_discount_cents':0})
     for item in output:
-        item['fingerprint']=fingerprint({k:v for k,v in item.items() if k not in ('candidate_date','canceled_on')})
+        if item['source_type']=='sale':origin={'route':'sales','id':item['source_id']}
+        elif item['source_type']=='service_order':origin={'route':'service-orders','id':item['source_id']}
+        elif item['source_type']=='service_order_cost':origin={'route':'service-orders','id':costs[item['source_id']].service_order_id}
+        else:origin={'route':'finance-receivable' if item['direction']=='income' else 'finance-payable','id':item['entry_ids'][0]}
+        item['origin']=origin
+        item['fingerprint']=fingerprint({k:v for k,v in item.items() if k not in ('candidate_date','canceled_on','origin')})
     return output,restricted

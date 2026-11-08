@@ -62,7 +62,7 @@ type Props = {
   navigate: (id: string) => void;
 };
 
-/** Uses only authenticated shell state. No queries, indicators or authorization policy. */
+/** Authenticated identity and shortcuts, with operational content supplied by canonical Home. */
 export function AuthenticatedHome({
   children,
   user,

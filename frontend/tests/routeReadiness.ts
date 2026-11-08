@@ -33,15 +33,19 @@ export async function openReadyRoute(
   page: Page,
   route: (typeof routes)[number],
 ) {
-  const response = page.waitForResponse(
-    (r) =>
-      new URL(r.url()).pathname === "/api" + endpoints[route.id] &&
-      r.request().method() === "GET",
-  );
-  await page.goto("/app#" + route.id);
-  const received = await response;
-  expect(received.ok(), `${route.id}: ${received.status()}`).toBe(true);
-  await received.finished();
+  const currentHomeAlias=route.id==='dashboard'&&new URL(page.url()).hash==='#home';
+  if(currentHomeAlias){
+    // A hash alias must reuse the already loaded Home, without fabricating a second GET.
+    await page.goto('/app#dashboard');
+    await expect(page).toHaveURL(/#home$/);
+    await expect(page.getByRole('region',{name:'Indicadores operacionais',exact:true})).toHaveCount(1);
+  }else{
+    const response = page.waitForResponse(r=>new URL(r.url()).pathname==='/api'+endpoints[route.id]&&r.request().method()==='GET');
+    await page.goto('/app#'+route.id);
+    const received=await response;
+    expect(received.ok(),`${route.id}: ${received.status()}`).toBe(true);
+    await received.finished();
+  }
   await expect(page.locator(".breadcrumb strong")).toHaveText(route.title);
   await expect(page.locator("main h1")).toBeVisible();
   await expect(page.locator("main [aria-busy=true]")).toHaveCount(0);

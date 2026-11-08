@@ -31,10 +31,15 @@ def test_manual_principal_not_payment_then_partial_and_reversal(env):
     recognize(admin,f"finance_entry:{entry['id']}:principal")
     first=admin.get('/api/finance/dre',params=period()).json()
     assert sum(f['amount_cents'] for f in first['facts'])==10001
+    assert next(r for r in first['lines'] if r['code']=='RB')['final_amount_cents']==10001
     paid=post(admin,f"/finance/{entry['id']}/settle",{'account_id':entry['account_id'],'method':'pix','principal_cents':4001,'request_key':'dre-unique-partial-payment'},200)
     assert admin.get('/api/finance/dre',params=period()).json()['facts']==first['facts']
+    reconciled=admin.get('/api/finance/dre/reconciliation',params=period()).json()['reconciliation'][0]
+    assert (reconciled['recognized_principal_cents'],reconciled['title_principal_cents'],reconciled['outstanding_principal_cents'],reconciled['cash_amount_cents_lifetime'])==(10001,10001,6000,4001)
     post(admin,f"/finance/payments/{paid['payments'][0]['id']}/reverse",{'reason':'Estorno fictício'},200)
     assert admin.get('/api/finance/dre',params=period()).json()['facts']==first['facts']
+    reconciled=admin.get('/api/finance/dre/reconciliation',params=period()).json()['reconciliation'][0]
+    assert reconciled['cash_amount_cents_lifetime']==0 and reconciled['outstanding_principal_cents']==10001
     assert next(r for r in first['lines'] if r['code']=='LL')['final_amount_cents'] is None
     for path in ('/finance/dre','/finance/dre/items','/finance/dre/issues','/finance/dre/reconciliation','/finance/dre.csv'):
         assert operator.get('/api'+path,params=period()).status_code==403
@@ -132,3 +137,99 @@ def test_transport_sources_not_disclosed_to_generic_or_another_identity(env):
     with app.state.sessions() as db:
         actor=db.scalar(select(User).where(User.username=='admin'));actor.transport_operations=True;db.commit()
     assert any(i.get('key')==f"finance_entry:{entry['id']}:principal" for i in admin.get('/api/finance/dre/issues',params=period()).json())
+
+
+def test_concurrent_mapping_confirmations_never_create_two_revisions(env):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+    app,admin,*_=env
+    entry=title(admin,'income',10001)
+    payload={'category_id':entry['category_id'],'line_code':'RB','valid_from':'2000-01-01','valid_to':'2099-12-31','expected_revision':0,'reason':'Concorrência sintética supervisionada'}
+    preview=post(admin,'/finance/dre/mappings/preview',payload,200)
+    body={**payload,'preview_token':preview['preview_token']}
+    # Mutating requests acquire BEGIN IMMEDIATE in the existing get_db dependency.
+    # Synchronize HTTP submission before that lock, never create an artificial barrier inside it.
+    barrier=Barrier(2)
+    def submit(_):
+        barrier.wait(timeout=10)
+        return admin.post('/api/finance/dre/mappings',json=body)
+    with ThreadPoolExecutor(max_workers=2) as pool:responses=list(pool.map(submit,range(2)))
+    assert sorted(r.status_code for r in responses)==[201,409]
+    with app.state.sessions() as db:
+        rows=list(db.scalars(select(DreMapping)))
+        assert len(rows)==1 and rows[0].revision==1
+
+
+def test_all_dre_mutations_require_admin_before_touching_sources(env):
+    app,admin,operator,visitor=env
+    entry=title(admin,'income',10001)
+    mapping_body={'category_id':entry['category_id'],'line_code':'RB','valid_from':'2026-01-01','valid_to':'2026-12-31','expected_revision':0,'reason':'Negativa sintética'}
+    bodies={
+      '/mappings/preview':mapping_body,'/mappings':mapping_body,
+      '/recognition-review':{'source_key':f"finance_entry:{entry['id']}:principal",'decision':'recognize','economic_date':V.today().isoformat(),'source_fingerprint':'0'*64,'evidence_kind':'teste','request_key':'unauthorized-fixture-key','expected_revision':0,'reason':'Negativa sintética'},
+      '/component-assertions':{**period(),'source_fingerprint':'0'*64,'reason':'Negativa sintética','line_code':'RB'},
+      '/period-reviews':{**period(),'source_fingerprint':'0'*64,'reason':'Negativa sintética'},
+    }
+    for path,payload in bodies.items():
+        assert operator.post('/api/finance/dre'+path,json=payload).status_code==403,path
+        assert visitor.post('/api/finance/dre'+path,json=payload).status_code==401,path
+    with app.state.sessions() as db:
+        assert list(db.scalars(select(DreMapping)))==[]
+        assert list(db.scalars(select(DreDecision)))==[]
+
+
+def test_revocation_hides_previous_specialized_snapshot_and_source_metadata(env):
+    app,admin,*_=env
+    from app.models import User,Supplier
+    entry=title(admin,'expense',12345)
+    with app.state.sessions() as db:
+        user=db.scalar(select(User).where(User.username=='admin'));user.transport_operations=True
+        supplier=Supplier(name='Fictício especializado privado',kind='subcontracted_freight');db.add(supplier);db.flush()
+        db.get(FinanceEntry,entry['id']).supplier_id=supplier.id;db.commit()
+    current=admin.get('/api/finance/dre',params=period()).json()
+    record=post(admin,'/finance/dre/period-reviews',{**period(),'source_fingerprint':current['source_fingerprint'],'report_fingerprint':current['report_fingerprint'],'reason':'Revisão sintética especializada'})
+    assert admin.get(f"/api/finance/dre/source-entry/{entry['id']}").status_code==200
+    with app.state.sessions() as db:
+        db.scalar(select(User).where(User.username=='admin')).transport_operations=False;db.commit()
+    assert admin.get(f"/api/finance/dre/source-entry/{entry['id']}").status_code==404
+    assert admin.get('/api/finance/dre/period-reviews',params=period()).json()==[]
+    assert admin.get('/api/finance/dre/period-reviews/'+str(record['id'])).status_code==403
+
+
+def test_investment_principal_is_never_income_and_exclusion_remains_traceable(env):
+    _,admin,*_=env
+    category=post(admin,'/categories',{'name':'Empréstimo fictício','direction':'income','classification':'financing'})
+    entry=title(admin,'income',100001,category_id=category['id']);first=mapping(admin,entry,'RB')
+    recognize(admin,f"finance_entry:{entry['id']}:principal")
+    rejected=admin.get('/api/finance/dre',params=period()).json()
+    assert rejected['facts']==[]
+    assert any('principal_outside_result_required' in i['codes'] for i in rejected['issues'])
+    mapping(admin,entry,'outside_dre',expected_revision=1,supersedes_id=first['id'])
+    result=admin.get('/api/finance/dre',params=period()).json()
+    assert result['facts']==[] and result['excluded'][0]['amount_cents']==100001
+    assert result['excluded'][0]['entry_ids']==[entry['id']]
+
+
+def test_commercial_sale_discount_is_deduction_not_second_principal(env):
+    app,admin,*_=env
+    from app.models import Sale,SaleItem,User
+    product=post(admin,'/products',{'code':'DRE-DISCOUNT','description':'Mercadoria fictícia com desconto','price_cents':10001})
+    with app.state.sessions() as db:
+        actor=db.scalar(select(User).where(User.username=='admin'))
+        sale=Sale(user_id=actor.id,status='finalized',total_cents=9000,discount_cents=1001,finalized_at=V.now())
+        db.add(sale);db.flush();identifier=sale.id
+        db.add(SaleItem(sale_id=sale.id,product_id=product['id'],description='Mercadoria fictícia',unit='UN',quantity_milli=1000,unit_price_cents=10001,total_cents=10001));db.commit()
+    entry=title(admin,'income',9000)
+    with app.state.sessions() as db:
+        db.get(FinanceEntry,entry['id']).sale_id=identifier;db.commit()
+    mapping(admin,entry)
+    before=admin.get('/api/finance/dre',params=period()).json()
+    assert {(f['dre_line_code'],f['amount_cents']) for f in before['facts']}=={('RB',10001),('DED',1001)}
+    assert next(r for r in before['lines'] if r['code']=='RL')['known_amount_cents']==9000
+    assert before['reconciliation'][0]['recognized_principal_cents']==9000
+    post(admin,f"/finance/{entry['id']}/settle",{'account_id':entry['account_id'],'method':'pix','principal_cents':4001,'interest_cents':101,'fine_cents':1,'discount_cents':2,'request_key':'dre-commercial-discount-partial'},200)
+    after=admin.get('/api/finance/dre',params=period()).json()
+    assert after['facts']==before['facts']
+    assert len([i for i in after['issues'] if i.get('source_type')=='payment'])==3
+    cash=admin.get('/api/finance/dre/reconciliation',params=period()).json()['reconciliation'][0]
+    assert (cash['outstanding_principal_cents'],cash['cash_amount_cents_lifetime'])==(4999,4101)

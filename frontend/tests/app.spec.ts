@@ -125,7 +125,7 @@ test("sessão persistente, navegação e tabelas responsivas", async ({
   page.on("request", (request) => {
     if (
       request.url().startsWith("http") &&
-      !request.url().startsWith("http://127.0.0.1:8011/")
+      new URL(request.url()).origin !== new URL(info.project.use.baseURL!).origin
     )
       external.push(request.url());
   });

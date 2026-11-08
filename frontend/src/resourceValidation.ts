@@ -16,7 +16,7 @@ export function validResource(path: string, value: unknown): boolean {
     return true;
   }
   if(name==='/finance/dre') {
-    if(!object(value)||!Array.isArray(value.lines)||!Array.isArray(value.facts)||!Array.isArray(value.issues)||typeof value.source_fingerprint!=='string'||!object(value.margins))return false;
+    if(!object(value)||!Array.isArray(value.lines)||!Array.isArray(value.facts)||!Array.isArray(value.issues)||!Array.isArray(value.excluded)||typeof value.source_fingerprint!=='string'||!object(value.margins))return false;
     if(!Object.values(value.margins).every(m=>object(m)&&(m.value===null||typeof m.value==='string')&&(m.reason===null||typeof m.reason==='string')))return false;
     const states=['complete','partial','unavailable','not_applicable'];
     return value.lines.every(row=>object(row)&&typeof row.code==='string'&&states.includes(String(row.coverage_status))&&['known_amount_cents','final_amount_cents'].every(k=>row[k]===null||Number.isSafeInteger(row[k]))&&(['complete','not_applicable'].includes(String(row.coverage_status))?Number.isSafeInteger(row.final_amount_cents):row.final_amount_cents===null))

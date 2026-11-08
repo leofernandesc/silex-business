@@ -1,8 +1,10 @@
+import {mkdirSync} from 'node:fs';
+import {join} from 'node:path';
 import {test,expect,type Page} from './integrationTest';
 async function login(page:Page){
  const response=await page.request.post('/api/auth/login',{data:{username:'demo.admin',password:process.env.SILEX_TEST_PASSWORD}});expect(response.ok()).toBe(true);
 }
-test('DRE: classify in the existing plan, confirm economic recognition and export a partial statement',async({page})=>{
+test('DRE: classify in the existing plan, confirm economic recognition and export a partial statement',async({page},info)=>{
  await login(page);
  const categories=await page.request.post('/api/categories',{data:{name:'Receita fictícia DRE navegador',direction:'income',classification:'operating'}});expect(categories.ok()).toBe(true);const category=await categories.json();
  const accounts=await(await page.request.get('/api/accounts')).json();
@@ -28,6 +30,12 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  await page.getByRole('button',{name:'Confirmar revisão',exact:true}).click();
  expect(decisions).toBe(2);
  await expect(page.getByRole('dialog')).toHaveCount(0);
+ await page.getByRole('button',{name:'Detalhar RB',exact:true}).click();
+ await page.getByRole('link',{name:key,exact:true}).click();
+ await expect(page).toHaveURL(/#finance-receivable$/);
+ await expect(page.getByRole('dialog')).toContainText('Fato econômico fictício DRE');
+ await page.getByRole('button',{name:'Fechar janela',exact:true}).click();
+ await page.goBack();await expect(page.getByLabel('Relatório',{exact:true})).toHaveValue('dre');
  const params={start:today.slice(0,7)+'-01',end:today};
  const before=await(await page.request.get('/api/finance/dre',{params})).json();
  expect(before.facts.filter((f:any)=>f.key===key)).toHaveLength(1);
@@ -35,7 +43,10 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  const settled=await page.request.post(`/api/finance/${entry.id}/settle`,{data:{account_id:entry.account_id,method:'pix',principal_cents:30001,request_key:'dre-browser-partial-unique'}});expect(settled.ok()).toBe(true);
  const after=await(await page.request.get('/api/finance/dre',{params})).json();expect(after.facts).toEqual(before.facts);
  const download=page.waitForEvent('download');await page.locator('.dre-report').getByRole('button',{name:/CSV/}).click();const file=await download;expect(await file.failure()).toBeNull();
+ const evidence=process.env.SILEX_DRE_EVIDENCE_DIR;
+ if(evidence){mkdirSync(evidence,{recursive:true});await page.screenshot({path:join(evidence,`dre-${info.project.name}-${process.env.SILEX_INTEGRATION_BROWSER||'chromium'}.png`),fullPage:true})}
  await page.emulateMedia({media:'print'});await expect(page.locator('.dre-report')).toBeVisible();await expect(page.locator('.dre-print-facts')).toBeVisible();await expect(page.locator('.dre-report th[scope=row]').filter({hasText:'Lucro líquido gerencial'})).toBeVisible();
+ if(evidence&&info.project.name==='desktop'&&process.env.SILEX_INTEGRATION_BROWSER!=='firefox')await page.pdf({path:join(evidence,'dre-partial-a4.pdf'),format:'A4',printBackground:true});
 });
 
 test('navigation aliases converge on one home and one financial plan',async({page})=>{

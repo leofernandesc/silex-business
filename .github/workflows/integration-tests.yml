@@ -65,6 +65,12 @@ jobs:
         run: npm test --prefix frontend
       - name: TypeScript and build (no deployment)
         run: npm run build --prefix frontend
+      - name: DRE compatibility with 26 legacy reports and their CSVs
+        run: PYTHONPATH=backend .venv/bin/python scripts/compare_dre_baseline.py
+      - name: DRE restart, SQLite backup and restored attachments (disposable only)
+        env:
+          SILEX_DRE_RESTART_OUTPUT: /tmp/dre-restart.json
+        run: PYTHONPATH=backend .venv/bin/python scripts/check_dre_restart.py
       - name: Prove rejection of invalid committed diffs in disposable repositories
         run: PYTHONPATH=backend .venv/bin/python -m pytest backend/tests/test_pr_diff_gate.py -q
 

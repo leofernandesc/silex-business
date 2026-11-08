@@ -58,7 +58,7 @@ test("sessão expirada na Início não revela dados e retorna a home após login
   await home(page);
 });
 
-test("home guest, retorno solicitado, login normal e refresh sem indicadores ou consultas extras", async ({
+test("home guest, retorno solicitado, login e refresh com uma consulta operacional por montagem", async ({
   page,
 }) => {
   const calls: string[] = [];
@@ -83,12 +83,13 @@ test("home guest, retorno solicitado, login normal e refresh sem indicadores ou 
   await page.waitForLoadState("networkidle");
   expect(
     calls.every((path) =>
-      ["/api/auth/me", "/api/auth/login", "/api/company-settings"].includes(
+      ["/api/auth/me", "/api/auth/login", "/api/company-settings", "/api/dashboard"].includes(
         path,
       ),
     ),
   ).toBe(true);
-  await expect(page.locator(".silex-home")).not.toContainText("R$");
+  expect(calls.filter(path=>path==='/api/dashboard')).toHaveLength(1);
+  await expect(page.getByRole('region',{name:'Indicadores operacionais',exact:true})).toHaveCount(1);
   expect(
     await page.evaluate((key) => sessionStorage.getItem(key), RETURN_KEY),
   ).toBeNull();

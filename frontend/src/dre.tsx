@@ -1,3 +1,4 @@
+import {sourceHref} from "./sourceNavigation";
 import "./dre.css";
 import { useRef, useState } from 'react';
 import { api, downloadCsv, query } from './api';
@@ -7,9 +8,9 @@ import { ExportButton, Field, Form, LoadFeedback, Modal, Notice, PageTitle, Pagi
 
 type Period={start:string;end:string};
 type Line={code:string;known_amount_cents:number|null;final_amount_cents:number|null;coverage_status:string};
-type Issue={key?:string;codes:string[];source_type?:string;source_id?:number;amount_cents?:number;source_fingerprint?:string;recognition_revision?:number;entry_ids?:number[]};
-type Fact={key:string;source_type:string;source_id:number;dre_line_code:string;amount_cents:number;economic_date:string;recognition_basis:string};
-type Report={report_fingerprint:string;margins:Record<string,{value:string|null;reason:string|null}>;lines:Line[];facts:Fact[];issues:Issue[];start:string;end:string;source_fingerprint:string;mapping_version:number;decision_version:number};
+type Issue={origin?:{route:string;id:number};category_id?:number;subcategory_id?:number|null;key?:string;codes:string[];source_type?:string;source_id?:number;amount_cents?:number;source_fingerprint?:string;recognition_revision?:number;entry_ids?:number[]};
+type Fact={origin?:{route:string;id:number};key:string;source_type:string;source_id:number;dre_line_code:string;amount_cents:number;economic_date:string;recognition_basis:string};
+type Report={excluded:{key:string;amount_cents:number;reason:string}[];report_fingerprint:string;margins:Record<string,{value:string|null;reason:string|null}>;lines:Line[];facts:Fact[];issues:Issue[];start:string;end:string;source_fingerprint:string;mapping_version:number;decision_version:number};
 const names:Record<string,string>={RB:'Receita bruta',DED:'Deduções',RL:'Receita líquida',CD:'Custos diretos / CMV / CSP',LB:'Lucro bruto',DO:'Despesas operacionais',OR:'Outras receitas operacionais',OD:'Outras despesas operacionais',DA:'Depreciação e amortização',EBIT:'Resultado operacional',EBITDA:'EBITDA gerencial',FI:'Receitas financeiras',FE:'Despesas financeiras',RF:'Resultado financeiro',TL:'Tributos sobre lucro',LL:'Lucro líquido gerencial'};
 const statuses:Record<string,string>={complete:'Completo',partial:'Parcial',unavailable:'Indisponível',not_applicable:'Não aplicável'};
 const base=['RB','DED','CD','DO','OR','OD','DA','FI','FE','TL'];
@@ -25,7 +26,7 @@ export function DreReport({period,onPeriod,onLegacy}:{period:Period;onPeriod:(p:
  <SilexDatePicker label="De" value={from} onChange={setFrom}/><SilexDatePicker label="Até" value={to} onChange={setTo}/><button className="primary">Gerar relatório</button></form>
  <LoadFeedback resource={result} label="DRE gerencial"/>
  <section className="panel finance-report-print dre-report"><div className="panel-heading"><div><h2>DRE gerencial</h2><p>{dateOnly(period.start)} a {dateOnly(period.end)} · Competência econômica · Silex Business</p></div><ExportButton onClick={()=>downloadCsv('/finance/dre.csv?'+query(period),'dre.csv')}/><button disabled={!data} onClick={()=>window.print()}>Imprimir</button></div>
- <p>Valores parciais não representam lucro final. CMV, tributos e depreciação desconhecidos não são considerados zero.</p>
+ <p>Período completo conforme as permissões. Filtros de conta e beneficiário dos relatórios por baixa não se aplicam à DRE. Valores parciais não representam lucro final. CMV, tributos e depreciação desconhecidos não são considerados zero.</p>
  {data&&<><p>Mapeamento: versão {data.mapping_version} · Reconhecimento: versão {data.decision_version} · Demonstrativo integral do período.</p>
  <Table headers={['Rubrica','Cobertura','Valor conhecido','Valor final','Revisão']} empty={false} loading={false}>
  {data.lines.map(line=><tr key={line.code}><th scope="row">{names[line.code]||line.code} <button type="button" onClick={()=>setDetail(detail===line.code?null:line.code)}>Detalhar {line.code}</button></th><td>{statuses[line.coverage_status]}</td><td>{line.known_amount_cents===null?'—':money(line.known_amount_cents)}</td><td>{line.final_amount_cents===null?'—':money(line.final_amount_cents)}</td><td>{base.includes(line.code)&&<button type="button" disabled={data.issues.length>0} onClick={()=>setCoverage(line.code)}>Revisar cobertura de {line.code}</button>}</td></tr>)}
@@ -33,8 +34,9 @@ export function DreReport({period,onPeriod,onLegacy}:{period:Period;onPeriod:(p:
  {detail&&<DreDetails key={detail} line={detail} period={period}/>}
  <Table headers={['Margem','Resultado','Critério']} loading={false} empty={false}>{Object.entries(data.margins).map(([code,margin])=><tr key={code}><th scope="row">{({LB:'Margem bruta',EBIT:'Margem operacional',EBITDA:'Margem EBITDA',LL:'Margem líquida'} as Record<string,string>)[code]}</th><td>{margin.value===null?'—':margin.value.replace('.',',')+'%'}</td><td>{margin.reason||'Componentes completos e receita líquida positiva'}</td></tr>)}</Table>
  <p><button type="button" onClick={()=>onLegacy('budget-actual')}>Consultar orçamento e realizado por baixas</button> · O orçamento existente possui regime distinto da competência econômica.</p>
- <section className="dre-print-facts"><h3>Fontes reconhecidas no período completo</h3><Table headers={['Origem','Rubrica','Data econômica','Centavos']} empty={!data.facts.length} loading={false}>{data.facts.map(f=><tr key={f.key}><td>{f.key}</td><td>{names[f.dre_line_code]}</td><td>{dateOnly(f.economic_date)}</td><td>{money(f.amount_cents)}</td></tr>)}</Table></section>
- <section><h3>Pendências econômicas</h3>{!data.issues.length?<p>Sem pendências identificadas nas fontes; revise a cobertura de cada componente.</p>:<ul>{data.issues.map((item,index)=><li key={item.key||index}>{item.key&&<strong>{item.key} · </strong>}{item.codes.map(c=>issueLabels[c]||c.replaceAll('_',' ')).join('; ')} {item.key&&item.source_fingerprint&&<><button type="button" onClick={()=>setIssue(item)}>Revisar reconhecimento de {item.key}</button> <a href={item.source_type==='sale'?'/app#sales':item.source_type?.startsWith('service_order')?'/app#service-orders':'/app#finance'}>Abrir origem #{item.source_id}</a></>}</li>)}</ul>}</section>
+ <section className="dre-print-facts"><h3>Fontes reconhecidas no período completo</h3><Table headers={['Origem','Rubrica','Data econômica','Valor (R$)']} empty={!data.facts.length} loading={false}>{data.facts.map(f=><tr key={f.key}><td>{f.origin?<a href={sourceHref(f.origin)}>{f.key}</a>:f.key}</td><td>{names[f.dre_line_code]}</td><td>{dateOnly(f.economic_date)}</td><td>{money(f.amount_cents)}</td></tr>)}</Table></section>
+ {data.excluded.length>0&&<section><h3>Fatos fora da DRE</h3><Table headers={['Origem','Valor excluído','Justificativa']} loading={false} empty={false}>{data.excluded.map(row=><tr key={row.key}><td>{row.key}</td><td>{money(row.amount_cents)}</td><td>{row.reason}</td></tr>)}</Table></section>}
+ <section><h3>Pendências econômicas</h3>{!data.issues.length?<p>Sem pendências identificadas nas fontes; revise a cobertura de cada componente.</p>:<ul>{data.issues.map((item,index)=><li key={item.key||index}>{item.key&&<strong>{item.key} · </strong>}{item.codes.map(c=>issueLabels[c]||c.replaceAll('_',' ')).join('; ')} {item.key&&item.source_fingerprint&&<><button type="button" onClick={()=>setIssue(item)}>Revisar reconhecimento de {item.key}</button> <a href={item.origin?sourceHref(item.origin):'/app#finance-plan'}>Abrir origem #{item.source_id}</a> {item.category_id&&<a href={sourceHref({route:'finance-plan',id:item.category_id})}>Revisar classificação da categoria #{item.category_id}</a>}</>}</li>)}</ul>}</section>
  <button type="button" onClick={()=>setReview(true)}>Registrar revisão deste período</button>
  </>}
  </section>
@@ -77,7 +79,7 @@ export function DreMappingEditor({categoryId,subcategoryId}:{categoryId:number;s
 function DreDetails({line,period}:{line:string;period:Period}){
  const [page,setPage]=useState(1);
  const result=useLoad<{items:Fact[];total:number;page:number;page_size:number}>('/finance/dre/items?'+query({...period,line,page}));
- return <section className="dre-screen-detail"><h3>Fontes de {names[line]}</h3><Table headers={['Origem','Rubrica','Data econômica','Valor','Evidência']} loading={result.loading} error={result.error} onRetry={result.reload} empty={!!result.data&&!result.data.items.length}>{result.data?.items.map(f=><tr key={f.key}><td>{f.key}</td><td>{names[f.dre_line_code]}</td><td>{dateOnly(f.economic_date)}</td><td>{money(f.amount_cents)}</td><td>{f.recognition_basis}</td></tr>)}</Table><Pagination data={result.data} onPage={setPage}/></section>;
+ return <section className="dre-screen-detail"><h3>Fontes de {names[line]}</h3><Table headers={['Origem','Rubrica','Data econômica','Valor','Evidência']} loading={result.loading} error={result.error} onRetry={result.reload} empty={!!result.data&&!result.data.items.length}>{result.data?.items.map(f=><tr key={f.key}><td>{f.origin?<a href={sourceHref(f.origin)}>{f.key}</a>:f.key}</td><td>{names[f.dre_line_code]}</td><td>{dateOnly(f.economic_date)}</td><td>{money(f.amount_cents)}</td><td>{f.recognition_basis}</td></tr>)}</Table><Pagination data={result.data} onPage={setPage}/></section>;
 }
 
 function DreReviewHistory({period,version}:{period:Period;version:number}){

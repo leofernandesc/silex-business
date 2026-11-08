@@ -1,3 +1,4 @@
+import {currentSourceId,useSourceRecord,clearSource} from "./sourceNavigation";
 import { hasTransport } from "./capabilities";
 import type { User } from "./types";
 import { SilexDatePicker } from "./SilexDatePicker";
@@ -7,7 +8,7 @@ import { api, query } from "./api";
 import { dateOnly, decimalInput, labels, localDate, money, parseDecimal, quantity } from "./format";
 import { partnerKinds } from "./partners";
 import type { Account, Customer, Page, ServiceOrder, Supplier, SupplierKind } from "./types";
-import { AddButton, Badge, Field, Form, Modal, Notice, PageTitle, Pagination, Table, useLoad } from "./ui";
+import { AddButton, Badge, Field, Form, Modal, Notice, PageTitle, Pagination, Table, useLoad, LoadFeedback } from "./ui";
 
 type CostDraft = { key: string; kind: "day_worker" | "subcontracted_freight"; supplier_id: string; days: string; amount: string; details: string; rateSuggested?: boolean };
 const statusLabels: Record<ServiceOrder["status"], string> = { draft: "Rascunho", scheduled: "Agendado", in_progress: "Em execução", completed: "Concluído", canceled: "Cancelado" };
@@ -18,6 +19,7 @@ export function ServiceOrdersPage({user}:{user:User}) {
     [viewing, setViewing] = useState<ServiceOrder | null>(null), [generating, setGenerating] = useState<ServiceOrder | null>(null),
     [canceling, setCanceling] = useState<ServiceOrder | null>(null), [notice, setNotice] = useState("");
   const [completing,setCompleting]=useState<ServiceOrder|null>(null);
+  const source=useSourceRecord<ServiceOrder>('/service-orders/',currentSourceId(),setViewing);
   const orders = useLoad<Page<ServiceOrder>>("/service-orders?" + query({ q, status, page }), version);
   const reload = () => setVersion((v) => v + 1);
   const saved = () => { setEditing(undefined); setNotice("Serviço/pedido salvo."); reload(); };
@@ -27,6 +29,7 @@ export function ServiceOrdersPage({user}:{user:User}) {
     reload();
   }
   return <>
+    <LoadFeedback resource={source} label="serviço de origem"/>
     <PageTitle title="Serviços e pedidos" subtitle="Custos contratados, títulos financeiros e resultado por operação.">
       <AddButton onClick={() => { setNotice(""); setEditing(null); }}>Novo serviço/pedido</AddButton>
     </PageTitle>
@@ -59,7 +62,7 @@ export function ServiceOrdersPage({user}:{user:User}) {
       <Pagination data={orders.data} onPage={setPage} />
     </section>
     {editing !== undefined && <ServiceOrderForm transportEnabled={hasTransport(user)} order={editing} close={() => setEditing(undefined)} done={saved} />}
-    {viewing && <ServiceOrderDetails order={viewing} close={() => setViewing(null)} refresh={() => refreshOrder(viewing)}
+    {viewing && <ServiceOrderDetails order={viewing} close={() => {setViewing(null);clearSource()}} refresh={() => refreshOrder(viewing)}
       canceled={() => { setViewing(null); setNotice("Serviço cancelado; títulos e baixas foram mantidos no histórico."); reload(); }} />}
     {completing&&<CompleteServiceForm order={completing} close={()=>setCompleting(null)} done={(order,generate)=>{setCompleting(null);setNotice('Conclusão registrada. '+(!order.title_run_id?'Títulos pendentes de confirmação.':''));reload();if(generate&&!order.title_run_id)setGenerating(order)}}/>}
     {generating && <GenerateTitlesForm order={generating} close={() => setGenerating(null)} done={() => { setGenerating(null); setNotice("Títulos financeiros gerados e vinculados ao pedido."); reload(); }} />}
