@@ -2115,6 +2115,9 @@ dialog > header button {
   .finance-report-column-bands {
     display: block;
   }
+  .finance-report-column-band:not(:first-child) {
+    break-inside: avoid-page;
+  }
   .finance-report-column-band + .finance-report-column-band {
     /* Keep complete column bands, without wasting a new sheet for every band. */
     break-before: auto;
