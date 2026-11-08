@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./integrationTest";
 import { localDate } from "../src/format";
 
 async function login(page: Page) {

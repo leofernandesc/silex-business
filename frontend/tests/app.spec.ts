@@ -1,9 +1,9 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./integrationTest";
 
 async function login(page: Page, username = "demo.admin") {
   await page.goto("/entrar");
   await page.getByLabel("Usuário", { exact: true }).fill(username);
-  await page.getByLabel("Senha", { exact: true }).fill("DemoLocal#2026");
+  await page.getByLabel("Senha", { exact: true }).fill(username === "transport.fixture.admin" ? "CustomerFixtureOnly#2026" : "DemoLocal#2026");
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Página inicial", exact: true }),
@@ -43,7 +43,7 @@ async function waitForMobileMenuToClose(page: Page) {
 test("cadastros de diaristas e frete com PIX e beneficiário em contas a pagar", async ({ page }, info) => {
   const errors: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
-  await login(page);
+  await login(page, "transport.fixture.admin");
   const suffix = info.project.name + "-" + Date.now();
   const worker = "Diarista E2E " + suffix, freight = "Frete E2E " + suffix;
   await navigate(page, "Diaristas");
@@ -301,7 +301,7 @@ test("financeiro: vencimento, exportação filtrada e quitação", async ({
 test("serviço/pedido vincula custos e gera títulos sem antecipar pagamentos", async ({ page }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await login(page);
+  await login(page, "transport.fixture.admin");
   const suffix = `${info.project.name}-${Date.now()}`;
   const customer = `Cliente OS ${suffix}`, worker = `Diarista OS ${suffix}`, freight = `Frete OS ${suffix}`;
 

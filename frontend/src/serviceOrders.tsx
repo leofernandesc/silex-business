@@ -191,7 +191,7 @@ function ServiceOrderDetails({ order, close, refresh, canceled }: { order: Servi
     <p className="table-scroll-hint">Deslize a tabela para ver todas as colunas.</p>
     <Table headers={["Título", "Direção", "Valor", "Restante", "Situação"]} empty={!order.titles.length}>{order.titles.map((title) => <tr key={title.id}><td>#{title.id} · {title.description}</td><td>{title.direction === "income" ? "Receber" : "Pagar"}</td><td>{money(title.amount_cents)}</td><td>{money(title.remaining_cents)}</td><td><Badge status={title.status} /></td></tr>)}</Table>
     {order.title_run_id && <p className="help">Vencimento {dateOnly(order.title_due_date)} · competência {dateOnly(order.title_competence_date)}. O realizado considera pagamentos e estornos registrados, inclusive baixas parciais.</p>}
-    {!order.restricted_transport_costs && order.status !== "canceled" && <Form submit="Cancelar serviço e preservar o histórico" submitClassName="danger" onSubmit={async () => {
+    {!order.restricted_transport_costs && order.status !== "canceled" && <Form processingText="Cancelando serviço..." submit="Cancelar serviço e preservar o histórico" submitClassName="danger" onSubmit={async () => {
       if (reason.trim().length < 3) throw new Error("Informe um motivo com pelo menos três caracteres.");
       await api(`/service-orders/${order.id}/cancel`, "POST", { reason: reason.trim() });
       canceled();
@@ -201,5 +201,5 @@ function ServiceOrderDetails({ order, close, refresh, canceled }: { order: Servi
 
 function CancelServiceOrderForm({ order, close, done }: { order: ServiceOrder; close: () => void; done: () => void }) {
   const [reason, setReason] = useState("");
-  return <Modal title={`Cancelar ${order.code}`} close={close}><p>O serviço será marcado como cancelado. Títulos existentes serão cancelados com estornos registrados quando já houver baixas.</p><Form cancel={close} submit="Confirmar cancelamento" onSubmit={async () => { await api(`/service-orders/${order.id}/cancel`, "POST", { reason }); done(); }}><Field label="Motivo *"><textarea required minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field></Form></Modal>;
+  return <Modal title={`Cancelar ${order.code}`} close={close}><p>O serviço será marcado como cancelado. Títulos existentes serão cancelados com estornos registrados quando já houver baixas.</p><Form processingText="Cancelando serviço..." cancel={close} submit="Confirmar cancelamento" onSubmit={async () => { await api(`/service-orders/${order.id}/cancel`, "POST", { reason }); done(); }}><Field label="Motivo *"><textarea required minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field></Form></Modal>;
 }

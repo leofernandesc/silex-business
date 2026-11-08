@@ -1,3 +1,4 @@
+import {localDate} from '../src/format';
 import {test,expect,type Page} from '@playwright/test';
 import {readFileSync} from 'node:fs';
 import {randomUUID} from 'node:crypto';
@@ -49,7 +50,7 @@ test('Historical transport finance remains readable while specialized order edit
  const token=randomUUID();const name='Historical provider '+token;
  const freight=await (await page.request.post('/api/suppliers',{data:{name,kind:'subcontracted_freight'}})).json();
  const customer=await (await page.request.post('/api/customers',{data:{name:'History '+token}})).json();
- const today=new Date().toISOString().slice(0,10);
+ const today=localDate();
  const payload={customer_id:customer.id,description:'History '+token,service_date:today,negotiated_cents:50000,costs:[{kind:'subcontracted_freight',supplier_id:freight.id,agreed_amount_cents:12345}]};
  const response=await page.request.post('/api/service-orders',{data:payload});expect(response.status()).toBe(201);const order=await response.json();
  const accounts=await (await page.request.get('/api/accounts')).json();

@@ -1,4 +1,4 @@
-import { test, expect, type APIRequestContext, type Page } from "@playwright/test";
+import { test, expect, type APIRequestContext, type Page } from "./integrationTest";
 
 // The Playwright launcher always creates/deletes its own local SQLite database.
 const fixturePassword = "CustomerFixtureOnly#2026";

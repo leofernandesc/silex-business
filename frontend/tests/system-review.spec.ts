@@ -1,5 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { routes } from "../src/navigation/routes";
+import { test, expect } from "./integrationTest";
+import {openReadyRoute} from './routeReadiness';
+import { canAccessRoute, routes } from "../src/navigation/routes";
 
 for (const width of [1440, 1024, 768, 375, 320]) {
   test(`all registered screens load without horizontal document overflow at ${width}px`, async ({
@@ -23,8 +24,9 @@ for (const width of [1440, 1024, 768, 375, 320]) {
           `${response.status()} ${new URL(response.url()).pathname}`,
         );
     });
-    for (const route of routes) {
-      await page.goto(`/app#${route.id}`);
+    const current = await (await page.request.get("/api/auth/me")).json();
+    for (const route of routes.filter(route => canAccessRoute(current, route.id))) {
+      await openReadyRoute(page,route);
       await expect(page.locator("main h1")).toBeVisible();
       await expect(
         page.getByText(

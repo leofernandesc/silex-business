@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Locator } from "@playwright/test";
+import { test, expect, type Page, type Locator } from "./integrationTest";
 // Real keyboard paths; never use locator.focus() to manufacture an opener.
 async function reach(page: Page, locator: Locator) {
   for (let i = 0; i < 400; i++) {

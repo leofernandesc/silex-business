@@ -3,6 +3,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.schemas import CompanySettingsInput, CustomerInput, SupplierInput
+from test_transport_capabilities import accounts
 
 
 @pytest.mark.parametrize("model,field", [(CustomerInput, "document"), (SupplierInput, "document"), (CompanySettingsInput, "company_document")])
@@ -24,8 +25,9 @@ def test_document_does_not_silently_discard_invalid_characters(model, field, bad
 
 
 @pytest.mark.parametrize("kind", ["supplier", "day_worker", "subcontracted_freight"])
-def test_partner_crud_rejects_customer_only_metadata(env, kind):
-    _, admin, operator, _ = env
+def test_partner_crud_rejects_customer_only_metadata(env, accounts, kind):
+    _, _, operator, _ = env
+    admin = accounts['sammya'] if kind == 'subcontracted_freight' else accounts['demo']
     payload = {"name": "Parceiro fictício", "kind": kind, "phone": "(92) 90000-0000", "document": "12.ABC.345/01DE-35"}
     created = admin.post("/api/suppliers", json=payload)
     assert created.status_code == 201, created.text

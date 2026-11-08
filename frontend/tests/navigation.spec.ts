@@ -1,10 +1,11 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./integrationTest";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { expireDisposableSession } from "./disposableSession";
 import {
   routes,
+  canAccessRoute,
   LOGOUT_PENDING_KEY,
   RETURN_KEY,
 } from "../src/navigation/routes";
@@ -136,7 +137,8 @@ test("compatibilidade dos 24 hashes anteriores, alias, home e destino desconheci
   page,
 }) => {
   await start(page);
-  for (const route of routes) {
+  const active = await (await page.request.get("/api/auth/me")).json();
+  for (const route of routes.filter(route => canAccessRoute(active, route.id))) {
     await page.goto("/#" + route.id);
     await expect(page).toHaveURL(new RegExp("/app#" + route.id + "$"));
     await expect(page.locator(".breadcrumb strong")).toHaveText(route.title);
@@ -181,9 +183,10 @@ test("navegação interna, Voltar/Avançar, foco e atalho financeiro", async ({
   await page.goto("/app#finance-dashboard");
   await page.waitForLoadState("networkidle");
   await page
-    .getByRole("button", { name: "Abrir livro caixa", exact: true })
+    .getByRole("link", { name: "Abrir livro caixa", exact: true })
     .click();
-  await expect(page).toHaveURL(/\/app#finance$/);
+  await expect.poll(() => { const address = new URL(page.url()); return {path:address.pathname,hash:address.hash,criteria:Object.fromEntries(address.searchParams)}; }).toEqual({path:'/app',hash:'#finance',criteria:{f_context:'movements',f_start:'',f_end:'',f_date_field:'posting'}});
+  await expect(page.getByLabel('Filtros aplicados')).toContainText('Sem início até Sem fim');
   await overflow(page);
 });
 
@@ -444,7 +447,7 @@ test("403 de operação preserva sessão e comunica recusa sem expirar", async (
   await expect(page.getByRole("alert")).toContainText(
     "Não foi possível consultar os dados do Dashboard Financeiro",
   );
-  await expect(page.locator(".dashboard-indicators .summary-card strong")).toHaveText(Array(6).fill("—"));
+  await expect(page.locator(".dashboard-indicators .summary-card strong")).toHaveText(Array(8).fill("—"));
   await expect(page).toHaveURL(/\/app#finance-dashboard$/);
   await expect(page.locator(".app-shell")).toBeVisible();
   expect((await page.request.get("/api/auth/me")).status()).toBe(200);

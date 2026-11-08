@@ -1,11 +1,11 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./integrationTest";
 
 const password = "DemoLocal#2026"; // Disposable seed only.
-async function login(page: Page, route = "customers") {
+async function login(page: Page, route = "customers", transport = false) {
   expect(
     (
       await page.request.post("/api/auth/login", {
-        data: { username: "demo.admin", password },
+        data: { username: transport ? "transport.fixture.admin" : "demo.admin", password: transport ? "CustomerFixtureOnly#2026" : password },
       })
     ).ok(),
   ).toBe(true);
@@ -166,7 +166,7 @@ for (const [route, button, nameLabel, kind] of [
   test(`${kind}: registration and contact do not duplicate the phone`, async ({
     page,
   }, info) => {
-    await login(page, route);
+    await login(page, route, kind === "subcontracted_freight");
     await page.getByRole("button", { name: button, exact: true }).click();
     const name = `Parceiro formulário ${kind} ${info.project.name} ${Date.now()}`;
     await page.getByLabel(nameLabel, { exact: true }).fill(name);
@@ -264,8 +264,9 @@ test("service cancellation reports failure, locks submissions and updates the li
     });
   await expect.poll(() => calls).toBe(1);
   await expect(
-    page.getByRole("button", { name: "Salvando..." }),
+    page.getByRole("button", { name: "Cancelando serviço..." }),
   ).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Salvando...", exact: true })).toHaveCount(0);
   release();
   await expect(page.getByRole("dialog").getByRole("alert")).toContainText(
     "Operação indisponível",

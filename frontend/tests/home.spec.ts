@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./integrationTest";
 import { expireDisposableSession } from "./disposableSession";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";

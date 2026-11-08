@@ -311,12 +311,14 @@ export function Form({
   submit = "Salvar",
   cancel,
   submitClassName = "primary",
+  processingText = "Salvando...",
 }: {
   onSubmit: () => Promise<void>;
   children: ReactNode;
   submit?: string;
   cancel?: () => void;
   submitClassName?: string;
+  processingText?: string;
 }) {
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -348,7 +350,7 @@ export function Form({
             </button>
           )}
           <button className={submitClassName} disabled={busy} type="submit">
-            {busy ? "Salvando..." : submit}
+            {busy ? processingText : submit}
           </button>
         </div>
       </fieldset>

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./integrationTest";
 
 for (const [route, path, selector, count] of [
   ["finance-payable", "/finance", ".finance-summary-grid", 4],
@@ -104,7 +104,7 @@ test("ledger account failure does not fabricate an all-accounts zero balance", a
   await page.goto("/app#finance");
   await expect(page.getByRole("alert")).toContainText("Contas indisponíveis");
   await expect(page.locator(".account-balances")).toContainText(
-    "Saldos indisponíveis",
+    "Saldos das contas indisponíveis.",
   );
   await expect(page.locator(".balance-chips button")).toHaveCount(0);
 });
