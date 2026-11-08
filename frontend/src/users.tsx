@@ -1,3 +1,4 @@
+import { hasTransport } from "./capabilities";
 import { useState } from "react";
 import { api } from "./api";
 import type { User, Page } from "./types";
@@ -44,6 +45,7 @@ export function UsersPage({ current }: { current: User }) {
               <td>{u.username}</td>
               <td>
                 <Badge status={u.role} />
+                {hasTransport(u) && <small>Módulo de transportadora</small>}
               </td>
               <td>
                 <Badge status={u.active ? "active" : "inactive"} />

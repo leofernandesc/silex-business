@@ -1,3 +1,5 @@
+import { hasTransport } from "./capabilities";
+import type { User } from "./types";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import { Eye, Pencil, Plus, ReceiptText, X } from "lucide-react";
@@ -10,7 +12,7 @@ import { AddButton, Badge, Field, Form, Modal, Notice, PageTitle, Pagination, Ta
 type CostDraft = { key: string; kind: "day_worker" | "subcontracted_freight"; supplier_id: string; days: string; amount: string; details: string; rateSuggested?: boolean };
 const statusLabels: Record<ServiceOrder["status"], string> = { draft: "Rascunho", scheduled: "Agendado", in_progress: "Em execução", completed: "Concluído", canceled: "Cancelado" };
 
-export function ServiceOrdersPage() {
+export function ServiceOrdersPage({user}:{user:User}) {
   const [q, setQ] = useState(""), [status, setStatus] = useState(""), [page, setPage] = useState(1),
     [version, setVersion] = useState(0), [editing, setEditing] = useState<ServiceOrder | null | undefined>(),
     [viewing, setViewing] = useState<ServiceOrder | null>(null), [generating, setGenerating] = useState<ServiceOrder | null>(null),
@@ -40,23 +42,23 @@ export function ServiceOrdersPage() {
           <td className={`numeric ${row.actual_result_cents < 0 ? "negative" : "positive"}`}>{money(row.actual_result_cents)}<small>Entradas {money(row.actual_income_cents)} · saídas {money(row.actual_cost_cents)}</small></td>
           <td><div className="row-actions">
             <button aria-label={`Ver ${row.code}`} onClick={() => setViewing(row)}><Eye size={14} /> Ver</button>
-            {row.status !== "canceled" && <button aria-label={`Editar ${row.code}`} onClick={() => setEditing(row)}><Pencil size={14} /> Editar</button>}
-            {!row.title_run_id && row.status !== "canceled" && <button onClick={() => setGenerating(row)}><ReceiptText size={14} /> Gerar títulos</button>}
+            {!row.restricted_transport_costs && row.status !== "canceled" && <button aria-label={`Editar ${row.code}`} onClick={() => setEditing(row)}><Pencil size={14} /> Editar</button>}
+            {!row.title_run_id && !row.restricted_transport_costs && row.status !== "canceled" && <button onClick={() => setGenerating(row)}><ReceiptText size={14} /> Gerar títulos</button>}
             {row.title_run_id && <span className="badge active">Títulos gerados</span>}
-            {row.status !== "canceled" && <button className="danger" onClick={() => setCanceling(row)}>Cancelar</button>}
+            {!row.restricted_transport_costs && row.status !== "canceled" && <button className="danger" onClick={() => setCanceling(row)}>Cancelar</button>}
           </div></td>
         </tr>)}
       </Table>
       <Pagination data={orders.data} onPage={setPage} />
     </section>
-    {editing !== undefined && <ServiceOrderForm order={editing} close={() => setEditing(undefined)} done={saved} />}
+    {editing !== undefined && <ServiceOrderForm transportEnabled={hasTransport(user)} order={editing} close={() => setEditing(undefined)} done={saved} />}
     {viewing && <ServiceOrderDetails order={viewing} close={() => setViewing(null)} refresh={() => void refreshOrder(viewing)} />}
     {generating && <GenerateTitlesForm order={generating} close={() => setGenerating(null)} done={() => { setGenerating(null); setNotice("Títulos financeiros gerados e vinculados ao pedido."); reload(); }} />}
     {canceling && <CancelServiceOrderForm order={canceling} close={() => setCanceling(null)} done={() => { setCanceling(null); setNotice("Serviço cancelado; títulos e baixas foram mantidos no histórico."); reload(); }} />}
   </>;
 }
 
-function ServiceOrderForm({ order, close, done }: { order: ServiceOrder | null; close: () => void; done: () => void }) {
+function ServiceOrderForm({ order, close, done, transportEnabled }: { order: ServiceOrder | null; close: () => void; done: () => void; transportEnabled: boolean }) {
   const customers = useLoad<Page<Customer>>("/customers?active=true&page_size=100"),
     suppliers = useLoad<Page<Supplier>>("/suppliers?active=true&page_size=100");
   const locked = Boolean(order?.title_run_id);
@@ -103,7 +105,7 @@ function ServiceOrderForm({ order, close, done }: { order: ServiceOrder | null; 
         <Field label="Andamento"><select value={status} onChange={(e) => setStatus(e.target.value as "draft" | "scheduled" | "in_progress" | "completed")}><option value="draft">Rascunho</option><option value="scheduled">Agendado</option><option value="in_progress">Em execução</option><option value="completed">Concluído</option></select></Field>
         <Field label="Observações" span><textarea maxLength={500} value={notes} onChange={(e) => setNotes(e.target.value)} /></Field>
       </div>
-      <div className="service-cost-heading"><div><h3>Custos contratados</h3><p>Valores específicos deste serviço prevalecem sobre a sugestão do cadastro.</p></div><div className="actions"><button type="button" disabled={locked} onClick={() => addCost("day_worker")}><Plus size={14} /> Adicionar diarista</button><button type="button" disabled={locked} onClick={() => addCost("subcontracted_freight")}><Plus size={14} /> Adicionar frete</button></div></div>
+      <div className="service-cost-heading"><div><h3>Custos contratados</h3><p>Valores específicos deste serviço prevalecem sobre a sugestão do cadastro.</p></div><div className="actions"><button type="button" disabled={locked} onClick={() => addCost("day_worker")}><Plus size={14} /> Adicionar diarista</button>{transportEnabled && <button type="button" disabled={locked} onClick={() => addCost("subcontracted_freight")}><Plus size={14} /> Adicionar frete</button>}</div></div>
       {costs.map((cost, index) => {
         const choices = (suppliers.data?.items || []).filter((supplier) => supplier.kind === cost.kind);
         return <fieldset className="service-cost-row" key={cost.key} disabled={locked}>
@@ -132,7 +134,7 @@ function ServiceOrderForm({ order, close, done }: { order: ServiceOrder | null; 
           </div>
         </fieldset>;
       })}
-      {costs.length === 0 && <div className="empty service-cost-empty">Nenhum custo contratado. Use os botões acima para associar diaristas ou frete.</div>}
+      {costs.length === 0 && <div className="empty service-cost-empty">Nenhum custo contratado. Use os botões acima para associar prestadores disponíveis.</div>}
       <p className="help">Cadastrar custos não os marca como pagos. A ação separada “Gerar títulos” cria o recebível e as contas a pagar, sem alterar saldos.</p>
     </Form>
   </Modal>;
@@ -166,15 +168,16 @@ function ServiceOrderDetails({ order, close, refresh }: { order: ServiceOrder; c
       <div className="summary-card"><span>Resultado realizado</span><strong>{money(order.actual_result_cents)}</strong><small>Recebido {money(order.actual_income_cents)} · pago {money(order.actual_cost_cents)}</small></div>
     </div>
     {order.notes && <p className="help">{order.notes}</p>}{order.cancel_reason && <Notice>Cancelado: {order.cancel_reason}</Notice>}
+    {order.restricted_transport_costs && <Notice tone="info">Custos especializados preservados. Os totais e títulos financeiros continuam disponíveis; alterações exigem autorização sobre os custos especializados deste pedido.</Notice>}
     <h3>Custos contratados</h3>
     <p className="table-scroll-hint">Deslize a tabela para ver todas as colunas.</p>
-    <Table headers={["Prestador", "Tipo / quantidade", "Valor acordado", "Título vinculado"]} empty={!order.costs.length}>{order.costs.map((cost) => <tr key={cost.id}><td>{cost.supplier_name}</td><td>{partnerKinds[cost.kind as SupplierKind]}{cost.quantity_milli != null && <small>{quantity(cost.quantity_milli)} diária(s)</small>}{cost.details && <small>{cost.details}</small>}</td><td className="numeric">{money(cost.agreed_amount_cents)}</td><td>{cost.finance_entry_id ? `#${cost.finance_entry_id} · ${labels[cost.finance_status || ""] || cost.finance_status}` : "Ainda não gerado"}</td></tr>)}</Table>
+    <Table headers={["Prestador", "Tipo / quantidade", "Valor acordado", "Título vinculado"]} empty={!order.costs.length && !order.restricted_transport_costs}>{order.restricted_transport_costs && <tr><td colSpan={4}>Há custos especializados restritos nesta consulta. Os totais foram preservados.</td></tr>}{order.costs.map((cost) => <tr key={cost.id}><td>{cost.supplier_name}</td><td>{partnerKinds[cost.kind as SupplierKind]}{cost.quantity_milli != null && <small>{quantity(cost.quantity_milli)} diária(s)</small>}{cost.details && <small>{cost.details}</small>}</td><td className="numeric">{money(cost.agreed_amount_cents)}</td><td>{cost.finance_entry_id ? `#${cost.finance_entry_id} · ${labels[cost.finance_status || ""] || cost.finance_status}` : "Ainda não gerado"}</td></tr>)}</Table>
     <h3>Títulos financeiros</h3>
     <p className="table-scroll-hint">Deslize a tabela para ver todas as colunas.</p>
     <Table headers={["Título", "Direção", "Valor", "Restante", "Situação"]} empty={!order.titles.length}>{order.titles.map((title) => <tr key={title.id}><td>#{title.id} · {title.description}</td><td>{title.direction === "income" ? "Receber" : "Pagar"}</td><td>{money(title.amount_cents)}</td><td>{money(title.remaining_cents)}</td><td><Badge status={title.status} /></td></tr>)}</Table>
     {order.title_run_id && <p className="help">Vencimento {dateOnly(order.title_due_date)} · competência {dateOnly(order.title_competence_date)}. O realizado considera pagamentos e estornos registrados, inclusive baixas parciais.</p>}
-    {order.status !== "canceled" && <Field label="Motivo para cancelar o serviço"><input minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field>}
-    {order.status !== "canceled" && <button className="danger" disabled={reason.trim().length < 3} onClick={async () => { await api(`/service-orders/${order.id}/cancel`, "POST", { reason: reason.trim() }); close(); }}>Cancelar serviço e preservar o histórico</button>}
+    {!order.restricted_transport_costs && order.status !== "canceled" && <Field label="Motivo para cancelar o serviço"><input minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field>}
+    {!order.restricted_transport_costs && order.status !== "canceled" && <button className="danger" disabled={reason.trim().length < 3} onClick={async () => { await api(`/service-orders/${order.id}/cancel`, "POST", { reason: reason.trim() }); close(); }}>Cancelar serviço e preservar o histórico</button>}
   </div></Modal>;
 }
 

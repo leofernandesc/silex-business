@@ -5,13 +5,14 @@ from fastapi import Depends, Query
 from sqlalchemy import func, or_, select
 
 from . import financial as F, schemas as S, services as V
+from .capabilities import has_transport, require_transport, transport_kind
 from .models import (
     Account, Category, Customer, FinanceEntry, Payment, ServiceOrder,
     ServiceOrderCost, ServiceOrderTitleRun, Subcategory, Supplier,
 )
 
 
-def order_data(db, order):
+def order_data(db, order, user):
     customer = V.get(db, Customer, order.customer_id)
     costs = []
     for cost in db.scalars(select(ServiceOrderCost).where(ServiceOrderCost.service_order_id == order.id).order_by(ServiceOrderCost.id)):
@@ -22,6 +23,7 @@ def order_data(db, order):
             "finance_entry_id": entry.id if entry else None,
             "finance_status": entry.status if entry else None,
         })
+    transport_visible = has_transport(user) and order.user_id == user.id
     expected_cost = sum(cost["agreed_amount_cents"] for cost in costs)
     actual_by_direction = db.execute(
         select(FinanceEntry.direction, func.coalesce(func.sum(Payment.amount_cents), 0))
@@ -51,7 +53,8 @@ def order_data(db, order):
         "title_run_id": run.id if run else None,
         "title_due_date": run.due_date.isoformat() if run else None,
         "title_competence_date": run.competence_date.isoformat() if run else None,
-        "costs": costs, "titles": titles,
+        "restricted_transport_costs": any(c["kind"] == "subcontracted_freight" for c in costs) and not transport_visible,
+        "costs": [c for c in costs if c["kind"] != "subcontracted_freight" or transport_visible], "titles": titles,
     }
 
 
@@ -59,8 +62,15 @@ def register(app, get_db, admin):
     DB = Depends(get_db, scope="function")
     ADMIN = Depends(admin)
 
-    def validate_costs(db, costs):
+    def guard_existing_transport(db, order, user):
+        if db.scalar(select(ServiceOrderCost.id).where(ServiceOrderCost.service_order_id == order.id, ServiceOrderCost.kind == "subcontracted_freight").limit(1)):
+            require_transport(user)
+            if order.user_id != user.id:
+                V.fail("Os custos especializados pertencem a outra identidade", 403)
+
+    def validate_costs(db, costs, user):
         for cost in costs:
+            transport_kind(user, cost.kind)
             supplier = V.get(db, Supplier, cost.supplier_id)
             if not supplier.active:
                 V.fail("Prestador inativo não pode ser associado a novo serviço")
@@ -83,12 +93,12 @@ def register(app, get_db, admin):
             if status not in ("draft", "scheduled", "in_progress", "completed", "canceled"):
                 V.fail("Situação de serviço inválida", 422)
             query = query.where(ServiceOrder.status == status)
-        return V.page(db, query, page, page_size, lambda row: order_data(db, row))
+        return V.page(db, query, page, page_size, lambda row: order_data(db, row, user))
 
     @app.post("/api/service-orders", status_code=201)
     def create_service_order(payload: S.ServiceOrderInput, db=DB, user=ADMIN):
         customer = F.require_active(db, Customer, payload.customer_id)
-        validate_costs(db, payload.costs)
+        validate_costs(db, payload.costs, user)
         order = ServiceOrder(
             code="PENDING-" + uuid4().hex,
             customer_id=customer.id,
@@ -105,19 +115,20 @@ def register(app, get_db, admin):
         replace_costs(db, order, payload.costs)
         V.audit(db, user, "create", "service_order", order.id)
         db.flush()
-        return order_data(db, order)
+        return order_data(db, order, user)
 
     @app.get("/api/service-orders/{identifier}")
     def get_service_order(identifier: int, db=DB, user=ADMIN):
-        return order_data(db, V.get(db, ServiceOrder, identifier))
+        return order_data(db, V.get(db, ServiceOrder, identifier), user)
 
     @app.put("/api/service-orders/{identifier}")
     def update_service_order(identifier: int, payload: S.ServiceOrderInput, db=DB, user=ADMIN):
         order = V.get(db, ServiceOrder, identifier)
+        guard_existing_transport(db, order, user)
         if order.status == "canceled":
             V.fail("Serviço cancelado não pode ser editado")
         customer = F.require_active(db, Customer, payload.customer_id)
-        validate_costs(db, payload.costs)
+        validate_costs(db, payload.costs, user)
         existing_costs = list(db.scalars(select(ServiceOrderCost).where(ServiceOrderCost.service_order_id == order.id).order_by(ServiceOrderCost.id)))
         contract_changed = (
             customer.id != order.customer_id
@@ -139,16 +150,17 @@ def register(app, get_db, admin):
             replace_costs(db, order, payload.costs)
         V.audit(db, user, "update", "service_order", order.id)
         db.flush()
-        return order_data(db, order)
+        return order_data(db, order, user)
 
     @app.post("/api/service-orders/{identifier}/generate-titles")
     def generate_service_order_titles(identifier: int, payload: S.ServiceOrderTitleGenerationInput, db=DB, user=ADMIN):
         order = V.get(db, ServiceOrder, identifier)
+        guard_existing_transport(db, order, user)
         if order.status == "canceled":
             V.fail("Serviço cancelado não pode gerar títulos")
         existing_run = db.scalar(select(ServiceOrderTitleRun).where(ServiceOrderTitleRun.service_order_id == order.id))
         if existing_run:
-            return {"created": False, "service_order": order_data(db, order)}
+            return {"created": False, "service_order": order_data(db, order, user)}
         account = F.require_active(db, Account, payload.account_id)
         preferred_income = db.scalar(select(Category).where(Category.name == "Vendas", Category.active, Category.direction.in_(["income", "both"])))
         preferred_expense = db.scalar(select(Category).where(Category.name == "Despesas operacionais", Category.active, Category.direction.in_(["expense", "both"])))
@@ -166,6 +178,7 @@ def register(app, get_db, admin):
         costs = list(db.scalars(select(ServiceOrderCost).where(ServiceOrderCost.service_order_id == order.id).order_by(ServiceOrderCost.id)))
         suppliers = {}
         for cost in costs:
+            transport_kind(user, cost.kind)
             supplier = V.get(db, Supplier, cost.supplier_id)
             if not supplier.active or supplier.kind != cost.kind:
                 V.fail("Revise os prestadores associados antes de gerar os títulos")
@@ -201,13 +214,14 @@ def register(app, get_db, admin):
             V.audit(db, user, "create", "finance", expense.id)
         V.audit(db, user, "generate_titles", "service_order", order.id)
         db.flush()
-        return {"created": True, "service_order": order_data(db, order)}
+        return {"created": True, "service_order": order_data(db, order, user)}
 
     @app.post("/api/service-orders/{identifier}/cancel")
     def cancel_service_order(identifier: int, payload: S.ServiceOrderCancellationInput, db=DB, user=ADMIN):
         order = V.get(db, ServiceOrder, identifier)
+        guard_existing_transport(db, order, user)
         if order.status == "canceled":
-            return order_data(db, order)
+            return order_data(db, order, user)
         entries = list(db.scalars(select(FinanceEntry).where(FinanceEntry.service_order_id == order.id).order_by(FinanceEntry.id)))
         for entry in entries:
             if entry.status != "canceled":
@@ -217,4 +231,4 @@ def register(app, get_db, admin):
         order.updated_at = V.now()
         V.audit(db, user, "cancel", "service_order", order.id)
         db.flush()
-        return order_data(db, order)
+        return order_data(db, order, user)
