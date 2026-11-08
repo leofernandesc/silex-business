@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { api, apiRequest, ApiError, query } from './api';
 import { dateOnly, localDate, money } from './format';
 import type { Account, Category, Entry, Page, Subcategory } from './types';
-import { Field, Form, Modal, Notice, PageTitle, Pagination, SummaryCard, Table, useLoad } from './ui';
-import { ArrowDownLeft, ArrowUpRight, Scale, Plus } from 'lucide-react';
+import { Field, Form, Modal, Notice, PageTitle, Pagination, Table, useLoad } from './ui';
+import { Plus } from 'lucide-react';
 import { LedgerTable } from './ledgerPresentation';
 import './reconciliation.css';
-import { financialMonthLabel, MonthlyValuesTable } from './dashboardPresentation';
 import './financialDashboard.css';
 import { reportGroupDate } from './reportDates';
 
@@ -18,7 +17,6 @@ type StatementList=Page<Statement>;
 type Candidate={entry:Entry;difference_cents:number;same_date:boolean};
 type ReportDef={id:string;name:string;source:string;date_basis:string};
 type ReportPage={id:string;name:string;items:Record<string,unknown>[];total:number;page:number;page_size:number};
-type FinanceDash={start:string;end:string;income_cents:number;expense_cents:number;net_cents:number;movement_count:number;accounts:Account[];receivable_open_cents:number;payable_open_cents:number;receivable_overdue_cents:number;payable_overdue_cents:number;monthly:{month:string;income_cents:number;expense_cents:number;net_cents:number}[];result_groups:{classification:string;group:string;direction:string;income_cents:number;expense_cents:number}[];budget_month:string};
 type Budget={id:number;year:number;month:number;category_id:number;category_name:string;subcategory_id:number|null;subcategory_name:string;target_cents:number;actual_cents:number;remaining_cents:number;percent_used:number;notes:string};
 const classificationLabels:Record<string,string>={operating:'Operacional',investment:'Investimento',financing:'Financiamento'};
 
@@ -84,37 +82,7 @@ function OfxNewFields({direction,category,setCategory,subcategory,setSubcategory
  return <>{loading&&<p role="status">Carregando dados do lançamento…</p>}{failed&&<Notice>Não foi possível carregar categorias, subcategorias ou beneficiários. Feche e reabra a conciliação para tentar novamente.</Notice>}<div className="form-grid"><Field label="Categoria *"><select disabled={!ready} value={category} onChange={e=>setCategory(e.target.value)}><option value="">Selecione</option>{categories.data?.filter(c=>c.active&&(c.direction==='both'||c.direction===direction)).map(c=><option value={c.id} key={c.id}>{c.name}</option>)}</select></Field><Field label="Subcategoria *"><select disabled={!ready} value={subcategory} onChange={e=>setSubcategory(e.target.value)}><option value="">Selecione</option>{subs.data?.filter(s=>s.active&&String(s.category_id)===category).map(s=><option value={s.id} key={s.id}>{s.name}</option>)}</select></Field><Field label={direction==='income'?'Cliente':'Fornecedor'}><select disabled={!ready} value={party} onChange={e=>setParty(e.target.value)}><option value="">Não informado</option>{people.data?.items?.map((p:any)=><option value={p.id} key={p.id}>{p.name}</option>)}</select></Field></div></>;
 }
 
-export function FinanceOverview({navigate}:{navigate:(id:string)=>void}){
- const today=localDate(),month=today.slice(0,7),[start,setStart]=useState(month+'-01'),[end,setEnd]=useState(today),[applied,setApplied]=useState({start:month+'-01',end:today});
- const [refreshKey,setRefreshKey]=useState(0),[settledKey,setSettledKey]=useState(-1);
- const result=useLoad<FinanceDash>('/finance/dashboard?'+query(applied),refreshKey);
- useEffect(()=>{if(!result.loading)setSettledKey(refreshKey);},[refreshKey,result.loading]);
- const pending=result.loading||settledKey!==refreshKey;
- const data=!pending&&!result.error?result.data:null;
- const unavailable=!pending&&!data;
- const unavailableDetail=pending?'Aguardando consulta':'Dados indisponíveis';
- const peak=Math.max(1,...(data?.monthly||[]).flatMap(x=>[x.income_cents,x.expense_cents]));
- return <div className="silex-financial-dashboard" aria-busy={pending}><PageTitle title="Dashboard financeiro" subtitle="Movimentos, títulos em aberto, saldos por conta e resultado por competência."/>
-  <form className="panel toolbar dashboard-period" onSubmit={e=>{e.preventDefault();setApplied({start,end});setRefreshKey(v=>v+1)}}><SilexDatePicker label="De" value={start} onChange={(value) => setStart(value)} /><SilexDatePicker label="Até" value={end} onChange={(value) => setEnd(value)} /><button className="primary">Atualizar</button></form>
-  {pending&&<p className="dashboard-loading" role="status">Carregando informações financeiras…</p>}
-  {unavailable&&<Notice>{result.error?.includes('Data inicial deve ser anterior à final')?'Período inválido: Data inicial deve ser anterior à final. Ajuste o período e clique em Atualizar.':'Não foi possível consultar os dados do Dashboard Financeiro. Confira a conexão e clique em Atualizar para tentar novamente.'}</Notice>}
-  <section className="dashboard-indicators" aria-labelledby="financial-period-title"><h2 id="financial-period-title">Movimentações do período</h2><p className="help">Pela data de lançamento. Os valores abaixo não incluem o saldo inicial.</p><div className="summary-grid three">
-   <SummaryCard label="Entradas no período" value={data?money(data.income_cents):'—'} detail={data?`${data.movement_count} movimentos`:unavailableDetail} tone="teal" icon={<ArrowDownLeft/>}/>
-   <SummaryCard label="Saídas no período" value={data?money(data.expense_cents):'—'} detail={data?'Inclui encargos e estornos':unavailableDetail} tone="amber" icon={<ArrowUpRight/>}/>
-   <SummaryCard label="Saldo do período" value={data?money(data.net_cents):'—'} detail={data?'Não inclui saldo inicial':unavailableDetail} icon={<Scale/>}/>
-  </div></section>
-  <section className="dashboard-indicators dashboard-current" aria-labelledby="financial-current-title"><h2 id="financial-current-title">Títulos em aberto e saldo atual</h2><p className="help">Situação atual, independente do período selecionado. Vencido considera datas anteriores a hoje.</p><div className="summary-grid three">
-   <SummaryCard label="A receber" value={data?money(data.receivable_open_cents):'—'} detail={data?`Vencido ${money(data.receivable_overdue_cents)}`:unavailableDetail} tone="teal" icon={<ArrowDownLeft/>}/>
-   <SummaryCard label="A pagar" value={data?money(data.payable_open_cents):'—'} detail={data?`Vencido ${money(data.payable_overdue_cents)}`:unavailableDetail} icon={<ArrowUpRight/>}/>
-   <SummaryCard label="Saldo atual total" value={data?money(data.accounts.reduce((n,a)=>n+a.balance_cents,0)):'—'} detail={data?'Saldo inicial + histórico':unavailableDetail} icon={<Scale/>}/>
-  </div></section>
-  <section className="panel dashboard-monthly" aria-labelledby="financial-monthly-title"><div className="panel-heading"><div><h2 id="financial-monthly-title">Movimentos por mês</h2><p>12 meses até o mês da data final, considerando cada mês completo.</p></div></div>
-   {data?<><div className="dashboard-chart-legend"><span><i className="bar-income" aria-hidden="true"/>Entradas</span><span><i className="bar-expense" aria-hidden="true"/>Saídas</span></div><p id="financial-chart-help" className="help">Escala proporcional ao maior valor, com altura mínima para visualizar as barras. Em telas estreitas, role o gráfico com as setas do teclado. Consulte os valores exatos na tabela abaixo.</p><div className="dashboard-chart-scroll" tabIndex={0} role="region" aria-label="Gráfico mensal de entradas e saídas" aria-describedby="financial-chart-help"><div className="monthly-bars">{data.monthly.map(row=>{const max=Math.max(row.income_cents,row.expense_cents);return <div key={row.month} role="img" aria-label={`${financialMonthLabel(row.month)}: entradas ${money(row.income_cents)}, saídas ${money(row.expense_cents)}`} title={`${row.month}: entradas ${money(row.income_cents)}, saídas ${money(row.expense_cents)}`}><div className="bar-pair"><span className="bar-income" style={{height:`${Math.max(2,row.income_cents/peak*140)}px`}}/><span className="bar-expense" style={{height:`${Math.max(2,row.expense_cents/peak*140)}px`}}/></div><small>{financialMonthLabel(row.month)}</small><small className="sr-only">Pico {money(max)}</small></div>})}</div></div><p className="help">A data inicial não limita este gráfico; a janela é de 12 meses.</p><MonthlyValuesTable months={data.monthly}/></>:<p className="help">{pending?'Carregando o gráfico mensal…':'Gráfico mensal indisponível.'}</p>}
-  </section>
-  <section className="panel dashboard-classification"><div className="panel-heading"><div><h2>Resultado por classificação e grupo</h2><p>Pela data de competência no período selecionado. Desconsidera subcategorias marcadas para não afetar o resultado.</p></div></div>{data?<LedgerTable headers={['Classificação','Grupo','Receitas','Despesas','Saldo']} empty={!data.result_groups.length}>{data.result_groups.map((row,i)=><tr key={i}><td>{classificationLabels[row.classification]||row.classification}</td><td>{row.group}</td><td className="numeric">{money(row.income_cents)}</td><td className="numeric">{money(row.expense_cents)}</td><td className="numeric">{money(row.income_cents-row.expense_cents)}</td></tr>)}</LedgerTable>:<p className="help">{pending?'Carregando resultados por classificação…':'Resultados por classificação indisponíveis.'}</p>}</section>
-  <section className="panel dashboard-accounts"><div className="panel-heading"><div><h2>Saldo atual por conta</h2><p>Saldo inicial e todo o histórico de movimentos, independente do período.</p></div><button onClick={()=>navigate('finance')}>Abrir livro caixa</button></div>{data?<><ul className="settings-list">{data.accounts.map(a=><li key={a.id}><span>{a.name}<small>{a.kind==='cash'?'Caixa':'Conta bancária'} · saldo inicial {money(a.opening_cents)}</small></span><strong>{money(a.balance_cents)}</strong></li>)}</ul>{!data.accounts.length&&<p className="dashboard-empty">Nenhuma conta disponível.</p>}</>:<p className="help">{pending?'Carregando saldos por conta…':'Saldos por conta indisponíveis.'}</p>}</section>
- </div>;
-}
+export {FinanceOverview} from "./financialOverview";
 
 export function FinanceReports(){
  const now=localDate(),[report,setReport]=useState('cash-monthly'),[from,setFrom]=useState(now.slice(0,7)+'-01'),[to,setTo]=useState(now),[account,setAccount]=useState(''),[category,setCategory]=useState(''),[supplierKind,setSupplierKind]=useState(''),[filters,setFilters]=useState({start:now.slice(0,7)+'-01',end:now,account_id:'',category_id:'',supplier_kind:''}),[page,setPage]=useState(1),[budgetMonth,setBudgetMonth]=useState(now.slice(0,7)),[showBudget,setShowBudget]=useState(false),[version,setVersion]=useState(0),[budgetForm,setBudgetForm]=useState(false);

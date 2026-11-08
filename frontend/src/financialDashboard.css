@@ -300,3 +300,15 @@
     }
   }
 }
+
+/* Stage 1: query shortcuts scoped to the financial dashboard. */
+@media screen {
+  .silex-financial-dashboard .dashboard-query-links { display: flex; flex-wrap: wrap; gap: var(--silex-space-2); }
+  .silex-financial-dashboard .dashboard-query-link { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 8px; color: var(--silex-brand-deep); font-weight: 600; overflow-wrap: anywhere; }
+  .silex-financial-dashboard .dashboard-query-link:focus-visible { outline: 3px solid var(--silex-brand-deep); outline-offset: 2px; }
+}
+
+@media screen {
+  .silex-financial-dashboard .dashboard-due-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  @media (max-width: 600px) { .silex-financial-dashboard .dashboard-due-grid { grid-template-columns: minmax(0,1fr); } }
+}

@@ -515,6 +515,8 @@ def create_app(engine=None, serve_frontend=True):
             query = query.where(FinanceEntry.document.contains(document, autoescape=True))
         if status == "overdue":
             query = query.where(FinanceEntry.status.in_(["open", "partial"]), FinanceEntry.due_date < V.today())
+        elif status == 'pending':
+            query = query.where(FinanceEntry.status.in_(['open', 'partial']))
         elif status == 'open':
             query = query.where(FinanceEntry.status == 'open')
         elif status == 'partial':
@@ -555,7 +557,7 @@ def create_app(engine=None, serve_frontend=True):
             func.coalesce(func.sum(case((is_pending & filtered.c.due_date.between(due, due + timedelta(days=7)), remaining_positive), else_=0)), 0).label("due_7_days_cents"),
             func.count(filtered.c.id).label("count"),
         ).select_from(filtered.outerjoin(paid, paid.c.entry_id == filtered.c.id))).one()
-        return {key: int(row._mapping[key] or 0) for key in ("pending_cents", "overdue_cents", "due_7_days_cents", "count")}
+        return {**{key: int(row._mapping[key] or 0) for key in ("pending_cents", "overdue_cents", "due_7_days_cents", "count")}, "as_of_date": due.isoformat()}
 
     @app.get("/api/finance")
     def finance(q: str = "", status: str | None = None, direction: str | None = None, account_id: int | None = None, category_id: int | None = None, supplier_id: int | None = None, supplier_kind: str | None = None, document: str = "", search_field: str = "history", start: date | None = None, end: date | None = None, date_field: str = "due", page: int = PAGE, page_size: int = SIZE, db=Depends(get_db, scope="function"), user=Depends(admin)):
