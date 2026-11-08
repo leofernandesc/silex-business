@@ -1,10 +1,10 @@
 {
   "base": "00fcaa5f869d702dda6ad535d264a0216dd11b65",
-  "code_commit": "76f7013033f87b7990e3820695f9da874354bb91",
+  "code_commit": "5df3edb44127abbd2bcaa132c72c9ce1fc35b9fd",
   "files": {
     ".github/workflows/integration-tests.yml": "ff3a4472d54cea81d7a2494019ecf1204f3f753a93688420e04e76cacf4393f9",
     "backend/app/api.py": "61c2a657162474eec2b0de229f5d538e5700a1ee3c3f8252ffee314d8cbe3af6",
-    "backend/app/dre.py": "26cd3bcf1d13c924d8ce18e259fec289a40e879e8d403f66f7a2e6c239251df0",
+    "backend/app/dre.py": "c1e631c5b8e1b1e8deebe32f885dede5f630c6fa54725426b337d7d24e7a0a47",
     "backend/app/dre_history.py": "f2a61464e5359497b92333770026ffb42b89e6566c19f894a3953dde0de9f40c",
     "backend/app/dre_policy.py": "5d43171e74f129bc15eaa614958b5dded3f17b0df2453e3b1c92edcd709024ce",
     "backend/app/dre_sources.py": "e163b0c3d63527379441cfbda15d308d708959475ffdc6908862d89531362a53",
@@ -16,12 +16,12 @@
     "backend/migrations/versions/0014_dre_policies.py": "c2962558bd37437f447b40ef8cb8e9407bd028afd65d4cbac17a4af13e0c10f6",
     "backend/migrations/versions/0015_service_completion_evidence.py": "df47e7e03f467a38ee05b35b2b885b54067b9c20deae7aa4744654dc960cb67c",
     "backend/migrations/versions/0016_dre_coverage_indexes.py": "1dfed1ecb4fb4b481905fff8353c06518209e9138c111f6db568cab42db525d3",
-    "backend/tests/test_dre_api.py": "e2ca6bc28f9a1ec9e87470c939c4fdbc2384424a78cc87c33e1549ea3269d56a",
+    "backend/tests/test_dre_api.py": "71940a64d1cbc0bdf69632f3c7aa2c59d30fc436fb03383160abfc6d74738bc2",
     "backend/tests/test_dre_history.py": "fdbf355b8e61a5dac83e288235196fdf090b773730af80322dc6ce12d103b0e2",
     "backend/tests/test_dre_migration.py": "8300868f8035d2b8ea4f8b6c09217b93715495ec73ce22803b37a0b81cf34b3b",
     "backend/tests/test_dre_policy.py": "a11065cfe2f65c1dd64a3488f84fa270b483f17b776ea3a09686c5d6b3357bcd",
     "backend/tests/test_dre_receivables.py": "343a19623061eb62ba101fa382991c0aee25f3ceb7e0f4c6f7987bcf42a49009",
-    "backend/tests/test_dre_resilience.py": "2a0d5c82b3320966b3bd769b341be93b09aa84d29c1e1065c130f246f2647dfd",
+    "backend/tests/test_dre_resilience.py": "f6ccc64faab8985c9b16111d7d73626e5cb72177ab7731cc33cdec61520b1671",
     "backend/tests/test_dre_service_completion.py": "857adc22905164f9a766209e341156e707d9af05650b29068d2f0d5b7ea51a8e",
     "frontend/playwright.integration.config.ts": "315be7d33e380ba96c9218744c9321df58a943a1f55309b0fac32157d519a173",
     "frontend/src/App.tsx": "fbdaddb09242091c826f48949bbf5ccb219a13eb3d8d2c751ce2221554abe62d",
@@ -63,5 +63,6 @@
     "scripts/check_dre_restart.py": "907d57f96fe8077e8d0fce33fbc81519bbf6c3148d4dc15d6aedfe5060b63cb1",
     "scripts/compare_dre_baseline.py": "dff84d7d879dffd98c1f5bd4cda7901e8774b6256aa058e58c210eb3a213f044",
     "scripts/e2e_server.py": "023f7014421ca7217c72c5146d568e87f9b2798ea355d57d3b232ccac1237dfd"
-  }
+  },
+  "previous_code_commit": "76f7013033f87b7990e3820695f9da874354bb91"
 }

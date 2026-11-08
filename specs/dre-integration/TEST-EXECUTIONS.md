@@ -1,6 +1,6 @@
 # Execuções e gate final E7
 
-Código congelado: `76f7013033f87b7990e3820695f9da874354bb91`. [Manifesto dos arquivos de código/teste](evidence/source-manifest.json). Os arquivos de relatório/evidência são posteriores, sem mudança nesses fontes.
+Código congelado: `5df3edb44127abbd2bcaa132c72c9ce1fc35b9fd`. [Manifesto dos arquivos de código/teste](evidence/source-manifest.json). Os arquivos de relatório/evidência são posteriores, sem mudança nesses fontes.
 
 ## Ambiente e isolamento
 
@@ -8,11 +8,13 @@ Linux local, Python 3.12.3, Node 26.8.1/npm 11.19.0; CI Ubuntu 24.04/Python 3.12
 
 Cada teste de integração do navegador restaura uma fixture SQLite temporária própria; os dois motores usam portas/manifests distintos. Servidor local existente em 8000/5173 preservado. Nenhum banco persistente, seed externo, Railway ou credencial real.
 
-## Resultados locais finais observados
+## Resultados locais observados
+
+A bateria completa local de 319 casos corresponde ao checkpoint `76f7013`, antes do ajuste final da prévia econômica. Esse ajuste foi reproduzido (prévia novembro mostrava zero fontes apesar de venda reconhecida em novembro/título dezembro), corrigido e validado em **19 testes dirigidos PASS** de API/resiliência. O caso de invalidação de prévia por mudança de reconhecimento acrescenta um teste: **320 backend esperados no CI final**, cujo resultado real será conferido no PR. Frontend/ativos permaneceram idênticos ao checkpoint das 26 jornadas por navegador. A primeira execução remota, `42508301497`, começou no HEAD anterior `2d81c8c`; não substitui a validação do novo HEAD.
 
 | Comando / escopo | Resultado | Evidência |
 |---|---|---|
-| `PYTHONPATH=backend .venv/bin/python -m pytest backend/tests -q` | **319 PASS**, 0 falhas/ignorados, 236,33 s | [backend](evidence/backend.txt) |
+| `PYTHONPATH=backend .venv/bin/python -m pytest backend/tests -q` | **319 PASS no checkpoint 76f7013**, 0 falhas/ignorados, 236,33 s | [backend](evidence/backend.txt) |
 | `npm test --prefix frontend` | **240 PASS**, 22 arquivos, 0 falhas/ignorados | [frontend](evidence/frontend.txt) |
 | `npm run build --prefix frontend` | TypeScript + Vite PASS | [build](evidence/build.txt) |
 | Playwright dirigido, Chromium | **26/26**, 0 falhas/skips/retries, uma bateria | [log](evidence/directed-chromium.txt) |
@@ -54,3 +56,5 @@ Os resultados remotos ocorrerão depois do commit deste relatório. **Consultar 
 Logs publicados removem apenas ANSI e whitespace final para leitura/Git; não são fixtures reescritas nem substituem os resultados do runner. O aviso de depreciação TestClient/httpx foi registrado, sem ignorar testes ou mudar dependências.
 
 Sem teste em impressora/dispositivo físico, leitor de tela real, pentest, carga prolongada ou dados/infraestrutura de produção. A medição de 1000 fontes demonstra leitura em lote no laboratório, não capacidade de produção.
+
+Correção final da prévia: período potencialmente afetado agora segue a data econômica efetiva, e a confirmação é invalidada se uma decisão de reconhecimento ou mapeamento mudar entre prévia e gravação. Reprodução negativa em `evidence/preview-before.txt`; 19 testes dirigidos aprovados em `evidence/preview-after.txt`. O principal, os pagamentos e os 26 relatórios legados não mudaram.

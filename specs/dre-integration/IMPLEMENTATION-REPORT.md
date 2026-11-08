@@ -1,6 +1,6 @@
 # DRE e integração dos fluxos — implementação
 
-Base confirmada: PR #14 aberto/Draft, `00fcaa5f869d702dda6ad535d264a0216dd11b65`. Branch isolada `feat/dre-integrated-financial-ux`; PR empilhado contra `fix/erp-commercial-readiness`. Código funcional congelado em `76f7013033f87b7990e3820695f9da874354bb91`. Os commits posteriores de evidências não devem modificar esse código; o SHA final e o CI correspondente constarão do PR.
+Base confirmada: PR #14 aberto/Draft, `00fcaa5f869d702dda6ad535d264a0216dd11b65`. Branch isolada `feat/dre-integrated-financial-ux`; PR empilhado contra `fix/erp-commercial-readiness`. Código funcional congelado em `5df3edb44127abbd2bcaa132c72c9ce1fc35b9fd`. Os commits posteriores de evidências não devem modificar esse código; o SHA final e o CI correspondente constarão do PR.
 
 ## Entregas
 
@@ -23,7 +23,7 @@ Base confirmada: PR #14 aberto/Draft, `00fcaa5f869d702dda6ad535d264a0216dd11b65`
 - Título manual/OFX/recorrente requer reconhecimento explícito. Encargos exigem data e natureza econômica confirmadas. Principal de investimento/financiamento não é receita ou despesa operacional. Cancelamento gera pendência de revisão, preservando o fato original; não há reversão econômica silenciosa.
 - Fatos reconhecidos e classificados confirmam RB/DO/OR/OD/FI/FE quando não há pendências. DED/CD/DA/TL exigem evidência de cobertura do período. Ausência de fatos nunca confirma zero. Componentes comprovadamente não aplicáveis têm declaração própria. Dependências desconhecidas impedem EBITDA/lucro/margens finais.
 - Subcategoria prevalece sobre categoria. Vigências não podem sobrepor; substituição explícita preserva o intervalo anterior inteiro. Divisão automática de uma vigência existente não foi implementada. Histórico é acrescentado, nunca reescrito.
-- Prévia de classificação apresenta fontes potencialmente afetadas, principal e períodos; não promete lucro futuro. Token vincula identidade, solicitação e fontes atuais. Confirmação obsoleta é recusada. Não há alteração do lançamento original.
+- Prévia de classificação apresenta fontes potencialmente afetadas, principal e períodos; não promete lucro futuro. Prévia e demonstrativo usam a mesma data econômica, incluindo reconhecimento posterior. Token vincula identidade, solicitação, fontes, mapeamentos e decisões atuais. Confirmação obsoleta é recusada. Não há alteração do lançamento original.
 
 ## Segurança e contratos
 
