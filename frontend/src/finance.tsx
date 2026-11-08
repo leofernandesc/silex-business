@@ -1,5 +1,9 @@
 import { hasTransport } from "./capabilities";
 import type { User } from "./types";
+import {useFinancialSnapshot} from "./useFinancialSnapshot";
+import {validTitlePage} from "./financialData";
+import { titlePeriodRange } from "./financeDates";
+import { initialFinancialSearch, syncFinancialSearch, temporalSummary } from "./financialNavigation";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useRef, useState } from "react";
 import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks, Plus } from "lucide-react";
@@ -42,31 +46,24 @@ type FinancePageResult = Page<Entry> & { summary: FinanceSummary };
 
 export function FinancePage({ initialDirection = "", user }: { initialDirection?: string; user: User }) {
   const today = localDate();
-  const initial: FinanceFilters = { q: "", status: "", direction: initialDirection, account_id: "", category_id: "", supplier_id: "", supplier_kind: "", document: "", search_field: "history", start: `${today.slice(0, 8)}01`, end: today, date_field: "due" };
+  const initial: FinanceFilters = { q: "", status: "", direction: initialDirection, account_id: "", category_id: "", supplier_id: "", supplier_kind: "", document: "", search_field: "history", start: `${today.slice(0, 8)}01`, end: today, date_field: "due", ...initialFinancialSearch("titles"), ...(initialDirection ? {direction:initialDirection} : {}) };
   const [draft, setDraft] = useState<FinanceFilters>(initial);
   const [filters, setFilters] = useState<FinanceFilters>(initial);
   const [pageSize, setPageSize] = useState(20);
-  const [period, setPeriod] = useState("month");
+  const [period, setPeriod] = useState(() => Object.keys(initialFinancialSearch("titles")).length ? "custom" : "month");
   const [page, setPage] = useState(1), [version, refresh] = useState(0),
     [adding, setAdding] = useState(false), [settings, setSettings] = useState(false),
     [settling, setSettling] = useState<Entry | null>(null), [canceling, setCanceling] = useState<Entry | null>(null),
     [historyEntry, setHistoryEntry] = useState<Entry | null>(null);
-  const result = useLoad<FinancePageResult>("/finance?" + query({ ...filters, page, page_size: pageSize }), version),
+  const result = useFinancialSnapshot<FinancePageResult>("/finance?" + query({ ...filters, page, page_size: pageSize }), version, validTitlePage),
     accounts = useLoad<Account[]>("/accounts", version), categories = useLoad<Category[]>("/categories", version),
     suppliers = useLoad<Page<Supplier>>("/suppliers?page_size=100", version);
   const summary = !result.loading && !result.error ? result.data?.summary : undefined;
   const stateDetail = result.loading ? "Consultando dados…" : "Dados indisponíveis";
   const update = (field: keyof FinanceFilters, value: string) => setDraft((current) => ({ ...current, [field]: value }));
-  function apply(next = draft) { setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); }
+  function apply(next = draft) { syncFinancialSearch("titles",{...next,direction:initialDirection || next.direction}); setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); }
   function quickPeriod(value: string) {
-    const now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    let start = "", end = "";
-    if (value === "today") start = end = iso(today);
-    if (value === "week") { const monday = new Date(today); monday.setDate(today.getDate() - ((today.getDay() + 6) % 7)); start = iso(monday); end = iso(today); }
-    if (value === "month") { start = iso(new Date(today.getFullYear(), today.getMonth(), 1)); end = iso(today); }
-    if (value === "previous") { start = iso(new Date(today.getFullYear(), today.getMonth() - 1, 1)); end = iso(new Date(today.getFullYear(), today.getMonth(), 0)); }
-    if (value === "year") { start = iso(new Date(today.getFullYear(), 0, 1)); end = iso(today); }
+    const { start, end } = titlePeriodRange(value);
     const next = { ...draft, start, end };
     setDraft(next); setPeriod(value); apply(next);
   }
@@ -80,10 +77,11 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
       <ExportButton onClick={() => exportCsv("finance", filters)} />
       <button className={initialDirection === "expense" ? "accounts-new-expense" : "primary"} onClick={() => setAdding(true)}><Plus size={17} />{initialDirection === "expense" ? "Nova despesa" : initialDirection === "income" ? "Nova receita" : "Novo lançamento"}</button>
     </PageTitle>
+    <p className="help" aria-label="Filtros aplicados">Filtros aplicados: {temporalSummary(filters)}</p>
     <div className="summary-grid finance-summary-grid" aria-busy={result.loading}>
       <SummaryCard label="Saldo pendente" value={summary ? money(summary.pending_cents) : "—"} detail={!summary ? stateDetail : initialDirection === "income" ? "Principal a receber neste filtro." : initialDirection === "expense" ? "Principal a pagar neste filtro." : "Principal pendente no recorte aplicado."} tone="blue" icon={<ArrowDownLeft />} />
       <SummaryCard label="Vencidos" value={summary ? money(summary.overdue_cents) : "—"} detail={summary ? "Vencimento anterior a hoje." : stateDetail} tone="amber" icon={<Clock />} />
-      <SummaryCard label="Vencem em 7 dias" value={summary ? money(summary.due_7_days_cents) : "—"} detail={summary ? "Hoje até hoje + 7 dias, inclusive." : stateDetail} tone="teal" icon={<CalendarClock />} />
+      <SummaryCard label="Vencimentos: hoje e 7 dias seguintes" value={summary ? money(summary.due_7_days_cents) : "—"} detail={summary ? "Data atual do servidor até o 7º dia seguinte, inclusive (8 datas possíveis)." : stateDetail} tone="teal" icon={<CalendarClock />} />
       <SummaryCard label="Lançamentos" value={summary ? String(summary.count) : "—"} detail={summary ? "Quantidade no filtro, antes da paginação." : stateDetail} icon={<ListChecks />} />
     </div>
     <section className="panel finance-ledger">
@@ -91,7 +89,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
         {[["today", "Hoje"], ["week", "Semana"], ["month", "Mês"], ["previous", "Mês anterior"], ["year", "Ano"], ["all", "Tudo"], ["custom", "Personalizado"]].map(([key, label]) => <button key={key} className={period === key ? "selected" : ""} onClick={() => key === "custom" ? setPeriod(key) : key === "all" ? (() => { const next = { ...draft, start: "", end: "" }; setDraft(next); setPeriod(key); apply(next); })() : quickPeriod(key)}>{label}</button>)}
       </div>
       <div className="finance-status-tabs" aria-label="Situação dos títulos">
-        {[["", "Todos"], ["open", "Em aberto"], ["partial", "Parciais"], ["paid", "Baixados"], ["overdue", "Vencidos"], ["canceled", "Cancelados"]].map(([key, label]) => <button key={key || "all"} className={filters.status === key ? "selected" : ""} onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}>{label}</button>)}
+        {[["", "Todos"], ["pending", "Pendentes"], ["open", "Sem baixas"], ["partial", "Parciais"], ["paid", "Baixados"], ["overdue", "Vencidos"], ["canceled", "Cancelados"]].map(([key, label]) => <button key={key || "all"} className={filters.status === key ? "selected" : ""} onClick={() => { const next = { ...draft, status: key }; setDraft(next); apply(next); }}>{label}</button>)}
       </div>
       <form className="finance-filter-grid" onSubmit={(e) => { e.preventDefault(); apply(); }}>
         <label className="inline-field">Buscar por<select value={draft.search_field} onChange={(e) => update("search_field", e.target.value)}><option value="history">Histórico ou documento</option><option value="description">Histórico</option><option value="document">Documento</option><option value="beneficiary">Beneficiário</option></select></label>
@@ -102,7 +100,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
         <label className="inline-field">Beneficiário<select value={draft.supplier_id} onChange={(e) => update("supplier_id", e.target.value)}><option value="">Todos</option>{suppliers.data?.items.map((s) => <option key={s.id} value={s.id}>{s.name} · {partnerKinds[s.kind]}</option>)}</select></label>
         <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).filter(([key]) => key !== "subcontracted_freight" || hasTransport(user)).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
         <label className="inline-field">Documento<input value={draft.document} onChange={(e) => update("document", e.target.value)} maxLength={100} /></label>
-        <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Lançamento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Baixa</option></select></label>
+        <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Vencimento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Quitação integral (registro)</option></select></label>
         <SilexDatePicker label="De" value={draft.start} onChange={(value) => update("start", value)} />
         <SilexDatePicker label="Até" value={draft.end} onChange={(value) => update("end", value)} />
         <button type="submit" className="primary finance-search-button"><Search size={14} /> Pesquisar</button>

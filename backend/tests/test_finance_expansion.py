@@ -130,6 +130,7 @@ def test_finance_filter_summary_uses_full_result_and_seven_day_boundary(env):
     assert result['total'] == result['summary']['count'] == 3
     assert len(result['items']) == 1
     assert result['summary'] == {
+        'as_of_date': today().isoformat(),
         'pending_cents': 55_000,
         'overdue_cents': 10_000,
         'due_7_days_cents': 15_000,
@@ -139,6 +140,7 @@ def test_finance_filter_summary_uses_full_result_and_seven_day_boundary(env):
     due_filter = admin.get('/api/finance', params={**filters, 'q': 'Resumo em sete dias', 'search_field': 'description', 'status': 'partial'}).json()
     assert due_filter['total'] == 1
     assert due_filter['summary'] == {
+        'as_of_date': today().isoformat(),
         'pending_cents': 15_000,
         'overdue_cents': 0,
         'due_7_days_cents': 15_000,

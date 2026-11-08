@@ -1,3 +1,4 @@
+import { preserveFinancialSearch } from "../financialNavigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, ApiError, resetSessionRequests } from "../api";
 import type { User } from "../types";
@@ -77,7 +78,7 @@ export function useAppNavigation() {
           ? request.message
           : "Seu perfil não tem permissão para acessar este módulo.",
       );
-      address(appUrl(destination));
+      address(preserveFinancialSearch(appUrl(destination)));
       handledAddress.current = currentAddress();
       setPage(destination);
       remember(null);
