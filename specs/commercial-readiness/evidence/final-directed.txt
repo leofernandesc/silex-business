@@ -1,0 +1,29 @@
+[WebServer] INFO:     Started server process [625141]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 16 tests using 1 worker
+
+(node:625143) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-reports auxiliary categories failure is visible in its form and retry restores choices (1.3s)
+  ✓   2 [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance-subcategories auxiliary categories failure is visible in its form and retry restores choices (1.3s)
+  ✓   3 [desktop] › tests/commercial-lookups.spec.ts:2:145 › finance auxiliary categories failure is visible in its form and retry restores choices (1.2s)
+  ✓   4 [desktop] › tests/commercial-report-values.spec.ts:4:1 › report screen and print preserve nested payment/attachment details and pending balance semantics (1.3s)
+  ✓   5 [desktop] › tests/integration-reports.spec.ts:215:1 › page two print preserves current rows, long text, IDs and full cents on A4 (2.2s)
+  ✓   6 [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento (2.8s)
+  ✓   7 [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento (2.6s)
+  ✓   8 [desktop] › tests/modal-workflows.spec.ts:206:1 › Outros padrões: venda, estorno, configurações financeiras, usuário e serviço (5.2s)
+(node:625754) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [mobile] › tests/commercial-lookups.spec.ts:2:145 › finance-reports auxiliary categories failure is visible in its form and retry restores choices (1.2s)
+  ✓  10 [mobile] › tests/commercial-lookups.spec.ts:2:145 › finance-subcategories auxiliary categories failure is visible in its form and retry restores choices (1.2s)
+  ✓  11 [mobile] › tests/commercial-lookups.spec.ts:2:145 › finance auxiliary categories failure is visible in its form and retry restores choices (1.2s)
+  ✓  12 [mobile] › tests/commercial-report-values.spec.ts:4:1 › report screen and print preserve nested payment/attachment details and pending balance semantics (1.2s)
+  ✓  13 [mobile] › tests/integration-reports.spec.ts:215:1 › page two print preserves current rows, long text, IDs and full cents on A4 (2.1s)
+  ✓  14 [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento (2.6s)
+  ✓  15 [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento (2.6s)
+  ✓  16 [mobile] › tests/modal-workflows.spec.ts:206:1 › Outros padrões: venda, estorno, configurações financeiras, usuário e serviço (4.7s)
+
+  16 passed (39.8s)

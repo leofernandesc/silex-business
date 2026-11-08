@@ -1,0 +1,78 @@
+
+> gestao-local@0.1.0 test
+> vitest run --run src/reportValues.test.ts
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-commercial-readiness/frontend
+
+ ❯ src/reportValues.test.ts (7 tests | 7 failed) 22ms
+   × a title remaining amount is pending, distinct from the available budget 12ms
+   × nested financial details preserve IDs, signed cents, civil dates and attachment metadata 2ms
+   × empty nested detail is explicit absence, and primitive cents stay unchanged 2ms
+   × report timestamps use Manaus while civil due dates retain their day in America/Manaus 1ms
+   × report timestamps use Manaus while civil due dates retain their day in UTC 1ms
+   × report timestamps use Manaus while civil due dates retain their day in Asia/Tokyo 1ms
+   × report timestamps use Manaus while civil due dates retain their day in America/Los_Angeles 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/reportValues.test.ts > a title remaining amount is pending, distinct from the available budget
+AssertionError: expected 'Disponível' to be 'Saldo pendente' // Object.is equality
+
+Expected: "Saldo pendente"
+Received: "Disponível"
+
+ ❯ src/reportValues.test.ts:4:55
+      2| import {reportColumn,formatReportValue} from './reportBaseline.fixture…
+      3| it('a title remaining amount is pending, distinct from the available b…
+      4|  expect(reportColumn('remaining_cents','titles-due')).toBe('Saldo pend…
+       |                                                       ^
+      5|  expect(reportColumn('remaining_cents','budget-actual')).toBe('Disponí…
+      6| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  src/reportValues.test.ts > nested financial details preserve IDs, signed cents, civil dates and attachment metadata
+AssertionError: expected '[object Object]' not to contain '[object Object]'
+ ❯ src/reportValues.test.ts:10:21
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  src/reportValues.test.ts > empty nested detail is explicit absence, and primitive cents stay unchanged
+AssertionError: expected '' to be '—' // Object.is equality
+
+- Expected
++ Received
+
+- —
+
+ ❯ src/reportValues.test.ts:13:56
+     11| });
+     12| it('empty nested detail is explicit absence, and primitive cents stay …
+     13|  expect(formatReportValue('payments',[],'titles-due')).toBe('—');
+       |                                                        ^
+     14|  expect(formatReportValue('amount_cents',12345,'titles-due')).toMatch(…
+     15| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  src/reportValues.test.ts > report timestamps use Manaus while civil due dates retain their day in America/Manaus
+ FAIL  src/reportValues.test.ts > report timestamps use Manaus while civil due dates retain their day in UTC
+ FAIL  src/reportValues.test.ts > report timestamps use Manaus while civil due dates retain their day in Asia/Tokyo
+ FAIL  src/reportValues.test.ts > report timestamps use Manaus while civil due dates retain their day in America/Los_Angeles
+AssertionError: expected '01/01/2027' to be '31/12/2026, 23:30' // Object.is equality
+
+Expected: "31/12/2026, 23:30"
+Received: "01/01/2027"
+
+ ❯ src/reportValues.test.ts:19:87
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed (7)
+   Start at  03:44:01
+   Duration  1.74s (transform 434ms, setup 0ms, import 1.46s, tests 22ms, environment 0ms)

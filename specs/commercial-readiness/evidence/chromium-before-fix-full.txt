@@ -1,0 +1,512 @@
+[WebServer] INFO:     Started server process [403543]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 300 tests using 1 worker
+
+(node:403848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    1 [desktop] › tests/actions-review.spec.ts:24:1 › payment reversal catches HTTP failure, prevents duplicate requests and preserves the payment (2.7s)
+  ✓    2 [desktop] › tests/actions-review.spec.ts:124:1 › budget deactivation catches failure and changes data only after successful retry (2.2s)
+  ✓    3 [desktop] › tests/actions-review.spec.ts:191:1 › company query failure is not perpetual loading and can be retried (1.1s)
+  ✓    4 [desktop] › tests/app.spec.ts:43:1 › cadastros de diaristas e frete com PIX e beneficiário em contas a pagar (6.5s)
+  ✓    5 [desktop] › tests/app.spec.ts:118:1 › sessão persistente, navegação e tabelas responsivas (4.3s)
+  ✓    6 [desktop] › tests/app.spec.ts:169:1 › cliente e produto persistem; estoque, venda, recibo e estorno (6.4s)
+  ✓    7 [desktop] › tests/app.spec.ts:270:1 › financeiro: vencimento, exportação filtrada e quitação (3.1s)
+  ✓    8 [desktop] › tests/app.spec.ts:301:1 › serviço/pedido vincula custos e gera títulos sem antecipar pagamentos (5.1s)
+  ✓    9 [desktop] › tests/app.spec.ts:370:1 › operador tem escopo restrito e abre/fecha seu caixa (2.0s)
+  ✓   10 [desktop] › tests/app.spec.ts:403:1 › rascunho a prazo, quitação e modal por teclado (3.5s)
+  ✓   11 [desktop] › tests/app.spec.ts:460:1 › financeiro ampliado: recorrência, baixa parcial, comprovante, OFX, painel e relatórios (5.1s)
+  ✓   12 [desktop] › tests/app.spec.ts:561:1 › Sprint 8: cadastros, livro caixa, filtros aplicados e estorno (7.7s)
+  ✓   13 [desktop] › tests/commercial-a11y.spec.ts:9:1 › accessible login, all 25 authorized routes and customer dialog (1.2m)
+  ✓   14 [desktop] › tests/commercial-readiness.spec.ts:5:64 › invalid Juros (R$) cannot silently become zero in a payment (4.4s)
+  ✓   15 [desktop] › tests/commercial-readiness.spec.ts:5:64 › invalid Multa (R$) cannot silently become zero in a payment (4.1s)
+  ✓   16 [desktop] › tests/commercial-readiness.spec.ts:5:64 › invalid Desconto (R$) cannot silently become zero in a payment (3.6s)
+  ✓   17 [desktop] › tests/commercial-readiness.spec.ts:13:1 › customers HTTP failure never confirms an empty table (1.5s)
+  ✓   18 [desktop] › tests/commercial-readiness.spec.ts:19:1 › POS cash query failure is unavailable rather than a closed cash session (1.9s)
+  ✓   19 [desktop] › tests/commercial-readiness.spec.ts:24:1 › POS search cannot offer stale products while another query is pending (1.8s)
+  ✓   20 [desktop] › tests/commercial-readiness.spec.ts:33:1 › structured HTTP validation remains readable and keeps the customer form (2.6s)
+  ✓   21 [desktop] › tests/commercial-readiness.spec.ts:39:141 › finance-payable retries the same applied filter after a failed query (2.4s)
+  ✓   22 [desktop] › tests/commercial-readiness.spec.ts:39:141 › finance retries the same applied filter after a failed query (2.8s)
+  ✓   23 [desktop] › tests/commercial-readiness.spec.ts:46:42 › malformed auth session response never enters a broken authenticated shell (3.2s)
+  ✓   24 [desktop] › tests/commercial-readiness.spec.ts:46:42 › malformed auth login response never enters a broken authenticated shell (1.5s)
+  ✓   25 [desktop] › tests/commercial-readiness.spec.ts:51:1 › CSV failure stays in the ERP, prevents duplicate requests and allows a real retry (2.9s)
+  ✓   26 [desktop] › tests/commercial-readiness.spec.ts:60:216 › products query failure and invalid success are recoverable, never empty confirmation (2.3s)
+  ✓   27 [desktop] › tests/commercial-readiness.spec.ts:60:216 › suppliers query failure and invalid success are recoverable, never empty confirmation (2.0s)
+  ✓   28 [desktop] › tests/commercial-readiness.spec.ts:60:216 › day-workers query failure and invalid success are recoverable, never empty confirmation (2.0s)
+  ✓   29 [desktop] › tests/commercial-readiness.spec.ts:60:216 › stock query failure and invalid success are recoverable, never empty confirmation (2.4s)
+  ✓   30 [desktop] › tests/commercial-readiness.spec.ts:60:216 › sales query failure and invalid success are recoverable, never empty confirmation (2.1s)
+  ✓   31 [desktop] › tests/commercial-readiness.spec.ts:60:216 › service-orders query failure and invalid success are recoverable, never empty confirmation (1.8s)
+  ✓   32 [desktop] › tests/commercial-readiness.spec.ts:60:216 › audit query failure and invalid success are recoverable, never empty confirmation (1.8s)
+  ✓   33 [desktop] › tests/commercial-readiness.spec.ts:67:1 › stock product lookup failure explains the blocked operation and retry restores choices (2.2s)
+  ✓   34 [desktop] › tests/commercial-readiness.spec.ts:72:1 › unavailable financial account lookup disables actions rather than producing inert buttons (2.4s)
+  ✓   35 [desktop] › tests/customer-details.spec.ts:73:1 › exatamente dois endereços completos: criar, editar independentemente e recarregar (9.3s)
+  ✓   36 [desktop] › tests/customer-details.spec.ts:127:3 › demo.admin: formulário comum não oferece nem envia os campos exclusivos (3.3s)
+  ✓   37 [desktop] › tests/customer-details.spec.ts:127:3 › demo.operador: formulário comum não oferece nem envia os campos exclusivos (3.2s)
+  ✓   38 [desktop] › tests/customer-details.spec.ts:127:3 › customer.other.admin: formulário comum não oferece nem envia os campos exclusivos (3.7s)
+  ✓   39 [desktop] › tests/customer-details.spec.ts:149:1 › cadastro anterior exige confirmação e textos 0011 permanecem recuperáveis (9.1s)
+  ✓   40 [desktop] › tests/customer-details.spec.ts:197:1 › texto cadastral curto só vai ao logradouro após confirmação explícita (4.8s)
+  ✓   41 [desktop] › tests/customer-details.spec.ts:217:1 › Contato / cidade preserva as informações e mostra cada telefone uma única vez (2.9s)
+  ✓   42 [desktop] › tests/financial-states-review.spec.ts:9:3 › finance-payable: pending and failed queries do not imply zero; successful zeros remain valid (3.2s)
+  ✓   43 [desktop] › tests/financial-states-review.spec.ts:9:3 › finance-receivable: pending and failed queries do not imply zero; successful zeros remain valid (3.1s)
+  ✓   44 [desktop] › tests/financial-states-review.spec.ts:9:3 › finance: pending and failed queries do not imply zero; successful zeros remain valid (2.8s)
+  ✓   45 [desktop] › tests/financial-states-review.spec.ts:9:3 › cash: pending and failed queries do not imply zero; successful zeros remain valid (2.2s)
+  ✓   46 [desktop] › tests/financial-states-review.spec.ts:88:1 › ledger account failure does not fabricate an all-accounts zero balance (1.9s)
+  ✓   47 [desktop] › tests/forms-review.spec.ts:23:1 › password visibility preserves value, keyboard, validation and login payload (3.2s)
+  ✓   48 [desktop] › tests/forms-review.spec.ts:69:1 › document punctuation, caret edits, invalid input and normalized persistence (5.1s)
+  ✓   49 [desktop] › tests/forms-review.spec.ts:166:3 › supplier: registration and contact do not duplicate the phone (3.7s)
+  ✓   50 [desktop] › tests/forms-review.spec.ts:166:3 › day_worker: registration and contact do not duplicate the phone (3.0s)
+  ✓   51 [desktop] › tests/forms-review.spec.ts:166:3 › subcontracted_freight: registration and contact do not duplicate the phone (2.7s)
+  ✓   52 [desktop] › tests/forms-review.spec.ts:231:1 › service cancellation reports failure, locks submissions and updates the list only on success (3.3s)
+  ✓   53 [desktop] › tests/forms-review.spec.ts:289:1 › service refresh failure remains retryable; a late response does not reopen a closed modal (3.5s)
+  ✓   54 [desktop] › tests/forms-review.spec.ts:332:1 › obsolete lookup is aborted without an error or stale results (1.9s)
+
+  ✓   55 [desktop] › tests/home.spec.ts:27:1 › sessão expirada na Início não revela dados e retorna a home após login (5.3s)
+  ✓   56 [desktop] › tests/home.spec.ts:61:1 › home guest, retorno solicitado, login normal e refresh sem indicadores ou consultas extras (4.4s)
+  ✓   57 [desktop] › tests/home.spec.ts:111:3 › atalhos admin: todos os destinos permitidos e cliques reais (7.9s)
+  ✓   58 [desktop] › tests/home.spec.ts:111:3 › atalhos operator: todos os destinos permitidos e cliques reais (2.8s)
+  ✓   59 [desktop] › tests/home.spec.ts:149:1 › Início e Visão Geral independentes, histórico, legado e item ativo (3.0s)
+  ✓   60 [desktop] › tests/home.spec.ts:189:1 › troca de sessão atualiza atalhos e operador não acessa URL administrativa (3.0s)
+  ✓   61 [desktop] › tests/home.spec.ts:219:1 › empresa ausente e falha de consulta sem nome legado ou dados inventados (1.9s)
+  ✓   62 [desktop] › tests/home.spec.ts:277:1 › teclado na Início, foco visível e menu P03 preservado (1.7s)
+  ✓   63 [desktop] › tests/integration-reports.spec.ts:4:1 › all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery (17.9s)
+  ✓   64 [desktop] › tests/integration-reports.spec.ts:106:1 › report generation retries the same applied criteria after an HTTP failure (2.1s)
+  ✓   65 [desktop] › tests/integration-reports.spec.ts:138:1 › failed report is unavailable rather than a confirmed empty result (1.7s)
+  ✓   66 [desktop] › tests/integration-reports.spec.ts:166:1 › budget query failure is not represented as an empty confirmed budget (1.8s)
+  ✓   67 [desktop] › tests/integration-reports.spec.ts:202:1 › all report and CSV endpoints distinguish operator denial from missing session (2.2s)
+  ✓   68 [desktop] › tests/integration-reports.spec.ts:215:1 › page two print preserves current rows, long text, IDs and full cents on A4 (5.9s)
+  ✓   69 [desktop] › tests/integration.spec.ts:59:3 › all route guards for demo (6.2s)
+  ✓   70 [desktop] › tests/integration.spec.ts:59:3 › all route guards for specialized (5.3s)
+  ✓   71 [desktop] › tests/integration.spec.ts:59:3 › all route guards for generic-second (5.2s)
+  ✓   72 [desktop] › tests/integration.spec.ts:59:3 › all route guards for specialized-second (4.9s)
+  ✓   73 [desktop] › tests/integration.spec.ts:59:3 › all route guards for operator (2.0s)
+  ✓   74 [desktop] › tests/integration.spec.ts:59:3 › all route guards for visitor (10.3s)
+  ✓   75 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1440px (5.1s)
+  ✓   76 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1024px (4.9s)
+  ✓   77 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 768px (5.1s)
+  ✓   78 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 375px (4.5s)
+  ✓   79 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 320px (4.4s)
+  ✓   80 [desktop] › tests/integration.spec.ts:104:1 › specialized metadata stays private across authorized identities; denied promotion is atomic (1.1s)
+  ✓   81 [desktop] › tests/modal-workflows.spec.ts:50:1 › Clientes: salvar, editar e cancelar preservam o formulário e o foco (3.9s)
+  ✘   82 [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento (9.4s)
+(node:451988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   83 [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento (9.0s)
+(node:452182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   84 [desktop] › tests/modal-workflows.spec.ts:153:1 › Conciliação: revisão, erro existente e Escape preservam acionador e dados (4.5s)
+  ✓   85 [desktop] › tests/modal-workflows.spec.ts:190:1 › Histórico do navegador desmonta modal e mantém foco do novo módulo (2.4s)
+  ✓   86 [desktop] › tests/modal-workflows.spec.ts:206:1 › Outros padrões: venda, estorno, configurações financeiras, usuário e serviço (12.5s)
+  ✓   87 [desktop] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível (2.8s)
+  ✓   88 [desktop] › tests/navigation.spec.ts:63:1 › login inválido/válido e persistência sem mudanças no cookie (1.9s)
+  ✓   89 [desktop] › tests/navigation.spec.ts:91:1 › rota protegida retorna após login, refresh e logout sem conteúdo privado no histórico (2.5s)
+  ✓   90 [desktop] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido (13.0s)
+  ✓   91 [desktop] › tests/navigation.spec.ts:162:1 › navegação interna, Voltar/Avançar, foco e atalho financeiro (2.9s)
+  ✓   92 [desktop] › tests/navigation.spec.ts:193:1 › P08: operador sem atalhos administrativos e guard uniforme para todos os destinos (1.7s)
+  ✓   93 [desktop] › tests/navigation.spec.ts:243:1 › P03: teclado, modal móvel, submenus, Escape e foco restaurado (1.5s)
+
+  ✓   94 [desktop] › tests/navigation.spec.ts:342:1 › sessão expirada no servidor, limpeza e retorno após reautenticação (1.8s)
+
+  ✓   95 [desktop] › tests/navigation.spec.ts:367:1 › logout com sessão já expirada considera 401 como saída concluída (1.6s)
+  ✓   96 [desktop] › tests/navigation.spec.ts:391:1 › falha de rede no logout oculta dados, persiste bloqueio local e permite nova tentativa (1.9s)
+  ✓   97 [desktop] › tests/navigation.spec.ts:429:1 › 403 de operação preserva sessão e comunica recusa sem expirar (1.5s)
+  ✓   98 [desktop] › tests/navigation.spec.ts:457:1 › retorno adulterado e parâmetro externo não redirecionam para outra origem (1.2s)
+  ✓   99 [desktop] › tests/navigation.spec.ts:473:1 › P03: mudança de breakpoint conserva foco acessível e desfaz o modo modal (1.6s)
+  ✓  100 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 400: central session handling and safe feedback (1.2s)
+  ✓  101 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 401: central session handling and safe feedback (1.2s)
+  ✓  102 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 403: central session handling and safe feedback (979ms)
+  ✓  103 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 404: central session handling and safe feedback (1.0s)
+  ✓  104 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 422: central session handling and safe feedback (1.3s)
+  ✓  105 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 500: central session handling and safe feedback (1.3s)
+  ✓  106 [desktop] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 503: central session handling and safe feedback (1.4s)
+  ✓  107 [desktop] › tests/ofx-errors.spec.ts:82:3 › upload network does not leak diagnostics or retry (1.4s)
+  ✓  108 [desktop] › tests/ofx-errors.spec.ts:82:3 › upload non-json-error does not leak diagnostics or retry (1.3s)
+  ✓  109 [desktop] › tests/ofx-errors.spec.ts:82:3 › upload non-json-success does not leak diagnostics or retry (1.4s)
+  ✓  110 [desktop] › tests/ofx-errors.spec.ts:96:1 › a late upload 401 cannot log out a newly authenticated session (1.5s)
+  ✓  111 [desktop] › tests/ofx-errors.spec.ts:115:1 › simultaneous auxiliary 401 responses expire the session only once (1.3s)
+  ✓  112 [desktop] › tests/ofx-errors.spec.ts:126:3 › accounts failure is distinct from an empty result and recovers on reopening (2.2s)
+  ✓  113 [desktop] › tests/ofx-errors.spec.ts:126:3 › history failure is distinct from an empty result and recovers on reopening (2.0s)
+  ✓  114 [desktop] › tests/ofx-errors.spec.ts:141:1 › legitimately empty accounts and history have no error and cannot upload without a valid bank (1.2s)
+  ✓  115 [desktop] › tests/ofx-errors.spec.ts:152:1 › history pagination errors do not present the previous page as current (1.2s)
+  ✓  116 [desktop] › tests/ofx-errors.spec.ts:162:1 › reopening a missing statement reports failure, hides old rows and permits retry (1.4s)
+  ✓  117 [desktop] › tests/ofx-errors.spec.ts:175:3 › suggestions empty is explicit and never confirms unavailable data (1.9s)
+  ✓  118 [desktop] › tests/ofx-errors.spec.ts:175:3 › suggestions failure is explicit and never confirms unavailable data (1.6s)
+  ✓  119 [desktop] › tests/ofx-errors.spec.ts:187:3 › creation lookup categories failure blocks confirmation (1.9s)
+  ✓  120 [desktop] › tests/ofx-errors.spec.ts:187:3 › creation lookup subcategories failure blocks confirmation (2.4s)
+  ✓  121 [desktop] › tests/ofx-errors.spec.ts:187:3 › creation lookup suppliers?active=true&page_size=100 failure blocks confirmation (1.9s)
+  ✓  122 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore 400: keeps the modal and reason without a mutation (1.7s)
+  ✓  123 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore 403: keeps the modal and reason without a mutation (1.7s)
+  ✓  124 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore 404: keeps the modal and reason without a mutation (1.2s)
+  ✓  125 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore 422: keeps the modal and reason without a mutation (1.1s)
+  ✓  126 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore 500: keeps the modal and reason without a mutation (1.1s)
+  ✓  127 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore 503: keeps the modal and reason without a mutation (1.3s)
+  ✓  128 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore network: keeps the modal and reason without a mutation (1.3s)
+  ✓  129 [desktop] › tests/ofx-errors.spec.ts:198:3 › ignore non-json: keeps the modal and reason without a mutation (1.3s)
+  ✓  130 [desktop] › tests/ofx-errors.spec.ts:214:1 › ignore locks rapid clicks and closes only after success and refreshed statement (1.1s)
+  ✓  131 [desktop] › tests/ofx-errors.spec.ts:231:1 › a successful operation with failed refresh retries only GET, never POST (1.5s)
+  ✓  132 [desktop] › tests/ofx-errors.spec.ts:244:1 › normal confirmation failures stay in Form with no false success (1.4s)
+  ✓  133 [desktop] › tests/ofx-errors.spec.ts:258:1 › rapid statement reopen requests are locked until the current read finishes (976ms)
+  ✓  134 [desktop] › tests/ofx-errors.spec.ts:268:1 › closing a pending modal cannot reopen and resubmit the same operation (1.6s)
+  ✓  135 [desktop] › tests/ofx-errors.spec.ts:282:1 › pending upload and statement reads reject duplicate actions; size/invalid OFX keep existing limits (3.2s)
+  ✓  136 [desktop] › tests/ofx-errors.spec.ts:294:1 › error feedback remains accessible at desktop, tablet and mobile widths (880ms)
+  ✓  137 [desktop] › tests/ofx-errors.spec.ts:305:1 › invalid OFX is rejected by the unchanged backend without creating an import (795ms)
+  ✓  138 [desktop] › tests/public.spec.ts:24:1 › público sem sessão: conteúdo, metadados, fontes e nenhuma API ou rastreador (1.5s)
+  ✓  139 [desktop] › tests/public.spec.ts:71:1 › âncoras públicas, rolagem, histórico e refresh não ativam módulos ERP (1.1s)
+  ✓  140 [desktop] › tests/public.spec.ts:103:1 › Entrar, login, ERP e logout conservam os contratos do SB-03 (2.1s)
+  ✓  141 [desktop] › tests/public.spec.ts:127:1 › sessão válida no público permanece privada; retorno same-document não é reescrito pelo ERP (3.0s)
+  ✓  142 [desktop] › tests/public.spec.ts:182:1 › menu público por teclado: disclosure não modal, Escape, seções e breakpoint (625ms)
+  ✓  143 [desktop] › tests/public.spec.ts:237:1 › demonstração acessível de vendas: dados fictícios, cinco colunas e rolagem contida (772ms)
+  ✓  144 [desktop] › tests/public.spec.ts:269:1 › movimento reduzido e ampliação a 200% não tornam o conteúdo inacessível (595ms)
+  ✓  145 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1440px (2.4s)
+  ✓  146 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1024px (2.8s)
+  ✓  147 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 768px (2.5s)
+  ✓  148 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 375px (2.4s)
+  ✓  149 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 320px (2.5s)
+  ✓  150 [desktop] › tests/system-review.spec.ts:49:1 › all 26 financial report types retain the displayed page in print media and CSV remains downloadable (4.8s)
+(node:457047) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  151 [mobile] › tests/actions-review.spec.ts:24:1 › payment reversal catches HTTP failure, prevents duplicate requests and preserves the payment (1.7s)
+  ✓  152 [mobile] › tests/actions-review.spec.ts:124:1 › budget deactivation catches failure and changes data only after successful retry (1.5s)
+  ✓  153 [mobile] › tests/actions-review.spec.ts:191:1 › company query failure is not perpetual loading and can be retried (713ms)
+  ✓  154 [mobile] › tests/app.spec.ts:43:1 › cadastros de diaristas e frete com PIX e beneficiário em contas a pagar (5.0s)
+  ✓  155 [mobile] › tests/app.spec.ts:118:1 › sessão persistente, navegação e tabelas responsivas (4.0s)
+  ✓  156 [mobile] › tests/app.spec.ts:169:1 › cliente e produto persistem; estoque, venda, recibo e estorno (4.7s)
+  ✓  157 [mobile] › tests/app.spec.ts:270:1 › financeiro: vencimento, exportação filtrada e quitação (2.0s)
+  ✓  158 [mobile] › tests/app.spec.ts:301:1 › serviço/pedido vincula custos e gera títulos sem antecipar pagamentos (3.6s)
+  ✓  159 [mobile] › tests/app.spec.ts:370:1 › operador tem escopo restrito e abre/fecha seu caixa (2.0s)
+  ✓  160 [mobile] › tests/app.spec.ts:403:1 › rascunho a prazo, quitação e modal por teclado (3.2s)
+  ✓  161 [mobile] › tests/app.spec.ts:460:1 › financeiro ampliado: recorrência, baixa parcial, comprovante, OFX, painel e relatórios (5.0s)
+  ✓  162 [mobile] › tests/app.spec.ts:561:1 › Sprint 8: cadastros, livro caixa, filtros aplicados e estorno (6.2s)
+  ✘  163 [mobile] › tests/commercial-a11y.spec.ts:9:1 › accessible login, all 25 authorized routes and customer dialog (38.6s)
+(node:459252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  164 [mobile] › tests/commercial-readiness.spec.ts:5:64 › invalid Juros (R$) cannot silently become zero in a payment (2.9s)
+  ✓  165 [mobile] › tests/commercial-readiness.spec.ts:5:64 › invalid Multa (R$) cannot silently become zero in a payment (2.3s)
+  ✓  166 [mobile] › tests/commercial-readiness.spec.ts:5:64 › invalid Desconto (R$) cannot silently become zero in a payment (2.2s)
+  ✓  167 [mobile] › tests/commercial-readiness.spec.ts:13:1 › customers HTTP failure never confirms an empty table (1.2s)
+  ✓  168 [mobile] › tests/commercial-readiness.spec.ts:19:1 › POS cash query failure is unavailable rather than a closed cash session (1.4s)
+  ✓  169 [mobile] › tests/commercial-readiness.spec.ts:24:1 › POS search cannot offer stale products while another query is pending (1.4s)
+  ✓  170 [mobile] › tests/commercial-readiness.spec.ts:33:1 › structured HTTP validation remains readable and keeps the customer form (1.5s)
+  ✓  171 [mobile] › tests/commercial-readiness.spec.ts:39:141 › finance-payable retries the same applied filter after a failed query (1.8s)
+  ✓  172 [mobile] › tests/commercial-readiness.spec.ts:39:141 › finance retries the same applied filter after a failed query (1.9s)
+  ✓  173 [mobile] › tests/commercial-readiness.spec.ts:46:42 › malformed auth session response never enters a broken authenticated shell (1.3s)
+  ✓  174 [mobile] › tests/commercial-readiness.spec.ts:46:42 › malformed auth login response never enters a broken authenticated shell (1.0s)
+  ✓  175 [mobile] › tests/commercial-readiness.spec.ts:51:1 › CSV failure stays in the ERP, prevents duplicate requests and allows a real retry (1.4s)
+  ✓  176 [mobile] › tests/commercial-readiness.spec.ts:60:216 › products query failure and invalid success are recoverable, never empty confirmation (1.3s)
+  ✓  177 [mobile] › tests/commercial-readiness.spec.ts:60:216 › suppliers query failure and invalid success are recoverable, never empty confirmation (1.1s)
+  ✓  178 [mobile] › tests/commercial-readiness.spec.ts:60:216 › day-workers query failure and invalid success are recoverable, never empty confirmation (1.3s)
+  ✓  179 [mobile] › tests/commercial-readiness.spec.ts:60:216 › stock query failure and invalid success are recoverable, never empty confirmation (1.4s)
+  ✓  180 [mobile] › tests/commercial-readiness.spec.ts:60:216 › sales query failure and invalid success are recoverable, never empty confirmation (1.5s)
+  ✓  181 [mobile] › tests/commercial-readiness.spec.ts:60:216 › service-orders query failure and invalid success are recoverable, never empty confirmation (1.2s)
+  ✓  182 [mobile] › tests/commercial-readiness.spec.ts:60:216 › audit query failure and invalid success are recoverable, never empty confirmation (1.2s)
+  ✓  183 [mobile] › tests/commercial-readiness.spec.ts:67:1 › stock product lookup failure explains the blocked operation and retry restores choices (1.6s)
+  ✓  184 [mobile] › tests/commercial-readiness.spec.ts:72:1 › unavailable financial account lookup disables actions rather than producing inert buttons (1.8s)
+  ✓  185 [mobile] › tests/customer-details.spec.ts:73:1 › exatamente dois endereços completos: criar, editar independentemente e recarregar (5.3s)
+  ✓  186 [mobile] › tests/customer-details.spec.ts:127:3 › demo.admin: formulário comum não oferece nem envia os campos exclusivos (2.4s)
+  ✓  187 [mobile] › tests/customer-details.spec.ts:127:3 › demo.operador: formulário comum não oferece nem envia os campos exclusivos (2.0s)
+  ✓  188 [mobile] › tests/customer-details.spec.ts:127:3 › customer.other.admin: formulário comum não oferece nem envia os campos exclusivos (1.9s)
+  ✓  189 [mobile] › tests/customer-details.spec.ts:149:1 › cadastro anterior exige confirmação e textos 0011 permanecem recuperáveis (4.5s)
+  ✓  190 [mobile] › tests/customer-details.spec.ts:197:1 › texto cadastral curto só vai ao logradouro após confirmação explícita (2.3s)
+  ✓  191 [mobile] › tests/customer-details.spec.ts:217:1 › Contato / cidade preserva as informações e mostra cada telefone uma única vez (1.8s)
+  ✓  192 [mobile] › tests/financial-states-review.spec.ts:9:3 › finance-payable: pending and failed queries do not imply zero; successful zeros remain valid (2.3s)
+  ✓  193 [mobile] › tests/financial-states-review.spec.ts:9:3 › finance-receivable: pending and failed queries do not imply zero; successful zeros remain valid (2.3s)
+  ✓  194 [mobile] › tests/financial-states-review.spec.ts:9:3 › finance: pending and failed queries do not imply zero; successful zeros remain valid (2.3s)
+  ✓  195 [mobile] › tests/financial-states-review.spec.ts:9:3 › cash: pending and failed queries do not imply zero; successful zeros remain valid (1.5s)
+  ✓  196 [mobile] › tests/financial-states-review.spec.ts:88:1 › ledger account failure does not fabricate an all-accounts zero balance (1.7s)
+  ✓  197 [mobile] › tests/forms-review.spec.ts:23:1 › password visibility preserves value, keyboard, validation and login payload (1.7s)
+  ✓  198 [mobile] › tests/forms-review.spec.ts:69:1 › document punctuation, caret edits, invalid input and normalized persistence (2.8s)
+  ✓  199 [mobile] › tests/forms-review.spec.ts:166:3 › supplier: registration and contact do not duplicate the phone (1.8s)
+  ✓  200 [mobile] › tests/forms-review.spec.ts:166:3 › day_worker: registration and contact do not duplicate the phone (1.8s)
+  ✓  201 [mobile] › tests/forms-review.spec.ts:166:3 › subcontracted_freight: registration and contact do not duplicate the phone (2.0s)
+  ✓  202 [mobile] › tests/forms-review.spec.ts:231:1 › service cancellation reports failure, locks submissions and updates the list only on success (2.6s)
+  ✓  203 [mobile] › tests/forms-review.spec.ts:289:1 › service refresh failure remains retryable; a late response does not reopen a closed modal (2.4s)
+  ✓  204 [mobile] › tests/forms-review.spec.ts:332:1 › obsolete lookup is aborted without an error or stale results (1.3s)
+
+  ✓  205 [mobile] › tests/home.spec.ts:27:1 › sessão expirada na Início não revela dados e retorna a home após login (2.0s)
+  ✓  206 [mobile] › tests/home.spec.ts:61:1 › home guest, retorno solicitado, login normal e refresh sem indicadores ou consultas extras (2.3s)
+  ✓  207 [mobile] › tests/home.spec.ts:111:3 › atalhos admin: todos os destinos permitidos e cliques reais (4.3s)
+  ✓  208 [mobile] › tests/home.spec.ts:111:3 › atalhos operator: todos os destinos permitidos e cliques reais (2.3s)
+  ✓  209 [mobile] › tests/home.spec.ts:149:1 › Início e Visão Geral independentes, histórico, legado e item ativo (2.8s)
+  ✓  210 [mobile] › tests/home.spec.ts:189:1 › troca de sessão atualiza atalhos e operador não acessa URL administrativa (2.2s)
+  ✓  211 [mobile] › tests/home.spec.ts:219:1 › empresa ausente e falha de consulta sem nome legado ou dados inventados (1.6s)
+  ✓  212 [mobile] › tests/home.spec.ts:277:1 › teclado na Início, foco visível e menu P03 preservado (1.6s)
+  ✓  213 [mobile] › tests/integration-reports.spec.ts:4:1 › all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery (13.3s)
+  ✓  214 [mobile] › tests/integration-reports.spec.ts:106:1 › report generation retries the same applied criteria after an HTTP failure (1.5s)
+  ✓  215 [mobile] › tests/integration-reports.spec.ts:138:1 › failed report is unavailable rather than a confirmed empty result (1.6s)
+  ✓  216 [mobile] › tests/integration-reports.spec.ts:166:1 › budget query failure is not represented as an empty confirmed budget (1.7s)
+  ✓  217 [mobile] › tests/integration-reports.spec.ts:202:1 › all report and CSV endpoints distinguish operator denial from missing session (1.5s)
+  ✓  218 [mobile] › tests/integration-reports.spec.ts:215:1 › page two print preserves current rows, long text, IDs and full cents on A4 (4.0s)
+  ✓  219 [mobile] › tests/integration.spec.ts:59:3 › all route guards for demo (3.8s)
+  ✓  220 [mobile] › tests/integration.spec.ts:59:3 › all route guards for specialized (3.4s)
+  ✓  221 [mobile] › tests/integration.spec.ts:59:3 › all route guards for generic-second (3.7s)
+  ✓  222 [mobile] › tests/integration.spec.ts:59:3 › all route guards for specialized-second (4.0s)
+  ✓  223 [mobile] › tests/integration.spec.ts:59:3 › all route guards for operator (2.3s)
+  ✓  224 [mobile] › tests/integration.spec.ts:59:3 › all route guards for visitor (10.7s)
+  ✓  225 [mobile] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1440px (4.8s)
+  ✓  226 [mobile] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1024px (4.9s)
+  ✓  227 [mobile] › tests/integration.spec.ts:90:3 › specialized routes reflow at 768px (3.8s)
+  ✓  228 [mobile] › tests/integration.spec.ts:90:3 › specialized routes reflow at 375px (4.1s)
+  ✓  229 [mobile] › tests/integration.spec.ts:90:3 › specialized routes reflow at 320px (5.4s)
+  ✓  230 [mobile] › tests/integration.spec.ts:104:1 › specialized metadata stays private across authorized identities; denied promotion is atomic (1.5s)
+  ✓  231 [mobile] › tests/modal-workflows.spec.ts:50:1 › Clientes: salvar, editar e cancelar preservam o formulário e o foco (4.1s)
+  ✘  232 [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento (8.8s)
+(node:467351) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  233 [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento (8.5s)
+(node:467679) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  234 [mobile] › tests/modal-workflows.spec.ts:153:1 › Conciliação: revisão, erro existente e Escape preservam acionador e dados (3.1s)
+  ✓  235 [mobile] › tests/modal-workflows.spec.ts:190:1 › Histórico do navegador desmonta modal e mantém foco do novo módulo (1.7s)
+  ✓  236 [mobile] › tests/modal-workflows.spec.ts:206:1 › Outros padrões: venda, estorno, configurações financeiras, usuário e serviço (7.5s)
+  ✓  237 [mobile] › tests/modal-workflows.spec.ts:293:1 › Caixa: confirmação assíncrona troca acionador e mantém destino acessível (1.9s)
+  ✓  238 [mobile] › tests/navigation.spec.ts:63:1 › login inválido/válido e persistência sem mudanças no cookie (2.1s)
+  ✓  239 [mobile] › tests/navigation.spec.ts:91:1 › rota protegida retorna após login, refresh e logout sem conteúdo privado no histórico (2.7s)
+  ✓  240 [mobile] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido (12.8s)
+  ✓  241 [mobile] › tests/navigation.spec.ts:162:1 › navegação interna, Voltar/Avançar, foco e atalho financeiro (2.6s)
+  ✓  242 [mobile] › tests/navigation.spec.ts:193:1 › P08: operador sem atalhos administrativos e guard uniforme para todos os destinos (1.7s)
+  ✓  243 [mobile] › tests/navigation.spec.ts:243:1 › P03: teclado, modal móvel, submenus, Escape e foco restaurado (2.4s)
+
+  ✓  244 [mobile] › tests/navigation.spec.ts:342:1 › sessão expirada no servidor, limpeza e retorno após reautenticação (2.0s)
+
+  ✓  245 [mobile] › tests/navigation.spec.ts:367:1 › logout com sessão já expirada considera 401 como saída concluída (2.2s)
+  ✓  246 [mobile] › tests/navigation.spec.ts:391:1 › falha de rede no logout oculta dados, persiste bloqueio local e permite nova tentativa (3.6s)
+  ✓  247 [mobile] › tests/navigation.spec.ts:429:1 › 403 de operação preserva sessão e comunica recusa sem expirar (1.8s)
+  ✓  248 [mobile] › tests/navigation.spec.ts:457:1 › retorno adulterado e parâmetro externo não redirecionam para outra origem (1.1s)
+  ✓  249 [mobile] › tests/navigation.spec.ts:473:1 › P03: mudança de breakpoint conserva foco acessível e desfaz o modo modal (1.4s)
+  ✓  250 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 400: central session handling and safe feedback (1.2s)
+  ✓  251 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 401: central session handling and safe feedback (1.3s)
+  ✓  252 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 403: central session handling and safe feedback (1.1s)
+  ✓  253 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 404: central session handling and safe feedback (1.1s)
+  ✓  254 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 422: central session handling and safe feedback (1.3s)
+  ✓  255 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 500: central session handling and safe feedback (1.4s)
+  ✓  256 [mobile] › tests/ofx-errors.spec.ts:54:3 › upload HTTP 503: central session handling and safe feedback (1.3s)
+  ✓  257 [mobile] › tests/ofx-errors.spec.ts:82:3 › upload network does not leak diagnostics or retry (967ms)
+  ✓  258 [mobile] › tests/ofx-errors.spec.ts:82:3 › upload non-json-error does not leak diagnostics or retry (995ms)
+  ✓  259 [mobile] › tests/ofx-errors.spec.ts:82:3 › upload non-json-success does not leak diagnostics or retry (1.2s)
+  ✓  260 [mobile] › tests/ofx-errors.spec.ts:96:1 › a late upload 401 cannot log out a newly authenticated session (1.8s)
+  ✓  261 [mobile] › tests/ofx-errors.spec.ts:115:1 › simultaneous auxiliary 401 responses expire the session only once (1.2s)
+  ✓  262 [mobile] › tests/ofx-errors.spec.ts:126:3 › accounts failure is distinct from an empty result and recovers on reopening (1.6s)
+  ✓  263 [mobile] › tests/ofx-errors.spec.ts:126:3 › history failure is distinct from an empty result and recovers on reopening (2.1s)
+  ✓  264 [mobile] › tests/ofx-errors.spec.ts:141:1 › legitimately empty accounts and history have no error and cannot upload without a valid bank (1.6s)
+  ✓  265 [mobile] › tests/ofx-errors.spec.ts:152:1 › history pagination errors do not present the previous page as current (987ms)
+  ✓  266 [mobile] › tests/ofx-errors.spec.ts:162:1 › reopening a missing statement reports failure, hides old rows and permits retry (1.2s)
+  ✓  267 [mobile] › tests/ofx-errors.spec.ts:175:3 › suggestions empty is explicit and never confirms unavailable data (1.6s)
+  ✓  268 [mobile] › tests/ofx-errors.spec.ts:175:3 › suggestions failure is explicit and never confirms unavailable data (1.1s)
+  ✓  269 [mobile] › tests/ofx-errors.spec.ts:187:3 › creation lookup categories failure blocks confirmation (1.2s)
+  ✓  270 [mobile] › tests/ofx-errors.spec.ts:187:3 › creation lookup subcategories failure blocks confirmation (1.2s)
+  ✓  271 [mobile] › tests/ofx-errors.spec.ts:187:3 › creation lookup suppliers?active=true&page_size=100 failure blocks confirmation (1.3s)
+  ✓  272 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore 400: keeps the modal and reason without a mutation (1.1s)
+  ✓  273 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore 403: keeps the modal and reason without a mutation (1.3s)
+  ✓  274 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore 404: keeps the modal and reason without a mutation (1.4s)
+  ✓  275 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore 422: keeps the modal and reason without a mutation (1.2s)
+  ✓  276 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore 500: keeps the modal and reason without a mutation (1.3s)
+  ✓  277 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore 503: keeps the modal and reason without a mutation (1.3s)
+  ✓  278 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore network: keeps the modal and reason without a mutation (1.2s)
+  ✓  279 [mobile] › tests/ofx-errors.spec.ts:198:3 › ignore non-json: keeps the modal and reason without a mutation (1.4s)
+  ✓  280 [mobile] › tests/ofx-errors.spec.ts:214:1 › ignore locks rapid clicks and closes only after success and refreshed statement (1.2s)
+  ✓  281 [mobile] › tests/ofx-errors.spec.ts:231:1 › a successful operation with failed refresh retries only GET, never POST (1.3s)
+  ✓  282 [mobile] › tests/ofx-errors.spec.ts:244:1 › normal confirmation failures stay in Form with no false success (1.3s)
+  ✓  283 [mobile] › tests/ofx-errors.spec.ts:258:1 › rapid statement reopen requests are locked until the current read finishes (996ms)
+  ✓  284 [mobile] › tests/ofx-errors.spec.ts:268:1 › closing a pending modal cannot reopen and resubmit the same operation (1.3s)
+  ✓  285 [mobile] › tests/ofx-errors.spec.ts:282:1 › pending upload and statement reads reject duplicate actions; size/invalid OFX keep existing limits (4.4s)
+  ✓  286 [mobile] › tests/ofx-errors.spec.ts:294:1 › error feedback remains accessible at desktop, tablet and mobile widths (1.3s)
+  ✓  287 [mobile] › tests/ofx-errors.spec.ts:305:1 › invalid OFX is rejected by the unchanged backend without creating an import (1.1s)
+  ✓  288 [mobile] › tests/public.spec.ts:24:1 › público sem sessão: conteúdo, metadados, fontes e nenhuma API ou rastreador (1.7s)
+  ✓  289 [mobile] › tests/public.spec.ts:71:1 › âncoras públicas, rolagem, histórico e refresh não ativam módulos ERP (1.4s)
+  ✓  290 [mobile] › tests/public.spec.ts:103:1 › Entrar, login, ERP e logout conservam os contratos do SB-03 (2.3s)
+  ✓  291 [mobile] › tests/public.spec.ts:127:1 › sessão válida no público permanece privada; retorno same-document não é reescrito pelo ERP (3.0s)
+  ✓  292 [mobile] › tests/public.spec.ts:182:1 › menu público por teclado: disclosure não modal, Escape, seções e breakpoint (952ms)
+  ✓  293 [mobile] › tests/public.spec.ts:237:1 › demonstração acessível de vendas: dados fictícios, cinco colunas e rolagem contida (1.1s)
+  ✓  294 [mobile] › tests/public.spec.ts:269:1 › movimento reduzido e ampliação a 200% não tornam o conteúdo inacessível (826ms)
+  ✓  295 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1440px (3.3s)
+  ✓  296 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1024px (3.4s)
+  ✓  297 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 768px (3.5s)
+  ✓  298 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 375px (3.5s)
+  ✓  299 [mobile] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 320px (3.0s)
+  ✓  300 [mobile] › tests/system-review.spec.ts:49:1 › all 26 financial report types retain the displayed page in print media and CSV remains downloadable (3.7s)
+
+
+  1) [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Nova despesa', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Nova despesa', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Nova despesa', exact: true })
+        2 × locator resolved to <button disabled class="accounts-new-expense">…</button>
+          - unexpected value "inactive"
+        11 × locator resolved to <button class="accounts-new-expense">…</button>
+           - unexpected value "inactive"
+
+
+       98 |     await expect(page.getByRole("dialog")).toHaveCount(0);
+       99 |     await page.waitForLoadState("networkidle");
+    > 100 |     await expect(add).toBeFocused();
+          |                       ^
+      101 |     const search = page.getByRole("textbox", { name: "Busca", exact: true });
+      102 |     await search.fill(description);
+      103 |     await search.press("Enter");
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:100:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/modal-workflows-finance-pa-e7d12-na-histórico-e-cancelamento-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/modal-workflows-finance-pa-e7d12-na-histórico-e-cancelamento-desktop/error-context.md
+
+  2) [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Nova receita', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Nova receita', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Nova receita', exact: true })
+        - locator resolved to <button disabled class="primary">…</button>
+        13 × unexpected value "inactive"
+           - locator resolved to <button class="primary">…</button>
+        - unexpected value "inactive"
+
+
+       98 |     await expect(page.getByRole("dialog")).toHaveCount(0);
+       99 |     await page.waitForLoadState("networkidle");
+    > 100 |     await expect(add).toBeFocused();
+          |                       ^
+      101 |     const search = page.getByRole("textbox", { name: "Busca", exact: true });
+      102 |     await search.fill(description);
+      103 |     await search.press("Enter");
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:100:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/modal-workflows-finance-re-bc0f3-na-histórico-e-cancelamento-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/modal-workflows-finance-re-bc0f3-na-histórico-e-cancelamento-desktop/error-context.md
+
+  3) [mobile] › tests/commercial-a11y.spec.ts:9:1 › accessible login, all 25 authorized routes and customer dialog
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "surface": "login",
+    +     "violations": Array [
+    +       Object {
+    +         "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+    +         "id": "page-has-heading-one",
+    +         "impact": "moderate",
+    +         "nodes": Array [
+    +           Object {
+    +             "summary": "Fix all of the following:
+    +   Page must have a level-one heading",
+    +             "target": Array [
+    +               "html",
+    +             ],
+    +           },
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+      16 |  await page.goto('/app#customers');await page.getByRole('button',{name:'Novo cliente',exact:true}).click();await expect(page.getByRole('dialog')).toBeVisible();await audit('customer-dialog');
+      17 |  writeFileSync(join(tmpdir(),`silex-commercial-axe-${testInfo.project.name}-${process.env.SILEX_INTEGRATION_BROWSER||'chromium'}.json`),JSON.stringify(findings,null,2));
+    > 18 |  expect(findings.filter(f=>f.violations.length)).toEqual([]);
+         |                                                  ^
+      19 | });
+      20 |
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/commercial-a11y.spec.ts:18:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/commercial-a11y-accessible-f5bee--routes-and-customer-dialog-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/commercial-a11y-accessible-f5bee--routes-and-customer-dialog-mobile/error-context.md
+
+  4) [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Nova despesa', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Nova despesa', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Nova despesa', exact: true })
+        2 × locator resolved to <button disabled class="accounts-new-expense">…</button>
+          - unexpected value "inactive"
+        12 × locator resolved to <button class="accounts-new-expense">…</button>
+           - unexpected value "inactive"
+
+
+       98 |     await expect(page.getByRole("dialog")).toHaveCount(0);
+       99 |     await page.waitForLoadState("networkidle");
+    > 100 |     await expect(add).toBeFocused();
+          |                       ^
+      101 |     const search = page.getByRole("textbox", { name: "Busca", exact: true });
+      102 |     await search.fill(description);
+      103 |     await search.press("Enter");
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:100:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/modal-workflows-finance-pa-e7d12-na-histórico-e-cancelamento-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/modal-workflows-finance-pa-e7d12-na-histórico-e-cancelamento-mobile/error-context.md
+
+  5) [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('button', { name: 'Nova receita', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('button', { name: 'Nova receita', exact: true }) with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Nova receita', exact: true })
+        - locator resolved to <button disabled class="primary">…</button>
+        13 × unexpected value "inactive"
+           - locator resolved to <button class="primary">…</button>
+        - unexpected value "inactive"
+
+
+       98 |     await expect(page.getByRole("dialog")).toHaveCount(0);
+       99 |     await page.waitForLoadState("networkidle");
+    > 100 |     await expect(add).toBeFocused();
+          |                       ^
+      101 |     const search = page.getByRole("textbox", { name: "Busca", exact: true });
+      102 |     await search.fill(description);
+      103 |     await search.press("Enter");
+        at /home/leofernandesc/silex-commercial-readiness/frontend/tests/modal-workflows.spec.ts:100:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results-integration/modal-workflows-finance-re-bc0f3-na-histórico-e-cancelamento-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results-integration/modal-workflows-finance-re-bc0f3-na-histórico-e-cancelamento-mobile/error-context.md
+
+  5 failed
+    [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento
+    [desktop] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento
+    [mobile] › tests/commercial-a11y.spec.ts:9:1 › accessible login, all 25 authorized routes and customer dialog
+    [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-payable: cadastro, baixa assíncrona, histórico e cancelamento
+    [mobile] › tests/modal-workflows.spec.ts:82:3 › finance-receivable: cadastro, baixa assíncrona, histórico e cancelamento
+  295 passed (16.1m)

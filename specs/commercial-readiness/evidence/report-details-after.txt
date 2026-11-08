@@ -1,0 +1,12 @@
+
+> gestao-local@0.1.0 test
+> vitest run --run src/reportValues.test.ts
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-commercial-readiness/frontend
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  03:43:35
+   Duration  1.27s (transform 329ms, setup 0ms, import 1.09s, tests 8ms, environment 0ms)

@@ -1,0 +1,9 @@
+{
+  "file": "report-after-a4.pdf",
+  "pages": 4,
+  "a4": true,
+  "text_selectable": true,
+  "outside_page_words": [],
+  "missing_expected_tokens": [],
+  "checks": "Physical A4 page bounds and extracted original text. No claim of tagged PDF, physical printer or assistive validation."
+}

@@ -1,0 +1,114 @@
+{
+  "base": "9f284fb6cfaeea7f34bc8ce4d4eba7075f3c9c82",
+  "comparisons": 124,
+  "json_comparisons": 68,
+  "csv_byte_comparisons": 56,
+  "mismatches": [],
+  "unchanged_financial_functions": {
+    "services.py:expected_cash": true,
+    "services.py:cash_data": true,
+    "services.py:move_stock": true,
+    "services.py:line_total": true,
+    "services.py:create_sale": true,
+    "services.py:sale_data": true,
+    "services.py:default_records": true,
+    "services.py:category_subcategory": true,
+    "services.py:repeat_date": true,
+    "services.py:choose_account": true,
+    "services.py:principal_paid": true,
+    "services.py:settle_entry": true,
+    "services.py:reverse_payment": true,
+    "services.py:finalize_sale": true,
+    "services.py:cancel_entry": true,
+    "services.py:cancel_sale": true,
+    "services.py:finance_data": true,
+    "services.py:date_window": true,
+    "services.py:page": true,
+    "reporting.py:budget_result": true,
+    "reporting.py:rows_page": true,
+    "reporting.py:finance_dashboard": true,
+    "reporting.py:payment_report": false,
+    "reporting.py:report_result": false,
+    "financial.py:account_data": true,
+    "financial.py:movement_query": true,
+    "financial.py:movement_data": true,
+    "financial.py:movements": true,
+    "financial.py:csv_movements": true,
+    "financial.py:save_attachment": true,
+    "financial.py:reverse_title_payment": true,
+    "financial.py:reverse_movement": true
+  },
+  "fixture": "Equivalent integer-cent titles, partial payments with charges/discount and reversals. Fixed synthetic event timestamps; only additive summary.as_of_date and volatile JSON timestamp fields omitted by the original probe. CSV byte hashes are not normalized.",
+  "not_compared": "Capability return fields and intentional document normalization are validated separately; this comparison does not assume all source files remain identical after integration.",
+  "corrected_catalog_date_basis": {
+    "after-reversal:catalog": [
+      [
+        "receivable-open",
+        "posting",
+        "due"
+      ],
+      [
+        "payable-open",
+        "posting",
+        "due"
+      ],
+      [
+        "receivable-overdue",
+        "posting",
+        "due"
+      ],
+      [
+        "payable-overdue",
+        "posting",
+        "due"
+      ],
+      [
+        "titles-due",
+        "posting",
+        "due"
+      ],
+      [
+        "budget-actual",
+        "posting",
+        "competence"
+      ]
+    ],
+    "before-reversal:catalog": [
+      [
+        "receivable-open",
+        "posting",
+        "due"
+      ],
+      [
+        "payable-open",
+        "posting",
+        "due"
+      ],
+      [
+        "receivable-overdue",
+        "posting",
+        "due"
+      ],
+      [
+        "payable-overdue",
+        "posting",
+        "due"
+      ],
+      [
+        "titles-due",
+        "posting",
+        "due"
+      ],
+      [
+        "budget-actual",
+        "posting",
+        "competence"
+      ]
+    ]
+  },
+  "expected_changed_predicates": [
+    "reporting.py:payment_report",
+    "reporting.py:report_result"
+  ],
+  "predicate_regressions": "backend/tests/test_commercial_reports.py validates independent date/classification/account expectations; aggregate arithmetic unchanged."
+}
