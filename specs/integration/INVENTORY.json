@@ -1,0 +1,1316 @@
+{
+  "routes": [
+    {
+      "id": "home",
+      "title": "In\u00edcio",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "dashboard",
+      "title": "Vis\u00e3o geral",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "customers",
+      "title": "Clientes",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "products",
+      "title": "Produtos ou Servi\u00e7os",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "suppliers",
+      "title": "Fornecedores",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "day-workers",
+      "title": "Diaristas",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "subcontracted-freight",
+      "title": "Frete Subcontratado",
+      "admin": true,
+      "transport": true
+    },
+    {
+      "id": "stock",
+      "title": "Estoque",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "pos",
+      "title": "Frente de Caixa",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "sales",
+      "title": "Vendas",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "service-orders",
+      "title": "Servi\u00e7os e pedidos",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "cash",
+      "title": "Controle de caixa",
+      "admin": false,
+      "transport": false
+    },
+    {
+      "id": "finance-dashboard",
+      "title": "Dashboard",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance",
+      "title": "Lan\u00e7amento (Despesa/Receita)",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-reconcile",
+      "title": "Concilia\u00e7\u00e3o Banc\u00e1ria",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-payable",
+      "title": "Contas a Pagar",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-receivable",
+      "title": "Contas a Receber",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-accounts",
+      "title": "Cadastro de Contas",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-categories",
+      "title": "Categorias",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-subcategories",
+      "title": "SubCategorias",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-reports",
+      "title": "Relat\u00f3rios Financeiros",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "users",
+      "title": "Usu\u00e1rios",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "audit",
+      "title": "Hist\u00f3rico de opera\u00e7\u00f5es",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "company-settings",
+      "title": "Empresa e identidade",
+      "admin": true,
+      "transport": false
+    },
+    {
+      "id": "finance-suppliers",
+      "title": "Fornecedores",
+      "admin": true,
+      "transport": false
+    }
+  ],
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "function": "health",
+      "file": "backend/app/api.py",
+      "line": 120,
+      "defaults": [
+        "Depends(get_db, scope='function')"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/company-settings",
+      "function": "get_company_settings",
+      "file": "backend/app/api.py",
+      "line": 144,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/company-settings",
+      "function": "put_company_settings",
+      "file": "backend/app/api.py",
+      "line": 148,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "function": "login",
+      "file": "backend/app/api.py",
+      "line": 160,
+      "defaults": [
+        "Depends(get_db, scope='function')"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "function": "me",
+      "file": "backend/app/api.py",
+      "line": 199,
+      "defaults": [
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "function": "logout",
+      "file": "backend/app/api.py",
+      "line": 203,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/users",
+      "function": "users",
+      "file": "backend/app/api.py",
+      "line": 210,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/users",
+      "function": "create_user",
+      "file": "backend/app/api.py",
+      "line": 214,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/users/{identifier}/toggle",
+      "function": "toggle_user",
+      "file": "backend/app/api.py",
+      "line": 222,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/customers",
+      "function": "customers",
+      "file": "backend/app/api.py",
+      "line": 264,
+      "defaults": [
+        "''",
+        "None",
+        "'all'",
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/customers",
+      "function": "create_customer",
+      "file": "backend/app/api.py",
+      "line": 315,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/customers/{identifier}",
+      "function": "edit_customer",
+      "file": "backend/app/api.py",
+      "line": 326,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/products",
+      "function": "products",
+      "file": "backend/app/api.py",
+      "line": 339,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "''",
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/products",
+      "function": "create_product",
+      "file": "backend/app/api.py",
+      "line": 345,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/products/{identifier}",
+      "function": "edit_product",
+      "file": "backend/app/api.py",
+      "line": 353,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/stock-movements",
+      "function": "stock",
+      "file": "backend/app/api.py",
+      "line": 377,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "None",
+        "None",
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/stock-movements",
+      "function": "create_stock",
+      "file": "backend/app/api.py",
+      "line": 381,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/cash-sessions",
+      "function": "cash_sessions",
+      "file": "backend/app/api.py",
+      "line": 396,
+      "defaults": [
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/cash-sessions/current",
+      "function": "current_cash",
+      "file": "backend/app/api.py",
+      "line": 403,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/cash-sessions",
+      "function": "open_cash",
+      "file": "backend/app/api.py",
+      "line": 408,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/cash-sessions/{identifier}/close",
+      "function": "close_cash",
+      "file": "backend/app/api.py",
+      "line": 418,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/sales",
+      "function": "sales",
+      "file": "backend/app/api.py",
+      "line": 442,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "None",
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/sales",
+      "function": "create_sale",
+      "file": "backend/app/api.py",
+      "line": 446,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/sales/{identifier}",
+      "function": "sale",
+      "file": "backend/app/api.py",
+      "line": 450,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/sales/{identifier}/finalize",
+      "function": "finalize",
+      "file": "backend/app/api.py",
+      "line": 456,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/sales/{identifier}/cancel",
+      "function": "cancel",
+      "file": "backend/app/api.py",
+      "line": 460,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/accounts",
+      "function": "accounts",
+      "file": "backend/app/api.py",
+      "line": 464,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/accounts",
+      "function": "create_account",
+      "file": "backend/app/api.py",
+      "line": 468,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/categories",
+      "function": "categories",
+      "file": "backend/app/api.py",
+      "line": 479,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/categories",
+      "function": "create_category",
+      "file": "backend/app/api.py",
+      "line": 483,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance",
+      "function": "finance",
+      "file": "backend/app/api.py",
+      "line": 564,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "''",
+        "'history'",
+        "None",
+        "None",
+        "'due'",
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/print",
+      "function": "finance_print",
+      "file": "backend/app/api.py",
+      "line": 572,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "''",
+        "'history'",
+        "None",
+        "None",
+        "'due'",
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance",
+      "function": "create_finance",
+      "file": "backend/app/api.py",
+      "line": 586,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": [
+        "transport_supplier"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/{identifier}/settle",
+      "function": "settle",
+      "file": "backend/app/api.py",
+      "line": 614,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/{identifier}/cancel",
+      "function": "cancel_finance",
+      "file": "backend/app/api.py",
+      "line": 626,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/dashboard",
+      "function": "dashboard",
+      "file": "backend/app/api.py",
+      "line": 635,
+      "defaults": [
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/audit",
+      "function": "audit",
+      "file": "backend/app/api.py",
+      "line": 651,
+      "defaults": [
+        "PAGE",
+        "SIZE",
+        "Depends(get_db, scope='function')",
+        "Depends(admin)"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/reports/{report}.csv",
+      "function": "report",
+      "file": "backend/app/api.py",
+      "line": 655,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "''",
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "''",
+        "'all'",
+        "None",
+        "None",
+        "'due'",
+        "Depends(get_db, scope='function')",
+        "Depends(current_user)"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/{path:path}",
+      "function": "frontend",
+      "file": "backend/app/api.py",
+      "line": 697,
+      "defaults": [],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/accounts/{identifier}",
+      "function": "edit_account",
+      "file": "backend/app/financial.py",
+      "line": 38,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/categories/{identifier}",
+      "function": "edit_category",
+      "file": "backend/app/financial.py",
+      "line": 53,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/ofx/imports",
+      "function": "list_ofx_imports",
+      "file": "backend/app/financial.py",
+      "line": 75,
+      "defaults": [
+        "Query(1, ge=1, le=1000000)",
+        "Query(20, ge=1, le=100)",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/ofx/imports",
+      "function": "import_ofx",
+      "file": "backend/app/financial.py",
+      "line": 79,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/ofx/imports/{identifier}",
+      "function": "ofx_detail",
+      "file": "backend/app/financial.py",
+      "line": 107,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/ofx/imports/{import_id}/items/{item_id}/suggestions",
+      "function": "ofx_suggestions",
+      "file": "backend/app/financial.py",
+      "line": 111,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/ofx/imports/{import_id}/items/{item_id}/confirm",
+      "function": "confirm_ofx",
+      "file": "backend/app/financial.py",
+      "line": 124,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_supplier"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/subcategories",
+      "function": "subcategories",
+      "file": "backend/app/financial.py",
+      "line": 168,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/subcategories",
+      "function": "create_subcategory",
+      "file": "backend/app/financial.py",
+      "line": 172,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/subcategories/{identifier}",
+      "function": "edit_subcategory",
+      "file": "backend/app/financial.py",
+      "line": 180,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/suppliers",
+      "function": "suppliers",
+      "file": "backend/app/financial.py",
+      "line": 192,
+      "defaults": [
+        "''",
+        "None",
+        "None",
+        "'all'",
+        "Query(1, ge=1)",
+        "Query(20, ge=1, le=100)",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/suppliers",
+      "function": "create_supplier",
+      "file": "backend/app/financial.py",
+      "line": 209,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/suppliers/{identifier}",
+      "function": "edit_supplier",
+      "file": "backend/app/financial.py",
+      "line": 218,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/movements",
+      "function": "movements",
+      "file": "backend/app/financial.py",
+      "line": 260,
+      "defaults": [
+        "Depends(filter_dependency)",
+        "Query(1, ge=1, le=1000000)",
+        "Query(20, ge=1, le=100)",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/movements",
+      "function": "create_movement",
+      "file": "backend/app/financial.py",
+      "line": 268,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_supplier"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/{identifier}/attachments",
+      "function": "add_entry_attachment",
+      "file": "backend/app/financial.py",
+      "line": 326,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/payments/{identifier}/attachments",
+      "function": "add_payment_attachment",
+      "file": "backend/app/financial.py",
+      "line": 330,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/attachments/{identifier}",
+      "function": "download_attachment",
+      "file": "backend/app/financial.py",
+      "line": 334,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/payments/{identifier}/reverse",
+      "function": "reverse_title_payment",
+      "file": "backend/app/financial.py",
+      "line": 339,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/movements/{identifier}/reverse",
+      "function": "reverse_movement",
+      "file": "backend/app/financial.py",
+      "line": 346,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/movements.csv",
+      "function": "csv_movements",
+      "file": "backend/app/financial.py",
+      "line": 355,
+      "defaults": [
+        "Depends(filter_dependency)",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/reports/catalog",
+      "function": "report_catalog",
+      "file": "backend/app/reporting.py",
+      "line": 63,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/budgets",
+      "function": "budgets",
+      "file": "backend/app/reporting.py",
+      "line": 67,
+      "defaults": [
+        "Query(ge=2000, le=2200)",
+        "Query(ge=1, le=12)",
+        "None",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/finance/budgets",
+      "function": "save_budget",
+      "file": "backend/app/reporting.py",
+      "line": 73,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/finance/budgets/{identifier}",
+      "function": "deactivate_budget",
+      "file": "backend/app/reporting.py",
+      "line": 90,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/dashboard",
+      "function": "finance_dashboard",
+      "file": "backend/app/reporting.py",
+      "line": 94,
+      "defaults": [
+        "None",
+        "None",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/reports/{slug}.csv",
+      "function": "finance_report_csv",
+      "file": "backend/app/reporting.py",
+      "line": 197,
+      "defaults": [
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/finance/reports/{slug}",
+      "function": "finance_report",
+      "file": "backend/app/reporting.py",
+      "line": 203,
+      "defaults": [
+        "None",
+        "None",
+        "None",
+        "None",
+        "None",
+        "Query(1, ge=1, le=1000000)",
+        "Query(20, ge=1, le=100)",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/service-orders",
+      "function": "list_service_orders",
+      "file": "backend/app/service_orders.py",
+      "line": 88,
+      "defaults": [
+        "''",
+        "None",
+        "Query(1, ge=1, le=1000000)",
+        "Query(20, ge=1, le=100)",
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "POST",
+      "path": "/api/service-orders",
+      "function": "create_service_order",
+      "file": "backend/app/service_orders.py",
+      "line": 99,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "GET",
+      "path": "/api/service-orders/{identifier}",
+      "function": "get_service_order",
+      "file": "backend/app/service_orders.py",
+      "line": 121,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": []
+    },
+    {
+      "method": "PUT",
+      "path": "/api/service-orders/{identifier}",
+      "function": "update_service_order",
+      "file": "backend/app/service_orders.py",
+      "line": 125,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "guard_existing_transport"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/service-orders/{identifier}/generate-titles",
+      "function": "generate_service_order_titles",
+      "file": "backend/app/service_orders.py",
+      "line": 156,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "guard_existing_transport",
+        "transport_kind"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/service-orders/{identifier}/cancel",
+      "function": "cancel_service_order",
+      "file": "backend/app/service_orders.py",
+      "line": 220,
+      "defaults": [
+        "DB",
+        "ADMIN"
+      ],
+      "guards": [
+        "guard_existing_transport"
+      ]
+    }
+  ],
+  "backend_tests": {
+    "backend/tests/test_app.py": [
+      "test_auth_cookie_sessions_and_logout",
+      "test_login_throttling_and_no_secret_in_validation",
+      "test_permissions_backend_and_own_records",
+      "test_origin_boundary",
+      "test_customer_document_uniqueness_pagination_and_deactivation",
+      "test_product_uniqueness_history_and_price_snapshot",
+      "test_stock_ledger_inventory_and_insufficient_balance",
+      "test_service_never_moves_stock",
+      "test_sale_requires_cash_and_customer_for_credit",
+      "test_finalize_atomic_and_idempotent",
+      "test_insufficient_stock_rolls_back_all_items_and_finance",
+      "test_concurrent_sales_do_not_oversell",
+      "test_concurrent_finalize_same_sale_single_payment",
+      "test_cancel_creates_reversals_once_and_restores_stock",
+      "test_operator_cannot_cancel_finalized_sale",
+      "test_closed_cash_blocks_sale_cancel_and_preserves_discrepancy",
+      "test_one_active_cash_and_opening_not_revenue",
+      "test_credit_settlement_once_full_amount",
+      "test_manual_cash_income_expense_and_reversal",
+      "test_finance_rejects_partial_and_wrong_account_and_cash_without_session",
+      "test_overdue_filters_and_dashboard_derived",
+      "test_csv_respects_filters_and_neutralizes_formula",
+      "test_integer_precision_rounding_and_reject_floats",
+      "test_disabled_user_session_revoked",
+      "test_session_expires",
+      "test_persistence_across_app_restart_and_backup_restore",
+      "test_negative_cash_expense_rolls_back",
+      "test_closed_receipt_cash_blocks_credit_sale_reversal",
+      "test_user_password_spaces_preserved_and_no_hash_output",
+      "test_manual_cancel_preserves_full_reason",
+      "test_receipt_date_filters_in_manaus",
+      "test_large_identifier_fails_cleanly"
+    ],
+    "backend/tests/test_customer_details.py": [
+      "test_create_edit_clear_and_preserve_common_fields",
+      "test_common_edits_by_other_users_preserve_private_metadata",
+      "test_other_identities_cannot_write_or_read_details",
+      "test_arbitrary_service_types_rejected_atomically",
+      "test_no_identity_in_payload_and_address_limit",
+      "test_existing_customer_and_csv_contract_do_not_include_private_fields",
+      "test_session_rechecks_account_role_and_activation",
+      "test_exact_username_with_operator_role_is_not_enabled",
+      "test_metadata_is_bound_to_account_id_and_not_reassigned_by_username",
+      "test_restart_and_existing_sqlite_backup_preserve_metadata",
+      "test_database_constraint_rejects_invalid_type",
+      "test_additive_migration_preserves_existing_tables_and_records",
+      "test_collection_and_delivery_are_independent_and_partial_updates_preserve_legacy",
+      "test_common_and_personalized_edits_preserve_each_other",
+      "test_direct_structured_address_access_is_denied_to_other_accounts",
+      "test_structured_address_limits_unknown_fields_and_atomic_validation",
+      "test_0011_to_0012_preserves_old_addresses_without_assigning_them",
+      "test_new_process_reads_persisted_collection_delivery_and_legacy"
+    ],
+    "backend/tests/test_deployment.py": [
+      "test_public_settings_fail_closed",
+      "test_railway_metadata_cannot_fall_back_to_local",
+      "test_public_variables_require_public_mode",
+      "test_directory_without_mount_is_rejected_before_creating_database",
+      "test_absent_mount_is_rejected",
+      "test_wrong_database_location_is_rejected",
+      "test_symlink_database_is_rejected",
+      "test_readonly_volume_is_rejected",
+      "test_explicit_https_port_is_supported_but_not_userinfo_or_invalid_port",
+      "test_secure_cookie_logout_expiry_and_private_endpoints",
+      "test_unauthorized_origins_and_cross_site_are_rejected",
+      "test_forwarded_headers_do_not_authorize_host_or_downgrade_cookie",
+      "test_forged_client_ip_cannot_bypass_existing_login_limit",
+      "test_health_requires_migrations_and_reserves_railway_health_host",
+      "test_seed_is_not_available_in_public_mode",
+      "test_start_requires_valid_port_before_opening_database",
+      "test_start_requires_built_frontend"
+    ],
+    "backend/tests/test_dre_specification.py": [
+      "test_proposed_dre_integer_cent_examples"
+    ],
+    "backend/tests/test_finance_expansion.py": [
+      "test_recurrence_is_finite_month_clamped_and_does_not_move_account",
+      "test_partial_settlements_are_idempotent_and_reversals_restore_balance",
+      "test_finance_filter_summary_uses_full_result_and_seven_day_boundary",
+      "test_attachments_are_private_validated_deduplicated_and_bounded",
+      "test_ofx_preview_duplicates_matching_creation_and_manual_ignore",
+      "test_dashboard_all_reports_budgets_and_export",
+      "test_backup_bundle_contains_restorable_database_and_attachment_manifest",
+      "test_0003_migration_preserves_existing_payment_and_backfills_principal"
+    ],
+    "backend/tests/test_financial_ledger.py": [
+      "test_opening_balance_period_totals_and_pending_titles",
+      "test_movement_retry_concurrency_and_reversal",
+      "test_cash_rules_and_atomic_rollback",
+      "test_backdated_competence_document_origin_and_paging",
+      "test_catalog_edits_deactivation_and_history",
+      "test_category_supplier_validation_and_permissions",
+      "test_migration_0002_preserves_ids_values_foreign_keys_and_manaus",
+      "test_automatic_sale_respects_inactive_category_and_rolls_back"
+    ],
+    "backend/tests/test_financial_print.py": [
+      "test_print_civil_date_preserves_iso_and_csv",
+      "test_print_does_not_relax_date_validation",
+      "test_print_direction_money_empty_and_authorization"
+    ],
+    "backend/tests/test_financial_stage1.py": [
+      "test_pending_shortcuts_reconcile_partial_overdue_and_due_window",
+      "test_financial_shortcuts_keep_admin_authorization_and_zero_is_real"
+    ],
+    "backend/tests/test_integration_fixture.py": [
+      "test_fixture_reset_restores_data_without_replacing_database_file",
+      "test_fixture_reset_never_accepts_arbitrary_database"
+    ],
+    "backend/tests/test_operational_integrity.py": [
+      "test_consistent_generated_links_are_read_only",
+      "test_old_reclassification_is_reported_without_repair",
+      "test_dangling_references_are_reported",
+      "test_financial_operational_mismatches",
+      "test_missing_file_is_not_created",
+      "test_pending_wal_is_not_ignored_or_recovered"
+    ],
+    "backend/tests/test_partners.py": [
+      "test_pix_formats_are_normalized_and_do_not_create_payments",
+      "test_invalid_pix_and_recipient_types_are_rejected",
+      "test_partner_in_payables_preserves_history_and_pix_does_not_send_money",
+      "test_supplier_migration_keeps_existing_supplier_and_financial_reference"
+    ],
+    "backend/tests/test_registration.py": [
+      "test_tax_document_preserves_digits_and_cnpj_letters",
+      "test_document_does_not_silently_discard_invalid_characters",
+      "test_partner_crud_rejects_customer_only_metadata",
+      "test_formatted_document_search_and_optional_clear"
+    ],
+    "backend/tests/test_service_orders.py": [
+      "test_service_order_costs_titles_actual_result_idempotency_and_cancel"
+    ],
+    "backend/tests/test_supplier_kind_links.py": [
+      "test_cost_without_finance_blocks_kind_change_and_preserves_every_link",
+      "test_legacy_generic_supplier_with_operational_link_is_protected",
+      "test_new_generic_supplier_cannot_be_associated_as_day_worker",
+      "test_financial_history_restriction_is_preserved",
+      "test_unlinked_kind_change_follows_existing_capability",
+      "test_common_edit_retains_costs_and_generates_identical_contracted_amounts",
+      "test_direct_specialized_requests_remain_denied_without_capability",
+      "test_kind_guard_and_common_edits_survive_application_restart"
+    ],
+    "backend/tests/test_transport_capabilities.py": [
+      "test_backend_module_boundary_and_account_capabilities",
+      "test_capability_cannot_be_self_granted_and_rechecked_on_each_request",
+      "test_customer_details_are_owned_by_id_and_generic_edits_preserve_them",
+      "test_freight_catalog_and_historical_orders_without_losing_financial_data",
+      "test_secure_provisioning_creates_reuses_and_preserves_demo",
+      "test_additive_migration_preserves_every_legacy_column_and_defaults_disabled",
+      "test_new_freight_associations_in_ledger_and_ofx_are_blocked_atomically",
+      "test_provisioning_requires_fresh_login_without_resetting_existing_password"
+    ]
+  },
+  "limits": "Static route access is not authorization for every mutation. Endpoint dependencies and backend tests are authoritative."
+}

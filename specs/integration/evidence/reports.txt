@@ -1,0 +1,17 @@
+[WebServer] INFO:     Started server process [320510]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 6 tests using 1 worker
+
+(node:320512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [reports] › tests/integration-reports.spec.ts:4:1 › all 26 reports: filtered pagination contracts, empty output, HTTP failure and recovery (8.0s)
+  ✓  2 [reports] › tests/integration-reports.spec.ts:106:1 › report generation retries the same applied criteria after an HTTP failure (1.3s)
+  ✓  3 [reports] › tests/integration-reports.spec.ts:138:1 › failed report is unavailable rather than a confirmed empty result (1.2s)
+  ✓  4 [reports] › tests/integration-reports.spec.ts:166:1 › budget query failure is not represented as an empty confirmed budget (1.3s)
+  ✓  5 [reports] › tests/integration-reports.spec.ts:202:1 › all report and CSV endpoints distinguish operator denial from missing session (598ms)
+  ✓  6 [reports] › tests/integration-reports.spec.ts:215:1 › page two print preserves current rows, long text, IDs and full cents on A4 (2.0s)
+
+  6 passed (19.1s)

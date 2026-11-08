@@ -1,0 +1,21 @@
+[WebServer] INFO:     Started server process [321543]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 8 tests using 1 worker
+
+(node:321545) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/actions-review.spec.ts:124:1 › budget deactivation catches failure and changes data only after successful retry (1.5s)
+  ✓  2 [desktop] › tests/app.spec.ts:460:1 › financeiro ampliado: recorrência, baixa parcial, comprovante, OFX, painel e relatórios (3.1s)
+  ✓  3 [desktop] › tests/navigation.spec.ts:162:1 › navegação interna, Voltar/Avançar, foco e atalho financeiro (2.0s)
+  ✓  4 [desktop] › tests/system-review.spec.ts:49:1 › all 26 financial report types retain the displayed page in print media and CSV remains downloadable (2.8s)
+(node:321992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  5 [mobile] › tests/actions-review.spec.ts:124:1 › budget deactivation catches failure and changes data only after successful retry (1.5s)
+  ✓  6 [mobile] › tests/app.spec.ts:460:1 › financeiro ampliado: recorrência, baixa parcial, comprovante, OFX, painel e relatórios (4.2s)
+  ✓  7 [mobile] › tests/navigation.spec.ts:162:1 › navegação interna, Voltar/Avançar, foco e atalho financeiro (2.2s)
+  ✓  8 [mobile] › tests/system-review.spec.ts:49:1 › all 26 financial report types retain the displayed page in print media and CSV remains downloadable (2.7s)
+
+  8 passed (25.6s)

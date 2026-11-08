@@ -1,0 +1,9 @@
+{
+  "backend/app/capabilities.py": true,
+  "backend/app/transport_admin.py": true,
+  "backend/migrations/versions/0013_transport_capability.py": true,
+  "frontend/src/capabilities.ts": true,
+  "frontend/src/navigation/routes.ts": true,
+  "backend/app/service_orders.py": true,
+  "backend/app/financial.py:edit_supplier": true
+}

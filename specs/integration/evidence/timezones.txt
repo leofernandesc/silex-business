@@ -1,0 +1,21 @@
+[WebServer] INFO:     Started server process [294882]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8011 (Press CTRL+C to quit)
+
+Running 4 tests using 1 worker
+
+(node:294905) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [America/Manaus] › tests/integration-dates.spec.ts:9:1 › real browser timezone boundaries preserve ISO presets and reloaded criteria (13.2s)
+(node:295811) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [UTC] › tests/integration-dates.spec.ts:9:1 › real browser timezone boundaries preserve ISO presets and reloaded criteria (12.6s)
+(node:296460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [Asia/Tokyo] › tests/integration-dates.spec.ts:9:1 › real browser timezone boundaries preserve ISO presets and reloaded criteria (10.7s)
+(node:296707) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 [America/Los_Angeles] › tests/integration-dates.spec.ts:9:1 › real browser timezone boundaries preserve ISO presets and reloaded criteria (11.2s)
+
+  4 passed (1.0m)
