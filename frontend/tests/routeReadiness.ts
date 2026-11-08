@@ -1,7 +1,8 @@
 import { expect, type Page } from "@playwright/test";
 import type { routes } from "../src/navigation/routes";
 const endpoints: Record<string, string> = {
-  home: "/company-settings",
+  home: "/dashboard",
+  "finance-plan": "/categories",
   dashboard: "/dashboard",
   customers: "/customers",
   products: "/products",

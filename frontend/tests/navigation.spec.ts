@@ -21,7 +21,7 @@ async function start(page: Page, username = "demo.admin") {
   await signIn(page, username);
   await expect(page).toHaveURL(/\/app#home$/);
   await page.goto("/app#dashboard");
-  await expect(page.getByRole("heading", { name: "Visão geral", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Página inicial", exact: true })).toBeVisible();
 }
 async function openMenu(page: Page) {
   const opener = page.getByRole("button", { name: "Abrir menu", exact: true });
@@ -140,7 +140,7 @@ test("compatibilidade dos 24 hashes anteriores, alias, home e destino desconheci
   const active = await (await page.request.get("/api/auth/me")).json();
   for (const route of routes.filter(route => canAccessRoute(active, route.id))) {
     await page.goto("/#" + route.id);
-    await expect(page).toHaveURL(new RegExp("/app#" + route.id + "$"));
+    await expect(page).toHaveURL(new RegExp("/app#" + (route.id==="dashboard"?"home":route.id) + "$"));
     await expect(page.locator(".breadcrumb strong")).toHaveText(route.title);
     await expect(page.locator(".app-shell")).toBeVisible();
   }
@@ -152,7 +152,7 @@ test("compatibilidade dos 24 hashes anteriores, alias, home e destino desconheci
     "Endereço não encontrado",
   );
   await page.goto("/rota-inexistente");
-  await expect(page).toHaveURL(/\/app#dashboard$/);
+  await expect(page).toHaveURL(/\/app#home$/);
   await expect(page.getByRole("alert")).toContainText(
     "Endereço não encontrado",
   );
@@ -175,7 +175,7 @@ test("navegação interna, Voltar/Avançar, foco e atalho financeiro", async ({
   await expect(page).toHaveURL(/\/app#customers$/);
   await expect(page.locator("#main-content")).toBeFocused();
   await page.goBack();
-  await expect(page).toHaveURL(/\/app#dashboard$/);
+  await expect(page).toHaveURL(/\/app#home$/);
   await page.goForward();
   await expect(page).toHaveURL(/\/app#customers$/);
   await page.goForward();
@@ -195,7 +195,7 @@ test("P08: operador sem atalhos administrativos e guard uniforme para todos os d
 }) => {
   await page.goto("/app#finance");
   await signIn(page, "demo.operador");
-  await expect(page).toHaveURL(/\/app#dashboard$/);
+  await expect(page).toHaveURL(/\/app#home$/);
   await expect(page.getByRole("alert")).toContainText("não tem permissão");
   await openMenu(page);
   const nav = page.getByRole("navigation", { name: "Menu principal" });
@@ -207,7 +207,7 @@ test("P08: operador sem atalhos administrativos e guard uniforme para todos os d
   ).toHaveCount(0);
   for (const route of routes.filter((r) => r.admin)) {
     await page.goto("/app#" + route.id);
-    await expect(page).toHaveURL(/\/app#dashboard$/);
+    await expect(page).toHaveURL(/\/app#home$/);
     await expect(page.getByRole("alert")).toContainText("não tem permissão");
   }
   for (const endpoint of [
@@ -445,7 +445,7 @@ test("403 de operação preserva sessão e comunica recusa sem expirar", async (
   await page.goto("/app#finance-dashboard");
   // F02 deliberately replaces backend diagnostics with contextual dashboard feedback.
   await expect(page.getByRole("alert")).toContainText(
-    "Não foi possível consultar os dados do Dashboard Financeiro",
+    "Não foi possível consultar os dados da Visão financeira",
   );
   await expect(page.locator(".dashboard-indicators .summary-card strong")).toHaveText(Array(8).fill("—"));
   await expect(page).toHaveURL(/\/app#finance-dashboard$/);

@@ -7,11 +7,13 @@ const manifest =
 process.env.SILEX_E2E_MANIFEST = manifest;
 process.env.SILEX_INTEGRATION_MANIFEST = manifest;
 process.env.SILEX_TEST_PASSWORD = "DemoLocal#2026";
+const port = Number(process.env.SILEX_E2E_PORT || 8011);
 const firefox = process.env.SILEX_INTEGRATION_BROWSER === "firefox";
 export default defineConfig({
   testDir: "./tests",
   testMatch: [
     "app.spec.ts",
+    "dre-integration.spec.ts",
     "navigation.spec.ts",
     "home.spec.ts",
     "public.spec.ts",
@@ -44,9 +46,9 @@ export default defineConfig({
       },
     ],
   ],
-  outputDir: "test-results-integration",
+  outputDir: process.env.SILEX_INTEGRATION_OUTPUT || "test-results-integration",
   use: {
-    baseURL: "http://127.0.0.1:8011",
+    baseURL: `http://127.0.0.1:${port}`,
     browserName: firefox ? "firefox" : "chromium",
     locale: "pt-BR",
     timezoneId: "America/Manaus",
@@ -66,7 +68,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "../.venv/bin/python ../scripts/e2e_server.py",
-    url: "http://127.0.0.1:8011/api/health",
+    url: `http://127.0.0.1:${port}/api/health`,
     timeout: 45000,
     reuseExistingServer: false,
   },

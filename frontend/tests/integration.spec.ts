@@ -75,10 +75,10 @@ for (const identity of identities)
         continue;
       }
       if (allowed) {
-        await expect(page).toHaveURL(new RegExp("#" + route.id + "$"));
+        await expect(page).toHaveURL(new RegExp("#" + (route.id==="dashboard"?"home":route.id) + "$"));
         await expect(page.locator("main h1")).toBeVisible();
       } else {
-        await expect(page).toHaveURL(/#dashboard$/);
+        await expect(page).toHaveURL(/#home$/);
         await expect(page.getByRole("alert")).toContainText(
           "não tem permissão",
         );
