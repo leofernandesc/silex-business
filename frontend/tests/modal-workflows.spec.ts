@@ -21,7 +21,7 @@ async function activate(page: Page, locator: Locator) {
   await reach(page, locator);
   await page.keyboard.press("Enter");
 }
-async function login(page: Page, route: string) {
+async function login(page: Page, route: string, waitForIdle = true) {
   await page.goto("/app#" + route);
   await page.getByLabel("Usuário", { exact: true }).fill("demo.admin");
   await page
@@ -29,7 +29,7 @@ async function login(page: Page, route: string) {
     .fill(process.env.SILEX_TEST_PASSWORD!);
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
   await expect(page.locator(".app-shell main h1")).toBeVisible();
-  await page.waitForLoadState("networkidle");
+  if (waitForIdle) await page.waitForLoadState("networkidle");
 }
 async function accessibleFocus(page: Page) {
   await expect
@@ -293,7 +293,18 @@ test("Outros padrões: venda, estorno, configurações financeiras, usuário e s
 test("Caixa: confirmação assíncrona troca acionador e mantém destino acessível", async ({
   page,
 }) => {
-  await login(page, "cash");
+  // Hold the initial lookup: action selection must follow confirmed data.
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => { release = resolve; });
+  let requested!: () => void;
+  const requestStarted = new Promise<void>((resolve) => { requested = resolve; });
+  await page.route("**/api/cash-sessions/current", async (route) => {
+    requested();
+    await pending;
+    await route.continue();
+  }, { times: 1 });
+  await login(page, "cash", false);
+  await requestStarted;
   const close = page.getByRole("button", {
     name: "Fechar meu caixa",
     exact: true,
@@ -302,6 +313,11 @@ test("Caixa: confirmação assíncrona troca acionador e mantém destino acessí
     name: "Abrir meu caixa",
     exact: true,
   });
+  await expect(page.getByText("Consultando caixa…", { exact: true })).toHaveCount(3);
+  await expect(close).toHaveCount(0);
+  await expect(open).toHaveCount(0);
+  release();
+  await expect(open.or(close)).toBeVisible();
   if (await close.isVisible()) {
     await activate(page, close);
     await activate(
