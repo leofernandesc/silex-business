@@ -10,9 +10,9 @@ import {
 } from "./routes";
 
 describe("Route availability and compatibility, including SB-04B home", () => {
-  it("keeps all 23 modules and the legacy supplier alias alongside home", () => {
-    expect(routes).toHaveLength(25);
-    expect(new Set(routes.map((r) => r.id)).size).toBe(25);
+  it("preserves legacy addresses and adds one canonical financial plan", () => {
+    expect(routes).toHaveLength(26);
+    expect(new Set(routes.map((r) => r.id)).size).toBe(26);
     expect(getRoute("home")).toMatchObject({
       admin: false,
       group: "PRINCIPAL",
@@ -24,10 +24,10 @@ describe("Route availability and compatibility, including SB-04B home", () => {
       expect(canAccessRoute(null, route.id)).toBe(false);
       for (const pathname of ["/", "/app", "/app/"]) {
         expect(readAddress({ pathname, hash: `#${route.id}` }).route).toBe(
-          route.id,
+          route.id === "dashboard" ? "home" : route.id,
         );
       }
-      expect(appUrl(route.id)).toBe(`/app#${route.id}`);
+      expect(appUrl(route.id)).toBe(`/app#${route.id === "dashboard" ? "home" : route.id}`);
     }
   });
   it("uses home by default and treats login as a separate path", () => {
@@ -53,7 +53,7 @@ describe("Route availability and compatibility, including SB-04B home", () => {
   ])("rejects unknown fragment %s", (hash) => {
     expect(canAccessRoute({ role: "admin" }, hash)).toBe(false);
     expect(readAddress({ pathname: "/app", hash: `#${hash}` })).toMatchObject({
-      route: "dashboard",
+      route: "home",
       requested: false,
     });
     expect(encodeReturn(hash)).toBeNull();

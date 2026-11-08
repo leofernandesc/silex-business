@@ -4,7 +4,7 @@ import type { User } from "../types";
 // Availability mirrors the existing admin/current_user guards; the server authorizes requests.
 export const routes = [
   { id: "home", title: "Início", group: "PRINCIPAL", admin: false },
-  { id: "dashboard", title: "Visão geral", group: "PRINCIPAL", admin: false },
+  { id: "dashboard", title: "Início", group: "PRINCIPAL", admin: false },
   { id: "customers", title: "Clientes", group: "cadastros", admin: false },
   {
     id: "products",
@@ -37,7 +37,7 @@ export const routes = [
   },
   {
     id: "finance-dashboard",
-    title: "Dashboard",
+    title: "Visão financeira",
     group: "financeiro",
     admin: true,
   },
@@ -71,15 +71,16 @@ export const routes = [
     group: "financeiro",
     admin: true,
   },
+  {id:"finance-plan",title:"Plano financeiro",group:"financeiro",admin:true},
   {
     id: "finance-categories",
-    title: "Categorias",
+    title: "Plano financeiro",
     group: "financeiro",
     admin: true,
   },
   {
     id: "finance-subcategories",
-    title: "SubCategorias",
+    title: "Plano financeiro",
     group: "financeiro",
     admin: true,
   },
@@ -112,7 +113,7 @@ export const routes = [
 
 export type RouteId = (typeof routes)[number]["id"];
 export function getRoute(id: string) {
-  return routes.find((route) => route.id === id);
+  return routes.find((route) => route.id === (id === "dashboard" ? "home" : id));
 }
 export function canAccessRoute(
   user: Pick<User, "role" | "capabilities"> | null,
@@ -122,7 +123,7 @@ export function canAccessRoute(
   return Boolean(user && route && (!route.admin || user.role === "admin") && (route.id !== "subcontracted-freight" || hasTransport(user)));
 }
 export function appUrl(id: RouteId) {
-  return `/app#${id}`;
+  return `/app#${getRoute(id)?.id || id}`;
 }
 export const RETURN_KEY = "silex.navigation.return";
 export const LOGOUT_PENDING_KEY = "silex.session.logout-pending";
@@ -155,7 +156,7 @@ export function readAddress(address: Pick<Location, "pathname" | "hash">) {
       : "";
   return {
     login,
-    route: route || (message ? "dashboard" : DEFAULT_ROUTE),
+    route: route || (message ? "home" : DEFAULT_ROUTE),
     requested: operational && Boolean(route),
     message,
   };

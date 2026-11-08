@@ -13,3 +13,13 @@ describe('GET structure guards never interpret malformed responses as empty succ
 it('requires a complete active authentication identity',()=>{const user={id:1,name:'Fixture',username:'fixture',active:true,role:'admin',capabilities:[]};expect(validUser(user)).toBe(true);for(const invalid of [{},null,{...user,active:false},{...user,role:'owner'},{...user,capabilities:null},{...user,name:''}])expect(validUser(invalid)).toBe(false);});
 
 it('allows explicitly nullable open-cash fields without allowing null balances',()=>{expect(validResource('/cash-sessions',{items:[{id:1,opening_cents:0,expected_cents:0,counted_cents:null,difference_cents:null}],total:1,page:1,page_size:20})).toBe(true);expect(validResource('/accounts',[{id:1,name:'Fixture',opening_cents:0,balance_cents:null}])).toBe(false);});
+
+it('DRE preserves unavailable versus confirmed zero and rejects false final totals',()=>{
+ const report={margins:{LL:{value:null,reason:'Incompleto'}},source_fingerprint:'0'.repeat(64),lines:[{code:'LL',known_amount_cents:null,final_amount_cents:null,coverage_status:'unavailable'}],facts:[],issues:[]};
+ expect(validResource('/finance/dre',report)).toBe(true);
+ expect(validResource('/finance/dre',{...report,lines:[{code:'LL',known_amount_cents:0,final_amount_cents:0,coverage_status:'complete'}]})).toBe(true);
+ expect(validResource('/finance/dre',{...report,lines:[{code:'LL',known_amount_cents:0,final_amount_cents:0,coverage_status:'partial'}]})).toBe(false);
+ expect(validResource('/finance/dre',{...report,lines:[{code:'DA',known_amount_cents:0,final_amount_cents:0,coverage_status:'not_applicable'}]})).toBe(true);
+ expect(validResource('/finance/dre',{})).toBe(false);
+ expect(validResource('/finance/dre',{...report,facts:[{key:'source',amount_cents:'0',economic_date:'2026-11-08'}]})).toBe(false);
+});

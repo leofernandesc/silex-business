@@ -1,0 +1,7 @@
+.dre-print-facts { display: none; }
+@media print {
+  .dre-report .dre-print-facts { display: block; }
+  .dre-report .dre-screen-detail { display: none; }
+  .dre-report thead { display: table-header-group; }
+  .dre-report th, .dre-report td { overflow-wrap: anywhere; }
+}

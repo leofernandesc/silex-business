@@ -19,6 +19,7 @@ export function homeNavigation(user: Pick<User, "role" | "capabilities"> | null)
     (route) =>
       route.id !== "home" &&
       route.id !== "finance-suppliers" &&
+      route.id !== "dashboard" && route.id !== "finance-categories" && route.id !== "finance-subcategories" &&
       canAccessRoute(user, route.id),
   );
   const quick = quickOrder.flatMap((id) =>

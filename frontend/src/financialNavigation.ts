@@ -1,3 +1,4 @@
+import {readDrePeriod,dreHref} from "./dreNavigation";
 import { civilDate } from "./civilDates";
 import { dateOnly } from "./format";
 export type FinancialContext = "dashboard" | "titles" | "movements";
@@ -82,6 +83,7 @@ export function financialHref(route: string, filters: TemporalFilters): string {
 export function preserveFinancialSearch(destination: string): string {
   const route = destination.split("#")[1],
     context = contexts[route];
+  if(typeof location!=="undefined"&&route==="finance-reports"&&location.hash==="#finance-reports"){const dre=readDrePeriod(location.search);if(dre)return dreHref(dre);}
   if (
     typeof location === "undefined" ||
     !context ||

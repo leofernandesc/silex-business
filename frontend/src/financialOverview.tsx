@@ -1,3 +1,4 @@
+import {dreHref} from "./dreNavigation";
 import { useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Scale } from "lucide-react";
 import { query } from "./api";
@@ -137,9 +138,10 @@ export function FinanceOverview(_props: { navigate: (id: string) => void }) {
   return (
     <div className="silex-financial-dashboard" aria-busy={pending}>
       <PageTitle
-        title="Dashboard financeiro"
+        title="Visão financeira"
         subtitle="Movimentos, títulos em aberto, saldos por conta e resultado por competência."
       />
+      <p><a href={dreHref()}>Consultar DRE gerencial por competência econômica nos relatórios</a></p>
       <form
         className="panel toolbar dashboard-period"
         onSubmit={(e) => {
@@ -177,7 +179,7 @@ export function FinanceOverview(_props: { navigate: (id: string) => void }) {
         <Notice>
           {result.error?.includes("Data inicial deve ser anterior à final")
             ? "Período inválido: Data inicial deve ser anterior à final. Ajuste o período e clique em Atualizar."
-            : "Não foi possível consultar os dados do Dashboard Financeiro. Confira a conexão e clique em Atualizar para tentar novamente."}
+            : "Não foi possível consultar os dados da Visão financeira. Confira a conexão e clique em Atualizar para tentar novamente."}
         </Notice>
       )}
       <section

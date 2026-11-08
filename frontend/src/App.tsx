@@ -1,3 +1,4 @@
+import { FinancePlanPage } from "./financePlan";
 import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
@@ -42,6 +43,7 @@ import {
   SummaryCard,
   Table,
   useLoad,
+  LoadFeedback,
 } from "./ui";
 import { Customers, Products } from "./catalog";
 import { CashPage, StockPage } from "./operations";
@@ -63,7 +65,7 @@ const routeIcons: Record<string, typeof LayoutDashboard> = {
   sales: Receipt, "service-orders": Receipt, cash: Banknote, users: ShieldCheck,
   audit: FileClock, "company-settings": Settings2,
 };
-const menu = routes.filter((route) => route.group !== "financeiro" && route.id !== "finance-suppliers")
+const menu = routes.filter((route) => route.group !== "financeiro" && route.id !== "finance-suppliers" && route.id !== "dashboard")
   .map((route) => ({ key: route.id, name: route.title, group: route.group, icon: routeIcons[route.id] || Wallet }));
 const navGroups = [
   { key: "cadastros", label: "CADASTROS" },
@@ -71,7 +73,7 @@ const navGroups = [
   { key: "financeiro", label: "FINANCEIRO" },
   { key: "administracao", label: "ADMINISTRAÇÃO" },
 ];
-const financeMenu = routes.filter((route) => route.group === "financeiro")
+const financeMenu = routes.filter((route) => route.group === "financeiro" && route.id !== "finance-categories" && route.id !== "finance-subcategories")
   .map((route) => ({ key: route.id, name: route.title }));
 export default function App() {
   const session = useAppNavigation();
@@ -250,12 +252,9 @@ export default function App() {
             </button>
           </div>
         </header>
-        <main id="main-content" tabIndex={-1} key={safePage} className={safePage === "dashboard" ? "silex-overview" : undefined}>
+        <main id="main-content" tabIndex={-1} key={safePage} className={undefined}>
           {error && <Notice>{error}</Notice>}
-          {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate} />}
-          {safePage === "dashboard" && (
-            <DashboardPage user={user} navigate={navigate} />
-          )}{" "}
+          {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate}><section className="silex-overview" aria-label="Resumo operacional"><OperationalSummary user={user} navigate={navigate}/></section></AuthenticatedHome>}{" "}
           {safePage === "customers" && <Customers user={user} />}{" "}
           {safePage === "products" && <Products user={user} />}{" "}
           {safePage === "stock" && <StockPage />}{" "}
@@ -279,14 +278,15 @@ export default function App() {
           {safePage === "finance-receivable" && (
             <FinancePage user={user} initialDirection="income" />
           )}
+          {safePage === "finance-plan" && <FinancePlanPage/>}
           {safePage === "finance-accounts" && (
             <FinanceCatalog kind="accounts" />
           )}
           {safePage === "finance-categories" && (
-            <FinanceCatalog kind="categories" />
+            <FinancePlanPage />
           )}
           {safePage === "finance-subcategories" && (
-            <FinanceCatalog kind="subcategories" />
+            <FinancePlanPage initialSubcategories />
           )}
           {safePage === "finance-suppliers" && (
             <PartnerRegistry kind="supplier" />
@@ -418,7 +418,7 @@ function Login({
 function CheckIcon() {
   return <ShieldCheck size={18} className="positive" />;
 }
-function DashboardPage({
+function OperationalSummary({
   user,
   navigate,
 }: {
@@ -428,31 +428,12 @@ function DashboardPage({
   const result = useLoad<Dashboard>("/dashboard"),
     [view, setView] = useState<Sale | null>(null),
     d = result.data;
-  if (result.error) return <Notice>{result.error}</Notice>;
+  if (result.error) return <LoadFeedback resource={result} label="resumo operacional"/>;
   if (!d) return <div className="empty">Carregando resumo...</div>;
   return (
     <>
-      <PageTitle
-        title="Visão geral"
-        subtitle={`Olá, ${user.name.split(" ")[0]}. Confira o movimento do seu negócio.`}
-      >
-        <span className="today-chip">
-          <Clock size={15} />
-          {dateOnly(d.date)}
-        </span>
-      </PageTitle>
-      <section className="welcome-banner">
-        <div>
-          <span className="eyebrow">TUDO EM UM SÓ LUGAR</span>
-          <h2>Uma nova venda começa por aqui.</h2>
-          <p>Consulte seus itens, monte o pedido e acompanhe o resultado.</p>
-        </div>
-        <button onClick={() => navigate("pos")}>
-          Iniciar venda <ArrowRight size={18} />
-        </button>
-        <ShoppingCart className="banner-icon" />
-      </section>
-      <div className="summary-grid overview-summary" role="region" aria-label="Indicadores da Visão Geral" aria-describedby="overview-values-help" tabIndex={0}>
+      <h2>Indicadores operacionais</h2>
+      <div className="summary-grid overview-summary" role="region" aria-label="Indicadores operacionais" aria-describedby="overview-values-help" tabIndex={0}>
         <SummaryCard
           label="Vendas hoje"
           value={money(d.sales_today_cents)}
@@ -470,14 +451,14 @@ function DashboardPage({
           <>
             <SummaryCard
               label="A receber"
-              value={money(d.receivable_cents || 0)}
+              value={d.receivable_cents==null?"—":money(d.receivable_cents)}
               detail="Valores ainda em aberto."
               icon={<Wallet />}
               tone="purple"
             />
             <SummaryCard
               label="Recebíveis vencidos"
-              value={money(d.overdue_cents || 0)}
+              value={d.overdue_cents==null?"—":money(d.overdue_cents)}
               detail="Acompanhe os vencimentos."
               icon={<Clock />}
               tone="amber"
@@ -502,6 +483,7 @@ function DashboardPage({
           </>
         )}
       </div>
+      {user.role==='admin'&&d.service_counts&&<div className="summary-grid"><SummaryCard icon={<Receipt/>} label="Serviços agendados" value={String(d.service_counts.scheduled||0)} detail="Ordens acessíveis ao seu perfil"/><SummaryCard icon={<Receipt/>} label="Serviços em execução" value={String(d.service_counts.in_progress||0)} detail="Ordens acessíveis ao seu perfil"/><SummaryCard icon={<Receipt/>} label="Serviços concluídos" value={String(d.service_counts.completed||0)} detail="Confira a evidência e os títulos no pedido"/></div>}
       <p id="overview-values-help" className="overview-values-help">Se necessário, deslize ou use as setas para conferir os valores completos.</p>
       <div className="dashboard-grid">
         <section className="panel">

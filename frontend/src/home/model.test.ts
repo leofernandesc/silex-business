@@ -32,14 +32,15 @@ describe("SB-04B authenticated home", () => {
         (route) =>
           route.id !== "home" &&
           route.id !== "finance-suppliers" &&
+          !["dashboard","finance-categories","finance-subcategories"].includes(route.id) &&
           (!route.admin || role === "admin") && route.id !== "subcontracted-freight",
       );
       expect(navigation.available).toEqual(expected);
       const ids = [
         ...navigation.quick,
         ...navigation.remaining,
-        navigation.overview!,
       ].map((route) => route.id);
+      expect(navigation.overview).toBeUndefined();
       expect(new Set(ids).size).toBe(ids.length);
       expect(new Set(ids)).toEqual(new Set(expected.map((route) => route.id)));
     },
@@ -70,7 +71,8 @@ describe("SB-04B authenticated home", () => {
     expect(html).not.toContain("Administração");
     for (const route of routes.filter((route) => route.admin))
       expect(html).not.toContain(`href="/app#${route.id}"`);
-    expect(html).toContain('href="/app#dashboard"');
+    expect(html).not.toContain('href="/app#dashboard"');
+    expect(html).toContain('href="/app#sales"');
     expect(html).not.toContain("R$");
   });
   it.each(["loading", "error"] as const)(

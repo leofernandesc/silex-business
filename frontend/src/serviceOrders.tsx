@@ -17,6 +17,7 @@ export function ServiceOrdersPage({user}:{user:User}) {
     [version, setVersion] = useState(0), [editing, setEditing] = useState<ServiceOrder | null | undefined>(),
     [viewing, setViewing] = useState<ServiceOrder | null>(null), [generating, setGenerating] = useState<ServiceOrder | null>(null),
     [canceling, setCanceling] = useState<ServiceOrder | null>(null), [notice, setNotice] = useState("");
+  const [completing,setCompleting]=useState<ServiceOrder|null>(null);
   const orders = useLoad<Page<ServiceOrder>>("/service-orders?" + query({ q, status, page }), version);
   const reload = () => setVersion((v) => v + 1);
   const saved = () => { setEditing(undefined); setNotice("Serviço/pedido salvo."); reload(); };
@@ -48,6 +49,8 @@ export function ServiceOrdersPage({user}:{user:User}) {
             <button aria-label={`Ver ${row.code}`} onClick={() => setViewing(row)}><Eye size={14} /> Ver</button>
             {!row.restricted_transport_costs && row.status !== "canceled" && <button aria-label={`Editar ${row.code}`} onClick={() => setEditing(row)}><Pencil size={14} /> Editar</button>}
             {!row.title_run_id && !row.restricted_transport_costs && row.status !== "canceled" && <button onClick={() => setGenerating(row)}><ReceiptText size={14} /> Gerar títulos</button>}
+            {!row.restricted_transport_costs&&!row.completed_on&&row.status!=='canceled'&&<button type="button" onClick={()=>setCompleting(row)}>Concluir {row.code}</button>}
+            {row.status==='completed'&&!row.title_run_id&&<span role="status">Títulos pendentes</span>}
             {row.title_run_id && <span className="badge active">Títulos gerados</span>}
             {!row.restricted_transport_costs && row.status !== "canceled" && <button className="danger" onClick={() => setCanceling(row)}>Cancelar</button>}
           </div></td>
@@ -58,6 +61,7 @@ export function ServiceOrdersPage({user}:{user:User}) {
     {editing !== undefined && <ServiceOrderForm transportEnabled={hasTransport(user)} order={editing} close={() => setEditing(undefined)} done={saved} />}
     {viewing && <ServiceOrderDetails order={viewing} close={() => setViewing(null)} refresh={() => refreshOrder(viewing)}
       canceled={() => { setViewing(null); setNotice("Serviço cancelado; títulos e baixas foram mantidos no histórico."); reload(); }} />}
+    {completing&&<CompleteServiceForm order={completing} close={()=>setCompleting(null)} done={(order,generate)=>{setCompleting(null);setNotice('Conclusão registrada. '+(!order.title_run_id?'Títulos pendentes de confirmação.':''));reload();if(generate&&!order.title_run_id)setGenerating(order)}}/>}
     {generating && <GenerateTitlesForm order={generating} close={() => setGenerating(null)} done={() => { setGenerating(null); setNotice("Títulos financeiros gerados e vinculados ao pedido."); reload(); }} />}
     {canceling && <CancelServiceOrderForm order={canceling} close={() => setCanceling(null)} done={() => { setCanceling(null); setNotice("Serviço cancelado; títulos e baixas foram mantidos no histórico."); reload(); }} />}
   </>;
@@ -107,7 +111,7 @@ function ServiceOrderForm({ order, close, done, transportEnabled }: { order: Ser
         <Field label="Descrição do serviço/pedido *" span><input autoFocus required maxLength={300} value={description} onChange={(e) => setDescription(e.target.value)} /></Field>
         <SilexDatePicker label="Data do serviço *" required value={serviceDate} onChange={(value) => setServiceDate(value)} />
         <Field label="Valor negociado (R$) *"><input required inputMode="decimal" disabled={locked} value={revenue} onChange={(e) => setRevenue(e.target.value)} /></Field>
-        <Field label="Andamento"><select value={status} onChange={(e) => setStatus(e.target.value as "draft" | "scheduled" | "in_progress" | "completed")}><option value="draft">Rascunho</option><option value="scheduled">Agendado</option><option value="in_progress">Em execução</option><option value="completed">Concluído</option></select></Field>
+        <Field label="Andamento"><select value={status} onChange={(e) => setStatus(e.target.value as "draft" | "scheduled" | "in_progress" | "completed")}><option value="draft">Rascunho</option><option value="scheduled">Agendado</option><option value="in_progress">Em execução</option>{order?.status==="completed"&&<option value="completed">Concluído — conferir evidência</option>}</select></Field>
         <Field label="Observações" span><textarea maxLength={500} value={notes} onChange={(e) => setNotes(e.target.value)} /></Field>
       </div>
       <div className="service-cost-heading"><div><h3>Custos contratados</h3><p>Valores específicos deste serviço prevalecem sobre a sugestão do cadastro.</p></div><div className="actions"><button type="button" disabled={locked} onClick={() => addCost("day_worker")}><Plus size={14} /> Adicionar diarista</button>{transportEnabled && <button type="button" disabled={locked} onClick={() => addCost("subcontracted_freight")}><Plus size={14} /> Adicionar frete</button>}</div></div>
@@ -202,4 +206,15 @@ function ServiceOrderDetails({ order, close, refresh, canceled }: { order: Servi
 function CancelServiceOrderForm({ order, close, done }: { order: ServiceOrder; close: () => void; done: () => void }) {
   const [reason, setReason] = useState("");
   return <Modal title={`Cancelar ${order.code}`} close={close}><p>O serviço será marcado como cancelado. Títulos existentes serão cancelados com estornos registrados quando já houver baixas.</p><Form processingText="Cancelando serviço..." cancel={close} submit="Confirmar cancelamento" onSubmit={async () => { await api(`/service-orders/${order.id}/cancel`, "POST", { reason }); done(); }}><Field label="Motivo *"><textarea required minLength={3} maxLength={300} value={reason} onChange={(e) => setReason(e.target.value)} /></Field></Form></Modal>;
+}
+
+function CompleteServiceForm({order,close,done}:{order:ServiceOrder;close:()=>void;done:(order:ServiceOrder,generate:boolean)=>void}){
+ const [completed,setCompleted]=useState(localDate()),[reason,setReason]=useState(''),[incurred,setIncurred]=useState<Record<number,string>>({}),[generate,setGenerate]=useState(false);
+ const requestKey=useRef(crypto.randomUUID());
+ return <Modal title={`Concluir ${order.code}`} close={close}><p>{order.customer_name} · {order.description} · Receita contratada {money(order.negotiated_cents)}. A conclusão registra execução comprovada; não gera títulos automaticamente.</p><Form cancel={close} submit="Confirmar conclusão do serviço" processingText="Registrando conclusão…" onSubmit={async()=>{
+  const updated=await api<ServiceOrder>(`/service-orders/${order.id}/complete`,'POST',{completed_on:completed,reason,request_key:requestKey.current,incurred_costs:Object.entries(incurred).map(([cost_id,incurred_on])=>({cost_id:Number(cost_id),incurred_on}))});done(updated,generate);
+ }}><SilexDatePicker label="Data efetiva de conclusão *" required value={completed} onChange={setCompleted}/><Field label="Evidência da execução *"><textarea required minLength={5} maxLength={500} value={reason} onChange={e=>setReason(e.target.value)}/></Field>
+ <fieldset><legend>Custos efetivamente incorridos</legend><p>Custos não confirmados permanecem pendentes, sem presumir valor zero.</p>{order.costs.map(cost=><div key={cost.id}><Field label={`Confirmar incorrência de ${cost.supplier_name} · ${money(cost.agreed_amount_cents)}`}><input type="checkbox" checked={cost.id in incurred} onChange={e=>setIncurred(current=>{const next={...current};if(e.target.checked)next[cost.id]=localDate();else delete next[cost.id];return next})}/></Field>{cost.id in incurred&&<SilexDatePicker label={`Data de incorrência do custo #${cost.id}`} required value={incurred[cost.id]} onChange={v=>setIncurred(current=>({...current,[cost.id]:v}))}/>}</div>)}</fieldset>
+ {!order.title_run_id&&<Field label="Após concluir, abrir confirmação para gerar títulos agora"><input type="checkbox" checked={generate} onChange={e=>setGenerate(e.target.checked)}/></Field>}
+ </Form></Modal>;
 }

@@ -1,8 +1,10 @@
 """Serviços/pedidos, custos contratados e títulos financeiros associados."""
 from uuid import uuid4
+import hashlib
+import json
 
 from fastapi import Depends, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import func, or_, select, update
 
 from . import financial as F, schemas as S, services as V
 from .capabilities import has_transport, require_transport, transport_kind
@@ -137,8 +139,10 @@ def register(app, get_db, admin):
             != [(x.kind, x.supplier_id, x.quantity_milli, x.agreed_amount_cents, x.details) for x in payload.costs]
         )
         has_run = db.scalar(select(ServiceOrderTitleRun.id).where(ServiceOrderTitleRun.service_order_id == order.id))
-        if has_run and contract_changed:
+        if (has_run or order.completed_on is not None) and contract_changed:
             V.fail("Os títulos já foram gerados; valor, cliente e custos contratados ficam preservados", 409)
+        if order.completed_on is not None and payload.status not in ('completed',):
+            V.fail('Conclusão comprovada não pode ser desfeita pela edição comum',409)
         order.customer_id = customer.id
         order.description = payload.description
         order.service_date = payload.service_date
@@ -146,11 +150,35 @@ def register(app, get_db, admin):
         order.status = payload.status
         order.notes = payload.notes
         order.updated_at = V.now()
-        if not has_run:
+        if not has_run and order.completed_on is None:
             replace_costs(db, order, payload.costs)
         V.audit(db, user, "update", "service_order", order.id)
         db.flush()
         return order_data(db, order, user)
+
+    @app.post("/api/service-orders/{identifier}/complete")
+    def complete_order(identifier: int, payload: S.ServiceCompletionInput, db=DB, user=ADMIN):
+        order=V.get(db,ServiceOrder,identifier)
+        guard_existing_transport(db,order,user)
+        digest=hashlib.sha256(json.dumps(payload.model_dump(mode='json'),sort_keys=True).encode()).hexdigest()
+        if order.completed_on is not None:
+            if order.completion_request_key==payload.request_key and order.completion_request_hash==digest:
+                return order_data(db,order,user)
+            V.fail('Conclusão já registrada; uma revisão exige procedimento econômico explícito',409)
+        if order.status=='canceled':V.fail('Serviço cancelado não pode ser concluído',409)
+        if payload.completed_on>V.today():V.fail('Conclusão deve representar execução efetiva, não futura',422)
+        costs={c.id:c for c in db.scalars(select(ServiceOrderCost).where(ServiceOrderCost.service_order_id==identifier))}
+        identifiers=[c.cost_id for c in payload.incurred_costs]
+        if len(identifiers)!=len(set(identifiers)) or any(i not in costs for i in identifiers):V.fail('Custos inválidos ou duplicados para este serviço',422)
+        if any(c.incurred_on>V.today() for c in payload.incurred_costs):V.fail('Incorrência deve ser comprovada, não futura',422)
+        changed=db.execute(update(ServiceOrder).where(ServiceOrder.id==identifier,ServiceOrder.completed_on.is_(None)).values(status='completed',completed_on=payload.completed_on,completed_at=V.now(),completed_by_id=user.id,completion_reason=payload.reason,completion_request_key=payload.request_key,completion_request_hash=digest,updated_at=V.now()))
+        if changed.rowcount!=1:V.fail('Serviço alterado simultaneamente; atualize a consulta',409)
+        for item in payload.incurred_costs:
+            cost=costs[item.cost_id]
+            cost.incurred_on=item.incurred_on;cost.incurred_at=V.now();cost.incurred_by_id=user.id;cost.incurrence_reason=payload.reason
+        V.audit(db,user,'complete','service_order',identifier)
+        db.flush();db.refresh(order)
+        return order_data(db,order,user)
 
     @app.post("/api/service-orders/{identifier}/generate-titles")
     def generate_service_order_titles(identifier: int, payload: S.ServiceOrderTitleGenerationInput, db=DB, user=ADMIN):
