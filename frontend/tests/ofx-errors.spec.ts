@@ -312,3 +312,22 @@ test('invalid OFX is rejected by the unchanged backend without creating an impor
   const after = await (await page.request.get('/api/finance/ofx/imports')).json();
   expect(after).toEqual(before);
 });
+
+test('history failure retries in place without reopening or duplicate requests', async ({ page }) => {
+  let attempts = 0;
+  await page.route(uploadPath, route => {
+    if (route.request().method() !== 'GET') return route.fallback();
+    attempts++;
+    return attempts === 1
+      ? route.fulfill({ status: 503, json: { detail: 'Unavailable' } })
+      : route.fulfill({ json: { items: [statement], total: 1, page: 1, page_size: 20 } });
+  });
+  await open(page);
+  const history = page.locator('.reconciliation-history');
+  await expect(history.getByRole('alert')).toBeVisible();
+  await history.getByRole('button', { name: 'Tentar novamente', exact: true }).click();
+  await expect(history.getByText(statement.original_name, { exact: true })).toBeVisible();
+  await expect(history.getByRole('alert')).toHaveCount(0);
+  await expect(page).toHaveURL(/#finance-reconcile$/);
+  expect(attempts).toBe(2);
+});

@@ -645,9 +645,10 @@ def create_app(engine=None, serve_frontend=True):
         cash = db.scalar(select(CashSession).where(CashSession.user_id == user.id, CashSession.status == "open"))
         result["cash"] = V.cash_data(db, cash) if cash else None
         if user.role == "admin":
-            result["receivable_cents"] = db.scalar(select(func.coalesce(func.sum(FinanceEntry.amount_cents), 0)).where(FinanceEntry.status == "open", FinanceEntry.direction == "income"))
-            result["payable_cents"] = db.scalar(select(func.coalesce(func.sum(FinanceEntry.amount_cents), 0)).where(FinanceEntry.status == "open", FinanceEntry.direction == "expense"))
-            result["overdue_cents"] = db.scalar(select(func.coalesce(func.sum(FinanceEntry.amount_cents), 0)).where(FinanceEntry.status == "open", FinanceEntry.direction == "income", FinanceEntry.due_date < V.today()))
+            pending = V.open_title_principal(db)
+            result["receivable_cents"] = sum(amount for row,amount in pending if row.direction == 'income')
+            result["payable_cents"] = sum(amount for row,amount in pending if row.direction == 'expense')
+            result["overdue_cents"] = sum(amount for row,amount in pending if row.direction == 'income' and row.due_date < V.today())
         return result
 
     @app.get("/api/audit")
