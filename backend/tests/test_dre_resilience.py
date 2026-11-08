@@ -77,6 +77,9 @@ def test_sale_uses_manaus_economic_day_instead_of_title_or_payment_month(env,mon
         db.commit()
     entry=title(admin,'income',10001,due=date(2026,12,1))
     with app.state.sessions() as db:db.get(FinanceEntry,entry['id']).sale_id=sale_id;db.commit()
+    preview_payload={'category_id':entry['category_id'],'line_code':'RB','valid_from':'2026-11-01','valid_to':'2026-11-30','expected_revision':0,'reason':'Prévia econômica no mês da entrega'}
+    preview=post(admin,'/finance/dre/mappings/preview',preview_payload,200)
+    assert preview['affected_sources']==1 and preview['periods']==['2026-11']
     mapping(admin,entry)
     november={'start':'2026-11-01','end':'2026-11-30'}
     before=admin.get('/api/finance/dre',params=november).json()

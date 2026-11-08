@@ -60,6 +60,13 @@ def window(start,end):
     if start>end or (end-start).days>366*10:V.fail('Informe período válido de até dez anos',422)
 
 
+def economic_day(source,decision):
+    current=decision is not None and decision.source_fingerprint==source['fingerprint']
+    if current and decision.decision!='pending' and decision.economic_date:
+        return decision.economic_date
+    return source['economic_date'] or source['candidate_date']
+
+
 def report(db,user,start,end,mapping_version=None,decision_version=None):
     window(start,end)
     source_rows,restricted=sources(db,user)
@@ -76,7 +83,7 @@ def report(db,user,start,end,mapping_version=None,decision_version=None):
             relevant_sources.append(src);relevant_keys.add(src['key'])
         decision=decisions.get(src['key'])
         current=decision is not None and decision.source_fingerprint==src['fingerprint']
-        when=decision.economic_date if current and decision.decision!='pending' and decision.economic_date else src['economic_date'] or src['candidate_date']
+        when=economic_day(src,decision)
         if when is None or not start<=when<=end:continue
         if src['key'] not in relevant_keys:relevant_sources.append(src);relevant_keys.add(src['key'])
         issues_for=list(src['issues'])
@@ -208,11 +215,15 @@ def register(app,get_db,admin):
     def preview(payload,db,user):
         values=payload.model_dump();target,revision,prior=validate_mapping(db,values)
         rows,restricted=sources(db,user)
-        affected=[s for s in rows if s['category_id']==payload.category_id and (payload.subcategory_id is None or s['subcategory_id']==payload.subcategory_id) and payload.valid_from<=s['candidate_date']<=payload.valid_to]
-        # Bind the confirmation to the full current source state, user and requested change.
-        token=fingerprint({'values':{k:v for k,v in values.items() if k!='preview_token'},'sources':rows,'actor':user.id,'restricted':restricted})
-        return {'preview_token':token,'affected_sources':len(affected),'affected_principal_cents':sum(s['amount_cents'] for s in affected if s['source_type']!='payment'),
-                'periods':sorted({s['candidate_date'].strftime('%Y-%m') for s in affected}),'previous':V.data(prior) if prior else None,'proposed':{k:v for k,v in values.items() if k!='preview_token'},'restricted_sources':restricted},target,revision
+        decision_rows=list(db.scalars(select(DreDecision).order_by(DreDecision.id)))
+        latest={d.source_key:d for d in decision_rows}
+        affected=[(s,economic_day(s,latest.get(s['key']))) for s in rows if s['category_id']==payload.category_id and (payload.subcategory_id is None or s['subcategory_id']==payload.subcategory_id)]
+        affected=[(s,when) for s,when in affected if when is not None and payload.valid_from<=when<=payload.valid_to]
+        # Recognition can move the economic period without changing a title or payment.
+        # Confirmations must attest the same policies as well as the same source rows.
+        token=fingerprint({'values':{k:v for k,v in values.items() if k!='preview_token'},'sources':rows,'decisions':[V.data(d) for d in decision_rows],'mappings':[V.data(m) for m in active_mappings(db)],'actor':user.id,'restricted':restricted})
+        return {'preview_token':token,'affected_sources':len(affected),'affected_principal_cents':sum(s['amount_cents'] for s,_ in affected if s['source_type']!='payment'),
+                'periods':sorted({when.strftime('%Y-%m') for _,when in affected}),'previous':V.data(prior) if prior else None,'proposed':{k:v for k,v in values.items() if k!='preview_token'},'restricted_sources':restricted},target,revision
 
     @app.post('/api/finance/dre/mappings/preview')
     def mapping_preview(payload:MappingInput,db=DB,user=ADMIN):return preview(payload,db,user)[0]

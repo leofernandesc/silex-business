@@ -272,3 +272,17 @@ def test_confirmed_fee_components_and_their_reversals_keep_economic_signs(env,di
     cash=admin.get('/api/finance/dre/reconciliation',params=period()).json()['reconciliation'][0]
     assert cash['cash_amount_cents_lifetime']==0
     assert cash['outstanding_principal_cents']==10001
+
+
+def test_preview_is_invalidated_by_a_recognition_policy_change(env):
+    app,admin,*_=env
+    entry=title(admin,'income',10001);first=mapping(admin,entry)
+    payload={'category_id':entry['category_id'],'line_code':'OR','valid_from':'2000-01-01','valid_to':'2099-12-31','expected_revision':1,'supersedes_id':first['id'],'reason':'Prévia supervisionada com reconhecimento concorrente'}
+    preview=post(admin,'/finance/dre/mappings/preview',payload,200)
+    recognize(admin,f"finance_entry:{entry['id']}:principal")
+    assert admin.post('/api/finance/dre/mappings',json={**payload,'preview_token':preview['preview_token']}).status_code==409
+    with app.state.sessions() as db:
+        assert len(list(db.scalars(select(DreMapping))))==1
+    current=post(admin,'/finance/dre/mappings/preview',payload,200)
+    assert current['preview_token']!=preview['preview_token']
+    assert post(admin,'/finance/dre/mappings',{**payload,'preview_token':current['preview_token']})['revision']==2
