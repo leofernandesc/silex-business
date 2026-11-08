@@ -1,11 +1,14 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFileSync } from "node:fs";
-import { money } from "../src/format";
+import { dateOnly, money } from "../src/format";
 import { enterDate, expectDate } from "./dateHelpers";
 const fixture = JSON.parse(
   readFileSync(process.env.SILEX_FINANCIAL_FIXTURE!, "utf8"),
 );
 const base = "/app#finance-dashboard";
+const evidenceDir =
+  process.env.SILEX_FINANCIAL_EVIDENCE_DIR ||
+  "../specs/financial-stage1/evidence";
 async function login(page: Page, role = "admin") {
   const r = await page.request.post("/api/auth/login", {
     data: fixture.accounts[role],
@@ -71,7 +74,7 @@ test("integer-cent values reconcile; open, overdue, due-window and realized shor
   );
   await noOverflow(page);
   await page.screenshot({
-    path: `../specs/financial-stage1/evidence/dashboard-${info.project.name}.png`,
+    path: `${evidenceDir}/dashboard-${info.project.name}.png`,
     fullPage: true,
   });
   await page
@@ -169,7 +172,7 @@ test("applied versus draft period; pending/failure hides old values, retry recov
     "01/01/2026 até 31/01/2026",
   );
   await page.screenshot({
-    path: `../specs/financial-stage1/evidence/error-${info.project.name}.png`,
+    path: `${evidenceDir}/error-${info.project.name}.png`,
     fullPage: true,
   });
   mode = "real";
@@ -424,3 +427,95 @@ test("keyboard shortcut focus, monthly alternative table and tablet/text enlarge
     }),
   ).toBeVisible();
 });
+
+for (const scenario of [
+  {
+    zone: "Asia/Tokyo",
+    instant: "2026-11-01T02:30:00Z",
+    day: "2026-10-31",
+    week: "2026-10-26",
+    month: "2026-10-01",
+    previous: ["2026-09-01", "2026-09-30"],
+    year: "2026-01-01",
+  },
+  {
+    zone: "America/Los_Angeles",
+    instant: "2027-01-01T04:00:00Z",
+    day: "2027-01-01",
+    week: "2026-12-28",
+    month: "2027-01-01",
+    previous: ["2026-12-01", "2026-12-31"],
+    year: "2027-01-01",
+  },
+])
+  test.describe(`civil presets in ${scenario.zone}`, () => {
+    test.use({ timezoneId: scenario.zone });
+    test("all five title presets send Manaus dates and preserve filtered navigation", async ({
+      page,
+    }) => {
+      await page.clock.setFixedTime(new Date(scenario.instant));
+      await login(page);
+      await ready(page);
+      await expect(
+        page.getByRole("heading", {
+          name: "Vencimentos: hoje e 7 dias seguintes",
+          exact: true,
+        }),
+      ).toBeVisible();
+      // Due-window links still use server as_of_date, not the deliberately different browser clock.
+      await page
+        .getByRole("link", {
+          name: "Consultar próximos vencimentos a receber",
+          exact: true,
+        })
+        .click();
+      await expectDate(page, "De", fixture.reference);
+      await expect(
+        page.getByText(
+          "Data atual do servidor até o 7º dia seguinte, inclusive (8 datas possíveis).",
+          { exact: true },
+        ),
+      ).toBeVisible();
+      let last: URL | null = null;
+      page.on("request", (request) => {
+        const url = new URL(request.url());
+        if (
+          url.pathname === "/api/finance" &&
+          url.searchParams.has("date_field")
+        )
+          last = url;
+      });
+      for (const route of ["finance-payable", "finance-receivable"]) {
+        await page.goto("/app#" + route);
+        const buttons = page.getByLabel("Período rápido");
+        for (const [label, start, end] of [
+          ["Hoje", scenario.day, scenario.day],
+          ["Semana", scenario.week, scenario.day],
+          ["Mês", scenario.month, scenario.day],
+          ["Mês anterior", ...scenario.previous],
+          ["Ano", scenario.year, scenario.day],
+        ]) {
+          await buttons
+            .getByRole("button", { name: label, exact: true })
+            .click();
+          await expect.poll(() => last?.searchParams.get("start")).toBe(start);
+          await expect.poll(() => last?.searchParams.get("end")).toBe(end);
+          expect(last!.searchParams.get("date_field")).toBe("due");
+          expect(last!.searchParams.get("direction")).toBe(
+            route === "finance-payable" ? "expense" : "income",
+          );
+          await expectDate(page, "De", start);
+          await expectDate(page, "Até", end);
+          await expect(page.getByLabel("Filtros aplicados")).toContainText(
+            `${dateOnly(start)} até ${dateOnly(end)}`,
+          );
+          const address = new URL(page.url());
+          expect(address.searchParams.get("f_start")).toBe(start);
+          expect(address.searchParams.get("f_end")).toBe(end);
+        }
+        await page.reload();
+        await expectDate(page, "Até", scenario.day);
+        await noOverflow(page);
+      }
+    });
+  });

@@ -49,8 +49,8 @@ function DueCard({
         icon={direction === "income" ? <ArrowDownLeft /> : <ArrowUpRight />}
         label={
           direction === "income"
-            ? "A receber nos próximos 7 dias"
-            : "A pagar nos próximos 7 dias"
+            ? "A receber: hoje e 7 dias seguintes"
+            : "A pagar: hoje e 7 dias seguintes"
         }
         value={data ? money(data.summary.due_7_days_cents) : "—"}
         detail={
@@ -355,10 +355,10 @@ export function FinanceOverview(_props: { navigate: (id: string) => void }) {
         className="dashboard-indicators"
         aria-labelledby="financial-due-title"
       >
-        <h2 id="financial-due-title">Próximos vencimentos</h2>
+        <h2 id="financial-due-title">Vencimentos: hoje e 7 dias seguintes</h2>
         <p className="help">
-          Principal pendente entre a data de referência do servidor e os sete
-          dias seguintes, inclusive. Independente do período realizado acima;
+          Principal pendente da data atual do servidor até o 7º dia seguinte,
+          inclusive (8 datas possíveis). Independente do período realizado acima;
           inclui parcelas em aberto.
         </p>
         <div className="summary-grid dashboard-due-grid">

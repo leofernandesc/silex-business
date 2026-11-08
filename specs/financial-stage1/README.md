@@ -1,5 +1,7 @@
 # Evolução Financeira Empresarial — Etapa 1
 
+> Revisão dirigida após auditoria independente: [REVIEW-DATES.md](REVIEW-DATES.md), a partir de cff5f2e. Os resultados e evidências abaixo registram a entrega original; o documento da revisão contém a validação atual. `CHECKSUMS.sha256` é histórico da árvore cff5f2e e permanece intacto; o manifesto atual é `REVIEW-CHECKSUMS.sha256`.
+
 Base: `main/origin/main` **7214ad2543e0e980366a386b27cc7bbb39eddb32**. Branch independente: `feat/finance-enterprise-stage1`. Trabalho em worktree própria, preservando `fix/forms-usability-system-review` (6c873d0) e PR #11 (ed51939). Não houve merge dessas linhas. Nenhum acesso ao SQLite persistente/Railway, provisionamento de contas reais ou deploy.
 
 Risco **moderado** para apresentação/filtros financeiros e alteração aditiva de leitura da API, com atenção à navegação autenticada. Não altera cálculo, persistência, autorização, pagamentos ou schema. A implementação não contém motor DRE.

@@ -1,5 +1,6 @@
 import {useFinancialSnapshot} from "./useFinancialSnapshot";
 import {validTitlePage} from "./financialData";
+import { titlePeriodRange } from "./financeDates";
 import { initialFinancialSearch, syncFinancialSearch, temporalSummary } from "./financialNavigation";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
@@ -58,14 +59,7 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
   const update = (field: keyof FinanceFilters, value: string) => setDraft((current) => ({ ...current, [field]: value }));
   function apply(next = draft) { syncFinancialSearch("titles",{...next,direction:initialDirection || next.direction}); setFilters({ ...next, direction: initialDirection || next.direction }); setPage(1); }
   function quickPeriod(value: string) {
-    const now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    let start = "", end = "";
-    if (value === "today") start = end = iso(today);
-    if (value === "week") { const monday = new Date(today); monday.setDate(today.getDate() - ((today.getDay() + 6) % 7)); start = iso(monday); end = iso(today); }
-    if (value === "month") { start = iso(new Date(today.getFullYear(), today.getMonth(), 1)); end = iso(today); }
-    if (value === "previous") { start = iso(new Date(today.getFullYear(), today.getMonth() - 1, 1)); end = iso(new Date(today.getFullYear(), today.getMonth(), 0)); }
-    if (value === "year") { start = iso(new Date(today.getFullYear(), 0, 1)); end = iso(today); }
+    const { start, end } = titlePeriodRange(value);
     const next = { ...draft, start, end };
     setDraft(next); setPeriod(value); apply(next);
   }
@@ -83,7 +77,7 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
     <div className="summary-grid finance-summary-grid">
       <SummaryCard label="Saldo pendente" value={result.data?money(result.data.summary.pending_cents):"—"} detail={initialDirection === "income" ? "Principal a receber neste filtro." : initialDirection === "expense" ? "Principal a pagar neste filtro." : "Principal pendente no recorte aplicado."} tone="blue" icon={<ArrowDownLeft />} />
       <SummaryCard label="Vencidos" value={result.data?money(result.data.summary.overdue_cents):"—"} detail="Vencimento anterior a hoje." tone="amber" icon={<Clock />} />
-      <SummaryCard label="Vencem em 7 dias" value={result.data?money(result.data.summary.due_7_days_cents):"—"} detail="Hoje até hoje + 7 dias, inclusive." tone="teal" icon={<CalendarClock />} />
+      <SummaryCard label="Vencimentos: hoje e 7 dias seguintes" value={result.data?money(result.data.summary.due_7_days_cents):"—"} detail="Data atual do servidor até o 7º dia seguinte, inclusive (8 datas possíveis)." tone="teal" icon={<CalendarClock />} />
       <SummaryCard label="Lançamentos" value={result.data?String(result.data.summary.count):"—"} detail="Quantidade no filtro, antes da paginação." icon={<ListChecks />} />
     </div>
     <section className="panel finance-ledger">
