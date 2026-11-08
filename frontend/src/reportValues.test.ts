@@ -18,3 +18,9 @@ it.each(['America/Manaus','UTC','Asia/Tokyo','America/Los_Angeles'])('report tim
  vi.stubEnv('TZ',zone);
  try{expect(formatReportValue('created_at','2027-01-01T03:30:00+00:00','titles-due')).toBe('31/12/2026, 23:30');expect(formatReportValue('due_date','2027-01-01','titles-due')).toBe('01/01/2027');}finally{vi.unstubAllEnvs();}
 });
+it('date-like descriptions, documents and category names keep their identity',()=>{
+ for(const key of ['description','document','group'])expect(formatReportValue(key,'2027-01-01','income-category')).toBe('2027-01-01');
+});
+it('daily report group dates remain Brazilian civil dates',()=>{
+ for(const report of ['cash-daily','settlements-daily'])expect(formatReportValue('group','2027-01-01',report)).toBe('01/01/2027');
+});
