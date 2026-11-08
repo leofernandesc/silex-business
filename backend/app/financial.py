@@ -16,7 +16,7 @@ from fastapi import Depends, Query, Request, Response
 from sqlalchemy import case, exists, func, literal, or_, select
 
 from . import schemas as S, services as V
-from .models import Account, Attachment, BankStatementImport, BankStatementItem, Category, FinanceEntry, Payment, Subcategory, Supplier
+from .models import Account, Attachment, BankStatementImport, BankStatementItem, Category, FinanceEntry, Payment, ServiceOrderCost, Subcategory, Supplier
 
 
 def account_data(db, row):
@@ -223,6 +223,8 @@ def register(app, get_db, admin):
             V.fail("Metadados de clientes não pertencem a prestadores", 422)
         if row.kind != payload.kind and db.scalar(select(FinanceEntry.id).where(FinanceEntry.supplier_id == identifier).limit(1)):
             V.fail('Beneficiário com histórico financeiro não pode mudar de tipo')
+        if row.kind != payload.kind and db.scalar(select(ServiceOrderCost.id).where(ServiceOrderCost.supplier_id == identifier).limit(1)):
+            V.fail('Beneficiário com custos operacionais vinculados não pode mudar de tipo')
         for key,value in payload.model_dump(exclude={"service_details"}).items():
             setattr(row,key,value)
         db.flush(); V.audit(db,user,'update','supplier',row.id)

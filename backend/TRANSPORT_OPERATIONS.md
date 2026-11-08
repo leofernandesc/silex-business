@@ -111,3 +111,37 @@ Testes legados de migração usam inserções compatíveis com cada esquema anti
 - Não se executa downgrade automático. Em caso de falha operacional, interromper o serviço, preservar o arquivo problemático e recuperar código/banco a partir de cópias conferidas em ambiente isolado. Retornar ao código antigo também retorna à antiga política por username; manter acesso restrito até conferir a autorização.
 - O backup Git de preparação ficou fora do repositório e sua extração foi conferida. Não substitui backup do banco real, que não foi acessado nesta tarefa.
 - Não há alegação de homologação humana, leitor de tela, dispositivos físicos, multitenancy ou prontidão de produção. Não houve merge, deploy, seed ou migração em banco persistente.
+
+## Revisão dirigida — integridade do tipo de prestador com custos operacionais
+
+Base da revisão: `ed519397a5081fbda36d9901784bca0f8187573e`. A implementação principal foi mantida; esta seção complementa o relatório histórico, sem incorporar PR #12 ou a branch de formulários.
+
+**Reprodução confirmada antes da correção:** em SQLite descartável, uma conta autorizada criou um frete e um pedido com custo de 12.345 centavos, sem títulos. A edição do prestador para `supplier` retornou **200**; a Demo passou a vê-lo no catálogo genérico; o custo manteve `subcontracted_freight`; a geração posterior retornou **409**, “Revise os prestadores associados antes de gerar os títulos”. Não foram criados títulos nem pagamentos na geração recusada. A sonda de diagnóstico externa ao repositório confirmou a sequência completa; o primeiro teste de regressão falhou como esperado no HEAD original (200 em vez de 409).
+
+**Correção mínima:** `financial.edit_supplier()` mantém os guards de capacidade, a checagem financeira e sua mensagem original. Acrescenta uma consulta a qualquer `ServiceOrderCost` associado, somente quando o tipo solicitado difere do atual. Havendo vínculo, retorna **409** com “Beneficiário com custos operacionais vinculados não pode mudar de tipo”, antes de atribuir os campos. Não apaga, transfere, reclassifica nem altera custos/títulos. Edições com o mesmo tipo continuam permitidas e prestadores sem vínculos continuam sujeitos às mesmas permissões existentes.
+
+`service_orders.validate_costs()` e a validação da geração já recusavam tipos incompatíveis e não precisaram ser alteradas. A API não oferece um custo novo do tipo `supplier`: aceita apenas diarista ou frete e exige correspondência com o prestador. Por isso, a cobertura do fornecedor genérico com vínculo operacional usa uma **fixture legada inconsistente**, alcançável pela falha antiga; não presume essa associação como fluxo válido. Há teste separado que mantém a recusa de uma associação genérica nova (422).
+
+**Testes novos:** `backend/tests/test_supplier_kind_links.py`, 20 casos parametrizados, cobrindo:
+
+- frete e diarista com custo ainda sem financeiro; fornecedor genérico em fixture legada; restrição financeira anterior nos três tipos;
+- conversões sem vínculos com/sem capacidade, sem conceder transporte a administradores genéricos;
+- atualização de nome/contato/telefone/e-mail com tipo estável e geração posterior de títulos com os centavos, IDs e FKs contratados;
+- recusas diretas para Demo, outro administrador genérico, operador e requisição sem sessão, sem mutações operacionais/financeiras;
+- comparação de todas as colunas armazenadas de prestadores, pedidos, custos, rodadas de títulos, lançamentos, pagamentos e contas após tentativas recusadas;
+- persistência de edição permitida e manutenção do bloqueio depois de descartar o engine e criar nova aplicação FastAPI/engine sobre o **mesmo SQLite descartável**, com geração de títulos, `integrity_check` e FKs conferidos;
+- financeiro geral idêntico para Demo e conta autorizada, sem ocultar o histórico.
+
+**Resultados desta revisão:**
+
+- Sonda do baseline: **1 diagnóstico aprovado**, demonstrando o comportamento vulnerável, não a correção.
+- Primeiro teste de regressão antes da correção: **1 falha esperada** (mudança indevida aceita).
+- `PYTHONPATH=backend .venv/bin/python -m pytest backend/tests/test_supplier_kind_links.py backend/tests/test_transport_capabilities.py -q`: primeira coleta com **31 aprovados e duas falhas do instrumento novo**. Esses dois casos procuravam `supplier_id` no resumo compacto de títulos do pedido, que não faz parte desse contrato. As mesmas verificações de valor/vínculo foram mantidas e passaram a consultar as FKs persistidas; as duas reexecuções dirigidas passaram. Nenhuma asserção antiga foi relaxada e nenhum contrato de API foi ampliado.
+- `PYTHONPATH=backend .venv/bin/python -m pytest backend/tests -q`: **186 aprovados**, incluindo os 20 casos novos e os 13 anteriores de capacidades. O aviso preexistente Starlette/TestClient/httpx permanece; não houve falhas finais.
+- `(cd frontend && npm test)`: **140 aprovados**, 15 arquivos.
+- `(cd frontend && npm run build)`: TypeScript e Vite aprovados.
+- `git diff --check`: sem erros. Comparação AST confirmou as outras **28 funções de financial.py** intactas; modelos, serviço de pedidos, API de autenticação, capacidades, provisionamento, 0013 e dependências permaneceram byte a byte iguais ao HEAD revisado. Não houve alteração de frontend; não foi repetida a matriz E2E visual.
+
+Os casos novos não se somam novamente às suas reexecuções nem à suíte completa. Permissões de usuário inativo, papel, capacidade, propriedade e identidade continuam cobertas também pelos testes anteriores de capacidade.
+
+**Limites:** a correção impede novas mudanças incompatíveis; não saneia automaticamente registros que já tenham sido reclassificados antes. A situação do banco Railway não foi verificada. Qualquer inventário/reparo persistente exige autorização e procedimento próprios, sem transferir identidades ou reclassificar históricos automaticamente. Nenhuma conta real foi provisionada, nenhuma migração foi criada, nenhum banco persistente foi acessado e não houve merge ou deploy. Modelos, schema, endpoints, regras de geração, baixa, valores, relatórios e histórico financeiro permanecem preservados.
