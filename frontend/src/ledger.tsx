@@ -173,32 +173,32 @@ export function LedgerPage() {
           ))}
         </div>
       </div>
-      <div className="summary-grid ledger-summary">
+      <div className="summary-grid ledger-summary" aria-busy={result.loading}>
         <SummaryCard
           label="Entradas"
-          value={money(summary?.income_cents || 0)}
-          detail="Movimentos no filtro aplicado"
+          value={summary ? money(summary.income_cents) : "—"}
+          detail={summary ? "Movimentos no filtro aplicado" : result.loading ? "Consultando dados…" : "Dados indisponíveis"}
           tone="teal"
           icon={<ArrowDownLeft />}
         />
         <SummaryCard
           label="Saídas"
-          value={money(summary?.expense_cents || 0)}
-          detail="Movimentos no filtro aplicado"
+          value={summary ? money(summary.expense_cents) : "—"}
+          detail={summary ? "Movimentos no filtro aplicado" : result.loading ? "Consultando dados…" : "Dados indisponíveis"}
           tone="amber"
           icon={<ArrowUpRight />}
         />
         <SummaryCard
           label="Saldo do período"
-          value={money(summary?.net_cents || 0)}
-          detail="Entradas menos saídas"
+          value={summary ? money(summary.net_cents) : "—"}
+          detail={summary ? "Entradas menos saídas" : result.loading ? "Consultando dados…" : "Dados indisponíveis"}
           icon={<Scale />}
         />
         <SummaryCard
           label="Lançamentos"
-          value={String(summary?.count || 0)}
+          value={summary ? String(summary.count) : "—"}
           detail={
-            applied.start || applied.end
+            !summary ? (result.loading ? "Consultando dados…" : "Dados indisponíveis") : applied.start || applied.end
               ? `${dateOnly(applied.start)} a ${dateOnly(applied.end)}`
               : "Todo o histórico"
           }
@@ -211,7 +211,7 @@ export function LedgerPage() {
           Saldo atual das contas · clique para filtrar · inclui saldo inicial e
           todo o histórico
         </p>
-        <div className="balance-chips">
+        {accounts.loading || accounts.error ? <p role="status">{accounts.loading ? "Consultando saldos…" : "Saldos indisponíveis."}</p> : <div className="balance-chips">
           {[
             {
               id: 0,
@@ -242,7 +242,7 @@ export function LedgerPage() {
               </span>
             </button>
           ))}
-        </div>
+        </div>}
       </div>
       <form
         className="panel ledger-filters"

@@ -2,6 +2,7 @@ import { test, expect, type Page } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { expireDisposableSession } from "./disposableSession";
 import {
   routes,
   LOGOUT_PENDING_KEY,
@@ -33,6 +34,7 @@ async function overflow(page: Page) {
   ).toBeTruthy();
 }
 async function expireCookieSession(page: Page) {
+  if (process.env.SILEX_E2E_MANIFEST) return expireDisposableSession(page);
   // Only the disposable fixture provided by the isolated test launcher may be changed.
   const envPath = process.env.SILEX_SB04B_ENV || process.env.SILEX_SB04A_ENV || process.env.SILEX_SB03_ENV;
   if (!envPath)
@@ -338,7 +340,7 @@ test("sessão expirada no servidor, limpeza e retorno após reautenticação", a
   page,
 }) => {
   test.skip(
-    !(process.env.SILEX_SB04B_ENV || process.env.SILEX_SB04A_ENV || process.env.SILEX_SB03_ENV),
+    !(process.env.SILEX_E2E_MANIFEST || process.env.SILEX_SB04B_ENV || process.env.SILEX_SB04A_ENV || process.env.SILEX_SB03_ENV),
     "Requer manifesto do ambiente descartável SB-03",
   );
   await start(page);
@@ -363,7 +365,7 @@ test("logout com sessão já expirada considera 401 como saída concluída", asy
   page,
 }) => {
   test.skip(
-    !(process.env.SILEX_SB04B_ENV || process.env.SILEX_SB04A_ENV || process.env.SILEX_SB03_ENV),
+    !(process.env.SILEX_E2E_MANIFEST || process.env.SILEX_SB04B_ENV || process.env.SILEX_SB04A_ENV || process.env.SILEX_SB03_ENV),
     "Requer manifesto do ambiente descartável SB-03",
   );
   await start(page);
@@ -438,9 +440,11 @@ test("403 de operação preserva sessão e comunica recusa sem expirar", async (
   });
   await start(page);
   await page.goto("/app#finance-dashboard");
+  // F02 deliberately replaces backend diagnostics with contextual dashboard feedback.
   await expect(page.getByRole("alert")).toContainText(
-    "Acesso reservado ao administrador",
+    "Não foi possível consultar os dados do Dashboard Financeiro",
   );
+  await expect(page.locator(".dashboard-indicators .summary-card strong")).toHaveText(Array(6).fill("—"));
   await expect(page).toHaveURL(/\/app#finance-dashboard$/);
   await expect(page.locator(".app-shell")).toBeVisible();
   expect((await page.request.get("/api/auth/me")).status()).toBe(200);

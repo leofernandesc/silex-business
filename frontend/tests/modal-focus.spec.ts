@@ -1,5 +1,19 @@
 import { test, expect, type Page, type Locator } from "@playwright/test";
 const origin = process.env.SILEX_MODAL_ORIGIN || "http://127.0.0.1:18564";
+// Chromium can move Tab to its browser chrome: activeElement becomes BODY and
+// document.hasFocus() becomes false. This also occurs in the approved baseline.
+// Resume once from browser chrome; focus on application background still fails.
+async function resumeFromBrowserChrome(
+  page: Page,
+  direction: "Tab" | "Shift+Tab",
+) {
+  if (
+    await page.evaluate(
+      () => !document.hasFocus() && document.activeElement === document.body,
+    )
+  )
+    await page.keyboard.press(direction);
+}
 export async function tabTo(page: Page, target: Locator) {
   for (let index = 0; index < 300; index++) {
     if (await target.evaluate((element) => element === document.activeElement))
@@ -36,9 +50,10 @@ for (const mode of ["normal", "autofocus"]) {
     await expect(
       page.getByRole("button", { name: "Fechar janela" }),
     ).toBeFocused();
-    for (const key of ["Tab", "Shift+Tab"]) {
+    for (const key of ["Tab", "Shift+Tab"] as const) {
       for (let i = 0; i < 24; i++) {
         await page.keyboard.press(key);
+        await resumeFromBrowserChrome(page, key);
         expect(
           await page
             .locator("dialog")
@@ -95,7 +110,9 @@ for (const mode of [
     await expect(target).toBeFocused();
     await page.keyboard.press("Tab");
     expect(
-      await page.evaluate(() => document.activeElement !== document.body),
+      await page.evaluate(
+        () => document.activeElement !== document.body || !document.hasFocus(),
+      ),
     ).toBe(true);
   });
 }
@@ -124,6 +141,7 @@ test("componente: diálogo sobre outro diálogo preserva topo modal e acionadore
   ).toBeVisible();
   for (let i = 0; i < 10; i++) {
     await page.keyboard.press("Tab");
+    await resumeFromBrowserChrome(page, "Tab");
     expect(
       await page
         .getByRole("dialog", { name: "Segundo diálogo", exact: true })

@@ -16,7 +16,7 @@ async function prepareAccounts(request: APIRequestContext) {
 async function login(page: Page, username: string) {
   await page.goto("/entrar");
   await page.getByLabel("Usuário", { exact: true }).fill(username);
-  await page.getByLabel("Senha", { exact: true }).fill(username.startsWith("demo.") ? "DemoLocal#2026" : fixturePassword);
+  await page.getByLabel("Senha", { exact: true }).fill(["demo.admin", "demo.operador"].includes(username) ? "DemoLocal#2026" : fixturePassword);
   const authenticated = page.waitForResponse(r => new URL(r.url()).pathname === "/api/auth/login" && r.request().method() === "POST");
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
   expect((await authenticated).status()).toBe(200);
