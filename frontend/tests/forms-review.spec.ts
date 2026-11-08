@@ -10,7 +10,7 @@ async function login(page: Page, route = "customers", transport = false) {
     ).ok(),
   ).toBe(true);
   await page.goto("/app#" + route);
-  await expect(page.locator("main h1")).toBeVisible();
+  await expect(page.locator(".app-shell main h1")).toBeVisible();
 }
 async function noOverflow(page: Page) {
   expect(

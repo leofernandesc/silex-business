@@ -1171,7 +1171,7 @@ dialog > header button {
   color: #82c8d3;
   font-size: 10px;
 }
-.login-intro h1 {
+.login-intro :is(h1, h2) {
   font-size: 43px;
   line-height: 1.2;
   letter-spacing: -1.5px;
@@ -1325,7 +1325,7 @@ dialog > header button {
   .login-intro {
     padding: 40px;
   }
-  .login-intro h1 {
+  .login-intro :is(h1, h2) {
     font-size: 37px;
   }
 }
@@ -1410,7 +1410,7 @@ dialog > header button {
   .login-intro {
     padding: 35px;
   }
-  .login-intro h1 {
+  .login-intro :is(h1, h2) {
     font-size: 32px;
   }
 }
@@ -2116,7 +2116,9 @@ dialog > header button {
     display: block;
   }
   .finance-report-column-band + .finance-report-column-band {
-    break-before: page;
+    /* Keep complete column bands, without wasting a new sheet for every band. */
+    break-before: auto;
+    margin-top: 5mm;
   }
   .finance-report-column-band h3 {
     font-size: 11pt;

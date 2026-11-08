@@ -1,5 +1,6 @@
 import { test as original } from "@playwright/test";
 import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
 export * from "@playwright/test";
 /** A fresh, private SQLite fixture per test, only when the integration launcher opts in. */
 export const test = original.extend<{ isolatedDatabase: void }>({
@@ -10,7 +11,7 @@ export const test = original.extend<{ isolatedDatabase: void }>({
         execFileSync(
           "../.venv/bin/python",
           ["../scripts/reset_integration_fixture.py", manifest],
-          { stdio: "pipe" },
+          { stdio: "pipe", cwd: resolve(import.meta.dirname, "..") },
         );
       await use();
     },

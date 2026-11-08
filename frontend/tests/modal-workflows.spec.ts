@@ -28,7 +28,7 @@ async function login(page: Page, route: string) {
     .getByLabel("Senha", { exact: true })
     .fill(process.env.SILEX_TEST_PASSWORD!);
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
-  await expect(page.locator("main h1")).toBeVisible();
+  await expect(page.locator(".app-shell main h1")).toBeVisible();
   await page.waitForLoadState("networkidle");
 }
 async function accessibleFocus(page: Page) {

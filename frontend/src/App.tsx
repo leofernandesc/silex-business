@@ -330,10 +330,10 @@ function Login({
         />
         <div className="login-intro-content">
           <span className="eyebrow">SIMPLES. PRÓXIMO. ORGANIZADO.</span>
-          <h1>
+          <h2>
             Mais clareza para
             <br />o seu negócio.
-          </h1>
+          </h2>
           <p>
             Vendas, estoque e financeiro
             <br />
