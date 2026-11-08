@@ -125,7 +125,7 @@ export function FinanceCatalog({ kind }: { kind: Kind }) {
             "Situação",
             "Ações",
           ]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!rows.length}
         >
           {rows.map((r) => (

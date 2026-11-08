@@ -320,7 +320,7 @@ function Login({
   const [username, setUsername] = useState(""),
     [password, setPassword] = useState("");
   return (
-    <div className="login-page">
+    <main className="login-page">
       <section className="login-intro">
         <SilexBrand
           className="login-logo-dark"
@@ -370,7 +370,7 @@ function Login({
             />
           </div>
           <span className="eyebrow">BEM-VINDO</span>
-          <h2>Acesse seu espaço</h2>
+          <h1>Acesse seu espaço</h1>
           <p>Entre para acompanhar suas operações.</p>
           {error && <Notice>{error}</Notice>}
         {logoutPending && <button type="button" disabled={logoutBusy} onClick={retryLogout}>Concluir saída no servidor</button>}
@@ -412,7 +412,7 @@ function Login({
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
 function CheckIcon() {

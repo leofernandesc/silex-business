@@ -1,6 +1,7 @@
 import { preserveFinancialSearch } from "../financialNavigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, ApiError, resetSessionRequests } from "../api";
+import { validUser } from "../resourceValidation";
 import type { User } from "../types";
 import { isPublicAddress } from "./surfaces";
 import {
@@ -98,6 +99,7 @@ export function useAppNavigation() {
     } else {
       api<User>("/auth/me")
         .then((active) => {
+          if (!validUser(active)) throw new Error("Resposta de sessão inválida");
           if (!alive || version !== authVersion.current) return;
           currentUser.current = active;
           setUser(active);
@@ -171,6 +173,7 @@ export function useAppNavigation() {
     window.scrollTo(0, 0);
   };
   const onLogin = (active: User) => {
+    if (!validUser(active)) throw new Error("Resposta de autenticação inválida. Tente novamente.");
     ++authVersion.current;
     resetSessionRequests();
     currentUser.current = active;

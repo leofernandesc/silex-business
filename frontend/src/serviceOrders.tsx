@@ -36,7 +36,7 @@ export function ServiceOrdersPage({user}:{user:User}) {
         <label className="inline-field">Andamento<select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }}><option value="">Todos</option><option value="draft">Rascunho</option><option value="scheduled">Agendado</option><option value="in_progress">Em execução</option><option value="completed">Concluído</option><option value="canceled">Cancelado</option></select></label>
       </div>
       {orders.error && <Notice>{orders.error}</Notice>}
-      <Table headers={["Pedido / cliente", "Data / andamento", "Receita prevista", "Custos previstos", "Resultado previsto", "Resultado realizado", "Ações"]} loading={orders.loading} empty={!orders.data?.items.length}>
+      <Table headers={["Pedido / cliente", "Data / andamento", "Receita prevista", "Custos previstos", "Resultado previsto", "Resultado realizado", "Ações"]} loading={orders.loading} error={orders.error} onRetry={orders.reload} empty={!orders.data?.items.length}>
         {orders.data?.items.map((row) => <tr key={row.id}>
           <td><strong>{row.code}</strong><small>{row.customer_name} · {row.description}</small></td>
           <td>{dateOnly(row.service_date)}<small><Badge status={row.status} /> {statusLabels[row.status]}</small></td>

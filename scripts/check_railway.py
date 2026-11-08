@@ -68,10 +68,12 @@ def create_admin(container, password):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--build", action="store_true")
+    parser.add_argument("--image", default=IMAGE, help="Dedicated local test image; never published")
     parser.add_argument("--browser", action="store_true")
     args = parser.parse_args()
+    global_image = args.image
     if args.build:
-        subprocess.run(["docker", "build", "-t", IMAGE, "."], cwd=ROOT, check=True)
+        subprocess.run(["docker", "build", "-t", global_image, "."], cwd=ROOT, check=True)
     suffix = uuid.uuid4().hex[:12]
     volume = "silex-railway-check-" + suffix
     containers = []
@@ -110,7 +112,7 @@ def main():
             mount = ["--mount", f"type=volume,source={volume},target=/data"]
 
             def start(name):
-                command("docker", "run", "-d", "--name", name, "--memory", "470m", "--cpus", "1", "-p", "127.0.0.1::18080", *mount, *env, IMAGE)
+                command("docker", "run", "-d", "--name", name, "--memory", "470m", "--cpus", "1", "-p", "127.0.0.1::18080", *mount, *env, global_image)
                 containers.append(name)
                 backend[0] = int(command("docker", "port", name, "18080/tcp").stdout.strip().rsplit(":", 1)[1])
                 wait_ready(name)
@@ -162,7 +164,7 @@ result={t:c.execute(q).fetchall() for t,q in {
 print(json.dumps(result))"""
                 return json.loads(command("docker", "exec", name, "python", "-c", code).stdout)
 
-            absent = command("docker", "run", "--rm", "--network", "none", *env, IMAGE, check=False)
+            absent = command("docker", "run", "--rm", "--network", "none", *env, global_image, check=False)
             assert absent.returncode != 0 and "Volume persistente obrigatório" in absent.stderr
             first = "silex-railway-first-" + suffix
             start(first)
@@ -193,7 +195,7 @@ print(json.dumps(result))"""
             assert before["integrity"] == [["ok"]] and before["foreign_keys"] == []
             assert before["journal"] == [["wal"]] and before["database"][0][2] == "/data/gestao.sqlite3"
             command("docker", "exec", first, "python", "-c", "from pathlib import Path; assert all(Path('/data/gestao.sqlite3'+s).is_file() for s in ('','-wal','-shm')); assert not Path('/app/data').exists()")
-            duplicate = command("docker", "run", "--rm", "--network", "none", *mount, *env, IMAGE, check=False)
+            duplicate = command("docker", "run", "--rm", "--network", "none", *mount, *env, global_image, check=False)
             assert duplicate.returncode != 0 and "Outra instância" in duplicate.stderr
             blocked = command("docker", "exec", first, "python", "-m", "app.cli", "seed-demo", check=False)
             assert blocked.returncode != 0 and "não é permitido" in blocked.stderr
@@ -238,14 +240,14 @@ print(json.dumps(result))"""
             command("docker", "stop", second)
             # Corrupt only the synthetic revision and confirm startup fails without resetting records.
             change = "import sqlite3; c=sqlite3.connect('/data/gestao.sqlite3'); c.execute(\"UPDATE alembic_version SET version_num='missing_test_revision'\"); c.commit()"
-            command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", IMAGE, "-c", change)
-            failed = command("docker", "run", "--rm", "--network", "none", *mount, *env, IMAGE, check=False)
+            command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", global_image, "-c", change)
+            failed = command("docker", "run", "--rm", "--network", "none", *mount, *env, global_image, check=False)
             assert failed.returncode != 0
             preservation = "import sqlite3; c=sqlite3.connect('file:/data/gestao.sqlite3?mode=ro',uri=True); assert c.execute('SELECT amount_cents FROM finance_entries').fetchone()==(123456789,); assert c.execute('SELECT COUNT(*) FROM users').fetchone()==(2,)"
-            command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", IMAGE, "-c", preservation)
+            command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", global_image, "-c", preservation)
             known_demo = f"import sqlite3; c=sqlite3.connect('/data/gestao.sqlite3'); c.execute('UPDATE alembic_version SET version_num=?', ({before['revision'][0][0]!r},)); c.execute(\"UPDATE users SET username='demo.admin' WHERE username='pilot.admin'\"); c.commit()"
-            command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", IMAGE, "-c", known_demo)
-            demo = command("docker", "run", "--rm", "--network", "none", *mount, *env, IMAGE, check=False)
+            command("docker", "run", "--rm", "--network", "none", *mount, "--entrypoint", "python", global_image, "-c", known_demo)
+            demo = command("docker", "run", "--rm", "--network", "none", *mount, *env, global_image, check=False)
             assert demo.returncode != 0 and "Banco com contas demo" in demo.stderr
             print(json.dumps({"mount_required": True, "no_demo_seed": True, "admin_cli_no_password_echo": True,
                               "restart_equal": True, "fresh_container_equal": True, "attachments_restored": True,

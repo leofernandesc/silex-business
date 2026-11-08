@@ -153,7 +153,9 @@ export function PointOfSale({
       >
         <button onClick={() => navigate("sales")}>Histórico de vendas</button>
       </PageTitle>
-      {!cash.loading && !cash.data && (
+      {cash.loading && <p role="status">Carregando situação do caixa…</p>}
+      {cash.error && <Notice>{cash.error}<button type="button" onClick={cash.reload}>Tentar novamente</button></Notice>}
+      {!cash.loading && !cash.error && !cash.data && (
         <Notice tone="warning">
           Seu caixa está fechado.{" "}
           <button onClick={() => navigate("cash")}>Abrir caixa</button>
@@ -181,8 +183,9 @@ export function PointOfSale({
               placeholder="Buscar item ou código de barras"
             />
           </div>
-          {products.error && <Notice>{products.error}</Notice>}
+          {products.error && <Notice>{products.error}<button type="button" onClick={products.reload}>Tentar novamente</button></Notice>}
           <div className="product-grid">
+            {products.loading && <p role="status">Carregando produtos…</p>}
             {products.data?.items.map((p) => (
               <button
                 key={p.id}
@@ -210,7 +213,7 @@ export function PointOfSale({
                 <span className="tile-add">Adicionar +</span>
               </button>
             ))}
-            {!products.loading && !products.data?.items.length && (
+            {!products.loading && !products.error && !products.data?.items.length && (
               <div className="empty">Nenhum item disponível.</div>
             )}
           </div>
@@ -227,6 +230,7 @@ export function PointOfSale({
             submit={draft ? "Repetir finalização" : "Finalizar venda"}
             onSubmit={async () => {
               if (saving) throw new Error("Aguarde o salvamento");
+              if (cash.loading || cash.error) throw new Error("Consulte a situação do caixa antes de finalizar");
               if (!cash.data)
                 throw new Error("Abra seu caixa antes de finalizar");
               const s = await ensureDraft();
@@ -336,6 +340,7 @@ export function PointOfSale({
                   {valid ? money(Math.max(0, total)) : "Confira os valores"}
                 </strong>
               </div>
+              {customers.error && <Notice>{customers.error}<button type="button" onClick={customers.reload}>Tentar novamente</button></Notice>}
               <Field label="Forma de pagamento">
                 <select
                   value={method}
@@ -450,7 +455,7 @@ export function SalesPage({
             "Situação",
             "Ações",
           ]}
-          loading={result.loading}
+          loading={result.loading} error={result.error} onRetry={result.reload}
           empty={!result.data?.items.length}
         >
           {result.data?.items.map((s) => (

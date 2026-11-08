@@ -11,6 +11,16 @@ from test_finance_expansion import post, title
 def test_pending_shortcuts_reconcile_partial_overdue_and_due_window(env, monkeypatch, direction):
     _, admin, _, _ = env
     reference = date(2026, 11, 7)
+    # The disposable account opening reference must belong to the same frozen scenario.
+    # Freezing only services.today after the fixture was created made this test fail
+    # on later wall-clock dates; production's opening-date guard must remain strict.
+    from app.models import Account
+    from sqlalchemy import select
+    app = env[0]
+    with app.state.sessions() as db:
+        for account in db.scalars(select(Account)):
+            account.opening_date = reference
+        db.commit()
     monkeypatch.setattr(V, 'today', lambda: reference)
     late = title(admin, direction, 10_001, due=reference-timedelta(days=1))
     first = title(admin, direction, 20_002, due=reference)

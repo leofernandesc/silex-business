@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { LedgerTable } from "./ledgerPresentation";
 import "./ledger.css";
-import { api, query } from "./api";
+import { downloadCsv, api, query } from "./api";
 import { dateOnly, localDate, money, parseDecimal } from "./format";
 import { presets, periodRange } from "./financeDates";
 import type {
@@ -93,6 +93,7 @@ export function LedgerPage() {
   function apply(filters = draft) {
     syncFinancialSearch("movements",filters);
     setApplied({ ...filters });
+    setVersion(value=>value+1);
     setPage(1);
     setPrintRows(null);
   }
@@ -145,7 +146,7 @@ export function LedgerPage() {
         </button>
         <ExportButton
           onClick={() => {
-            location.href = "/api/finance/movements.csv?" + query(applied);
+            return downloadCsv("/finance/movements.csv?" + query(applied),"livro-caixa.csv");
           }}
         />
         <button
@@ -382,7 +383,7 @@ export function LedgerPage() {
           </div>
         ) : (
           <LedgerTable
-            loading={result.loading}
+            loading={result.loading} error={result.error} onRetry={()=>setVersion(value=>value+1)}
             empty={false}
             headers={[
               "Data / competência",

@@ -1223,7 +1223,7 @@ dialog > header button {
 .login-card .eyebrow {
   color: #247f87;
 }
-.login-card h2 {
+.login-card :is(h1, h2) {
   font-size: 27px;
   margin-top: 15px;
   letter-spacing: -0.6px;

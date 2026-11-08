@@ -19,12 +19,10 @@ export default defineConfig({
     browserName: chromium ? "chromium" : "firefox",
     launchOptions: chromium
       ? {
-          executablePath:
-            process.env.SILEX_CHROMIUM_PATH ||
-            "/snap/brave/current/opt/brave.com/brave/brave",
+          ...(process.env.SILEX_CHROMIUM_PATH ? {executablePath:process.env.SILEX_CHROMIUM_PATH} : {}),
           args: ["--disable-brave-update", "--disable-background-networking"],
         }
-      : original.use?.launchOptions,
+      : process.env.GESTAO_FIREFOX_PATH ? {executablePath:process.env.GESTAO_FIREFOX_PATH} : {},
   },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 900 } } },
