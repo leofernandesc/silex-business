@@ -45,7 +45,7 @@ export function FinanceDemo() {
           </div>
           <div className="silex-public__demo-row">
             <span>
-              Frete ilustrativo<small>Pagamento registrado</small>
+              Serviço ilustrativo<small>Pagamento registrado</small>
             </span>
             <strong className="silex-public__expense">− R$ 2.130,00</strong>
           </div>

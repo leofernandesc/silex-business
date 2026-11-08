@@ -1,4 +1,5 @@
 """Livro caixa efetivo e cadastros financeiros (Sprint 8)."""
+from .capabilities import has_transport, transport_kind, transport_supplier
 import csv
 import base64
 import binascii
@@ -15,7 +16,7 @@ from fastapi import Depends, Query, Request, Response
 from sqlalchemy import case, exists, func, literal, or_, select
 
 from . import schemas as S, services as V
-from .models import Account, Attachment, BankStatementImport, BankStatementItem, Category, FinanceEntry, Payment, Subcategory, Supplier
+from .models import Account, Attachment, BankStatementImport, BankStatementItem, Category, FinanceEntry, Payment, ServiceOrderCost, Subcategory, Supplier
 
 
 def account_data(db, row):
@@ -142,6 +143,7 @@ def register(app, get_db, admin):
                 if direction=='income' and payload.supplier_id is not None or direction=='expense' and payload.customer_id is not None:
                     V.fail('Cliente é usado em receitas e fornecedor em despesas',422)
                 if payload.customer_id: V.active_customer(db,payload.customer_id)
+                transport_supplier(db, user, payload.supplier_id)
                 if payload.supplier_id: require_active(db,Supplier,payload.supplier_id)
                 title=FinanceEntry(description=(item.name or item.memo or f'Movimento OFX {item.fitid}')[:180],direction=direction,amount_cents=abs(item.amount_cents),account_id=account.id,category_id=category.id,subcategory_id=subcategory.id,customer_id=payload.customer_id,supplier_id=payload.supplier_id,origin='ofx',document=item.fitid[:100],competence_date=item.posted_date,due_date=item.posted_date,user_id=user.id)
                 db.add(title);db.flush();V.settle_entry(db,title,'ofx',account,user,item.posted_date,principal_cents=abs(item.amount_cents),request_key=f"ofx-{import_id}-{hashlib.sha256(item.fitid.encode()).hexdigest()}",request_hash=fingerprint)
@@ -188,7 +190,10 @@ def register(app, get_db, admin):
 
     @app.get('/api/suppliers')
     def suppliers(q:str='',active:bool|None=None,kind:Literal['supplier','day_worker','subcontracted_freight']|None=None,search_field:str='all',page:int=Query(1,ge=1),page_size:int=Query(20,ge=1,le=100),db=DB,user=ADMIN):
+        transport_kind(user, kind)
         query=select(Supplier).order_by(Supplier.id.desc())
+        if not has_transport(user):
+            query=query.where(Supplier.kind != "subcontracted_freight")
         if q:
             fields={'name':Supplier.name,'document':Supplier.document,'phone':Supplier.phone,'email':Supplier.email,'contact':Supplier.contact_name,'address':Supplier.city,'pix':Supplier.pix_key}
             if search_field=='all':query=query.where(or_(*(column.contains(q,autoescape=True) for column in fields.values())))
@@ -202,16 +207,25 @@ def register(app, get_db, admin):
 
     @app.post('/api/suppliers',status_code=201)
     def create_supplier(payload:S.SupplierInput,db=DB,user=ADMIN):
-        row=Supplier(**payload.model_dump()); db.add(row); db.flush()
+        transport_kind(user, payload.kind)
+        if "service_details" in payload.model_fields_set:
+            V.fail("Metadados de clientes não pertencem a prestadores", 422)
+        row=Supplier(**payload.model_dump(exclude={"service_details"})); db.add(row); db.flush()
         V.audit(db,user,'create','supplier',row.id)
         return V.data(row)
 
     @app.put('/api/suppliers/{identifier}')
     def edit_supplier(identifier:int,payload:S.SupplierInput,db=DB,user=ADMIN):
         row=V.get(db,Supplier,identifier)
+        transport_kind(user, row.kind)
+        transport_kind(user, payload.kind)
+        if "service_details" in payload.model_fields_set:
+            V.fail("Metadados de clientes não pertencem a prestadores", 422)
         if row.kind != payload.kind and db.scalar(select(FinanceEntry.id).where(FinanceEntry.supplier_id == identifier).limit(1)):
             V.fail('Beneficiário com histórico financeiro não pode mudar de tipo')
-        for key,value in payload.model_dump().items():
+        if row.kind != payload.kind and db.scalar(select(ServiceOrderCost.id).where(ServiceOrderCost.supplier_id == identifier).limit(1)):
+            V.fail('Beneficiário com custos operacionais vinculados não pode mudar de tipo')
+        for key,value in payload.model_dump(exclude={"service_details"}).items():
             setattr(row,key,value)
         db.flush(); V.audit(db,user,'update','supplier',row.id)
         return V.data(row)
@@ -265,6 +279,7 @@ def register(app, get_db, admin):
         category=require_active(db,Category,subcategory.category_id)
         if category.direction not in ('both',payload.direction):
             V.fail('Categoria incompatível com o tipo do lançamento',422)
+        transport_supplier(db, user, payload.supplier_id)
         if payload.supplier_id:
             require_active(db,Supplier,payload.supplier_id)
             if payload.direction != 'expense': V.fail('Fornecedor é usado em despesas',422)

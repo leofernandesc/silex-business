@@ -3,6 +3,7 @@ export type User = {
   name: string;
   username: string;
   role: "admin" | "operator";
+  capabilities?: string[];
   active: boolean;
 };
 export type CompanySettings = {
@@ -206,6 +207,7 @@ export type ServiceOrderCost = {
   finance_status: string | null;
 };
 export type ServiceOrder = {
+  restricted_transport_costs?: boolean;
   id: number;
   code: string;
   customer_id: number;

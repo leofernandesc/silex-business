@@ -26,6 +26,7 @@ from . import schemas as S
 from . import services as V
 from .db import ROOT, build_engine, session_factory
 from .deployment import Deployment, HEALTH_HOST
+from .capabilities import has_transport, transport_kind, transport_supplier
 from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, CustomerServiceDetails, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, Session, StockMovement, Subcategory, Supplier, User, now
 
 passwords = PasswordHasher()
@@ -267,7 +268,7 @@ def create_app(engine=None, serve_frontend=True):
 
     def customer_details_allowed(user):
         # Use the identity resolved from the authenticated session, never input data.
-        return user.username == "demo.restricted.admin" and user.role == "admin"
+        return has_transport(user)
 
     def customer_values(payload, user):
         if "service_details" in payload.model_fields_set and not customer_details_allowed(user):
@@ -559,6 +560,7 @@ def create_app(engine=None, serve_frontend=True):
 
     @app.get("/api/finance")
     def finance(q: str = "", status: str | None = None, direction: str | None = None, account_id: int | None = None, category_id: int | None = None, supplier_id: int | None = None, supplier_kind: str | None = None, document: str = "", search_field: str = "history", start: date | None = None, end: date | None = None, date_field: str = "due", page: int = PAGE, page_size: int = SIZE, db=Depends(get_db, scope="function"), user=Depends(admin)):
+        transport_kind(user, supplier_kind)
         query = finance_query(q, status, direction, account_id, category_id, supplier_id, supplier_kind, document, search_field, start, end, date_field)
         result = V.page(db, query, page, page_size, lambda row: V.finance_data(db, row))
         result["summary"] = finance_summary(db, query)
@@ -566,6 +568,7 @@ def create_app(engine=None, serve_frontend=True):
 
     @app.get("/api/finance/print", response_class=HTMLResponse)
     def finance_print(q: str = "", status: str | None = None, direction: str | None = None, account_id: int | None = None, category_id: int | None = None, supplier_id: int | None = None, supplier_kind: str | None = None, document: str = "", search_field: str = "history", start: date | None = None, end: date | None = None, date_field: str = "due", db=Depends(get_db, scope="function"), user=Depends(admin)):
+        transport_kind(user, supplier_kind)
         query = finance_query(q, status, direction, account_id, category_id, supplier_id, supplier_kind, document, search_field, start, end, date_field)
         rows = list(db.scalars(query))
         summary = finance_summary(db, query)
@@ -583,6 +586,7 @@ def create_app(engine=None, serve_frontend=True):
         category = F.require_active(db, Category, payload.category_id)
         subcategory = V.category_subcategory(db, category, payload.direction)
         V.active_customer(db, payload.customer_id)
+        transport_supplier(db, user, payload.supplier_id)
         if payload.supplier_id:
             F.require_active(db, Supplier, payload.supplier_id)
         if payload.subcategory_id:
@@ -658,6 +662,7 @@ def create_app(engine=None, serve_frontend=True):
         elif report == "sales":
             query, fields, transform = sale_query(user, q, status, start, end), [("id", "Venda"), ("customer_name", "Cliente"), ("total_cents", "Total"), ("status", "Status"), ("payment_method", "Pagamento"), ("created_at", "Data UTC")], lambda r: V.sale_data(db, r)
         elif report == "finance":
+            transport_kind(user, supplier_kind)
             query, fields, transform = finance_query(q, status, direction, account_id, category_id, supplier_id, supplier_kind, document, "history" if search_field == "all" else search_field, start, end, date_field), [("description", "Descrição"), ("direction", "Tipo"), ("amount_cents", "Valor"), ("status", "Status"), ("due_date", "Vencimento"), ("account_name", "Conta"), ("category_name", "Categoria")], lambda r: V.finance_data(db, r)
         else:
             V.fail("Relatório não encontrado", 404)

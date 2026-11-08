@@ -154,14 +154,19 @@ def backup_bundle(destination):
 
 def main():
     parser = argparse.ArgumentParser(description="Gestão Local")
-    parser.add_argument("command", choices=["init", "create-admin", "seed-demo", "backup", "backup-bundle"])
+    parser.add_argument("command", choices=["init", "create-admin", "seed-demo", "backup", "backup-bundle", "provision-sammya"])
     parser.add_argument("--output")
+    parser.add_argument("--existing-user-id", type=int)
+    parser.add_argument("--reset-password", action="store_true")
     args = parser.parse_args()
     if args.command == "init":
         migrate()
         print("Migrações aplicadas.")
     elif args.command == "create-admin":
         create_admin()
+    elif args.command == "provision-sammya":
+        from .transport_admin import provision_sammya
+        provision_sammya(args.existing_user_id, args.reset_password)
     elif args.command == "seed-demo":
         seed()
     elif args.command == "backup-bundle":

@@ -1,8 +1,10 @@
 from datetime import timedelta
 
+import pytest
+
 from sqlalchemy import func, select
 
-from app.models import Account, FinanceEntry, Payment, ServiceOrder, ServiceOrderCost, ServiceOrderTitleRun
+from app.models import Account, FinanceEntry, Payment, ServiceOrder, ServiceOrderCost, ServiceOrderTitleRun, User
 from app.services import today
 
 
@@ -131,3 +133,13 @@ def test_service_order_costs_titles_actual_result_idempotency_and_cancel(env):
         assert db.scalar(select(func.count(Payment.id)).join(FinanceEntry).where(FinanceEntry.service_order_id == order["id"])) == 4
         assert db.get(ServiceOrder, order["id"]).cancel_reason == "Cliente cancelou a operação"
 
+
+
+# Existing contract scenarios exercise the explicitly enabled module. Generic denial
+# and compatibility are covered separately in test_transport_capabilities.py.
+@pytest.fixture(autouse=True)
+def enable_transport_for_contract_scenarios(env):
+    app, _, _, _ = env
+    with app.state.sessions() as db:
+        db.scalar(select(User).where(User.username == "admin")).transport_operations = True
+        db.commit()

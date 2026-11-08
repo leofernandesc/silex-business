@@ -1,3 +1,5 @@
+import { hasTransport } from "./capabilities";
+import type { User } from "./types";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks, Plus } from "lucide-react";
@@ -38,7 +40,7 @@ type FinanceFilters = {
 type FinanceSummary = { pending_cents: number; overdue_cents: number; due_7_days_cents: number; count: number };
 type FinancePageResult = Page<Entry> & { summary: FinanceSummary };
 
-export function FinancePage({ initialDirection = "" }: { initialDirection?: string }) {
+export function FinancePage({ initialDirection = "", user }: { initialDirection?: string; user: User }) {
   const today = localDate();
   const initial: FinanceFilters = { q: "", status: "", direction: initialDirection, account_id: "", category_id: "", supplier_id: "", supplier_kind: "", document: "", search_field: "history", start: `${today.slice(0, 8)}01`, end: today, date_field: "due" };
   const [draft, setDraft] = useState<FinanceFilters>(initial);
@@ -96,7 +98,7 @@ export function FinancePage({ initialDirection = "" }: { initialDirection?: stri
         <label className="inline-field">Conta<select value={draft.account_id} onChange={(e) => update("account_id", e.target.value)}><option value="">Todas</option>{accounts.data?.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}</select></label>
         <label className="inline-field">Categoria<select value={draft.category_id} onChange={(e) => update("category_id", e.target.value)}><option value="">Todas</option>{categories.data?.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
         <label className="inline-field">Beneficiário<select value={draft.supplier_id} onChange={(e) => update("supplier_id", e.target.value)}><option value="">Todos</option>{suppliers.data?.items.map((s) => <option key={s.id} value={s.id}>{s.name} · {partnerKinds[s.kind]}</option>)}</select></label>
-        <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
+        <label className="inline-field">Tipo de beneficiário<select value={draft.supplier_kind} onChange={(e) => update("supplier_kind", e.target.value)}><option value="">Todos</option>{Object.entries(partnerKinds).filter(([key]) => key !== "subcontracted_freight" || hasTransport(user)).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
         <label className="inline-field">Documento<input value={draft.document} onChange={(e) => update("document", e.target.value)} maxLength={100} /></label>
         <label className="inline-field">Período por<select value={draft.date_field} onChange={(e) => update("date_field", e.target.value)}><option value="due">Lançamento</option><option value="competence">Competência</option><option value="created">Data de inclusão</option><option value="settled">Baixa</option></select></label>
         <SilexDatePicker label="De" value={draft.start} onChange={(value) => update("start", value)} />
