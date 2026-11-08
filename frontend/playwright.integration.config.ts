@@ -24,6 +24,7 @@ export default defineConfig({
     "customer-details.spec.ts",
     "integration.spec.ts",
     "commercial-readiness.spec.ts",
+    "commercial-report-values.spec.ts",
     "commercial-a11y.spec.ts",
     "integration-reports.spec.ts",
   ],
