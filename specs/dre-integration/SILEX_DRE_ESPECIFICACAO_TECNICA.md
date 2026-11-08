@@ -1,8 +1,8 @@
 # Silex Business — Especificação técnica: DRE gerencial e consolidação de fluxos
 
-**Documento:** ST-DRE-UX-001 · **Versão:** 1.0 (especificação aprovada quanto à direção; implementação não iniciada)  
-**Data de referência:** 08/11/2026 · **Repositório:** `leofernandesc/silex-business`  
-**Baseline auditada:** PR [#14](https://github.com/leofernandesc/silex-business/pull/14), HEAD `00fcaa5f869d702dda6ad535d264a0216dd11b65`, base `integration/erp-full-regression`.  
+**Documento:** ST-DRE-UX-001 · **Versão:** 1.0 (especificação aprovada quanto à direção; implementação não iniciada)<br>
+**Data de referência:** 08/11/2026 · **Repositório:** `leofernandesc/silex-business`<br>
+**Baseline auditada:** PR [#14](https://github.com/leofernandesc/silex-business/pull/14), HEAD `00fcaa5f869d702dda6ad535d264a0216dd11b65`, base `integration/erp-full-regression`.<br>
 **Estado operacional:** PR em Draft na verificação; nenhum merge, deploy, migração ou acesso aos dados reais autorizado.
 
 ## 1. Objetivos e decisões aprovadas

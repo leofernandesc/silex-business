@@ -1,8 +1,8 @@
 # Silex Business — Plano de implementação: DRE + consolidação de experiência
 
-**Documento:** PI-DRE-UX-001 · **Versão:** 1.0 · **Data:** 08/11/2026  
-**Norma vinculante de escopo:** [`SILEX_DRE_ESPECIFICACAO_TECNICA.md`](SILEX_DRE_ESPECIFICACAO_TECNICA.md).  
-**Baseline:** `leofernandesc/silex-business` — PR #14, SHA `00fcaa5f869d702dda6ad535d264a0216dd11b65`. PR em Draft na consulta.  
+**Documento:** PI-DRE-UX-001 · **Versão:** 1.0 · **Data:** 08/11/2026<br>
+**Norma vinculante de escopo:** [`SILEX_DRE_ESPECIFICACAO_TECNICA.md`](SILEX_DRE_ESPECIFICACAO_TECNICA.md).<br>
+**Baseline:** `leofernandesc/silex-business` — PR #14, SHA `00fcaa5f869d702dda6ad535d264a0216dd11b65`. PR em Draft na consulta.<br>
 **Objetivo:** entregar o conjunto de mudanças aprovado pelo proprietário sem repetição de fluxos, sem merge, deploy ou acesso ao banco real.
 
 ## 0. Protocolo de trabalho e preparação (bloqueante)
