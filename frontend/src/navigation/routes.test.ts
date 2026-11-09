@@ -11,8 +11,8 @@ import {
 
 describe("Route availability and compatibility, including SB-04B home", () => {
   it("preserves legacy addresses and adds one canonical financial plan", () => {
-    expect(routes).toHaveLength(26);
-    expect(new Set(routes.map((r) => r.id)).size).toBe(26);
+    expect(routes).toHaveLength(27);
+    expect(new Set(routes.map((r) => r.id)).size).toBe(27);
     expect(getRoute("home")).toMatchObject({
       admin: false,
       group: "PRINCIPAL",
@@ -73,4 +73,13 @@ describe("Route availability and compatibility, including SB-04B home", () => {
     ])
       expect(decodeReturn(value)).toBeNull();
   });
+});
+
+it('registers DRE as a separate admin destination and canonicalizes only valid legacy DRE links',()=>{
+ expect(routes.filter(route=>route.group==='financeiro').slice(0,3).map(route=>route.id)).toEqual(['finance-dashboard','finance-dre','finance-reports']);
+ expect(getRoute('finance-dre')).toMatchObject({title:'DRE gerencial',admin:true,group:'financeiro'});
+ expect(appUrl('finance-dre')).toBe('/app#finance-dre');
+ expect(readAddress({pathname:'/app',hash:'#finance-reports',search:'?dre_view=dre&dre_start=2000-01-01&dre_end=2000-01-31'}).route).toBe('finance-dre');
+ for(const search of ['', '?dre_view=dre&dre_start=2000-02-30', '?dre_view=dre&dre_view=dre'])expect(readAddress({pathname:'/app',hash:'#finance-reports',search}).route).toBe('finance-reports');
+ expect(decodeReturn(encodeReturn('finance-dre'))).toBe('finance-dre');
 });

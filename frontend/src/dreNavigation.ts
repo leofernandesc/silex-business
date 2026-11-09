@@ -7,5 +7,5 @@ export function readDrePeriod(search:string,today=localDate()):{start:string;end
  return {start,end};
 }
 export function dreHref(period?:{start:string;end:string}){
- const q=new URLSearchParams({dre_view:'dre',...(period?{dre_start:period.start,dre_end:period.end}:{})});return '/app?'+q.toString()+'#finance-reports';
+ const q=new URLSearchParams({dre_view:'dre',...(period?{dre_start:period.start,dre_end:period.end}:{})});return '/app?'+q.toString()+'#finance-dre';
 }

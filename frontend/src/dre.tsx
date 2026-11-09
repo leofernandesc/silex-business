@@ -25,14 +25,14 @@ export function DreReport({period,onPeriod,onLegacy}:{period:Period;onPeriod:(p:
  const data=!result.loading&&!result.error?result.data:null;
  const presentation=data?dreDisplayState(data):null;
  const refresh=()=>{setIssue(null);setCancellation(null);setCoverage(null);setReview(false);setVersion(v=>v+1)};
- return <><PageTitle title="Relatórios Financeiros" subtitle="DRE gerencial por competência econômica, integrada aos relatórios existentes."/>
+ return <><PageTitle title="DRE gerencial" subtitle="Resultado por competência econômica, com valores conhecidos e pendências do período."/>
  <form className="panel toolbar report-filters dre-filters" onSubmit={e=>{e.preventDefault();onPeriod({start:from,end:to});setVersion(v=>v+1)}}>
  <Field label="Relatório"><select value="dre" onChange={e=>onLegacy(e.target.value)}><option value="dre">DRE gerencial</option>{catalog.data?.map(r=><option key={r.id} value={r.id}>{r.name}</option>)}</select></Field>
  <SilexDatePicker label="De" value={from} onChange={setFrom}/><SilexDatePicker label="Até" value={to} onChange={setTo}/><button className="primary">Gerar relatório</button></form>
  <DreLoadFeedback resource={result} label="DRE gerencial"/>
  <section className="panel finance-report-print dre-report"><div className="panel-heading"><div><h2>DRE gerencial</h2><p>{dateOnly(period.start)} a {dateOnly(period.end)} · Competência econômica · Silex Business</p></div><ExportButton onClick={()=>exportReadableDre(period)}/><button disabled={!data} onClick={()=>window.print()}>Imprimir</button></div>
  {data&&<div className="dre-content">
- {presentation==='empty'?<section className="dre-empty" role="status"><h3>Nenhuma operação no período</h3><p>Não há fatos econômicos elegíveis neste período. Escolha outro período nos filtros para consultar sua DRE.</p></section>:<p className="dre-summary" role="status">{presentation==='pending'?'Existem operações para classificar ou confirmar. Revise as pendências abaixo.':presentation==='partial'?'Resultado parcial. Faltam confirmações de custos, tributos ou outros componentes.':'Cobertura do período confirmada.'}</p>}
+ {presentation==='empty'?<section className="dre-empty" role="status"><h3>Nenhuma operação no período</h3><p>Não há fatos econômicos elegíveis neste período. Escolha outro período nos filtros para consultar sua DRE.</p></section>:<p className="dre-summary" role="status">{presentation==='pending'?'Existem operações para classificar ou confirmar. Após revisar, gere o relatório novamente.':presentation==='partial'?'Resultado parcial. Faltam confirmações de custos, tributos ou outros componentes.':'Cobertura do período confirmada.'}</p>}
  <details className="dre-administration"><summary>Detalhes administrativos</summary><p>Classificação: versão {data.mapping_version} · Reconhecimento: versão {data.decision_version} · Ajustes econômicos: versão {data.cancellation_version}.</p><p>A DRE considera a competência econômica do período. Os filtros de conta e beneficiário dos demais relatórios não se aplicam aqui. Componentes desconhecidos não são considerados zero; resultados parciais não representam lucro final.</p></details>
  {presentation!=='empty'&&<>
  <div className="dre-lines"><Table headers={['Rubrica','Cobertura','Valor conhecido','Valor final','Revisão']} empty={false} loading={false}>

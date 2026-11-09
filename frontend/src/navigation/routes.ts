@@ -1,3 +1,4 @@
+import {readDrePeriod} from "../dreNavigation";
 import { hasTransport } from "../capabilities";
 import type { User } from "../types";
 
@@ -41,6 +42,13 @@ export const routes = [
     group: "financeiro",
     admin: true,
   },
+  { id: "finance-dre", title: "DRE gerencial", group: "financeiro", admin: true },
+  {
+    id: "finance-reports",
+    title: "Relatórios Financeiros",
+    group: "financeiro",
+    admin: true,
+  },
   {
     id: "finance",
     title: "Lançamento (Despesa/Receita)",
@@ -81,12 +89,6 @@ export const routes = [
   {
     id: "finance-subcategories",
     title: "Plano financeiro",
-    group: "financeiro",
-    admin: true,
-  },
-  {
-    id: "finance-reports",
-    title: "Relatórios Financeiros",
     group: "financeiro",
     admin: true,
   },
@@ -144,12 +146,13 @@ export function decodeReturn(value: string | null): RouteId | null {
 }
 export const DEFAULT_ROUTE: RouteId = "home";
 // Only registered operational hashes cross the public boundary.
-export function readAddress(address: Pick<Location, "pathname" | "hash">) {
+export function readAddress(address: Pick<Location, "pathname" | "hash"> & {search?:string}) {
   const hash = address.hash.slice(1);
   const login =
     address.pathname === "/entrar" || address.pathname === "/entrar/";
   const operational = ["/", "/app", "/app/"].includes(address.pathname);
-  const route = operational ? getRoute(hash)?.id : undefined;
+  const legacyDre = hash === "finance-reports" && readDrePeriod(address.search || "");
+  const route = operational ? getRoute(legacyDre ? "finance-dre" : hash)?.id : undefined;
   const message =
     (!operational && !login) || (operational && hash && !route)
       ? "Endereço não encontrado. Exibindo a entrada disponível do sistema."
