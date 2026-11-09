@@ -40,7 +40,10 @@ test('DRE review: dated policy splits preserve history and generic catalog edits
 test('DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal',async({page})=>{
  const {today,category,first,key}=await setup(page);
  async function change(nature:string,previous:any){const data={category_id:category.id,line_code:'outside_dre',economic_classification:nature,valid_from:'2000-01-01',valid_to:'2099-12-31',expected_revision:previous.revision,supersedes_id:previous.id,reason:'Política revisada e documentada em teste'};const p=await post(page,'/finance/dre/mappings/preview',data,200);return post(page,'/finance/dre/mappings',{...data,preview_token:p.preview_token})}
- const second=await change('financing',first);await dre(page);await page.getByRole('button',{name:'Revisar reconhecimento de '+key,exact:true}).click();await expect(page.getByText('Natureza econômica na data: Financiamento',{exact:false})).toBeVisible();
+ const second=await change('financing',first);await dre(page);
+ let legacy=true;await page.route('**/api/finance/dre/recognition-policy?*',route=>legacy?route.fulfill({json:{policy_fingerprint:'0'.repeat(64),economic_policy:{classification:null,affects_result:null}}}):route.continue());
+ await page.getByRole('button',{name:'Revisar reconhecimento de '+key,exact:true}).click();await expect(page.getByText(/Incidência não confirmada/)).toBeVisible();await expect(page.getByRole('button',{name:'Confirmar revisão',exact:true})).toBeDisabled();
+ legacy=false;await page.getByRole('button',{name:'Atualizar política econômica',exact:true}).click();await expect(page.getByText('Natureza econômica na data: Financiamento',{exact:false})).toBeVisible();
  await page.getByLabel('Tipo de evidência *',{exact:true}).fill('Revisão sintética fundamentada');await page.getByLabel('Justificativa e evidência *',{exact:true}).fill('Natureza econômica confirmada após supervisão');
  await enterDate(page,'Data econômica comprovada',civilDate(today)!.subtract({days:1}).toString());await expect(page.getByRole('button',{name:'Confirmar revisão',exact:true})).toBeEnabled();
  await change('investment',second);await page.getByRole('button',{name:'Confirmar revisão',exact:true}).click();await expect(page.getByRole('dialog').getByRole('alert')).toContainText('Política econômica mudou');

@@ -288,3 +288,19 @@ def test_revoking_transport_hides_economic_adjustments_and_their_frozen_review(e
         assert response.status_code==200 and '20001' not in response.text and 'economic_adjustment:' not in response.text
     assert admin.get('/api/finance/dre',params=period()).json()['cancellation_version']==0
     assert admin.get('/api/finance/dre/period-reviews/'+str(review['id'])).status_code==403
+
+
+def test_unrecorded_legacy_policy_is_unknown_not_false_and_cannot_be_confirmed(env):
+    app,admin,*_=env
+    from app.models import DreMapping,User
+    entry=title(admin,'income',10001);key=f"finance_entry:{entry['id']}:principal"
+    with app.state.sessions() as db:
+        actor=db.scalar(select(User).where(User.username=='admin'))
+        db.add(DreMapping(target=f"category:{entry['category_id']}:subcategory:0",category_id=entry['category_id'],line_code='RB',valid_from=date(2000,1,1),valid_to=date(2099,12,31),revision=1,actor_user_id=actor.id,reason='Política antiga sem captura econômica'))
+        db.commit()
+    policy=admin.get('/api/finance/dre/recognition-policy',params={'source_key':key,'economic_date':V.today().isoformat()}).json()
+    assert policy['economic_policy']=={'classification':None,'affects_result':None}
+    issue=next(i for i in admin.get('/api/finance/dre/issues',params=period()).json() if i.get('key')==key)
+    assert 'mapping_policy_confirmation_required' in issue['codes']
+    response=admin.post('/api/finance/dre/recognition-review',json={'source_key':key,'source_fingerprint':issue['source_fingerprint'],'policy_fingerprint':policy['policy_fingerprint'],'expected_revision':0,'decision':'recognize','economic_date':V.today().isoformat(),'evidence_kind':'legado_não_confirmado','reason':'Não adivinhar atributos ausentes do histórico','request_key':'legacy-unknown-must-not-be-false'})
+    assert response.status_code==409

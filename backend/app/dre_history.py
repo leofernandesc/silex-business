@@ -54,6 +54,8 @@ def active_mappings(db, version=None):
 
 
 def economic_policy(source,mapping):
+    if mapping and (mapping.economic_classification is None or mapping.economic_affects_result is None):
+        return {'classification':None,'affects_result':None}
     return {
         'classification':mapping.economic_classification if mapping else source['catalog_classification'],
         'affects_result':mapping.economic_affects_result if mapping and mapping.subcategory_id is not None else source['catalog_affects_result'],
