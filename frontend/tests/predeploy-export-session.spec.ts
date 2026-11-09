@@ -16,9 +16,11 @@ test('a financial download from the previous session must not finish in the oper
  await page.goto('/app#finance-reports');await page.getByLabel('Relatório',{exact:true}).selectOption('dre');await expect(page.locator('.dre-lines')).toContainText('100,01');
  let started!:()=>void;const intercepted=new Promise<void>(r=>started=r);let release!:()=>void;const held=new Promise<void>(r=>release=r);
  await page.route('**/api/finance/dre?*',async route=>{const response=await route.fetch();expect(response.status()).toBe(200);started();await held;await route.fulfill({response})});
- const download=page.waitForEvent('download',{timeout:10000}).catch(()=>null);
  await page.locator('.dre-report').getByRole('button',{name:'Exportar CSV',exact:true}).click();await intercepted;
  await page.getByRole('button',{name:'Sair',exact:true}).click();await expect(page.getByRole('heading',{name:'Acesse seu espaço'})).toBeVisible();await login(page,'demo.operador');
  expect((await page.request.get('/api/finance/dre?'+new URLSearchParams(period))).status()).toBe(403);
+ // Start the negative observation only after the new identity is established;
+ // a slow logout/login must not consume the window before releasing the body.
+ const download=page.waitForEvent('download',{timeout:10000}).catch(()=>null);
  release();const result=await download;expect(result,'No download may survive the authenticated identity change').toBeNull();
 });

@@ -1,7 +1,7 @@
 [
   {
     "path": "archival.json",
-    "sha256": "e3722cc90b731dd6cb530832a4b7fad402c833dce09c46a4f8b3cd1908bbee60"
+    "sha256": "e4299d0615158eb591d01c82e06d29d1bcb1a2635127f520f3902b666e00cd4d"
   },
   {
     "path": "build.txt",
@@ -9,7 +9,7 @@
   },
   {
     "path": "code-receipt.json",
-    "sha256": "6cced544f66c7b45a568d2999dc7d12efcc26056d3db2b81dd9b96e5dc4736a9"
+    "sha256": "61a045301ffd7bfd1da68ddece2c259c67bbe3541158dea8075ddecc72e32bdf"
   },
   {
     "path": "directed-chromium.txt",
@@ -22,6 +22,14 @@
   {
     "path": "frontend.txt",
     "sha256": "352cd8f2b72be00b6c5fc75e7f6f71b1907b641ac6ca080d10bd2c435f200f18"
+  },
+  {
+    "path": "observer-final-chromium.txt",
+    "sha256": "c950f9818288e3172629662e599d4522a733eb3db270a6122a7319a75ccbeb5a"
+  },
+  {
+    "path": "observer-final-firefox.txt",
+    "sha256": "29c92e9ba4a930945cebd9d8c6df0a9728c9b29ac13815cd387e4b2a9734cae7"
   },
   {
     "path": "race-before-chromium.txt",

@@ -16,7 +16,8 @@
     },
     {
       "path": "frontend/tests/predeploy-export-session.spec.ts",
-      "sha256": "475d42e9f2735c640bb5ee843c133dab45092611bcb7e1663b39f433c832b478"
+      "sha256": "6b2f291815a90895ebc07b2a58b1521c5251435ebd1ab0654627b47e0ce83fa7"
     }
-  ]
+  ],
+  "test_finalization": "E2E download observation armed after the operator login; product code remains the implementation commit; final file hashes below."
 }

@@ -52,5 +52,17 @@
     "original_sha256": "e3f05a205321efeee3dfba414884750c24786bdb819a95d2ac9f0d492d0eb590",
     "archived_sha256": "e3f05a205321efeee3dfba414884750c24786bdb819a95d2ac9f0d492d0eb590",
     "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "observer-final-chromium.txt",
+    "original_sha256": "c950f9818288e3172629662e599d4522a733eb3db270a6122a7319a75ccbeb5a",
+    "archived_sha256": "c950f9818288e3172629662e599d4522a733eb3db270a6122a7319a75ccbeb5a",
+    "normalization": "LF and trailing whitespace only"
+  },
+  {
+    "path": "observer-final-firefox.txt",
+    "original_sha256": "29c92e9ba4a930945cebd9d8c6df0a9728c9b29ac13815cd387e4b2a9734cae7",
+    "archived_sha256": "29c92e9ba4a930945cebd9d8c6df0a9728c9b29ac13815cd387e4b2a9734cae7",
+    "normalization": "LF and trailing whitespace only"
   }
 ]
