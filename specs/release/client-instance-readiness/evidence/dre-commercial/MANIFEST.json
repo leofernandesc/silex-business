@@ -118,13 +118,17 @@
   "evidence": [
     {
       "path": "audit-desktop.csv",
-      "sha256": "6d785dc90f82681ff8f0262607a5b42a9d86fabeb2a57b66ef17137b3a84016a",
-      "bytes": 2876
+      "sha256": "e51ac28cf49d4ac571327a0cb28d227f1d29103db4d0c7241c0a273dac713c9b",
+      "bytes": 2842,
+      "download_sha256": "6d785dc90f82681ff8f0262607a5b42a9d86fabeb2a57b66ef17137b3a84016a",
+      "normalization": "Archived CRLF -> LF only; runtime CSV unchanged."
     },
     {
       "path": "audit-mobile.csv",
-      "sha256": "627c65b221f7f28b4b4fbc9ee32ac4a85ffe893e04f16567e4d7c1fea4ffeb25",
-      "bytes": 2876
+      "sha256": "7ae2d99edebfdaf9e98dd4651e86be1f7a0040dc19211355dab0d70331ff1657",
+      "bytes": 2842,
+      "download_sha256": "627c65b221f7f28b4b4fbc9ee32ac4a85ffe893e04f16567e4d7c1fea4ffeb25",
+      "normalization": "Archived CRLF -> LF only; runtime CSV unchanged."
     },
     {
       "path": "backend-full.txt",
@@ -133,8 +137,8 @@
     },
     {
       "path": "baseline-negative.txt",
-      "sha256": "55b2a2e06cb99e96851ecefb7c62c43eaed9c4cc91c143f500d65bbf0baf8bdf",
-      "bytes": 2509
+      "sha256": "96271a4df463ea45531b5b6c960645fdcba6625c27d697a948219eab830539c0",
+      "bytes": 2508
     },
     {
       "path": "chromium-directed.txt",
@@ -153,13 +157,15 @@
     },
     {
       "path": "commercial-a4.txt",
-      "sha256": "caa2aaff354f0d5b2132f6ff9bfacac91f218c90220482ff0e8e86383e6f9c14",
-      "bytes": 2002
+      "sha256": "732c8999f4a88b3f68e89304aacdc92753036ab983587aef1bf23b4fcf75258a",
+      "bytes": 2001
     },
     {
       "path": "commercial-desktop.csv",
-      "sha256": "a9aa371dd0adbfbdc2b877b65401b42f236ebe0c8272a031b5c495db31616938",
-      "bytes": 1528
+      "sha256": "ffd656ba1d108eb7c6fe4900f8a8ac1c1e99f4e0ecf8d98f976867d97cf124bd",
+      "bytes": 1504,
+      "download_sha256": "a9aa371dd0adbfbdc2b877b65401b42f236ebe0c8272a031b5c495db31616938",
+      "normalization": "Archived CRLF -> LF only; runtime CSV unchanged."
     },
     {
       "path": "commercial-desktop.png",
@@ -168,8 +174,10 @@
     },
     {
       "path": "commercial-mobile.csv",
-      "sha256": "a9aa371dd0adbfbdc2b877b65401b42f236ebe0c8272a031b5c495db31616938",
-      "bytes": 1528
+      "sha256": "ffd656ba1d108eb7c6fe4900f8a8ac1c1e99f4e0ecf8d98f976867d97cf124bd",
+      "bytes": 1504,
+      "download_sha256": "a9aa371dd0adbfbdc2b877b65401b42f236ebe0c8272a031b5c495db31616938",
+      "normalization": "Archived CRLF -> LF only; runtime CSV unchanged."
     },
     {
       "path": "commercial-mobile.png",
@@ -203,8 +211,8 @@
     },
     {
       "path": "frontend-full.txt",
-      "sha256": "81efa701196da14a3f77f7e1e86e93b08063fc8dc511a5804e637bdd0b71d5f1",
-      "bytes": 283
+      "sha256": "c55495f21556a6c6cbb119ded974a3359454b8b49d46572ab8fb11a13f623acc",
+      "bytes": 282
     },
     {
       "path": "legacy-comparison.json",
@@ -235,6 +243,7 @@
   "notes": [
     "Actual local browser/PDF/CSV outputs; entirely fictitious disposable SQLite. No Railway access.",
     "Archived logs strip ANSI and trailing whitespace only; intermediate failures are retained.",
-    "Final immutable SHA and CI results are recorded in PR checks and description; no historical PASS is reassigned."
+    "Final immutable SHA and CI results are recorded in PR checks and description; no historical PASS is reassigned.",
+    "CSV archive copies normalize CRLF to LF for the repository whitespace gate; raw download SHA-256 is recorded per CSV. No export code or data changed."
   ]
 }

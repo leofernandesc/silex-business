@@ -48,4 +48,3 @@ AssertionError: expected '\ufeff"DRE gerencial";"Competência ec…' not to cont
       Tests  1 failed (1)
    Start at  18:08:05
    Duration  246ms (transform 57ms, setup 0ms, import 104ms, tests 10ms, environment 0ms)
-

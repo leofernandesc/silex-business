@@ -122,3 +122,5 @@ Não há mudança em backend de produção, migrações, cadastros financeiros, 
 Continuam dependendo de decisão humana: classificação econômica apropriada, execução real do serviço, evidência de fatos avulsos, cobertura documentada dos componentes, cancelamento econômico quando aplicável e aceite financeiro/contábil. Não há atestado automático de zero, lucro líquido completo ou EBITDA sem suporte. Homologação em dispositivo físico, impressora e leitor de tela real não foi realizada nesta tarefa.
 
 Os resultados locais registram as iterações de desenvolvimento. A aprovação da árvore imutável final é verificada pelo CI do SHA final; não se soma o controle negativo nem as reexecuções aos testes distintos.
+
+O gate de whitespace identificou CRLF nas cópias CSV adicionadas como evidência. As cópias versionadas foram normalizadas para LF, com hashes dos downloads originais registrados no manifesto. O CSV gerado pela aplicação mantém BOM/CRLF, separador e conteúdo; a normalização foi somente no arquivo de revisão.

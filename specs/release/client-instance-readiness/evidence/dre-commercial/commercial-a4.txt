@@ -25,4 +25,3 @@ Margem bruta                                          —
 Margem operacional                                    —
 Margem EBITDA                                         —
 Margem líquida                                        —
-
