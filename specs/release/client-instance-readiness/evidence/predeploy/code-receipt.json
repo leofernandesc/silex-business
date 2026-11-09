@@ -1,0 +1,23 @@
+{
+  "original_candidate": "0ade7944238cfa52175936650115f5bcf86592e4",
+  "implementation_commit": "720c73e9ca2091c7c01b368765bd26d8d7cc7b15",
+  "files": [
+    {
+      "path": "frontend/playwright.integration.config.ts",
+      "sha256": "e5109785922977855e89a905858792a482016dea74b410250590feb67365093e"
+    },
+    {
+      "path": "frontend/src/api.test.ts",
+      "sha256": "6132c518e9e6915f92bd0dbdb89573ae888fcb59004a948bee3924e21c80483c"
+    },
+    {
+      "path": "frontend/src/api.ts",
+      "sha256": "24b2a5ea4a2199273bb8f4b292294c265a8eae9ab051dd20a80e306e5e908870"
+    },
+    {
+      "path": "frontend/tests/predeploy-export-session.spec.ts",
+      "sha256": "6b2f291815a90895ebc07b2a58b1521c5251435ebd1ab0654627b47e0ce83fa7"
+    }
+  ],
+  "test_finalization": "E2E download observation armed after the operator login; product code remains the implementation commit; final file hashes below."
+}

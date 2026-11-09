@@ -1,0 +1,15 @@
+[WebServer] INFO:     Started server process [1081749]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8034 (Press CTRL+C to quit)
+
+Running 2 tests using 1 worker
+
+(node:1081753) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (13.2s)
+(node:1082517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [mobile] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (12.9s)
+
+  2 passed (33.6s)

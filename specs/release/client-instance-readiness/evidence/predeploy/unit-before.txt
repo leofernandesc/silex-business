@@ -1,0 +1,110 @@
+
+> gestao-local@0.1.0 test
+> vitest run --run src/api.test.ts
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-predeploy-audit/frontend
+
+ ❯ src/api.test.ts (35 tests | 5 failed) 64ms
+     × discards a late successful GET without replay or a second expiration event 34ms
+     × discards a late successful POST without replay or a second expiration event 1ms
+     × checks again after the response body has been read 1ms
+     × does not create a CSV download from the previous session 4ms
+     × accepts a response started in the new session while discarding the old one 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/api.test.ts > successful responses cannot cross authenticated session generations > discards a late successful GET without replay or a second expiration event
+ FAIL  src/api.test.ts > successful responses cannot cross authenticated session generations > discards a late successful POST without replay or a second expiration event
+AssertionError: promise resolved "{ amount_cents: 10001 }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "amount_cents": 10001,
+  }
+
+ ❯ src/api.test.ts:13:95
+     11|   let finish!:(response:Response)=>void;const dispatchEvent=vi.fn();vi…
+     12|   const fetch=vi.fn(()=>new Promise<Response>(resolve=>{finish=resolve…
+     13|   const assertion=expect(api('/finance',method,method==='POST'?{amount…
+       |                                                                                               ^
+     14|   resetSessionRequests();finish(new Response('{"amount_cents":10001}')…
+     15|   expect(fetch).toHaveBeenCalledTimes(1);expect(dispatchEvent).not.toH…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/api.test.ts > successful responses cannot cross authenticated session generations > checks again after the response body has been read
+AssertionError: promise resolved "{ amount_cents: 10001 }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "amount_cents": 10001,
+  }
+
+ ❯ src/api.test.ts:20:100
+     18|   let read!:()=>void;const reading=new Promise<void>(resolve=>{read=re…
+     19|   const response=new Response('{}');response.json=()=>{read();return n…
+     20|   vi.stubGlobal('fetch',vi.fn().mockResolvedValue(response));const ass…
+       |                                                                                                    ^
+     21|   await reading;resetSessionRequests();finish({amount_cents:10001});aw…
+     22|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/api.test.ts > successful responses cannot cross authenticated session generations > does not create a CSV download from the previous session
+AssertionError: expected TypeError: Cannot read properties of unde… to match object { status: +0 }
+
+- Expected
++ Received
+
+- {
+-   "status": 0,
++ TypeError {
++   "message": "Cannot read properties of undefined (reading 'remove')",
+  }
+
+ ❯ src/api.test.ts:26:67
+     24|   let finish!:(response:Response)=>void;const createElement=vi.fn();vi…
+     25|   vi.stubGlobal('fetch',vi.fn(()=>new Promise<Response>(resolve=>{fini…
+     26|   const assertion=expect(downloadCsv('/finance/dre.csv','dre.csv')).re…
+       |                                                                   ^
+     27|   resetSessionRequests();finish(new Response('private synthetic financ…
+     28|   expect(createElement).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/api.test.ts > successful responses cannot cross authenticated session generations > accepts a response started in the new session while discarding the old one
+AssertionError: promise resolved "{ amount_cents: 10001 }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "amount_cents": 10001,
+  }
+
+ ❯ src/api.test.ts:33:35
+     31|   let finish!:(response:Response)=>void;
+     32|   vi.stubGlobal('fetch',vi.fn().mockImplementationOnce(()=>new Promise…
+     33|   const old=expect(api('/finance')).rejects.toMatchObject({status:0});…
+       |                                   ^
+     34|   expect(await api('/auth/me')).toEqual({id:2});finish(new Response('{…
+     35|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 30 passed (35)
+   Start at  02:29:17
+   Duration  270ms (transform 59ms, setup 0ms, import 75ms, tests 64ms, environment 0ms)

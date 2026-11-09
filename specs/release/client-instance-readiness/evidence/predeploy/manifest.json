@@ -1,0 +1,58 @@
+[
+  {
+    "path": "archival.json",
+    "sha256": "e4299d0615158eb591d01c82e06d29d1bcb1a2635127f520f3902b666e00cd4d"
+  },
+  {
+    "path": "build.txt",
+    "sha256": "95fb33e652473ddb35bc8d3049348ff320fc935a4f4b0e2afafcabd130d0ce9b"
+  },
+  {
+    "path": "code-receipt.json",
+    "sha256": "61a045301ffd7bfd1da68ddece2c259c67bbe3541158dea8075ddecc72e32bdf"
+  },
+  {
+    "path": "directed-chromium.txt",
+    "sha256": "5413c54e46f3c14cf40afb42f16f41420b6c9a15cd7eb345095bab48b7d379c5"
+  },
+  {
+    "path": "directed-firefox.txt",
+    "sha256": "e3f05a205321efeee3dfba414884750c24786bdb819a95d2ac9f0d492d0eb590"
+  },
+  {
+    "path": "frontend.txt",
+    "sha256": "352cd8f2b72be00b6c5fc75e7f6f71b1907b641ac6ca080d10bd2c435f200f18"
+  },
+  {
+    "path": "observer-final-chromium.txt",
+    "sha256": "c950f9818288e3172629662e599d4522a733eb3db270a6122a7319a75ccbeb5a"
+  },
+  {
+    "path": "observer-final-firefox.txt",
+    "sha256": "29c92e9ba4a930945cebd9d8c6df0a9728c9b29ac13815cd387e4b2a9734cae7"
+  },
+  {
+    "path": "race-before-chromium.txt",
+    "sha256": "cc5e1fa1c59bd9b915df5e1116ec4880ac33fc0491d5f0c654ab9f53877c4748"
+  },
+  {
+    "path": "race-before-firefox.txt",
+    "sha256": "6f91d0e1e0aedf62413047356e14b93ffa9e404adb1d584ac0dd447c3af05fd6"
+  },
+  {
+    "path": "startup-docker.txt",
+    "sha256": "719eec7f560c2e96c02680bc6d239c8afd634a2a8bb2de19b708ddd46c3f6ef7"
+  },
+  {
+    "path": "startup-receipt.json",
+    "sha256": "2e61c8dbf734ed53ddeb2f952b8c6dad53380ed7dfd93f62a448fb4b8ac344ee"
+  },
+  {
+    "path": "unit-after.txt",
+    "sha256": "29e19b9de9e19e6f1caf3f9adc6275aa09ca8de724dd763de94f985618f66e36"
+  },
+  {
+    "path": "unit-before.txt",
+    "sha256": "d805e8bd9bce4b6193d2661121406218fd5a7f18e04bc3d54ddfddf1ba57ecaf"
+  }
+]

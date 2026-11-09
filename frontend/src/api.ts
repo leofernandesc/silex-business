@@ -37,14 +37,18 @@ async function request<T>(path: string, init: RequestInit, format:'json'|'csv'):
       try { detail=(await response.json()).detail; } catch { /* Never expose non-JSON diagnostics. */ }
       throw new ApiError(responseMessage(detail),response.status);
     }
+    let value:T;
     try {
       if(format==='csv') {
         if(!response.headers.get('content-type')?.toLowerCase().includes('text/csv'))throw new Error('Invalid CSV response');
-        return await response.blob() as T;
-      }
-      return await response.json();
+        value=await response.blob() as T;
+      } else value=await response.json();
     }
     catch (error) { if(controller.signal.aborted)throw error; throw new ApiError('Resposta inválida do servidor. Tente novamente.',response.status); }
+    // Logout/login already advance this generation. A successful old response
+    // must not populate the next identity's screen or create a late download.
+    if(generation!==sessionGeneration)throw new ApiError('A sessão mudou durante a solicitação. Consulte o resultado antes de reenviar uma operação.',0);
+    return value;
   } catch (error) {
     if (timedOut) throw new ApiError((init.method||'GET')==='GET'?'Tempo limite da consulta. Tente novamente.':'Tempo limite da solicitação. Consulte o resultado antes de reenviar uma operação.',0);
     if (init.signal?.aborted) throw error;
