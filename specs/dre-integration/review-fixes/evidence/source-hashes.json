@@ -1,0 +1,95 @@
+{
+  "reviewed_head": "13c2de557f40029b1008f019236d7551ac11eb03",
+  "code_commit": "7e5adb6bd6c94e54088cb9875b06169f43b0ab01",
+  "files": [
+    {
+      "path": ".github/workflows/integration-tests.yml",
+      "sha256": "1bbed140dcb653843665017f3089d43b9f325d530ac54c9c6af2fdb76d9d98ce"
+    },
+    {
+      "path": "backend/app/dre.py",
+      "sha256": "9715a15f28bf5d3d3714e96db6bd564dfefe4fb3f8a314d55e3bb5b9fd818fe1"
+    },
+    {
+      "path": "backend/app/dre_cancellations.py",
+      "sha256": "24c203b9255fa653d84b8b876a8674dfeffc3c30f5f88987e0e629264a6e7386"
+    },
+    {
+      "path": "backend/app/dre_history.py",
+      "sha256": "8b00f22ed4fc4f79f2c05e7f752d7208737abf7c4c82c3ffa10b1c0ccd531e52"
+    },
+    {
+      "path": "backend/app/dre_sources.py",
+      "sha256": "f866e3db2b7675ffebaecdf1ff060d5c0837fec17499744b4a2c1defe3cd0e67"
+    },
+    {
+      "path": "backend/app/financial.py",
+      "sha256": "1fded41a6b1cd5a4337db61c7648c3f9401f1931d9e03bf1750350f1530ecd54"
+    },
+    {
+      "path": "backend/app/models.py",
+      "sha256": "5df318a783eccb6d8392c348def900e9224f143e07406b8e0a65cb7de39aa356"
+    },
+    {
+      "path": "backend/migrations/versions/0017_dre_review_integrity.py",
+      "sha256": "c6e8ab5646c4e9d47a22d1fa93b406b11e26ae3d2cee41c411bec56ec9e9996f"
+    },
+    {
+      "path": "backend/tests/test_dre_api.py",
+      "sha256": "4ff38447b4d87d10f21f447ccb6d6120257e42c368ce62e62ea7f29d6638f00e"
+    },
+    {
+      "path": "backend/tests/test_dre_review_fixes.py",
+      "sha256": "18660f2d4a25ac11b9a0ab278c0892849dc463381e6efe40ba8e43850198a24e"
+    },
+    {
+      "path": "backend/tests/test_dre_review_migration.py",
+      "sha256": "9e6028ff758729df32c8741a335ab894cac77f536ea8ffb4abe22a4b40f52780"
+    },
+    {
+      "path": "frontend/playwright.integration.config.ts",
+      "sha256": "872952bc2aa027743eccaa42f691183504014e7994a3a14ea15ce7cb376353db"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "cc76003583f4c03443d449d7e7a274167a816b6ce1e20081e8da2f2abfc4bf40"
+    },
+    {
+      "path": "frontend/src/dre.tsx",
+      "sha256": "bd42a28a152008a18cbf5ff8a7c221151b0a1510a7ad48f660dea678c64f195a"
+    },
+    {
+      "path": "frontend/src/home/AuthenticatedHome.tsx",
+      "sha256": "05b6a52d43a3f30bd29479995a6fe01480e64a0238468f3ca8dc0401a4851693"
+    },
+    {
+      "path": "frontend/src/home/model.test.ts",
+      "sha256": "0371b765eafc7f71c2db69b847498de26ed9627c3c6d1f34c9bb1c27721d8898"
+    },
+    {
+      "path": "frontend/src/home/model.ts",
+      "sha256": "85a4d6e9710d845b9a9fb66bf2990c36077c67da9ed4a312265415f5b36b756b"
+    },
+    {
+      "path": "frontend/src/resourceValidation.test.ts",
+      "sha256": "b871f6b237d6d8a519dcb7526179bc41f548f6de60504d3cfc2fb1c89c13df6e"
+    },
+    {
+      "path": "frontend/src/resourceValidation.ts",
+      "sha256": "767bfaf019a5f91ff037171abe97b2c00ec183ed943eecbb33a10552817b6581"
+    },
+    {
+      "path": "frontend/src/ui.tsx",
+      "sha256": "8e610a00b05c28c56b9b762edc501f98591c6fe8a642aea4b97df5cf0d9f2347"
+    },
+    {
+      "path": "frontend/tests/dre-review-fixes.spec.ts",
+      "sha256": "7d0c084ce1f7cbcd048a6807bb4626a3f166fb2c188ab7ae303600ebf9848c64"
+    },
+    {
+      "path": "scripts/compare_dre_baseline.py",
+      "sha256": "8a5df1c9839033a750e31f769be60d87800e9f74c540101587f3558b36c8a7ef"
+    }
+  ],
+  "previous_code_commit": "3e0a2af2d125b21a97999684d907956d4bb6b86e"
+}

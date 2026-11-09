@@ -3,7 +3,7 @@ from calendar import monthrange
 from zoneinfo import ZoneInfo
 
 from fastapi import HTTPException
-from sqlalchemy import func, select
+from sqlalchemy import case, func, select
 
 from .models import Account, Audit, CashSession, Category, Customer, FinanceEntry, Payment, Product, Sale, SaleItem, ServiceOrder, StockMovement, Subcategory, Supplier, User, now
 
@@ -369,3 +369,11 @@ def page(db, query, page_number=1, page_size=20, transform=data):
     count = db.scalar(select(func.count()).select_from(query.order_by(None).subquery()))
     rows = db.scalars(query.offset((page_number - 1) * page_size).limit(page_size)).all()
     return {"items": [transform(row) for row in rows], "total": count, "page": page_number, "page_size": page_size}
+
+
+def open_title_principal(db):
+    """Outstanding principal, including signed reversals; one batch query."""
+    paid = select(Payment.entry_id, func.sum(Payment.principal_cents).label('principal')).group_by(Payment.entry_id).subquery()
+    sign = case((FinanceEntry.direction == 'income', 1), else_=-1)
+    remaining = func.max(0, FinanceEntry.amount_cents - func.max(0, func.coalesce(paid.c.principal, 0) * sign))
+    return db.execute(select(FinanceEntry, remaining).outerjoin(paid, paid.c.entry_id == FinanceEntry.id).where(FinanceEntry.status.in_(['open', 'partial']), remaining > 0)).all()

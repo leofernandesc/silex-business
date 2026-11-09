@@ -8,10 +8,11 @@ async function login(page: Page, username = "demo.admin") {
   await expect(
     page.getByRole("heading", { name: "Página inicial", exact: true }),
   ).toBeVisible({ timeout: 15000 });
-  await navigate(page, "Visão geral");
-  await expect(page.getByRole("heading", { name: "Visão geral", exact: true })).toBeVisible();
+  await navigate(page, "Início");
+  await expect(page.getByRole("heading", { name: "Página inicial", exact: true })).toBeVisible();
 }
 async function navigate(page: Page, name: string) {
+  name=({Dashboard:"Visão financeira",Categorias:"Plano financeiro",SubCategorias:"Plano financeiro"} as Record<string,string>)[name]||name;
   const open = page.getByRole("button", { name: "Abrir menu", exact: true });
   if (await open.isVisible()) await open.click();
   const nav = page.getByRole("navigation", { name: "Menu principal" });
@@ -19,7 +20,7 @@ async function navigate(page: Page, name: string) {
   const group: Record<string, string> = {
     Clientes: "CADASTROS", "Produtos ou Serviços": "CADASTROS", Fornecedores: "CADASTROS", Diaristas: "CADASTROS", "Frete Subcontratado": "CADASTROS",
     Estoque: "MOVIMENTAÇÕES", "Frente de Caixa": "MOVIMENTAÇÕES", Vendas: "MOVIMENTAÇÕES", "Serviços e pedidos": "MOVIMENTAÇÕES", "Controle de caixa": "MOVIMENTAÇÕES",
-    "Lançamento (Despesa/Receita)": "FINANCEIRO", "Conciliação Bancária": "FINANCEIRO", "Contas a Pagar": "FINANCEIRO", "Contas a Receber": "FINANCEIRO", Dashboard: "FINANCEIRO", "Cadastro de Contas": "FINANCEIRO", Categorias: "FINANCEIRO", SubCategorias: "FINANCEIRO", "Relatórios Financeiros": "FINANCEIRO",
+    "Lançamento (Despesa/Receita)": "FINANCEIRO", "Conciliação Bancária": "FINANCEIRO", "Contas a Pagar": "FINANCEIRO", "Contas a Receber": "FINANCEIRO", "Visão financeira": "FINANCEIRO", "Plano financeiro":"FINANCEIRO", "Cadastro de Contas": "FINANCEIRO", Categorias: "FINANCEIRO", SubCategorias: "FINANCEIRO", "Relatórios Financeiros": "FINANCEIRO",
     Usuários: "ADMINISTRAÇÃO", "Histórico de operações": "ADMINISTRAÇÃO", "Empresa e identidade": "ADMINISTRAÇÃO",
   };
   if (!(await target.isVisible()) && group[name]) await nav.getByRole("button", { name: group[name], exact: true }).click();
@@ -124,7 +125,7 @@ test("sessão persistente, navegação e tabelas responsivas", async ({
   page.on("request", (request) => {
     if (
       request.url().startsWith("http") &&
-      !request.url().startsWith("http://127.0.0.1:8011/")
+      new URL(request.url()).origin !== new URL(info.project.use.baseURL!).origin
     )
       external.push(request.url());
   });
@@ -136,7 +137,7 @@ test("sessão persistente, navegação e tabelas responsivas", async ({
   });
   await page.reload();
   await expect(
-    page.getByRole("heading", { name: "Visão geral", exact: true }),
+    page.getByRole("heading", { name: "Página inicial", exact: true }),
   ).toBeVisible();
   await page.keyboard.press("Tab");
   await page.getByRole("link", { name: "Pular para o conteúdo" }).focus();
@@ -500,7 +501,7 @@ test("financeiro ampliado: recorrência, baixa parcial, comprovante, OFX, painel
   await expect(row).toContainText("Em aberto");
 
   await navigate(page, "Dashboard");
-  await expect(page.getByRole("heading", { name: "Dashboard financeiro", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Visão financeira", exact: true })).toBeVisible();
   await waitForMobileMenuToClose(page);
   await page.screenshot({ path: `../docs/evidence/sprint9-13/dashboard-${info.project.name}.png`, fullPage: true });
   await noOverflow(page);
@@ -615,7 +616,8 @@ test("Sprint 8: cadastros, livro caixa, filtros aplicados e estorno", async ({
     .getByLabel("Incide no resultado", { exact: true })
     .selectOption("false");
   await page.getByRole("button", { name: "Salvar", exact: true }).click();
-  await expect(page.getByRole("row").filter({ hasText: sub })).toContainText(
+  await page.locator("details").filter({hasText:category}).locator("summary").click();
+  await expect(page.getByRole("listitem").filter({ hasText: sub })).toContainText(
     "Não incide no resultado",
   );
   await navigate(page, "Lançamento (Despesa/Receita)");
@@ -709,7 +711,7 @@ test("Sprint 8: cadastros, livro caixa, filtros aplicados e estorno", async ({
     page.getByRole("row").filter({ hasText: account }),
   ).toContainText("Inativo");
   for (const [name, heading] of [
-    ["Dashboard", "Dashboard financeiro"],
+    ["Visão financeira", "Visão financeira"],
     ["Conciliação Bancária", "Conciliação Bancária"],
     ["Relatórios Financeiros", "Relatórios Financeiros"],
     ["Contas a Pagar", "Contas a Pagar"],

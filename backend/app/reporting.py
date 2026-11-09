@@ -97,11 +97,7 @@ def register(app,get_db,admin):
         payments=list(db.scalars(select(Payment).where(Payment.posting_date>=start,Payment.posting_date<=end).order_by(Payment.posting_date,Payment.id)))
         income=sum(max(0,p.amount_cents) for p in payments);expense=sum(max(0,-p.amount_cents) for p in payments)
         accounts=[{**V.data(a),'balance_cents':a.opening_cents+(db.scalar(select(func.coalesce(func.sum(Payment.amount_cents),0)).where(Payment.account_id==a.id)) or 0)} for a in db.scalars(select(Account).order_by(Account.id))]
-        titles=list(db.scalars(select(FinanceEntry).where(FinanceEntry.status.in_(['open','partial']))))
-        pending=[]
-        for row in titles:
-            remaining=max(0,row.amount_cents-V.principal_paid(db,row))
-            if remaining:pending.append((row,remaining))
+        pending=V.open_title_principal(db)
         open_income=sum(amount for row,amount in pending if row.direction=='income')
         open_expense=sum(amount for row,amount in pending if row.direction=='expense')
         overdue_income=sum(amount for row,amount in pending if row.direction=='income' and row.due_date<V.today())

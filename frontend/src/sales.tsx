@@ -1,3 +1,4 @@
+import {currentSourceId,useSourceRecord,clearSource} from "./sourceNavigation";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
 import {
@@ -35,6 +36,7 @@ import {
   SearchBox,
   Table,
   useLoad,
+  LoadFeedback,
 } from "./ui";
 
 type CartRow = { product: Product; qty: string; price: string };
@@ -398,6 +400,7 @@ export function SalesPage({
     [page, setPage] = useState(1),
     [version, refresh] = useState(0),
     [view, setView] = useState<Sale | null>(null);
+  const source=useSourceRecord<Sale>('/sales/',currentSourceId(),setView);
   const filters = { q, status, start, end },
     result = useLoad<Page<Sale>>(
       "/sales?" + query({ ...filters, page }),
@@ -409,6 +412,7 @@ export function SalesPage({
   };
   return (
     <>
+      <LoadFeedback resource={source} label="venda de origem"/>
       <PageTitle
         title="Vendas"
         subtitle="Rascunhos, vendas concluídas e cancelamentos."
@@ -489,7 +493,7 @@ export function SalesPage({
         <SaleDetail
           sale={view}
           user={user}
-          close={() => setView(null)}
+          close={() => {setView(null);clearSource()}}
           onChange={(s) => {
             setView(s);
             refresh(version + 1);

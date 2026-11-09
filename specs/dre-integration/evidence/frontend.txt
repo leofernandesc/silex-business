@@ -1,0 +1,12 @@
+
+> gestao-local@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-dre-integration/frontend
+
+
+ Test Files  22 passed (22)
+      Tests  240 passed (240)
+   Start at  13:58:25
+   Duration  4.11s (transform 2.34s, setup 0ms, import 12.22s, tests 1.75s, environment 6ms)

@@ -65,7 +65,7 @@ export function useAppNavigation() {
         if (request.requested) remember(request.route);
         address("/entrar");
         handledAddress.current = currentAddress();
-        setPage("dashboard");
+        setPage("home");
         if (request.message) setError(request.message);
         return;
       }
@@ -73,7 +73,7 @@ export function useAppNavigation() {
         ? pending.current || DEFAULT_ROUTE
         : request.route;
       const allowed = canAccessRoute(active, target);
-      const destination = allowed ? target : "dashboard";
+      const destination = allowed ? target : "home";
       setError(
         allowed
           ? request.message
@@ -125,7 +125,7 @@ export function useAppNavigation() {
       resetSessionRequests();
       currentUser.current = null;
       setUser(null);
-      setPage("dashboard");
+      setPage("home");
       address("/entrar");
       handledAddress.current = currentAddress();
       setError("Sua sessão terminou. Entre novamente.");
@@ -191,7 +191,7 @@ export function useAppNavigation() {
     resetSessionRequests();
     currentUser.current = null;
     setUser(null);
-    setPage("dashboard");
+    setPage("home");
     remember(null);
     save(LOGOUT_PENDING_KEY, "1");
     setLogoutPending(true);

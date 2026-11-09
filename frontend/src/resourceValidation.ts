@@ -4,7 +4,7 @@ const moneyFields = (row:Record<string,unknown>) => Object.entries(row).every(([
 const integers = (row: Record<string, unknown>, fields: string[]) => fields.every(key => Number.isSafeInteger(row[key]));
 export function validResource(path: string, value: unknown): boolean {
   const name = path.split('?')[0];
-  if (['/customers','/products','/suppliers','/sales','/stock-movements','/cash-sessions','/service-orders','/audit','/finance/ofx/imports','/finance/movements','/finance'].includes(name) || /^\/finance\/reports\/(?!catalog$)[^/]+$/.test(name)) {
+  if (['/customers','/products','/suppliers','/sales','/stock-movements','/cash-sessions','/service-orders','/audit','/finance/dre/items','/finance/ofx/imports','/finance/movements','/finance'].includes(name) || /^\/finance\/reports\/(?!catalog$)[^/]+$/.test(name)) {
     return object(value) && Array.isArray(value.items) && value.items.every((row:unknown)=>object(row)&&moneyFields(row)) && integers(value,['total','page','page_size']) && Number(value.total)>=0 && Number(value.page)>0 && Number(value.page_size)>0;
   }
   if (['/accounts','/categories','/subcategories','/users','/finance/budgets','/finance/reports/catalog'].includes(name) || /\/suggestions$/.test(name)) {
@@ -14,6 +14,16 @@ export function validResource(path: string, value: unknown): boolean {
     if(name.endsWith('/suggestions'))return value.every(row=>object(row.entry)&&integers(row.entry,['id','remaining_cents'])&&integers(row,['difference_cents']));
     if(name==='/accounts')return value.every(row=>integers(row,['id','opening_cents','balance_cents'])&&typeof row.name==='string');
     return true;
+  }
+  if(name==='/finance/dre/recognition-policy')return object(value)&&typeof value.policy_fingerprint==='string'&&value.policy_fingerprint.length===64&&object(value.economic_policy)&&[null,'operating','investment','financing'].includes(value.economic_policy.classification as string|null)&&[null,true,false].includes(value.economic_policy.affects_result as boolean|null);
+  if(name==='/finance/dre/mappings')return Array.isArray(value)&&value.every(row=>object(row)&&integers(row,['id','category_id','revision'])&&typeof row.line_code==='string'&&typeof row.valid_from==='string'&&typeof row.valid_to==='string');
+  if(name==='/finance/dre') {
+    if(!object(value)||!Array.isArray(value.lines)||!Array.isArray(value.facts)||!Array.isArray(value.issues)||!Array.isArray(value.excluded)||typeof value.source_fingerprint!=='string'||!object(value.margins))return false;
+    if(!Object.values(value.margins).every(m=>object(m)&&(m.value===null||typeof m.value==='string')&&(m.reason===null||typeof m.reason==='string')))return false;
+    const states=['complete','partial','unavailable','not_applicable'];
+    return value.lines.every(row=>object(row)&&typeof row.code==='string'&&states.includes(String(row.coverage_status))&&['known_amount_cents','final_amount_cents'].every(k=>row[k]===null||Number.isSafeInteger(row[k]))&&(['complete','not_applicable'].includes(String(row.coverage_status))?Number.isSafeInteger(row.final_amount_cents):row.final_amount_cents===null))
+      && value.facts.every(row=>object(row)&&typeof row.key==='string'&&Number.isSafeInteger(row.amount_cents)&&typeof row.economic_date==='string')
+      && value.issues.every(row=>object(row)&&Array.isArray(row.codes)&&row.codes.every(c=>typeof c==='string'));
   }
   if(name==='/cash-sessions/current')return value===null || object(value) && integers(value,['id','opening_cents','expected_cents']) && typeof value.status==='string';
   if(name==='/dashboard')return object(value)&&integers(value,['sales_today_cents','sales_today_count','sales_month_cents','active_products'])&&Array.isArray(value.recent_sales)&&Array.isArray(value.low_stock);

@@ -1,0 +1,15 @@
+.dre-print-facts { display: none; }
+@media print {
+  @page silex-dre-statement { size: A4 portrait; margin: 12mm; }
+  main > .finance-report-print.dre-report { page: silex-dre-statement; }
+  .dre-report .dre-print-facts { display: block; }
+  .dre-report .dre-screen-detail,
+  .dre-report .dre-budget-link,
+  .dre-report button,
+  .dre-report li a,
+  .dre-report .dre-lines th:nth-child(5),
+  .dre-report .dre-lines td:nth-child(5) { display: none; }
+  .dre-report thead { display: table-header-group; }
+  .dre-report th, .dre-report td { overflow-wrap: anywhere; }
+  .dre-report h3 { break-after: avoid; }
+}

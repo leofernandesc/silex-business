@@ -1,3 +1,4 @@
+import { FinancePlanPage } from "./financePlan";
 import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
@@ -23,7 +24,7 @@ import {
   Settings2,
 } from "lucide-react";
 import { AuthenticatedHome } from "./home/AuthenticatedHome";
-import type { CompanyStatus } from "./home/model";
+import {homeServiceIndicators,type CompanyStatus} from "./home/model";
 import { api } from "./api";
 import { PasswordInput } from "./formInputs";
 import { canAccessRoute, getRoute, routes } from "./navigation/routes";
@@ -42,6 +43,7 @@ import {
   SummaryCard,
   Table,
   useLoad,
+  LoadFeedback,
 } from "./ui";
 import { Customers, Products } from "./catalog";
 import { CashPage, StockPage } from "./operations";
@@ -63,7 +65,7 @@ const routeIcons: Record<string, typeof LayoutDashboard> = {
   sales: Receipt, "service-orders": Receipt, cash: Banknote, users: ShieldCheck,
   audit: FileClock, "company-settings": Settings2,
 };
-const menu = routes.filter((route) => route.group !== "financeiro" && route.id !== "finance-suppliers")
+const menu = routes.filter((route) => route.group !== "financeiro" && route.id !== "finance-suppliers" && route.id !== "dashboard")
   .map((route) => ({ key: route.id, name: route.title, group: route.group, icon: routeIcons[route.id] || Wallet }));
 const navGroups = [
   { key: "cadastros", label: "CADASTROS" },
@@ -71,7 +73,7 @@ const navGroups = [
   { key: "financeiro", label: "FINANCEIRO" },
   { key: "administracao", label: "ADMINISTRAÇÃO" },
 ];
-const financeMenu = routes.filter((route) => route.group === "financeiro")
+const financeMenu = routes.filter((route) => route.group === "financeiro" && route.id !== "finance-categories" && route.id !== "finance-subcategories")
   .map((route) => ({ key: route.id, name: route.title }));
 export default function App() {
   const session = useAppNavigation();
@@ -250,12 +252,9 @@ export default function App() {
             </button>
           </div>
         </header>
-        <main id="main-content" tabIndex={-1} key={safePage} className={safePage === "dashboard" ? "silex-overview" : undefined}>
+        <main id="main-content" tabIndex={-1} key={safePage} className={undefined}>
           {error && <Notice>{error}</Notice>}
-          {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate} />}
-          {safePage === "dashboard" && (
-            <DashboardPage user={user} navigate={navigate} />
-          )}{" "}
+          {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate}><section className="silex-overview" aria-label="Resumo operacional"><OperationalSummary user={user} navigate={navigate}/></section></AuthenticatedHome>}{" "}
           {safePage === "customers" && <Customers user={user} />}{" "}
           {safePage === "products" && <Products user={user} />}{" "}
           {safePage === "stock" && <StockPage />}{" "}
@@ -279,14 +278,15 @@ export default function App() {
           {safePage === "finance-receivable" && (
             <FinancePage user={user} initialDirection="income" />
           )}
+          {safePage === "finance-plan" && <FinancePlanPage/>}
           {safePage === "finance-accounts" && (
             <FinanceCatalog kind="accounts" />
           )}
           {safePage === "finance-categories" && (
-            <FinanceCatalog kind="categories" />
+            <FinancePlanPage />
           )}
           {safePage === "finance-subcategories" && (
-            <FinanceCatalog kind="subcategories" />
+            <FinancePlanPage initialSubcategories />
           )}
           {safePage === "finance-suppliers" && (
             <PartnerRegistry kind="supplier" />
@@ -418,7 +418,7 @@ function Login({
 function CheckIcon() {
   return <ShieldCheck size={18} className="positive" />;
 }
-function DashboardPage({
+function OperationalSummary({
   user,
   navigate,
 }: {
@@ -428,56 +428,27 @@ function DashboardPage({
   const result = useLoad<Dashboard>("/dashboard"),
     [view, setView] = useState<Sale | null>(null),
     d = result.data;
-  if (result.error) return <Notice>{result.error}</Notice>;
+  const serviceMetrics=homeServiceIndicators(user,d?.service_counts);
+  if (result.error) return <LoadFeedback resource={result} label="resumo operacional"/>;
   if (!d) return <div className="empty">Carregando resumo...</div>;
   return (
     <>
-      <PageTitle
-        title="Visão geral"
-        subtitle={`Olá, ${user.name.split(" ")[0]}. Confira o movimento do seu negócio.`}
-      >
-        <span className="today-chip">
-          <Clock size={15} />
-          {dateOnly(d.date)}
-        </span>
-      </PageTitle>
-      <section className="welcome-banner">
-        <div>
-          <span className="eyebrow">TUDO EM UM SÓ LUGAR</span>
-          <h2>Uma nova venda começa por aqui.</h2>
-          <p>Consulte seus itens, monte o pedido e acompanhe o resultado.</p>
-        </div>
-        <button onClick={() => navigate("pos")}>
-          Iniciar venda <ArrowRight size={18} />
-        </button>
-        <ShoppingCart className="banner-icon" />
-      </section>
-      <div className="summary-grid overview-summary" role="region" aria-label="Indicadores da Visão Geral" aria-describedby="overview-values-help" tabIndex={0}>
-        <SummaryCard
-          label="Vendas hoje"
-          value={money(d.sales_today_cents)}
-          detail={`${d.sales_today_count} venda${d.sales_today_count !== 1 ? "s" : ""} finalizada${d.sales_today_count !== 1 ? "s" : ""}`}
-          icon={<TrendingUp />}
-          tone="teal"
-        />
-        <SummaryCard
-          label="Vendas no mês"
-          value={money(d.sales_month_cents)}
-          detail="Inclui vendas à vista e a prazo."
-          icon={<Receipt />}
-        />
+      <h2>Indicadores operacionais</h2>
+      <div className="summary-grid overview-summary" role="region" aria-label="Indicadores operacionais" aria-describedby="overview-values-help" tabIndex={0}>
+        {user.role==='admin'?<SummaryCard label="Serviços em andamento" value={serviceMetrics?.active==null?'—':String(serviceMetrics.active)} detail={serviceMetrics?.active==null?'Dados dos serviços indisponíveis.':'Agendados e em execução, acessíveis ao seu perfil.'} icon={<Receipt/>} tone="teal"/>:<SummaryCard label="Vendas hoje" value={money(d.sales_today_cents)} detail={`${d.sales_today_count} vendas finalizadas por você`} icon={<TrendingUp/>} tone="teal"/>}
+        <SummaryCard label={user.role==='admin'?'Vendas hoje':'Vendas no mês'} value={money(user.role==='admin'?d.sales_today_cents:d.sales_month_cents)} detail={user.role==='admin'?`${d.sales_today_count} vendas finalizadas`:'Inclui vendas à vista e a prazo.'} icon={<Receipt/>}/>
         {user.role === "admin" ? (
           <>
             <SummaryCard
               label="A receber"
-              value={money(d.receivable_cents || 0)}
+              value={d.receivable_cents==null?"—":money(d.receivable_cents)}
               detail="Valores ainda em aberto."
               icon={<Wallet />}
               tone="purple"
             />
             <SummaryCard
               label="Recebíveis vencidos"
-              value={money(d.overdue_cents || 0)}
+              value={d.overdue_cents==null?"—":money(d.overdue_cents)}
               detail="Acompanhe os vencimentos."
               icon={<Clock />}
               tone="amber"
@@ -504,11 +475,12 @@ function DashboardPage({
       </div>
       <p id="overview-values-help" className="overview-values-help">Se necessário, deslize ou use as setas para conferir os valores completos.</p>
       <div className="dashboard-grid">
+        {user.role==='admin'&&<section className="panel" aria-label="Resumo de serviços e pedidos"><div className="panel-heading"><div><h2>Serviços e pedidos</h2><p>Ordens acessíveis ao seu perfil, sem confundir previsão com realização.</p></div></div><dl><div><dt>Agendados</dt><dd>{serviceMetrics?.scheduled??'—'}</dd></div><div><dt>Em execução</dt><dd>{serviceMetrics?.inProgress??'—'}</dd></div><div><dt>Concluídos</dt><dd>{serviceMetrics?.completed??'—'}</dd></div></dl><button className="panel-link" onClick={()=>navigate('service-orders')}>Consultar serviços e pedidos <ArrowRight size={16}/></button></section>}
         <section className="panel">
           <div className="panel-heading">
             <div>
               <h2>Últimas vendas</h2>
-              <p>Pedidos finalizados mais recentes</p>
+              <p>Vendas finalizadas mais recentes · No mês: {money(d.sales_month_cents)}</p>
             </div>
             <button className="text-button" onClick={() => navigate("sales")}>
               Ver todas <ArrowRight size={15} />
@@ -576,7 +548,7 @@ function DashboardPage({
           <span>
             {d.cash
               ? `Dinheiro esperado: ${money(d.cash.expected_cents)}`
-              : "Abra um turno para registrar novas vendas."}
+              : "Abra um turno quando houver movimentação em dinheiro."}
           </span>
         </div>
         <button onClick={() => navigate("cash")}>

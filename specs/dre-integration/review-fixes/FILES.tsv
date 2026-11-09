@@ -1,0 +1,23 @@
+arquivo	justificativa
+.github/workflows/integration-tests.yml	Configuração de testes e comparação reproduzível contra o HEAD revisado 13c2de5
+backend/app/dre.py	Resolver política econômica versionada e ajustes explícitos sem mutações financeiras
+backend/app/dre_cancellations.py	Resolver política econômica versionada e ajustes explícitos sem mutações financeiras
+backend/app/dre_history.py	Resolver política econômica versionada e ajustes explícitos sem mutações financeiras
+backend/app/dre_sources.py	Resolver política econômica versionada e ajustes explícitos sem mutações financeiras
+backend/app/financial.py	Bloquear alteração comum de política já utilizada; preservar edição genérica sem vínculos
+backend/app/models.py	0017 aditiva: política capturada, referência de recorte e revisão de cancelamento
+backend/migrations/versions/0017_dre_review_integrity.py	0017 aditiva: política capturada, referência de recorte e revisão de cancelamento
+backend/tests/test_dre_api.py	Regressão de política, vigência, ajuste, autorização ou migração; SQLite descartável
+backend/tests/test_dre_review_fixes.py	Regressão de política, vigência, ajuste, autorização ou migração; SQLite descartável
+backend/tests/test_dre_review_migration.py	Regressão de política, vigência, ajuste, autorização ou migração; SQLite descartável
+frontend/playwright.integration.config.ts	Configuração de testes e comparação reproduzível contra o HEAD revisado 13c2de5
+frontend/src/App.tsx	Início único, indicadores equilibrados e permissões preservadas
+frontend/src/dre.tsx	Revisão e prévia explícitas, contexto de política atualizado e seleção de segmentos de vigência
+frontend/src/home/AuthenticatedHome.tsx	Início único, indicadores equilibrados e permissões preservadas
+frontend/src/home/model.test.ts	Início único, indicadores equilibrados e permissões preservadas
+frontend/src/home/model.ts	Início único, indicadores equilibrados e permissões preservadas
+frontend/src/resourceValidation.test.ts	Recusar contexto de política ou histórico com estrutura inválida
+frontend/src/resourceValidation.ts	Recusar contexto de política ou histórico com estrutura inválida
+frontend/src/ui.tsx	submitDisabled opcional: impedir confirmar contexto pendente mantendo campos e cancelamento disponíveis
+frontend/tests/dre-review-fixes.spec.ts	Jornadas reais de revisão, falha/duplo clique, isolamento e Início
+scripts/compare_dre_baseline.py	Configuração de testes e comparação reproduzível contra o HEAD revisado 13c2de5

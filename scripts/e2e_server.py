@@ -49,7 +49,9 @@ engine.dispose()
             source.backup(destination)
         manifest_path.write_text(json.dumps({"database": str(Path(directory) / "e2e.sqlite3"), "baseline":str(baseline), "persistent_database_used": False}))
         manifest_path.chmod(0o600)
-    server = subprocess.Popen([sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8011"], env=env, cwd=root)
+    port=int(os.environ.get('SILEX_E2E_PORT','8011'))
+    if not 1024<=port<=65535:raise ValueError('Invalid disposable test port')
+    server = subprocess.Popen([sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(port)], env=env, cwd=root)
     try:
         raise SystemExit(server.wait())
     except KeyboardInterrupt:

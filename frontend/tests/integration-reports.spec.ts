@@ -18,7 +18,11 @@ test("all 26 reports: filtered pagination contracts, empty output, HTTP failure 
   expect(catalog).toHaveLength(26);
   await page.goto("/app#finance-reports");
   const select = page.getByLabel("Relatório", { exact: true });
-  await expect(select.locator("option")).toHaveCount(26);
+  // The existing API still has exactly 26 formats. DRE is an additional UI view,
+  // with its own contract rather than a fabricated legacy report identifier.
+  await expect(select.locator("option")).toHaveCount(27);
+  await expect(select.locator('option[value="dre"]')).toHaveText('DRE gerencial');
+  expect((await select.locator('option:not([value="dre"])').evaluateAll(options=>options.map(o=>(o as HTMLOptionElement).value))).sort()).toEqual(catalog.map((row:{id:string})=>row.id).sort());
   await enterDate(page, "De", "2001-01-01");
   await enterDate(page, "Até", "2001-01-31");
   await page
@@ -199,8 +203,8 @@ test("budget query failure is not represented as an empty confirmed budget", asy
   await expect(panel).toContainText("Nenhum registro encontrado");
 });
 
-test('all report and CSV endpoints distinguish operator denial from missing session',async({browser})=>{
- const op=await browser.newContext({baseURL:'http://127.0.0.1:8011'}),visitor=await browser.newContext({baseURL:'http://127.0.0.1:8011'}),admin=await browser.newContext({baseURL:'http://127.0.0.1:8011'});
+test('all report and CSV endpoints distinguish operator denial from missing session',async({browser,baseURL})=>{
+ const op=await browser.newContext({baseURL}),visitor=await browser.newContext({baseURL}),admin=await browser.newContext({baseURL});
  try{
   expect((await admin.request.post('/api/auth/login',{data:{username:'demo.admin',password:'DemoLocal#2026'}})).ok()).toBe(true);
   expect((await op.request.post('/api/auth/login',{data:{username:'demo.operador',password:'DemoLocal#2026'}})).ok()).toBe(true);

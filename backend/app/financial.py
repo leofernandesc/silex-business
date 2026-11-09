@@ -54,6 +54,10 @@ def register(app, get_db, admin):
         row = V.get(db,Category,identifier)
         if row.direction != payload.direction and db.scalar(select(FinanceEntry.id).where(FinanceEntry.category_id == identifier).limit(1)):
             V.fail('Categoria com histórico: tipo de receita/despesa não pode ser alterado')
+        if row.classification!=payload.classification:
+            from .dre_history import catalog_policy_used
+            if catalog_policy_used(db,row.id):
+                V.fail('Natureza econômica utilizada na DRE: use uma revisão com vigência no Plano financeiro',409)
         for key,value in payload.model_dump().items():
             setattr(row,key,value)
         V.audit(db,user,'update','category',row.id)
@@ -183,6 +187,10 @@ def register(app, get_db, admin):
             require_active(db,Category,payload.category_id)
             if db.scalar(select(FinanceEntry.id).where(FinanceEntry.subcategory_id == identifier).limit(1)):
                 V.fail('Subcategoria com histórico não pode mudar de categoria')
+        if row.affects_result!=payload.affects_result or row.category_id!=payload.category_id:
+            from .dre_history import catalog_policy_used
+            if catalog_policy_used(db,row.category_id,row.id):
+                V.fail('Política utilizada na DRE: preserve o cadastro e revise a vigência no Plano financeiro',409)
         for key,value in payload.model_dump().items():
             setattr(row,key,value)
         db.flush(); V.audit(db,user,'update','subcategory',row.id)

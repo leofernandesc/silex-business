@@ -75,10 +75,10 @@ for (const identity of identities)
         continue;
       }
       if (allowed) {
-        await expect(page).toHaveURL(new RegExp("#" + route.id + "$"));
+        await expect(page).toHaveURL(new RegExp("#" + (route.id==="dashboard"?"home":route.id) + "$"));
         await expect(page.locator("main h1")).toBeVisible();
       } else {
-        await expect(page).toHaveURL(/#dashboard$/);
+        await expect(page).toHaveURL(/#home$/);
         await expect(page.getByRole("alert")).toContainText(
           "não tem permissão",
         );
@@ -103,7 +103,7 @@ for (const width of [1440, 1024, 768, 375, 320])
 
 test("specialized metadata stays private across authorized identities; denied promotion is atomic", async ({
   page,
-  browser,
+  browser, baseURL,
 }) => {
   await auth(page, identities[1]);
   const r = await page.request.post("/api/customers", {
@@ -126,7 +126,7 @@ test("specialized metadata stays private across authorized identities; denied pr
   });
   expect(r.status()).toBe(201);
   const row = await r.json();
-  const ctx = await browser.newContext({ baseURL: "http://127.0.0.1:8011" });
+  const ctx = await browser.newContext({ baseURL });
   try {
     const second = await ctx.newPage();
     await auth(second, identities[3]);

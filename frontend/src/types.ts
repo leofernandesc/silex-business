@@ -196,6 +196,7 @@ export type Entry = {
   service_order_code: string | null;
 };
 export type ServiceOrderCost = {
+  incurred_on?: string | null;
   id: number;
   supplier_id: number;
   supplier_name: string;
@@ -207,6 +208,7 @@ export type ServiceOrderCost = {
   finance_status: string | null;
 };
 export type ServiceOrder = {
+  completed_on?: string | null;
   restricted_transport_costs?: boolean;
   id: number;
   code: string;
@@ -236,6 +238,7 @@ export type Page<T> = {
   page_size: number;
 };
 export type Dashboard = {
+  service_counts?: Record<string,number> | null;
   date: string;
   sales_today_cents: number;
   sales_today_count: number;

@@ -1,3 +1,4 @@
+import {currentSourceId,useSourceRecord,clearSource} from "./sourceNavigation";
 import { hasTransport } from "./capabilities";
 import type { User } from "./types";
 import {useFinancialSnapshot} from "./useFinancialSnapshot";
@@ -56,6 +57,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
     [adding, setAdding] = useState(false), [settings, setSettings] = useState(false),
     [settling, setSettling] = useState<Entry | null>(null), [canceling, setCanceling] = useState<Entry | null>(null),
     [historyEntry, setHistoryEntry] = useState<Entry | null>(null);
+  const source=useSourceRecord<Entry>('/finance/dre/source-entry/',currentSourceId(),setHistoryEntry,initialDirection||undefined);
   const result = useFinancialSnapshot<FinancePageResult>("/finance?" + query({ ...filters, page, page_size: pageSize }), version, validTitlePage),
     accounts = useLoad<Account[]>("/accounts", version), categories = useLoad<Category[]>("/categories", version),
     suppliers = useLoad<Page<Supplier>>("/suppliers?page_size=100", version);
@@ -72,6 +74,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
   const fixedDirection = Boolean(initialDirection);
   const title = initialDirection === "income" ? "Contas a Receber" : initialDirection === "expense" ? "Contas a Pagar" : "Lançamentos (Despesa/Receita)";
   return <div className="silex-accounts">
+    <LoadFeedback resource={source} label="título de origem"/>
     <PageTitle title={title} subtitle={initialDirection === "income" ? "Acompanhe recebimentos, vencimentos e baixas." : initialDirection === "expense" ? "Acompanhe pagamentos, vencimentos e beneficiários." : "Livro financeiro com filtros, comprovantes e histórico de pagamentos."}>
       <button disabled={!!accounts.error||!!categories.error} onClick={() => setSettings(true)}><Settings2 size={15} /> Contas e categorias</button>
       <button onClick={() => window.open("/api/finance/print?" + query(filters), "_blank", "noopener,noreferrer")}><Printer size={15} /> Imprimir</button>
@@ -124,7 +127,7 @@ export function FinancePage({ initialDirection = "", user }: { initialDirection?
     {adding && accounts.data && categories.data && <EntryForm accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} initialDirection={initialDirection || "income"} fixedDirection={Boolean(initialDirection)} close={() => setAdding(false)} done={done} />}
     {settling && !accounts.data && <Modal title="Carregando contas para pagamento" close={()=>setSettling(null)}><LoadFeedback resource={accounts} label="contas"/></Modal>}
     {settling && accounts.data && <SettleForm entry={settling} accounts={accounts.data.filter((a) => a.active)} close={() => setSettling(null)} done={done} />}
-    {historyEntry && <PaymentHistory entry={historyEntry} close={() => setHistoryEntry(null)} done={() => { setHistoryEntry(null); refresh(version + 1); }} />}
+    {historyEntry && <PaymentHistory entry={historyEntry} close={() => {setHistoryEntry(null);clearSource()}} done={() => { setHistoryEntry(null); refresh(version + 1); }} />}
     {canceling && <CancelForm entry={canceling} close={() => setCanceling(null)} done={done} />}
     {settings && (!accounts.data || !categories.data) && <Modal title="Carregando configurações financeiras" close={()=>setSettings(false)}><LoadFeedback resource={accounts} label="contas"/><LoadFeedback resource={categories} label="categorias"/></Modal>}
     {settings && accounts.data && categories.data && <FinanceSettings accounts={accounts.data.filter((a) => a.active)} categories={categories.data.filter((c) => c.active)} close={() => setSettings(false)} refresh={() => refresh(version + 1)} />}

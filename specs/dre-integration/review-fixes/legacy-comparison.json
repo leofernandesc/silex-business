@@ -1,0 +1,780 @@
+{
+  "baseline": "13c2de557f40029b1008f019236d7551ac11eb03",
+  "reports": [
+    "cash-daily",
+    "cash-monthly",
+    "result-monthly",
+    "income-category",
+    "expense-category",
+    "income-subcategory",
+    "expense-subcategory",
+    "income-account",
+    "expense-account",
+    "income-customer",
+    "expense-supplier",
+    "by-origin",
+    "by-method",
+    "receivable-open",
+    "payable-open",
+    "receivable-overdue",
+    "payable-overdue",
+    "titles-due",
+    "titles-competence",
+    "settlements-daily",
+    "charges-monthly",
+    "discounts-monthly",
+    "partial-payments",
+    "reversals",
+    "documents",
+    "budget-actual"
+  ],
+  "comparisons": [
+    {
+      "case": "after-reversal:/accounts",
+      "equal": true,
+      "baseline_sha256": "2e58fa26f8afb8ac6e2645b15554e80be41b02ad1bcbf334714d1135ac0a5cc8",
+      "candidate_sha256": "2e58fa26f8afb8ac6e2645b15554e80be41b02ad1bcbf334714d1135ac0a5cc8"
+    },
+    {
+      "case": "after-reversal:/finance",
+      "equal": true,
+      "baseline_sha256": "2961d4fa2ba4bb0169d1830d208f832343a368730008d053758cc1a53d0e4661",
+      "candidate_sha256": "2961d4fa2ba4bb0169d1830d208f832343a368730008d053758cc1a53d0e4661"
+    },
+    {
+      "case": "after-reversal:/finance/dashboard",
+      "equal": true,
+      "baseline_sha256": "ff63b12ead8c51949d2db6b04d7e59b52baf6a73860be48f44f4ff106f1afcf9",
+      "candidate_sha256": "ff63b12ead8c51949d2db6b04d7e59b52baf6a73860be48f44f4ff106f1afcf9"
+    },
+    {
+      "case": "after-reversal:/finance/movements",
+      "equal": true,
+      "baseline_sha256": "2c6f38a16e369cb5f21efa70f44de27aa40e88809e301b0ce4317e66609e2ff9",
+      "candidate_sha256": "2c6f38a16e369cb5f21efa70f44de27aa40e88809e301b0ce4317e66609e2ff9"
+    },
+    {
+      "case": "after-reversal:/finance/movements.csv",
+      "equal": true,
+      "baseline_sha256": "80c6d69214771f41bf6e3c8b73d84499dd60fddb52fd8ee233a4579669435ea5",
+      "candidate_sha256": "80c6d69214771f41bf6e3c8b73d84499dd60fddb52fd8ee233a4579669435ea5"
+    },
+    {
+      "case": "after-reversal:/finance/reports/budget-actual",
+      "equal": true,
+      "baseline_sha256": "3c141b6677dc34c7956fffe2e0740227fbf19bb8ac88e54e0d002a859a4f5e8e",
+      "candidate_sha256": "3c141b6677dc34c7956fffe2e0740227fbf19bb8ac88e54e0d002a859a4f5e8e"
+    },
+    {
+      "case": "after-reversal:/finance/reports/budget-actual.csv",
+      "equal": true,
+      "baseline_sha256": "032dc63053cb672d5080de79741326e189f058c381707eed0b0ec9ba29fda0f9",
+      "candidate_sha256": "032dc63053cb672d5080de79741326e189f058c381707eed0b0ec9ba29fda0f9"
+    },
+    {
+      "case": "after-reversal:/finance/reports/by-method",
+      "equal": true,
+      "baseline_sha256": "e39e0379fe287167fb5c636f1b74546b80ab55d09ee5e8159838e2df9a49c376",
+      "candidate_sha256": "e39e0379fe287167fb5c636f1b74546b80ab55d09ee5e8159838e2df9a49c376"
+    },
+    {
+      "case": "after-reversal:/finance/reports/by-method.csv",
+      "equal": true,
+      "baseline_sha256": "c97d8bee1d8194ed392509cafb58d622c52fe574a6660f0b16412b5884dfc435",
+      "candidate_sha256": "c97d8bee1d8194ed392509cafb58d622c52fe574a6660f0b16412b5884dfc435"
+    },
+    {
+      "case": "after-reversal:/finance/reports/by-origin",
+      "equal": true,
+      "baseline_sha256": "a62a95a506236c098b7922257fa5586f7d19dad453aed41c2541889f3a903883",
+      "candidate_sha256": "a62a95a506236c098b7922257fa5586f7d19dad453aed41c2541889f3a903883"
+    },
+    {
+      "case": "after-reversal:/finance/reports/by-origin.csv",
+      "equal": true,
+      "baseline_sha256": "184aee0c404f57de9797055379ae89eea7b3f240b3f896683ad6d9dc77b81ae9",
+      "candidate_sha256": "184aee0c404f57de9797055379ae89eea7b3f240b3f896683ad6d9dc77b81ae9"
+    },
+    {
+      "case": "after-reversal:/finance/reports/cash-daily",
+      "equal": true,
+      "baseline_sha256": "4df94a4b7307a3a6d8b620ac88c589a49cccb37cd8243d49cf8a4545e2b09ae5",
+      "candidate_sha256": "4df94a4b7307a3a6d8b620ac88c589a49cccb37cd8243d49cf8a4545e2b09ae5"
+    },
+    {
+      "case": "after-reversal:/finance/reports/cash-daily.csv",
+      "equal": true,
+      "baseline_sha256": "908c4226a9a86d73488b985d32c0e02330adaa65091df3525c7a4dc1f49c116d",
+      "candidate_sha256": "908c4226a9a86d73488b985d32c0e02330adaa65091df3525c7a4dc1f49c116d"
+    },
+    {
+      "case": "after-reversal:/finance/reports/cash-monthly",
+      "equal": true,
+      "baseline_sha256": "1edfa01408853e63601ca8d30c1ca8083ce9947f48eeda4c1eae541cba822c07",
+      "candidate_sha256": "1edfa01408853e63601ca8d30c1ca8083ce9947f48eeda4c1eae541cba822c07"
+    },
+    {
+      "case": "after-reversal:/finance/reports/cash-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "99428b6eb8febd62d9c26f3ac366fbc07dfbc39b40889087fde22849461ece98",
+      "candidate_sha256": "99428b6eb8febd62d9c26f3ac366fbc07dfbc39b40889087fde22849461ece98"
+    },
+    {
+      "case": "after-reversal:/finance/reports/charges-monthly",
+      "equal": true,
+      "baseline_sha256": "3057585d55a992ca2ac0bd5210a252a573041627dfe7276dbd5fbbda694b36cb",
+      "candidate_sha256": "3057585d55a992ca2ac0bd5210a252a573041627dfe7276dbd5fbbda694b36cb"
+    },
+    {
+      "case": "after-reversal:/finance/reports/charges-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "99428b6eb8febd62d9c26f3ac366fbc07dfbc39b40889087fde22849461ece98",
+      "candidate_sha256": "99428b6eb8febd62d9c26f3ac366fbc07dfbc39b40889087fde22849461ece98"
+    },
+    {
+      "case": "after-reversal:/finance/reports/discounts-monthly",
+      "equal": true,
+      "baseline_sha256": "6c2aa0c94f4be1014b3e44b7477c0b1c74ff50e779babe0d8cf61474b8d2c2ec",
+      "candidate_sha256": "6c2aa0c94f4be1014b3e44b7477c0b1c74ff50e779babe0d8cf61474b8d2c2ec"
+    },
+    {
+      "case": "after-reversal:/finance/reports/discounts-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "99428b6eb8febd62d9c26f3ac366fbc07dfbc39b40889087fde22849461ece98",
+      "candidate_sha256": "99428b6eb8febd62d9c26f3ac366fbc07dfbc39b40889087fde22849461ece98"
+    },
+    {
+      "case": "after-reversal:/finance/reports/documents",
+      "equal": true,
+      "baseline_sha256": "e5250a73d193054f84b856c53f3c6ebdbeedc979a0af7d31f08892d3fa2e5227",
+      "candidate_sha256": "e5250a73d193054f84b856c53f3c6ebdbeedc979a0af7d31f08892d3fa2e5227"
+    },
+    {
+      "case": "after-reversal:/finance/reports/documents.csv",
+      "equal": true,
+      "baseline_sha256": "74c234e1d069ee078f355be73f253c6a3426ca8a52a78c064493011c588de928",
+      "candidate_sha256": "74c234e1d069ee078f355be73f253c6a3426ca8a52a78c064493011c588de928"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-account",
+      "equal": true,
+      "baseline_sha256": "188ce257199bc2da3449afe6ab8efe232650308e956bac6f48431d916be38853",
+      "candidate_sha256": "188ce257199bc2da3449afe6ab8efe232650308e956bac6f48431d916be38853"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-account.csv",
+      "equal": true,
+      "baseline_sha256": "ebd945098ff82902cc47a520d59e7a3c7541b8fb3daee402a47937a9368192f4",
+      "candidate_sha256": "ebd945098ff82902cc47a520d59e7a3c7541b8fb3daee402a47937a9368192f4"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-category",
+      "equal": true,
+      "baseline_sha256": "e8a21987409e1c35cb4a6e35a3971c6df83bedd6b1b9dc83294c8a309019a183",
+      "candidate_sha256": "e8a21987409e1c35cb4a6e35a3971c6df83bedd6b1b9dc83294c8a309019a183"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-category.csv",
+      "equal": true,
+      "baseline_sha256": "2379df6f9f2cb45a78e449ad96f901f39803fc3ade5b34efb024541452a284a3",
+      "candidate_sha256": "2379df6f9f2cb45a78e449ad96f901f39803fc3ade5b34efb024541452a284a3"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-subcategory",
+      "equal": true,
+      "baseline_sha256": "e902e7311a749940db623c5d2ef79f4374c8a95b7bc9fceabf72d2cfe30cc1f1",
+      "candidate_sha256": "e902e7311a749940db623c5d2ef79f4374c8a95b7bc9fceabf72d2cfe30cc1f1"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-subcategory.csv",
+      "equal": true,
+      "baseline_sha256": "71484d62567df5f33a5c833cc7bb8768fda13f20e540d4af5a8f11a8a89c21a7",
+      "candidate_sha256": "71484d62567df5f33a5c833cc7bb8768fda13f20e540d4af5a8f11a8a89c21a7"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-supplier",
+      "equal": true,
+      "baseline_sha256": "0c06b77ed95ec92b61b0ca8ee91754c1f01bc5821aae11db4127980def3638a7",
+      "candidate_sha256": "0c06b77ed95ec92b61b0ca8ee91754c1f01bc5821aae11db4127980def3638a7"
+    },
+    {
+      "case": "after-reversal:/finance/reports/expense-supplier.csv",
+      "equal": true,
+      "baseline_sha256": "ce4edc8cb89c6776239859e93093e727cab05dd9f4293b17a20808331ed92dd8",
+      "candidate_sha256": "ce4edc8cb89c6776239859e93093e727cab05dd9f4293b17a20808331ed92dd8"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-account",
+      "equal": true,
+      "baseline_sha256": "2082f6cbaa6935047e1db649357f04266d82828a26d7690a161e52aa5f0e4bed",
+      "candidate_sha256": "2082f6cbaa6935047e1db649357f04266d82828a26d7690a161e52aa5f0e4bed"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-account.csv",
+      "equal": true,
+      "baseline_sha256": "ebd945098ff82902cc47a520d59e7a3c7541b8fb3daee402a47937a9368192f4",
+      "candidate_sha256": "ebd945098ff82902cc47a520d59e7a3c7541b8fb3daee402a47937a9368192f4"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-category",
+      "equal": true,
+      "baseline_sha256": "cb41812706e956b4fd0d01825870d63a6ba7eed1cb64f200cc7062448b72fd58",
+      "candidate_sha256": "cb41812706e956b4fd0d01825870d63a6ba7eed1cb64f200cc7062448b72fd58"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-category.csv",
+      "equal": true,
+      "baseline_sha256": "650b372d40aed3f5e9edd38f5dd257332cc4fcfb20a8cd952c12e57e303167fe",
+      "candidate_sha256": "650b372d40aed3f5e9edd38f5dd257332cc4fcfb20a8cd952c12e57e303167fe"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-customer",
+      "equal": true,
+      "baseline_sha256": "aa55763d2de53a17bc7b70cfeb70a7d3831612ddc5a5be0a4c8cc44678b98915",
+      "candidate_sha256": "aa55763d2de53a17bc7b70cfeb70a7d3831612ddc5a5be0a4c8cc44678b98915"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-customer.csv",
+      "equal": true,
+      "baseline_sha256": "ce4edc8cb89c6776239859e93093e727cab05dd9f4293b17a20808331ed92dd8",
+      "candidate_sha256": "ce4edc8cb89c6776239859e93093e727cab05dd9f4293b17a20808331ed92dd8"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-subcategory",
+      "equal": true,
+      "baseline_sha256": "4dabc4b0448a8b410eb8d8e1db263a0681c16fa1c997a7b245614cd4db7104e1",
+      "candidate_sha256": "4dabc4b0448a8b410eb8d8e1db263a0681c16fa1c997a7b245614cd4db7104e1"
+    },
+    {
+      "case": "after-reversal:/finance/reports/income-subcategory.csv",
+      "equal": true,
+      "baseline_sha256": "71484d62567df5f33a5c833cc7bb8768fda13f20e540d4af5a8f11a8a89c21a7",
+      "candidate_sha256": "71484d62567df5f33a5c833cc7bb8768fda13f20e540d4af5a8f11a8a89c21a7"
+    },
+    {
+      "case": "after-reversal:/finance/reports/partial-payments",
+      "equal": true,
+      "baseline_sha256": "9d905ecb38e701f32e5e434b662904040610b02923172e239d05e7a57f1543ba",
+      "candidate_sha256": "9d905ecb38e701f32e5e434b662904040610b02923172e239d05e7a57f1543ba"
+    },
+    {
+      "case": "after-reversal:/finance/reports/partial-payments.csv",
+      "equal": true,
+      "baseline_sha256": "e774297defe3b291c9e8ae8dfc449a9c85a4de8c613713d5bad44c84fb4f3722",
+      "candidate_sha256": "e774297defe3b291c9e8ae8dfc449a9c85a4de8c613713d5bad44c84fb4f3722"
+    },
+    {
+      "case": "after-reversal:/finance/reports/payable-open",
+      "equal": true,
+      "baseline_sha256": "6de11b6896029a2e7453cd718a94ded44584a921233f6ae0ca1d5f6c971369ac",
+      "candidate_sha256": "6de11b6896029a2e7453cd718a94ded44584a921233f6ae0ca1d5f6c971369ac"
+    },
+    {
+      "case": "after-reversal:/finance/reports/payable-open.csv",
+      "equal": true,
+      "baseline_sha256": "589bcfc5eb2580ffd3d78d356780083c9f5da77fdeef3d5b138ec5e69280b155",
+      "candidate_sha256": "589bcfc5eb2580ffd3d78d356780083c9f5da77fdeef3d5b138ec5e69280b155"
+    },
+    {
+      "case": "after-reversal:/finance/reports/payable-overdue",
+      "equal": true,
+      "baseline_sha256": "006f96ba86ae6498d9c7fa2800c4190fa1b6ec6261c66369ea48e6f33675f338",
+      "candidate_sha256": "006f96ba86ae6498d9c7fa2800c4190fa1b6ec6261c66369ea48e6f33675f338"
+    },
+    {
+      "case": "after-reversal:/finance/reports/payable-overdue.csv",
+      "equal": true,
+      "baseline_sha256": "493eaeb41b0275077dd6162f28be4e69ffe6d4cdd94f23b1a4e23ceaf2045190",
+      "candidate_sha256": "493eaeb41b0275077dd6162f28be4e69ffe6d4cdd94f23b1a4e23ceaf2045190"
+    },
+    {
+      "case": "after-reversal:/finance/reports/receivable-open",
+      "equal": true,
+      "baseline_sha256": "0d00b9def558a085ec97d38e28de6dd2f13aae097e50f3947a918d85d4f4ae04",
+      "candidate_sha256": "0d00b9def558a085ec97d38e28de6dd2f13aae097e50f3947a918d85d4f4ae04"
+    },
+    {
+      "case": "after-reversal:/finance/reports/receivable-open.csv",
+      "equal": true,
+      "baseline_sha256": "da935a2b657e16d60d6e73906d26f19344294758454fc80bc3576ad5747e8dd2",
+      "candidate_sha256": "da935a2b657e16d60d6e73906d26f19344294758454fc80bc3576ad5747e8dd2"
+    },
+    {
+      "case": "after-reversal:/finance/reports/receivable-overdue",
+      "equal": true,
+      "baseline_sha256": "5207745531a33eba78153217b90bd05f791dfe8e90688792d23a2118ee65e163",
+      "candidate_sha256": "5207745531a33eba78153217b90bd05f791dfe8e90688792d23a2118ee65e163"
+    },
+    {
+      "case": "after-reversal:/finance/reports/receivable-overdue.csv",
+      "equal": true,
+      "baseline_sha256": "1beb6fd5c6184eefdba7710192ab03ee3aa55a5012903dbc17e45172ec1491cf",
+      "candidate_sha256": "1beb6fd5c6184eefdba7710192ab03ee3aa55a5012903dbc17e45172ec1491cf"
+    },
+    {
+      "case": "after-reversal:/finance/reports/result-monthly",
+      "equal": true,
+      "baseline_sha256": "8a37c43f6b1a46969f80a6dde7f50e562d556cb1c734e12c72a1c53f8774e4cb",
+      "candidate_sha256": "8a37c43f6b1a46969f80a6dde7f50e562d556cb1c734e12c72a1c53f8774e4cb"
+    },
+    {
+      "case": "after-reversal:/finance/reports/result-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "5f020115a2a1f587eb08543e392940091e0ece072ee54e5b529e26ef1d875807",
+      "candidate_sha256": "5f020115a2a1f587eb08543e392940091e0ece072ee54e5b529e26ef1d875807"
+    },
+    {
+      "case": "after-reversal:/finance/reports/reversals",
+      "equal": true,
+      "baseline_sha256": "a52b38c6c0d349ffff81c04154037d004801940e8f9d2266c2e9f24803f818a3",
+      "candidate_sha256": "a52b38c6c0d349ffff81c04154037d004801940e8f9d2266c2e9f24803f818a3"
+    },
+    {
+      "case": "after-reversal:/finance/reports/reversals.csv",
+      "equal": true,
+      "baseline_sha256": "93f0e8f6f533fa5b1abf0896eb44ba3c784390c9bc11e1597374906cf4f6f198",
+      "candidate_sha256": "93f0e8f6f533fa5b1abf0896eb44ba3c784390c9bc11e1597374906cf4f6f198"
+    },
+    {
+      "case": "after-reversal:/finance/reports/settlements-daily",
+      "equal": true,
+      "baseline_sha256": "9e8a01a17e486bd201832beee1c1f16b624ddd42f0bad4e836891e63500ca47c",
+      "candidate_sha256": "9e8a01a17e486bd201832beee1c1f16b624ddd42f0bad4e836891e63500ca47c"
+    },
+    {
+      "case": "after-reversal:/finance/reports/settlements-daily.csv",
+      "equal": true,
+      "baseline_sha256": "908c4226a9a86d73488b985d32c0e02330adaa65091df3525c7a4dc1f49c116d",
+      "candidate_sha256": "908c4226a9a86d73488b985d32c0e02330adaa65091df3525c7a4dc1f49c116d"
+    },
+    {
+      "case": "after-reversal:/finance/reports/titles-competence",
+      "equal": true,
+      "baseline_sha256": "4c9c5f019a75b88af3be9ca5d2c0237e0d500b1ec89e656a848f1b567bf61aa9",
+      "candidate_sha256": "4c9c5f019a75b88af3be9ca5d2c0237e0d500b1ec89e656a848f1b567bf61aa9"
+    },
+    {
+      "case": "after-reversal:/finance/reports/titles-competence.csv",
+      "equal": true,
+      "baseline_sha256": "74c234e1d069ee078f355be73f253c6a3426ca8a52a78c064493011c588de928",
+      "candidate_sha256": "74c234e1d069ee078f355be73f253c6a3426ca8a52a78c064493011c588de928"
+    },
+    {
+      "case": "after-reversal:/finance/reports/titles-due",
+      "equal": true,
+      "baseline_sha256": "8ad8f0479abff364413504a1fbe47c9a615536f45856e25fd77bd23523e61fe2",
+      "candidate_sha256": "8ad8f0479abff364413504a1fbe47c9a615536f45856e25fd77bd23523e61fe2"
+    },
+    {
+      "case": "after-reversal:/finance/reports/titles-due.csv",
+      "equal": true,
+      "baseline_sha256": "74c234e1d069ee078f355be73f253c6a3426ca8a52a78c064493011c588de928",
+      "candidate_sha256": "74c234e1d069ee078f355be73f253c6a3426ca8a52a78c064493011c588de928"
+    },
+    {
+      "case": "after-reversal:/finance?status=open",
+      "equal": true,
+      "baseline_sha256": "2961d4fa2ba4bb0169d1830d208f832343a368730008d053758cc1a53d0e4661",
+      "candidate_sha256": "2961d4fa2ba4bb0169d1830d208f832343a368730008d053758cc1a53d0e4661"
+    },
+    {
+      "case": "after-reversal:/finance?status=overdue",
+      "equal": true,
+      "baseline_sha256": "1d7f3b81b58972a158d33d336f30ddbbfc87113f8d6f82b0d35c111e0359679a",
+      "candidate_sha256": "1d7f3b81b58972a158d33d336f30ddbbfc87113f8d6f82b0d35c111e0359679a"
+    },
+    {
+      "case": "after-reversal:/finance?status=partial",
+      "equal": true,
+      "baseline_sha256": "1657f9e368f6c9fde9640b83d51c8087dd30d26f6c6cb53d2e38065e6b242933",
+      "candidate_sha256": "1657f9e368f6c9fde9640b83d51c8087dd30d26f6c6cb53d2e38065e6b242933"
+    },
+    {
+      "case": "after-reversal:/reports/finance.csv",
+      "equal": true,
+      "baseline_sha256": "3736a95147800da804170560979bbf6bd767bca6fffa8261adc987ac3f7d9183",
+      "candidate_sha256": "3736a95147800da804170560979bbf6bd767bca6fffa8261adc987ac3f7d9183"
+    },
+    {
+      "case": "after-reversal:catalog",
+      "equal": true,
+      "baseline_sha256": "70d9633e4427f913f26eca309b84d72de71565c5423ec7a1fddc79d081427aad",
+      "candidate_sha256": "70d9633e4427f913f26eca309b84d72de71565c5423ec7a1fddc79d081427aad"
+    },
+    {
+      "case": "before-reversal:/accounts",
+      "equal": true,
+      "baseline_sha256": "2e58fa26f8afb8ac6e2645b15554e80be41b02ad1bcbf334714d1135ac0a5cc8",
+      "candidate_sha256": "2e58fa26f8afb8ac6e2645b15554e80be41b02ad1bcbf334714d1135ac0a5cc8"
+    },
+    {
+      "case": "before-reversal:/finance",
+      "equal": true,
+      "baseline_sha256": "c5ec8d6e7f8bae2de1c1ab22cd9760cd1ad51550f16d6fa2aa9ef4e33cce2304",
+      "candidate_sha256": "c5ec8d6e7f8bae2de1c1ab22cd9760cd1ad51550f16d6fa2aa9ef4e33cce2304"
+    },
+    {
+      "case": "before-reversal:/finance/dashboard",
+      "equal": true,
+      "baseline_sha256": "25db6b2ed1ade1b8fc748df1898dfed5e8d6eeea2aebb5ef6697edf5a3e3cb38",
+      "candidate_sha256": "25db6b2ed1ade1b8fc748df1898dfed5e8d6eeea2aebb5ef6697edf5a3e3cb38"
+    },
+    {
+      "case": "before-reversal:/finance/movements",
+      "equal": true,
+      "baseline_sha256": "cb7252c7ab533673bcb360363b891aeb5993753eba252a8182817b0b5303fde9",
+      "candidate_sha256": "cb7252c7ab533673bcb360363b891aeb5993753eba252a8182817b0b5303fde9"
+    },
+    {
+      "case": "before-reversal:/finance/movements.csv",
+      "equal": true,
+      "baseline_sha256": "8472f6040af878a0a0318d9a5d0daf6c6bf2c751214db2d80806f76b7a1573e5",
+      "candidate_sha256": "8472f6040af878a0a0318d9a5d0daf6c6bf2c751214db2d80806f76b7a1573e5"
+    },
+    {
+      "case": "before-reversal:/finance/reports/budget-actual",
+      "equal": true,
+      "baseline_sha256": "3c141b6677dc34c7956fffe2e0740227fbf19bb8ac88e54e0d002a859a4f5e8e",
+      "candidate_sha256": "3c141b6677dc34c7956fffe2e0740227fbf19bb8ac88e54e0d002a859a4f5e8e"
+    },
+    {
+      "case": "before-reversal:/finance/reports/budget-actual.csv",
+      "equal": true,
+      "baseline_sha256": "032dc63053cb672d5080de79741326e189f058c381707eed0b0ec9ba29fda0f9",
+      "candidate_sha256": "032dc63053cb672d5080de79741326e189f058c381707eed0b0ec9ba29fda0f9"
+    },
+    {
+      "case": "before-reversal:/finance/reports/by-method",
+      "equal": true,
+      "baseline_sha256": "a7c95fc9bb25242ae9df8a18ef5d7b91cfd44d17300e4308a6669eabbb5fc786",
+      "candidate_sha256": "a7c95fc9bb25242ae9df8a18ef5d7b91cfd44d17300e4308a6669eabbb5fc786"
+    },
+    {
+      "case": "before-reversal:/finance/reports/by-method.csv",
+      "equal": true,
+      "baseline_sha256": "c4304ed63638a1bba05f00128daaee148deae1837822918c3364bd96c6e96611",
+      "candidate_sha256": "c4304ed63638a1bba05f00128daaee148deae1837822918c3364bd96c6e96611"
+    },
+    {
+      "case": "before-reversal:/finance/reports/by-origin",
+      "equal": true,
+      "baseline_sha256": "b2248d9dd79d4a2da525d311728d0a3ccce26580a61b8746d4d68a13c714e2eb",
+      "candidate_sha256": "b2248d9dd79d4a2da525d311728d0a3ccce26580a61b8746d4d68a13c714e2eb"
+    },
+    {
+      "case": "before-reversal:/finance/reports/by-origin.csv",
+      "equal": true,
+      "baseline_sha256": "fd85b6bd08efdce1e82e236968063f255445d33d79d8daf38a737155af81b890",
+      "candidate_sha256": "fd85b6bd08efdce1e82e236968063f255445d33d79d8daf38a737155af81b890"
+    },
+    {
+      "case": "before-reversal:/finance/reports/cash-daily",
+      "equal": true,
+      "baseline_sha256": "83cdecc39eac2836a5bfd816b052bede832f598b0e5e404593f35b7191a08564",
+      "candidate_sha256": "83cdecc39eac2836a5bfd816b052bede832f598b0e5e404593f35b7191a08564"
+    },
+    {
+      "case": "before-reversal:/finance/reports/cash-daily.csv",
+      "equal": true,
+      "baseline_sha256": "fea11c3e4ef57bb20c063639f3b650027707e776b6c9d6ae499a7cea2ddcf8b4",
+      "candidate_sha256": "fea11c3e4ef57bb20c063639f3b650027707e776b6c9d6ae499a7cea2ddcf8b4"
+    },
+    {
+      "case": "before-reversal:/finance/reports/cash-monthly",
+      "equal": true,
+      "baseline_sha256": "bab25a7157a620e71a8ee4a11d7a645d1c4887e67d00ef083c0a992f0b3abc03",
+      "candidate_sha256": "bab25a7157a620e71a8ee4a11d7a645d1c4887e67d00ef083c0a992f0b3abc03"
+    },
+    {
+      "case": "before-reversal:/finance/reports/cash-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "0776f633a3d3c027bcfc37c681105894e5c2c220a747fce61f5ec4f24b5187a8",
+      "candidate_sha256": "0776f633a3d3c027bcfc37c681105894e5c2c220a747fce61f5ec4f24b5187a8"
+    },
+    {
+      "case": "before-reversal:/finance/reports/charges-monthly",
+      "equal": true,
+      "baseline_sha256": "6bdae1ef87d4607e5c234f6dd1ae9504aa9f38b1d6e9c4fee546057eaba1d854",
+      "candidate_sha256": "6bdae1ef87d4607e5c234f6dd1ae9504aa9f38b1d6e9c4fee546057eaba1d854"
+    },
+    {
+      "case": "before-reversal:/finance/reports/charges-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "0776f633a3d3c027bcfc37c681105894e5c2c220a747fce61f5ec4f24b5187a8",
+      "candidate_sha256": "0776f633a3d3c027bcfc37c681105894e5c2c220a747fce61f5ec4f24b5187a8"
+    },
+    {
+      "case": "before-reversal:/finance/reports/discounts-monthly",
+      "equal": true,
+      "baseline_sha256": "2522c459e023640c9071c371da1dfe8e3142dc72c323ee2dbc7a8beceff871fb",
+      "candidate_sha256": "2522c459e023640c9071c371da1dfe8e3142dc72c323ee2dbc7a8beceff871fb"
+    },
+    {
+      "case": "before-reversal:/finance/reports/discounts-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "0776f633a3d3c027bcfc37c681105894e5c2c220a747fce61f5ec4f24b5187a8",
+      "candidate_sha256": "0776f633a3d3c027bcfc37c681105894e5c2c220a747fce61f5ec4f24b5187a8"
+    },
+    {
+      "case": "before-reversal:/finance/reports/documents",
+      "equal": true,
+      "baseline_sha256": "d2133b109bdaf1aeaaebcc55e6b51d594c5e164c74fe455ce0103166613a036c",
+      "candidate_sha256": "d2133b109bdaf1aeaaebcc55e6b51d594c5e164c74fe455ce0103166613a036c"
+    },
+    {
+      "case": "before-reversal:/finance/reports/documents.csv",
+      "equal": true,
+      "baseline_sha256": "36e783a121ef146cd3dd0810b183b781ca164b230ef0e079f100c4e3bc5f7fee",
+      "candidate_sha256": "36e783a121ef146cd3dd0810b183b781ca164b230ef0e079f100c4e3bc5f7fee"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-account",
+      "equal": true,
+      "baseline_sha256": "e71b6efe167a2be1bb4a796ecc1afd894b0798b5aa913e06edff3d0f6f1531ee",
+      "candidate_sha256": "e71b6efe167a2be1bb4a796ecc1afd894b0798b5aa913e06edff3d0f6f1531ee"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-account.csv",
+      "equal": true,
+      "baseline_sha256": "e3f39fbc36a728d8f115c640178d9174d01d9c693670b7762a3d3def9c2684e5",
+      "candidate_sha256": "e3f39fbc36a728d8f115c640178d9174d01d9c693670b7762a3d3def9c2684e5"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-category",
+      "equal": true,
+      "baseline_sha256": "0e9a2fc6bba1656ae04ee21ce558234834260e8b1d6659bfa31a6253d7cfa6ba",
+      "candidate_sha256": "0e9a2fc6bba1656ae04ee21ce558234834260e8b1d6659bfa31a6253d7cfa6ba"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-category.csv",
+      "equal": true,
+      "baseline_sha256": "88eedd0bcadfde41e2e0e8aa87d587f32519d16f82df2f7bcfb0b476db1ea33d",
+      "candidate_sha256": "88eedd0bcadfde41e2e0e8aa87d587f32519d16f82df2f7bcfb0b476db1ea33d"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-subcategory",
+      "equal": true,
+      "baseline_sha256": "6628e5b45dc375f2b4f48ab9a05090d56620c11215dec053afd74968fe501c51",
+      "candidate_sha256": "6628e5b45dc375f2b4f48ab9a05090d56620c11215dec053afd74968fe501c51"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-subcategory.csv",
+      "equal": true,
+      "baseline_sha256": "6770dbac1ed6095c307fbb2a2463e43d4c632e4260e3af5100a9d8cf393940fb",
+      "candidate_sha256": "6770dbac1ed6095c307fbb2a2463e43d4c632e4260e3af5100a9d8cf393940fb"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-supplier",
+      "equal": true,
+      "baseline_sha256": "f884368d165c627fe74191063d510d58043e5bd1a77bec1970daa51e3a7a25c5",
+      "candidate_sha256": "f884368d165c627fe74191063d510d58043e5bd1a77bec1970daa51e3a7a25c5"
+    },
+    {
+      "case": "before-reversal:/finance/reports/expense-supplier.csv",
+      "equal": true,
+      "baseline_sha256": "84aa8e2b9a72aa93992bbf095b342670b21879ba54ce042473d355a6800a718b",
+      "candidate_sha256": "84aa8e2b9a72aa93992bbf095b342670b21879ba54ce042473d355a6800a718b"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-account",
+      "equal": true,
+      "baseline_sha256": "fcbfc7cc08f7968995a134fa31e8fc83af4a63e97a4b44c6c871bfc4190ffd70",
+      "candidate_sha256": "fcbfc7cc08f7968995a134fa31e8fc83af4a63e97a4b44c6c871bfc4190ffd70"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-account.csv",
+      "equal": true,
+      "baseline_sha256": "f884f02129d23d6a649b22ec7fb4220a72a063aba2528f03de0c32cf6c59c1eb",
+      "candidate_sha256": "f884f02129d23d6a649b22ec7fb4220a72a063aba2528f03de0c32cf6c59c1eb"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-category",
+      "equal": true,
+      "baseline_sha256": "f5095dff86a62cf9475acb844a885557cb096db17fa33376e32c3574f982786c",
+      "candidate_sha256": "f5095dff86a62cf9475acb844a885557cb096db17fa33376e32c3574f982786c"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-category.csv",
+      "equal": true,
+      "baseline_sha256": "630051e254ce069badc78c482fb432842c96b71916ccefead6b4470cb5baea15",
+      "candidate_sha256": "630051e254ce069badc78c482fb432842c96b71916ccefead6b4470cb5baea15"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-customer",
+      "equal": true,
+      "baseline_sha256": "92ba3123250853f493a3c15705292d2619af7dcebccfffe3df118ed0345d89a0",
+      "candidate_sha256": "92ba3123250853f493a3c15705292d2619af7dcebccfffe3df118ed0345d89a0"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-customer.csv",
+      "equal": true,
+      "baseline_sha256": "23d63a3285f96f5a393b338b162fccd6d4fdc24fc0b396bf342c838bde188f4b",
+      "candidate_sha256": "23d63a3285f96f5a393b338b162fccd6d4fdc24fc0b396bf342c838bde188f4b"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-subcategory",
+      "equal": true,
+      "baseline_sha256": "9d9ed5135cb4b4dc861a04a7e483085a3a49d64898ef3577a53e833de73ad65f",
+      "candidate_sha256": "9d9ed5135cb4b4dc861a04a7e483085a3a49d64898ef3577a53e833de73ad65f"
+    },
+    {
+      "case": "before-reversal:/finance/reports/income-subcategory.csv",
+      "equal": true,
+      "baseline_sha256": "938fddca29170a91188c506c7c31f009bd75174ace9d8ded4349bde0f45dabfd",
+      "candidate_sha256": "938fddca29170a91188c506c7c31f009bd75174ace9d8ded4349bde0f45dabfd"
+    },
+    {
+      "case": "before-reversal:/finance/reports/partial-payments",
+      "equal": true,
+      "baseline_sha256": "10c06251f4bd0ef2dcfb4485b2cd463edfe41551730d786d5e238a2ca3d0d085",
+      "candidate_sha256": "10c06251f4bd0ef2dcfb4485b2cd463edfe41551730d786d5e238a2ca3d0d085"
+    },
+    {
+      "case": "before-reversal:/finance/reports/partial-payments.csv",
+      "equal": true,
+      "baseline_sha256": "0311f38f594eff3dac2b25a40be769f55574f9416b9207467776415d8a1e07cc",
+      "candidate_sha256": "0311f38f594eff3dac2b25a40be769f55574f9416b9207467776415d8a1e07cc"
+    },
+    {
+      "case": "before-reversal:/finance/reports/payable-open",
+      "equal": true,
+      "baseline_sha256": "de9ff14f3703b9f42c3b570e81f918eafadc5984379569b4cab0dd651fde4c37",
+      "candidate_sha256": "de9ff14f3703b9f42c3b570e81f918eafadc5984379569b4cab0dd651fde4c37"
+    },
+    {
+      "case": "before-reversal:/finance/reports/payable-open.csv",
+      "equal": true,
+      "baseline_sha256": "6e2479f9218e28e3bbb3efb3de8fd5a869bb0e78efecad2d72e4dc027bd9c075",
+      "candidate_sha256": "6e2479f9218e28e3bbb3efb3de8fd5a869bb0e78efecad2d72e4dc027bd9c075"
+    },
+    {
+      "case": "before-reversal:/finance/reports/payable-overdue",
+      "equal": true,
+      "baseline_sha256": "c064bb127b230e1a2dd552dbc0efa0404f6b8ac719954e531b6d58279f104e6a",
+      "candidate_sha256": "c064bb127b230e1a2dd552dbc0efa0404f6b8ac719954e531b6d58279f104e6a"
+    },
+    {
+      "case": "before-reversal:/finance/reports/payable-overdue.csv",
+      "equal": true,
+      "baseline_sha256": "e370b09cf1b3b546ac7840eac5c4649aa8be899346667a6ededd2ce7c5922156",
+      "candidate_sha256": "e370b09cf1b3b546ac7840eac5c4649aa8be899346667a6ededd2ce7c5922156"
+    },
+    {
+      "case": "before-reversal:/finance/reports/receivable-open",
+      "equal": true,
+      "baseline_sha256": "0b2594f69e2fa7a44de19704f2ad79475857882a9479b7767ec68f65b02aa4d2",
+      "candidate_sha256": "0b2594f69e2fa7a44de19704f2ad79475857882a9479b7767ec68f65b02aa4d2"
+    },
+    {
+      "case": "before-reversal:/finance/reports/receivable-open.csv",
+      "equal": true,
+      "baseline_sha256": "9c33fb43f43636dc97e893e857ec886372c4323f21077e2d72f6e9abfa1dd355",
+      "candidate_sha256": "9c33fb43f43636dc97e893e857ec886372c4323f21077e2d72f6e9abfa1dd355"
+    },
+    {
+      "case": "before-reversal:/finance/reports/receivable-overdue",
+      "equal": true,
+      "baseline_sha256": "70150351e7c317014fadf03f7cb49aa2508474246460b2723c648dd6222bf4e6",
+      "candidate_sha256": "70150351e7c317014fadf03f7cb49aa2508474246460b2723c648dd6222bf4e6"
+    },
+    {
+      "case": "before-reversal:/finance/reports/receivable-overdue.csv",
+      "equal": true,
+      "baseline_sha256": "80881d4c3698337a77eafab8212b0aded01c7d1c5b929b9b68be07bf408e73f7",
+      "candidate_sha256": "80881d4c3698337a77eafab8212b0aded01c7d1c5b929b9b68be07bf408e73f7"
+    },
+    {
+      "case": "before-reversal:/finance/reports/result-monthly",
+      "equal": true,
+      "baseline_sha256": "f7ce183dc0e38ee39a30a845b037bdf0335046e6b75c5588b4c75cfeb08e0fd7",
+      "candidate_sha256": "f7ce183dc0e38ee39a30a845b037bdf0335046e6b75c5588b4c75cfeb08e0fd7"
+    },
+    {
+      "case": "before-reversal:/finance/reports/result-monthly.csv",
+      "equal": true,
+      "baseline_sha256": "6a93cb8c78a40de72be036ddb1fe37d3c88cc9b62aa3875c5358d98beb358570",
+      "candidate_sha256": "6a93cb8c78a40de72be036ddb1fe37d3c88cc9b62aa3875c5358d98beb358570"
+    },
+    {
+      "case": "before-reversal:/finance/reports/reversals",
+      "equal": true,
+      "baseline_sha256": "61ab1d139d98503b6efd6e02dd251cef409025df74319d9853ccaa43515456a5",
+      "candidate_sha256": "61ab1d139d98503b6efd6e02dd251cef409025df74319d9853ccaa43515456a5"
+    },
+    {
+      "case": "before-reversal:/finance/reports/reversals.csv",
+      "equal": true,
+      "baseline_sha256": "032dc63053cb672d5080de79741326e189f058c381707eed0b0ec9ba29fda0f9",
+      "candidate_sha256": "032dc63053cb672d5080de79741326e189f058c381707eed0b0ec9ba29fda0f9"
+    },
+    {
+      "case": "before-reversal:/finance/reports/settlements-daily",
+      "equal": true,
+      "baseline_sha256": "46f535b5168c341f4df3f22d457229e4fab18edbe56a2454239edb9b688666a5",
+      "candidate_sha256": "46f535b5168c341f4df3f22d457229e4fab18edbe56a2454239edb9b688666a5"
+    },
+    {
+      "case": "before-reversal:/finance/reports/settlements-daily.csv",
+      "equal": true,
+      "baseline_sha256": "fea11c3e4ef57bb20c063639f3b650027707e776b6c9d6ae499a7cea2ddcf8b4",
+      "candidate_sha256": "fea11c3e4ef57bb20c063639f3b650027707e776b6c9d6ae499a7cea2ddcf8b4"
+    },
+    {
+      "case": "before-reversal:/finance/reports/titles-competence",
+      "equal": true,
+      "baseline_sha256": "4fef73ad51102a483d435a4c697f74aed8b9fc4b0c1cb469eb953aea1557ff0f",
+      "candidate_sha256": "4fef73ad51102a483d435a4c697f74aed8b9fc4b0c1cb469eb953aea1557ff0f"
+    },
+    {
+      "case": "before-reversal:/finance/reports/titles-competence.csv",
+      "equal": true,
+      "baseline_sha256": "36e783a121ef146cd3dd0810b183b781ca164b230ef0e079f100c4e3bc5f7fee",
+      "candidate_sha256": "36e783a121ef146cd3dd0810b183b781ca164b230ef0e079f100c4e3bc5f7fee"
+    },
+    {
+      "case": "before-reversal:/finance/reports/titles-due",
+      "equal": true,
+      "baseline_sha256": "671e3e6d23c4a1a58e22ff79cb73f5a5505e33105200f9bb020c419f61594c47",
+      "candidate_sha256": "671e3e6d23c4a1a58e22ff79cb73f5a5505e33105200f9bb020c419f61594c47"
+    },
+    {
+      "case": "before-reversal:/finance/reports/titles-due.csv",
+      "equal": true,
+      "baseline_sha256": "36e783a121ef146cd3dd0810b183b781ca164b230ef0e079f100c4e3bc5f7fee",
+      "candidate_sha256": "36e783a121ef146cd3dd0810b183b781ca164b230ef0e079f100c4e3bc5f7fee"
+    },
+    {
+      "case": "before-reversal:/finance?status=open",
+      "equal": true,
+      "baseline_sha256": "7c6fca427542e19301030c956957e37e9013685f8f16999714c026f584d12a76",
+      "candidate_sha256": "7c6fca427542e19301030c956957e37e9013685f8f16999714c026f584d12a76"
+    },
+    {
+      "case": "before-reversal:/finance?status=overdue",
+      "equal": true,
+      "baseline_sha256": "b197ec76efe3234da8d66334bea75e11a473b6a978122871876dda2bbf146390",
+      "candidate_sha256": "b197ec76efe3234da8d66334bea75e11a473b6a978122871876dda2bbf146390"
+    },
+    {
+      "case": "before-reversal:/finance?status=partial",
+      "equal": true,
+      "baseline_sha256": "b197ec76efe3234da8d66334bea75e11a473b6a978122871876dda2bbf146390",
+      "candidate_sha256": "b197ec76efe3234da8d66334bea75e11a473b6a978122871876dda2bbf146390"
+    },
+    {
+      "case": "before-reversal:/reports/finance.csv",
+      "equal": true,
+      "baseline_sha256": "c06e5891b868db2888d82f39b5f6913cab37d897bbba58c954a3fb7fdf9482f8",
+      "candidate_sha256": "c06e5891b868db2888d82f39b5f6913cab37d897bbba58c954a3fb7fdf9482f8"
+    },
+    {
+      "case": "before-reversal:catalog",
+      "equal": true,
+      "baseline_sha256": "70d9633e4427f913f26eca309b84d72de71565c5423ec7a1fddc79d081427aad",
+      "candidate_sha256": "70d9633e4427f913f26eca309b84d72de71565c5423ec7a1fddc79d081427aad"
+    }
+  ],
+  "mismatches": [],
+  "fixture": "Independent disposable SQLite fixtures; partial principal, charges, discounts and reversal. Identical event registration timestamps for CSV; JSON removes only the documented volatile timestamps from the existing probe. No CSV normalization.",
+  "intentional_dashboard_change": "/api/dashboard uses remaining principal including partial/reversed titles; proved separately in test_dre_receivables."
+}

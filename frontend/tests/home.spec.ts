@@ -58,7 +58,7 @@ test("sessão expirada na Início não revela dados e retorna a home após login
   await home(page);
 });
 
-test("home guest, retorno solicitado, login normal e refresh sem indicadores ou consultas extras", async ({
+test("home guest, retorno solicitado, login e refresh com uma consulta operacional por montagem", async ({
   page,
 }) => {
   const calls: string[] = [];
@@ -83,12 +83,13 @@ test("home guest, retorno solicitado, login normal e refresh sem indicadores ou 
   await page.waitForLoadState("networkidle");
   expect(
     calls.every((path) =>
-      ["/api/auth/me", "/api/auth/login", "/api/company-settings"].includes(
+      ["/api/auth/me", "/api/auth/login", "/api/company-settings", "/api/dashboard"].includes(
         path,
       ),
     ),
   ).toBe(true);
-  await expect(page.locator(".silex-home")).not.toContainText("R$");
+  expect(calls.filter(path=>path==='/api/dashboard')).toHaveLength(1);
+  await expect(page.getByRole('region',{name:'Indicadores operacionais',exact:true})).toHaveCount(1);
   expect(
     await page.evaluate((key) => sessionStorage.getItem(key), RETURN_KEY),
   ).toBeNull();
@@ -118,6 +119,7 @@ for (const role of ["admin", "operator"] as const) {
       (route) =>
         route.id !== "home" &&
         route.id !== "finance-suppliers" &&
+        !["dashboard","finance-categories","finance-subcategories"].includes(route.id) &&
         canAccessRoute({ role }, route.id),
     );
     const links = page.locator(".silex-home [data-home-route]");
@@ -146,44 +148,20 @@ for (const role of ["admin", "operator"] as const) {
   });
 }
 
-test("Início e Visão Geral independentes, histórico, legado e item ativo", async ({
-  page,
-}) => {
-  await page.goto("/entrar");
-  await signIn(page);
-  await home(page);
-  await page
-    .getByRole("link", { name: "Abrir Visão Geral", exact: true })
-    .click();
-  await expect(page).toHaveURL(/\/app#dashboard$/);
-  await expect(
-    page.getByRole("heading", { name: "Visão geral", exact: true }),
-  ).toBeVisible();
-  await expect(page.locator(".silex-home")).toHaveCount(0);
-  await page.goBack();
-  await home(page);
-  await expect(page.locator("#main-content")).toBeFocused();
-  await page.goForward();
-  await expect(page).toHaveURL(/\/app#dashboard$/);
-  const opener = page.getByRole("button", { name: "Abrir menu", exact: true });
-  if (await opener.isVisible()) await opener.click();
-  const nav = page.getByRole("navigation", { name: "Menu principal" });
-  await nav.getByRole("button", { name: "Início", exact: true }).click();
-  await home(page);
-  if (await opener.isVisible()) await opener.click();
-  await expect(
-    nav.getByRole("button", { name: "Início", exact: true }),
-  ).toHaveAttribute("aria-current", "page");
-  await expect(
-    nav.getByRole("button", { name: "Visão geral", exact: true }),
-  ).not.toHaveAttribute("aria-current", "page");
-  if ((page.viewportSize()?.width || 0) <= 900)
-    await page.keyboard.press("Escape");
-  await page.goto("/#home");
-  await home(page);
-  await page.goto("/app");
-  await home(page);
-  await noOverflow(page);
+test("Início consolida o legado, preserva histórico, foco e item ativo", async ({page})=>{
+  await page.goto('/entrar');await signIn(page);await home(page);
+  await page.locator('[data-home-route="sales"]').click();
+  await expect(page).toHaveURL(/#sales$/);await expect(page.locator('.silex-home')).toHaveCount(0);
+  await page.goBack();await home(page);await expect(page.locator('#main-content')).toBeFocused();
+  await page.goForward();await expect(page).toHaveURL(/#sales$/);
+  await page.goto('/app#dashboard');await home(page);
+  await expect(page.getByRole('region',{name:'Indicadores operacionais',exact:true})).toHaveCount(1);
+  const opener=page.getByRole('button',{name:'Abrir menu',exact:true});if(await opener.isVisible())await opener.click();
+  const nav=page.getByRole('navigation',{name:'Menu principal'});
+  await expect(nav.getByRole('button',{name:'Início',exact:true})).toHaveAttribute('aria-current','page');
+  await expect(nav.getByRole('button',{name:'Visão geral',exact:true})).toHaveCount(0);
+  if((page.viewportSize()?.width||0)<=900)await page.keyboard.press('Escape');
+  await page.goto('/#home');await home(page);await page.goto('/app');await home(page);await noOverflow(page);
 });
 
 test("troca de sessão atualiza atalhos e operador não acessa URL administrativa", async ({
@@ -202,7 +180,7 @@ test("troca de sessão atualiza atalhos e operador não acessa URL administrativ
   await expect(page.locator('[data-home-route="finance"]')).toHaveCount(0);
   await expect(page.locator(".silex-home")).toContainText("Operador Demo");
   await page.goto("/app#finance");
-  await expect(page).toHaveURL(/\/app#dashboard$/);
+  await expect(page).toHaveURL(/\/app#home$/);
   await expect(page.getByRole("alert")).toContainText("não tem permissão");
   expect((await page.request.get("/api/finance")).status()).toBe(403);
   await page.goto("/app#home");

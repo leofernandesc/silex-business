@@ -1,3 +1,4 @@
+import { DreMappingEditor } from "./dre";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { DocumentInput } from "./formInputs";
 import { useState } from "react";
@@ -206,7 +207,7 @@ export function FinanceCatalog({ kind }: { kind: Kind }) {
     </>
   );
 }
-function CatalogForm({
+export function CatalogForm({
   categoryLookup,
   kind,
   row,
@@ -480,6 +481,7 @@ function CatalogForm({
           </p>
         )}
       </Form>
+      {row&&row.id>0&&(kind==='categories'||kind==='subcategories')&&<DreMappingEditor categoryId={kind==='categories'?row.id:row.category_id!} subcategoryId={kind==='subcategories'?row.id:undefined}/>}
     </Modal>
   );
 }

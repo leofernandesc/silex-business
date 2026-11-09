@@ -1,0 +1,25 @@
+[WebServer] INFO:     Started server process [915647]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8012 (Press CTRL+C to quit)
+
+Running 12 tests using 1 worker
+
+(node:916011) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (12.8s)
+  ✓   2 [desktop] › tests/dre-integration.spec.ts:56:1 › navigation aliases converge on one home and one financial plan (1.7s)
+  ✓   3 [desktop] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (4.1s)
+  ✓   4 [desktop] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (4.2s)
+  ✓   5 [desktop] › tests/dre-review-fixes.spec.ts:51:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (5.1s)
+  ✓   6 [desktop] › tests/dre-review-fixes.spec.ts:72:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (3.0s)
+(node:918400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [mobile] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (8.4s)
+  ✓   8 [mobile] › tests/dre-integration.spec.ts:56:1 › navigation aliases converge on one home and one financial plan (1.2s)
+  ✓   9 [mobile] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (2.9s)
+  ✓  10 [mobile] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (3.0s)
+  ✓  11 [mobile] › tests/dre-review-fixes.spec.ts:51:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (4.1s)
+  ✓  12 [mobile] › tests/dre-review-fixes.spec.ts:72:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (2.5s)
+
+  12 passed (1.1m)

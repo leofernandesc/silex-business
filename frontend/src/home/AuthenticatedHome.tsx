@@ -10,7 +10,7 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react";
-import type { MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { Brand } from "../brand/Brand";
 import { appUrl, type RouteId } from "../navigation/routes";
 import type { CompanySettings, User } from "../types";
@@ -55,14 +55,16 @@ const areas = [
 ] as const;
 
 type Props = {
+  children?: ReactNode;
   user: User;
   company: CompanySettings | null;
   companyStatus: CompanyStatus;
   navigate: (id: string) => void;
 };
 
-/** Uses only authenticated shell state. No queries, indicators or authorization policy. */
+/** Authenticated identity and shortcuts, with operational content supplied by canonical Home. */
 export function AuthenticatedHome({
+  children,
   user,
   company,
   companyStatus,
@@ -116,6 +118,7 @@ export function AuthenticatedHome({
           da sua empresa.
         </p>
       </header>
+      {children}
 
       <section
         className="silex-home__company"
@@ -210,32 +213,6 @@ export function AuthenticatedHome({
           })}
         </div>
       </section>
-
-      {navigation.overview && (
-        <section
-          className="silex-home__overview"
-          aria-labelledby="home-overview-title"
-        >
-          <div>
-            <h2 id="home-overview-title">
-              Os indicadores continuam na Visão Geral.
-            </h2>
-            <p>
-              Consulte os resumos e acompanhe suas operações em uma tela
-              independente.
-            </p>
-          </div>
-          <a
-            className="silex-home__overview-link"
-            href={appUrl(navigation.overview.id)}
-            data-home-route={navigation.overview.id}
-            onClick={(event) => follow(event, navigation.overview!.id)}
-          >
-            <ArrowRight size={18} aria-hidden="true" />
-            Abrir Visão Geral
-          </a>
-        </section>
-      )}
 
       {administration.length > 0 && (
         <section
