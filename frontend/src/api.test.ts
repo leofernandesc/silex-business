@@ -1,9 +1,38 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { api, apiRequest, ApiError, resetSessionRequests, REQUEST_TIMEOUT_MS } from "./api";
+import { api, apiRequest, downloadCsv, ApiError, resetSessionRequests, REQUEST_TIMEOUT_MS } from "./api";
 
 afterEach(() => {
   vi.unstubAllGlobals();
   resetSessionRequests();
+});
+
+describe('successful responses cannot cross authenticated session generations',()=>{
+ it.each(['GET','POST'])('discards a late successful %s without replay or a second expiration event',async method=>{
+  let finish!:(response:Response)=>void;const dispatchEvent=vi.fn();vi.stubGlobal('window',{dispatchEvent});
+  const fetch=vi.fn(()=>new Promise<Response>(resolve=>{finish=resolve}));vi.stubGlobal('fetch',fetch);
+  const assertion=expect(api('/finance',method,method==='POST'?{amount_cents:10001}:undefined)).rejects.toMatchObject({status:0,message:expect.stringContaining('Consulte o resultado')});
+  resetSessionRequests();finish(new Response('{"amount_cents":10001}'));await assertion;
+  expect(fetch).toHaveBeenCalledTimes(1);expect(dispatchEvent).not.toHaveBeenCalled();
+ });
+ it('checks again after the response body has been read',async()=>{
+  let read!:()=>void;const reading=new Promise<void>(resolve=>{read=resolve});let finish!:(value:unknown)=>void;
+  const response=new Response('{}');response.json=()=>{read();return new Promise(resolve=>{finish=resolve})};
+  vi.stubGlobal('fetch',vi.fn().mockResolvedValue(response));const assertion=expect(api('/finance')).rejects.toMatchObject({status:0});
+  await reading;resetSessionRequests();finish({amount_cents:10001});await assertion;
+ });
+ it('does not create a CSV download from the previous session',async()=>{
+  let finish!:(response:Response)=>void;const createElement=vi.fn();vi.stubGlobal('document',{createElement});
+  vi.stubGlobal('fetch',vi.fn(()=>new Promise<Response>(resolve=>{finish=resolve})));
+  const assertion=expect(downloadCsv('/finance/dre.csv','dre.csv')).rejects.toMatchObject({status:0});
+  resetSessionRequests();finish(new Response('private synthetic financial data',{headers:{'Content-Type':'text/csv'}}));await assertion;
+  expect(createElement).not.toHaveBeenCalled();
+ });
+ it('accepts a response started in the new session while discarding the old one',async()=>{
+  let finish!:(response:Response)=>void;
+  vi.stubGlobal('fetch',vi.fn().mockImplementationOnce(()=>new Promise<Response>(resolve=>{finish=resolve})).mockResolvedValueOnce(new Response('{"id":2}')));
+  const old=expect(api('/finance')).rejects.toMatchObject({status:0});resetSessionRequests();
+  expect(await api('/auth/me')).toEqual({id:2});finish(new Response('{"amount_cents":10001}'));await old;
+ });
 });
 
 describe("binary requests share the existing HTTP/session handling", () => {

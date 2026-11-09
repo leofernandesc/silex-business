@@ -16,6 +16,7 @@ export default defineConfig({
     "dre-integration.spec.ts",
     "dre-review-fixes.spec.ts",
     "dre-release-ux.spec.ts",
+    "predeploy-export-session.spec.ts",
     "navigation.spec.ts",
     "home.spec.ts",
     "public.spec.ts",
