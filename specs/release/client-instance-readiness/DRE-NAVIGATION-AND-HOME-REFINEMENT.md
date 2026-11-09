@@ -1,6 +1,6 @@
 # Início, navegação e validação funcional da DRE
 
-Base publicada informada pelo proprietário: `cc7d9836649566211809270b286e6c62422f10d5`, PR #18. Branch isolada: `fix/dre-navigation-home-refinement`. Código/testes: **`474fa6808f6b6a1c0a2d32c1072a9230bed71b27`**; o commit seguinte arquiva este documento/evidências. O HEAD remoto final e os resultados posteriores do CI ficam nos checks e na descrição do novo Draft PR empilhado, evitando commits circulares de evidência.
+Base publicada informada pelo proprietário: `cc7d9836649566211809270b286e6c62422f10d5`, PR #18. Branch isolada: `fix/dre-navigation-home-refinement`. Código funcional e testes iniciais: **`474fa6808f6b6a1c0a2d32c1072a9230bed71b27`**; o commit seguinte arquiva este documento/evidências. Um ajuste posterior somente de teste valida também a URL canônica nos atalhos do Início, sem mudar produção. O HEAD remoto final e os resultados posteriores do CI ficam nos checks e na descrição do novo Draft PR empilhado, evitando commits circulares de evidência.
 
 **Entrega para revisão, não publicada.** Sem acesso à Railway, à Sammya ou a bancos persistentes; sem merge, migração persistente, mudança de usuário/senha, main ou referência de publicação. A informação sobre a versão online é do proprietário, não uma confirmação por consulta à instância.
 
@@ -68,7 +68,7 @@ A competência antiga é deliberada para separar as operações da fixture atual
 | `frontend/src/financialOverview.tsx`, `dre.tsx` | Remoção do atalho destacado, título coerente e orientação curta para atualizar após revisão. |
 | Três testes unitários de navegação | Novo destino, aliases, datas, autorização, ordem e metadados de retorno. |
 | `frontend/tests/dre-home-navigation.spec.ts` | Oito definições novas: card, zero/indisponibilidade, tablets, sidebar, autorização, histórico e ciclo real da DRE. |
-| `frontend/tests/navigation.spec.ts` | Asserção específica e estrita da URL canônica com datas para a rota nova; endereços antigos continuam com suas asserções anteriores. |
+| `frontend/tests/navigation.spec.ts`, `home.spec.ts` | Asserção específica e estrita da URL canônica com datas para a rota nova; endereços antigos continuam com suas asserções anteriores. |
 | `frontend/playwright.integration.config.ts` | Inclusão dos novos casos na matriz existente. |
 
 Nenhum backend, schema/API, migração, fórmula, parser monetário, CSV, histórico, anexo, autenticação ou guard especializado foi alterado. PRE-01 e os controles de transporte permanecem preservados. A primeira empresa continua exigindo instância/banco exclusivo; não se implementou multitenancy.
@@ -85,6 +85,7 @@ Ambiente local: Ubuntu, Python 3.12, Node 22, dependências fixadas existentes; 
 | Novo E2E, desktop/mobile | **16/16 Chromium e 16/16 Firefox**, sem retries/skips. |
 | Ampliação dirigida, seis arquivos | **64 PASS / 2 FAIL em cada motor**; falhas da asserção antiga de URL no destino recém-adicionado, descritas abaixo. Não é chamada de bateria integral aprovada. |
 | Reexecução da compatibilidade corrigida | **2/2 em cada motor**, subconjunto dos casos anteriores, não testes novos. |
+| Atalhos reais do Início, admin/operador | **4/4 em cada motor**, casos existentes com a URL nova validada estritamente. |
 | Legados | **124 comparações / 26 relatórios, zero divergências** contra `cc7d983`. |
 | Axe | Nenhuma violação nas telas exercitadas de Início e DRE conhecida/parcial; não é certificação WCAG ou teste com leitor real. |
 | CI final | Resultado do HEAD final será vinculado na descrição/checks do Draft PR após execução. A matriz principal inclui **406 execuções por motor**; não atribuir resultados do PR #18 a esta candidata. |
@@ -113,6 +114,7 @@ Comandos reproduzíveis com a configuração versionada, também usados na ampli
 npx --no-install playwright test --config playwright.integration.config.ts dre-home-navigation.spec.ts
 npx --no-install playwright test --config playwright.integration.config.ts dre-home-navigation.spec.ts dre-integration.spec.ts dre-review-fixes.spec.ts dre-release-ux.spec.ts predeploy-export-session.spec.ts navigation.spec.ts
 npx --no-install playwright test --config playwright.integration.config.ts navigation.spec.ts --grep 'compatibilidade dos'
+npx --no-install playwright test --config playwright.integration.config.ts home.spec.ts --grep 'atalhos .*todos os destinos'
 # Para Firefox, prefixar SILEX_INTEGRATION_BROWSER=firefox; usar porta local livre.
 ```
 
@@ -124,6 +126,8 @@ npx --no-install playwright test --config playwright.integration.config.ts navig
 - O teste antigo de todos os hashes exigia `/app#<rota>` também para DRE. Agora, para o novo destino, exige **exatamente** os três parâmetros canônicos e as datas civis esperadas, conferidas com a data do servidor fictício; as asserções dos endereços antigos permanecem. As duas falhas por motor e as duas reexecuções aprovadas estão arquivadas, sem somar como uma bateria integral verde.
 
 A varredura do patch binário codificado marcou um falso positivo em bytes base85 de uma captura PNG. A imagem foi preservada; a revisão do conteúdo real e a varredura do diff textual não encontraram credencial.
+
+A mesma suposição de URL sem parâmetros foi identificada por revisão no teste dos atalhos do Início e ajustada apenas para DRE, antes da validação final. Os quatro casos (admin/operador × desktop/mobile) passaram em cada motor. Não foi atribuída uma falha que não foi executada a esse controle. O CI intermediário do HEAD documental é substituído pelo novo HEAD com essa asserção.
 
 Nenhum teste desabilitado, `xfail`, retry, ajuste financeiro ou relaxamento de autorização para produzir aprovação.
 

@@ -87,6 +87,11 @@
       "bytes": 2944
     },
     {
+      "path": "chromium-home-shortcuts.txt",
+      "sha256": "2f66ebb7c51e4d3e8b2e189faa789953a54dcc6f450b284e2ac94e2f10095f7d",
+      "bytes": 1113
+    },
+    {
       "path": "chromium-lifecycle-1440.json",
       "sha256": "c83e0b2b4830939625b353fb1cf83c9e31e6776bc5048c196cd5185edf9c5642",
       "bytes": 288
@@ -130,6 +135,11 @@
       "path": "firefox-final.txt",
       "sha256": "118e56858671ef5b21acee6e1ef0b3cfca13c02b2da1d062b373fd3dffc2d065",
       "bytes": 2944
+    },
+    {
+      "path": "firefox-home-shortcuts.txt",
+      "sha256": "499eec86302431d7d96026604464ad0c6d67412623c8c0e1d64d0dddac282dc2",
+      "bytes": 1113
     },
     {
       "path": "firefox-lifecycle-1440.json",
@@ -187,5 +197,12 @@
     "Logs are archived with trailing whitespace normalization only.",
     "final logs: 16 new E2E executions per motor; release logs: 66 executions with 2 URL expectation failures per motor; canonical logs: 2 directed reexecutions per motor. Do not sum overlapping tests.",
     "Final immutable CI results belong to the exact final HEAD checks and Draft PR description."
+  ],
+  "subsequent_test_contracts": [
+    {
+      "path": "frontend/tests/home.spec.ts",
+      "sha256": "94b82a3d9a553404cf4149962e9fa4eea084367e2f492df2dfa7c0ab22a3f650",
+      "reason": "Exact canonical DRE query/date assertion in home shortcuts; production code unchanged."
+    }
   ]
 }

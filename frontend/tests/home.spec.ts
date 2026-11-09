@@ -138,7 +138,12 @@ for (const role of ["admin", "operator"] as const) {
     }
     for (const route of expected) {
       await page.locator(`.silex-home [data-home-route="${route.id}"]`).click();
-      await expect(page).toHaveURL(new RegExp(`/app#${route.id}$`));
+      if (route.id === "finance-dre") {
+        const today = (await (await page.request.get("/api/dashboard")).json()).date;
+        await expect(page).toHaveURL(new RegExp(`/app\\?dre_view=dre&dre_start=${today.slice(0,7)}-01&dre_end=${today}#finance-dre$`));
+      } else {
+        await expect(page).toHaveURL(new RegExp(`/app#${route.id}$`));
+      }
       await expect(page.locator(".breadcrumb strong")).toHaveText(route.title);
       await expect(page.locator("#main-content h1")).toBeVisible();
       await noOverflow(page);
