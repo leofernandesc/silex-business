@@ -25,7 +25,7 @@ from . import reporting as R
 from . import schemas as S
 from . import services as V
 from .db import ROOT, build_engine, session_factory
-from .deployment import Deployment, HEALTH_HOST
+from .deployment import Deployment, HEALTH_HOST, PUBLIC_RESERVED_USERNAME_MESSAGE
 from .request_limits import RequestBodyLimit
 from .capabilities import has_transport, transport_kind, transport_supplier
 from .models import Account, Audit, CashSession, Category, CompanySetting, Customer, CustomerServiceDetails, FinanceEntry, LoginAttempt, Payment, Product, Sale, SaleItem, ServiceOrder, ServiceOrderCost, Session, StockMovement, Subcategory, Supplier, User, now
@@ -110,6 +110,8 @@ def create_app(engine=None, serve_frontend=True):
     @app.exception_handler(RequestValidationError)
     async def validation_error(request, exc):
         # Nunca inclui o corpo recebido (pode conter senha).
+        if any(e['type'] == 'reserved_public_username' for e in exc.errors()):
+            return JSONResponse({"detail": PUBLIC_RESERVED_USERNAME_MESSAGE}, status_code=422)
         fields = [".".join(str(x) for x in e["loc"][1:]) for e in exc.errors()]
         return JSONResponse({"detail": "Confira os campos: " + ", ".join(fields)}, status_code=422)
 

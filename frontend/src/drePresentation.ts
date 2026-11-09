@@ -2,6 +2,13 @@
 import {dateOnly,money} from './format';
 export const dreLineNames:Record<string,string>={RB:'Receita bruta',DED:'Deduções',RL:'Receita líquida',CD:'Custos diretos / CMV / CSP',LB:'Lucro bruto',DO:'Despesas operacionais',OR:'Outras receitas operacionais',OD:'Outras despesas operacionais',DA:'Depreciação e amortização',EBIT:'Resultado operacional',EBITDA:'EBITDA gerencial',FI:'Receitas financeiras',FE:'Despesas financeiras',RF:'Resultado financeiro',TL:'Tributos sobre lucro',LL:'Lucro líquido gerencial',outside_dre:'Fora do resultado'};
 export const dreStatuses:Record<string,string>={complete:'Completo',partial:'Parcial',unavailable:'Indisponível',not_applicable:'Não aplicável'};
+/** Presentation only: an empty period is different from unconfigured operations. */
+export function dreDisplayState(report:{facts:unknown[];issues:unknown[];excluded:unknown[];lines:{known_amount_cents:number|null;coverage_status:string}[]}):'empty'|'pending'|'partial'|'complete'{
+ const known=report.lines.some(line=>line.known_amount_cents!==null);
+ if(!report.facts.length&&!report.issues.length&&!report.excluded.length&&!known)return 'empty';
+ if(!report.issues.length&&report.lines.length>0&&report.lines.every(line=>['complete','not_applicable'].includes(line.coverage_status)))return 'complete';
+ return !report.facts.length&&!known&&!report.excluded.length?'pending':'partial';
+}
 export const dreIssueMessages:Record<string,string>={
  source_or_policy_changed_since_review:'A fonte ou a política mudou. Atualize os dados e confirme novamente a evidência.',
  mapping_policy_confirmation_required:'A política histórica não foi comprovada. Revise a classificação no Plano financeiro antes de confirmar.',
@@ -42,7 +49,11 @@ export function dreOperationName(source:DreSourceRef):string{
  if(kind==='economic_adjustment')return 'Ajuste econômico #'+id+(source.original_source_key&&!source.original_source_key.startsWith('economic_adjustment:')?' · '+dreOperationName({key:source.original_source_key,origin:source.origin}):'');
  return 'Operação financeira';
 }
-export function dreEvidenceLabel(value:string){return ({verified_finalization:'Venda finalizada e conferida',verified_sale_discount:'Desconto comercial conferido'} as Record<string,string>)[value]||value}
+export function dreEvidenceLabel(value:string,sourceType?:string){
+ if(value==='verified_finalization'&&sourceType==='service_order')return 'Conclusão do serviço conferida';
+ if(value==='verified_finalization'&&sourceType==='service_order_cost')return 'Incorrência do custo conferida';
+ return ({verified_finalization:'Venda finalizada e conferida',verified_sale_discount:'Desconto comercial conferido'} as Record<string,string>)[value]||value;
+}
 export function dreErrorMessage(error:unknown):string{
  const e=error as {status?:number;message?:string};const text=typeof error==='string'?error:e?.message||'';
  if(e?.status===401)return 'Sua sessão terminou. Entre novamente antes de continuar.';

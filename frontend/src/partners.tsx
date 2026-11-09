@@ -1,8 +1,9 @@
+import {parseMoney} from "./moneyInput";
 import { useState } from "react";
 import { Copy } from "lucide-react";
 import { api, query } from "./api";
 import { DocumentInput, PostalCodeInput } from "./formInputs";
-import { decimalInput, money, parseDecimal } from "./format";
+import { decimalInput, money, } from "./format";
 import type { Page, PixInfo, Supplier, SupplierKind } from "./types";
 import {
   ActiveFilter, AddButton, Field, Form, Modal, Notice, PageTitle,
@@ -109,7 +110,7 @@ function PartnerForm({ kind, row, close, done }: { kind: SupplierKind; row: Supp
     <Form cancel={close} onSubmit={async () => {
       await api("/suppliers" + (row ? "/" + row.id : ""), row ? "PUT" : "POST", {
         kind, name, document: document || null, phone, email, contact_name: contactName, address, postal_code: postalCode, street, address_number: addressNumber, complement, neighborhood, city, state, notes, active,
-        default_rate_cents: defaultRate.trim() ? parseDecimal(defaultRate, 2) : null,
+        default_rate_cents: defaultRate.trim() ? parseMoney(defaultRate) : null,
         pix_key_type: pixType, pix_key: pixType ? pixKey : "", pix_holder: pixType ? pixHolder : "",
       });
       done();

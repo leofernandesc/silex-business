@@ -1,3 +1,4 @@
+import {parseMoney} from "./moneyInput";
 import {useFinancialSnapshot} from "./useFinancialSnapshot";
 import {validMovementPage} from "./financialData";
 import { initialFinancialSearch, syncFinancialSearch, temporalSummary } from "./financialNavigation";
@@ -16,7 +17,7 @@ import {
 import { LedgerTable } from "./ledgerPresentation";
 import "./ledger.css";
 import { downloadCsv, api, query } from "./api";
-import { dateOnly, localDate, money, parseDecimal } from "./format";
+import { dateOnly, localDate, money, } from "./format";
 import { presets, periodRange } from "./financeDates";
 import type {
   Account,
@@ -574,7 +575,7 @@ function MovementForm({
           await api("/finance/movements", "POST", {
             description,
             direction,
-            amount_cents: parseDecimal(value, 2),
+            amount_cents: parseMoney(value),
             account_id: Number(account),
             subcategory_id: Number(sub),
             posting_date: posting,

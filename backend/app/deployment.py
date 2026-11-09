@@ -9,6 +9,13 @@ from urllib.parse import urlsplit
 from sqlalchemy.engine import make_url
 
 HEALTH_HOST = "healthcheck.railway.app"
+PUBLIC_RESERVED_USERNAMES = frozenset({"demo.admin", "demo.operador"})
+PUBLIC_RESERVED_USERNAME_MESSAGE = "Nome de usuário reservado para demonstração. Escolha outro nome."
+
+
+def reserved_public_username(username: str) -> bool:
+    public = os.environ.get("GESTAO_ENV") == "railway" or bool(os.environ.get("RAILWAY_PROJECT_ID") or os.environ.get("RAILWAY_ENVIRONMENT_ID"))
+    return public and username.strip().lower() in PUBLIC_RESERVED_USERNAMES
 
 
 @dataclass(frozen=True)

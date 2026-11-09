@@ -1,5 +1,5 @@
 import {describe,it,expect} from 'vitest';
-import {dreOperationName,dreIssueMessages,dreIssueMessage,dreEvidenceLabel,dreErrorMessage,dreReadableCsv} from './drePresentation';
+import {dreOperationName,dreDisplayState,dreIssueMessages,dreIssueMessage,dreEvidenceLabel,dreErrorMessage,dreReadableCsv} from './drePresentation';
 describe('DRE presentation without changing economic data',()=>{
  it.each([
   [{key:'finance_entry:12:principal',origin:{route:'finance-receivable',id:12}},'Conta a receber #12'],
@@ -16,6 +16,7 @@ describe('DRE presentation without changing economic data',()=>{
   expect(dreIssueMessage('service_not_completed')).toContain('Serviço ainda não concluído');expect(dreIssueMessage('secret_unknown_code')).not.toContain('secret_unknown_code');
  });
  it('distinguishes system evidence codes from unchanged user evidence',()=>{expect(dreEvidenceLabel('verified_finalization')).toBe('Venda finalizada e conferida');expect(dreEvidenceLabel('Nota de prestação nº 123')).toBe('Nota de prestação nº 123')});
+ it.each([['service_order','Conclusão do serviço conferida'],['service_order_cost','Incorrência do custo conferida']])('uses the actual source for evidence %s',(source,label)=>expect(dreEvidenceLabel('verified_finalization',source)).toBe(label));
  it('gives actionable Portuguese errors without exposing internal server text',()=>{
   expect(dreErrorMessage({status:503,message:'INTERNAL_DETAILS'})).not.toContain('INTERNAL');expect(dreErrorMessage({status:403,message:'Forbidden'})).toContain('permissão');expect(dreErrorMessage('Internal Server Error')).toContain('Atualize');expect(dreErrorMessage('unavailable')).toContain('Atualize');expect(dreErrorMessage(new TypeError('Cannot read properties of undefined'))).not.toContain('Cannot read');expect(dreErrorMessage({status:409,message:'Mapeamento alterado; refaça a prévia'})).toBe('Mapeamento alterado; refaça a prévia');
  });
@@ -23,4 +24,12 @@ describe('DRE presentation without changing economic data',()=>{
   const r={start:'2026-11-01',end:'2026-11-09',mapping_version:1,decision_version:1,cancellation_version:1,lines:[{code:'RB',coverage_status:'complete',known_amount_cents:0,final_amount_cents:0},{code:'LL',coverage_status:'unavailable',known_amount_cents:null,final_amount_cents:null}],facts:[{key:'finance_entry:12:principal',origin:{route:'finance-receivable',id:12},dre_line_code:'RB',economic_date:'2026-11-09',amount_cents:10001},{key:'economic_adjustment:1:0',original_source_key:'finance_entry:12:principal',dre_line_code:'RB',economic_date:'2026-11-09',amount_cents:-10001}],excluded:[{key:'finance_entry:15:principal',amount_cents:20001,reason:'=UNTRUSTED()'}],issues:[{key:'service_order:2:revenue',codes:['service_not_completed']}],margins:{LL:{value:null,reason:'Resultado incompleto'}}};
   const before=JSON.stringify(r),csv=dreReadableCsv(r);expect(JSON.stringify(r)).toBe(before);expect(csv).toContain('Conta a receber #12');expect(csv).toContain('Serviço ainda não concluído');expect(csv).not.toContain('service not completed');expect(csv).toContain('Identificador técnico (auditoria)');expect(csv).toContain(';10001;');expect(csv).toContain(';-10001;');expect(csv).toContain("'=UNTRUSTED()");expect(csv).toContain('Indisponível');expect(csv).toContain('09/11/2026');expect(csv).toContain('finance_entry:12:principal');
  });
+});
+
+describe('DRE presentation states without inventing financial values',()=>{
+ const empty={facts:[],issues:[],excluded:[],lines:[{known_amount_cents:null,coverage_status:'unavailable'}]};
+ it('distinguishes no eligible operations from unconfigured operations',()=>{expect(dreDisplayState(empty)).toBe('empty');expect(dreDisplayState({...empty,issues:[{codes:['unclassified']}]})).toBe('pending')});
+ it('preserves known values and legitimate zero while final coverage is incomplete',()=>{for(const cents of [0,500001])expect(dreDisplayState({...empty,lines:[{known_amount_cents:cents,coverage_status:'partial'}]})).toBe('partial')});
+ it('treats traceable exclusions as partial coverage rather than no operations',()=>expect(dreDisplayState({...empty,excluded:[{key:'finance_entry:1:principal'}]})).toBe('partial'));
+ it('only declares coverage confirmed when all components are confirmed without issues',()=>{const report={...empty,lines:[{known_amount_cents:0,coverage_status:'complete'}]};expect(dreDisplayState(report)).toBe('complete');expect(dreDisplayState({...report,issues:[{}]})).toBe('partial')});
 });

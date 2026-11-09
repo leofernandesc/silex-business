@@ -1,3 +1,4 @@
+import {parseMoney} from "./moneyInput";
 import { DreMappingEditor } from "./dre";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { DocumentInput } from "./formInputs";
@@ -258,10 +259,7 @@ export function CatalogForm({
           if(kind==="subcategories"&&(categoryLookup.loading||categoryLookup.error))throw new Error("Consulte as categorias antes de salvar a subcategoria.");
           let extra = {};
           if (kind === "accounts") {
-            const raw = opening.trim();
-            const signed = raw.startsWith("-")
-              ? -parseDecimal(raw.slice(1), 2)
-              : parseDecimal(raw, 2);
+            const signed = parseMoney(opening, {allowNegative: true});
             extra = {
               kind: accountKind,
               opening_cents: signed,

@@ -1,3 +1,4 @@
+import {parseMoney} from "./moneyInput";
 import {currentSourceId,useSourceRecord,clearSource} from "./sourceNavigation";
 import { hasTransport } from "./capabilities";
 import type { User } from "./types";
@@ -9,7 +10,7 @@ import { SilexDatePicker } from "./SilexDatePicker";
 import { useRef, useState } from "react";
 import { Printer, Settings2, Paperclip, History as HistoryIcon, Search, ArrowDownLeft, Clock, CalendarClock, ListChecks, Plus } from "lucide-react";
 import { api, exportCsv, query } from "./api";
-import { dateOnly, localDate, money, parseDecimal, labels } from "./format";
+import { dateOnly, localDate, money, labels } from "./format";
 import { partnerKinds, PixDetails } from "./partners";
 import type {
   Account,
@@ -137,8 +138,8 @@ function EntryForm({ accounts, categories, initialDirection='income', fixedDirec
   const [description,setDescription]=useState(''),[direction,setDirection]=useState(initialDirection),[value,setValue]=useState(''),[account,setAccount]=useState(String(accounts.find(a=>a.kind==='bank')?.id||accounts[0]?.id||'')),[category,setCategory]=useState(String(categories.find(c=>c.direction==='both'||c.direction===initialDirection)?.id||categories[0]?.id||'')),[subcategory,setSubcategory]=useState(''),[due,setDue]=useState(localDate()),[competence,setCompetence]=useState(localDate()),[document,setDocument]=useState(''),[customer,setCustomer]=useState(''),[supplier,setSupplier]=useState(''),[q,setQ]=useState(''),[count,setCount]=useState('1'),[frequency,setFrequency]=useState('monthly');
   const customers=useLoad<Page<Customer>>('/customers?'+query({q,active:true,page_size:100})),suppliers=useLoad<Page<Supplier>>('/suppliers?'+query({q,active:true,page_size:100})),subcats=useLoad<Subcategory[]>('/subcategories');
   const categoryChoices=categories.filter(c=>c.active&&(c.direction==='both'||c.direction===direction)),subChoices=(subcats.data||[]).filter(x=>x.active&&x.category_id===Number(category));
-  const num=Number(count);let recurrenceAmount:number|null=null;try{recurrenceAmount=parseDecimal(value,2);}catch{/* Preview unavailable; submission stays strict. */}
-  return <Modal title={direction==='income'?'Nova conta a receber':'Nova conta a pagar'} close={close}><Form cancel={close} submit={num>1?'Criar títulos recorrentes':'Criar título'} onSubmit={async()=>{await api('/finance','POST',{description,direction,amount_cents:parseDecimal(value,2),account_id:Number(account),category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,customer_id:direction==='income'&&customer?Number(customer):null,supplier_id:direction==='expense'&&supplier?Number(supplier):null,due_date:due,competence_date:competence,document,recurrence_count:num,recurrence_frequency:frequency});done();}}>
+  const num=Number(count);let recurrenceAmount:number|null=null;try{recurrenceAmount=parseMoney(value);}catch{/* Preview unavailable; submission stays strict. */}
+  return <Modal title={direction==='income'?'Nova conta a receber':'Nova conta a pagar'} close={close}><Form cancel={close} submit={num>1?'Criar títulos recorrentes':'Criar título'} onSubmit={async()=>{await api('/finance','POST',{description,direction,amount_cents:parseMoney(value),account_id:Number(account),category_id:Number(category),subcategory_id:subcategory?Number(subcategory):null,customer_id:direction==='income'&&customer?Number(customer):null,supplier_id:direction==='expense'&&supplier?Number(supplier):null,due_date:due,competence_date:competence,document,recurrence_count:num,recurrence_frequency:frequency});done();}}>
     <LoadFeedback resource={direction==='income'?customers:suppliers} label={direction==='income'?'clientes':'beneficiários'}/><LoadFeedback resource={subcats} label="subcategorias"/>
     <div className="form-grid">
       <Field label="Histórico *" span><input autoFocus required maxLength={180} value={description} onChange={e=>setDescription(e.target.value)}/></Field>
@@ -162,7 +163,7 @@ function EntryForm({ accounts, categories, initialDirection='income', fixedDirec
 }
 function SettleForm({entry,accounts,close,done}:{entry:Entry;accounts:Account[];close:()=>void;done:()=>void}) {
   const current=accounts.find(a=>a.id===entry.account_id),[method,setMethod]=useState(current?.kind==='cash'?'cash':'pix'),[account,setAccount]=useState(String(current?.active?entry.account_id:accounts.find(a=>a.kind==='bank')?.id||'')),[principal,setPrincipal]=useState((entry.remaining_cents/100).toFixed(2).replace('.',',')),[interest,setInterest]=useState('0,00'),[fine,setFine]=useState('0,00'),[discount,setDiscount]=useState('0,00'),[key]=useState(()=>crypto.randomUUID());
-  const parsed=(()=>{try{return {principalCents:parseDecimal(principal,2),interestCents:interest.trim()?parseDecimal(interest,2):0,fineCents:fine.trim()?parseDecimal(fine,2):0,discountCents:discount.trim()?parseDecimal(discount,2):0};}catch{return null;}})();
+  const parsed=(()=>{try{return {principalCents:parseMoney(principal),interestCents:interest.trim()?parseMoney(interest):0,fineCents:fine.trim()?parseMoney(fine):0,discountCents:discount.trim()?parseMoney(discount):0};}catch{return null;}})();
   const total=parsed?parsed.principalCents+parsed.interestCents+parsed.fineCents-parsed.discountCents:null;
   function changeMethod(value:string){setMethod(value);setAccount(String(accounts.find(a=>a.active&&a.kind===(value==='cash'?'cash':'bank'))?.id||''));}
   const full=parsed&&parsed.principalCents===entry.remaining_cents&&parsed.interestCents===0&&parsed.fineCents===0&&parsed.discountCents===0;
@@ -184,12 +185,23 @@ function PaymentHistory({entry,close,done}:{entry:Entry;close:()=>void;done:()=>
     catch(e){setError((e as Error).message);}
     finally{pending.current=false;setReversing(null);}
   }
-  return <Modal title={`Baixas · ${entry.description}`} close={close} wide><p>Total {money(entry.amount_cents)} · Pago em principal {money(entry.paid_principal_cents)} · Restante {money(entry.remaining_cents)}</p>
+  return <Modal title={`Baixas · ${entry.description}`} close={close} wide>
+    <p>Total {money(entry.amount_cents)} · Pago em principal {money(entry.paid_principal_cents)} · Restante {money(entry.remaining_cents)}</p>
     {error&&<Notice>{error}</Notice>}
-    <LedgerTable headers={['Data','Forma','Principal / encargos / desconto','Valor líquido','Comprovantes','Ação']} empty={!entry.payments.length}>
-      {entry.payments.map(p=><tr key={p.id}><td>{dateOnly(p.posting_date)}<small>Competência {dateOnly(p.competence_date)}</small>{p.reversal_reason&&<small>Motivo: {p.reversal_reason}</small>}</td><td>{labels[p.method]||p.method}{p.reversal_of&&<small>Estorno</small>}</td><td>{money(p.principal_cents)}<small>Juros {money(p.interest_cents)} · Multa {money(p.fine_cents)} · Desconto {money(p.discount_cents)}</small></td><td className="numeric">{money(p.amount_cents)}</td><td><AttachmentControls attachments={p.attachments||[]} path={`/finance/payments/${p.id}/attachments`} done={done}/></td><td>{!p.reversal_of&&!entry.payments.some(x=>x.reversal_of===p.id)&&<button className="danger" disabled={reversing!==null||reason.trim().length<3} onClick={()=>void reverse(p.id)}>{reversing===p.id?'Estornando…':'Estornar baixa'}</button>}</td></tr>)}
-    </LedgerTable>
-    <Field label="Motivo de estorno"><input minLength={3} maxLength={300} value={reason} onChange={e=>setReason(e.target.value)} placeholder="Informado ao estornar"/></Field>
+    <Field label="Motivo de estorno"><input minLength={3} maxLength={300} value={reason} onChange={e=>setReason(e.target.value)} placeholder="Informe o motivo e selecione a baixa"/></Field>
+    <p className="help">Confira a data e o valor da baixa antes de estornar. O motivo é obrigatório.</p>
+    {!entry.payments.length&&<p>Nenhuma baixa registrada.</p>}
+    <ol className="payment-records" aria-label="Histórico de baixas">
+      {entry.payments.map(p=>{const reversed=entry.payments.some(x=>x.reversal_of===p.id);const heading=`payment-${entry.id}-${p.id}`;return <li key={p.id}><article className="payment-record" aria-labelledby={heading}>
+        <header><div><h3 id={heading}>{p.reversal_of?'Estorno':'Baixa'} #{p.id} · {dateOnly(p.posting_date)}</h3><p>{labels[p.method]||p.method} · Competência {dateOnly(p.competence_date)}</p></div>
+          {!p.reversal_of&&!reversed&&<button className="danger" aria-describedby={heading} disabled={reversing!==null||reason.trim().length<3} onClick={()=>void reverse(p.id)}>{reversing===p.id?'Estornando…':'Estornar baixa'}</button>}
+          {reversed&&<span className="badge canceled">Baixa estornada</span>}
+        </header>
+        <dl className="payment-values">{([['Principal',p.principal_cents],['Juros',p.interest_cents],['Multa',p.fine_cents],['Desconto',p.discount_cents],['Valor líquido',p.amount_cents]] as const).map(([label,value])=><div key={String(label)}><dt>{label}</dt><dd>{money(value)}</dd></div>)}</dl>
+        {p.reversal_of&&<p>Estorno da baixa #{p.reversal_of}</p>}{p.reversal_reason&&<p>Motivo: {p.reversal_reason}</p>}
+        <h4>Comprovantes da baixa #{p.id}</h4><AttachmentControls attachments={p.attachments||[]} path={`/finance/payments/${p.id}/attachments`} done={done}/>
+      </article></li>})}
+    </ol>
     <h3>Comprovantes do título</h3><AttachmentControls attachments={entry.attachments||[]} path={`/finance/${entry.id}/attachments`} done={done}/>
   </Modal>;
 }
