@@ -1,0 +1,27 @@
+[WebServer] INFO:     Started server process [1290536]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8041 (Press CTRL+C to quit)
+
+Running 14 tests using 1 worker
+
+(node:1290539) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-commercial.spec.ts:57:1 › DRE commercial: reusable setup, uncompleted service and manual evidence stay outside the statement and exports (8.3s)
+  ✓   2 [desktop] › tests/dre-commercial.spec.ts:277:1 › DRE commercial: administrative destination is denied to operator and visitor (581ms)
+  ✓   3 [desktop] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (1.2s)
+  ✓   4 [desktop] › tests/predeploy-export-session.spec.ts:5:38 › a commercial financial download from the previous session must not finish in the operator session (11.8s)
+  ✓   5 [desktop] › tests/predeploy-export-session.spec.ts:5:38 › a diagnostic financial download from the previous session must not finish in the operator session (13.3s)
+  ✓   6 [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px (7.4s)
+  ✓   7 [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px (7.0s)
+(node:1292847) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [mobile] › tests/dre-commercial.spec.ts:57:1 › DRE commercial: reusable setup, uncompleted service and manual evidence stay outside the statement and exports (7.4s)
+  ✓   9 [mobile] › tests/dre-commercial.spec.ts:277:1 › DRE commercial: administrative destination is denied to operator and visitor (988ms)
+  ✓  10 [mobile] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (1.2s)
+  ✓  11 [mobile] › tests/predeploy-export-session.spec.ts:5:38 › a commercial financial download from the previous session must not finish in the operator session (11.8s)
+  ✓  12 [mobile] › tests/predeploy-export-session.spec.ts:5:38 › a diagnostic financial download from the previous session must not finish in the operator session (12.8s)
+  ✓  13 [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px (8.0s)
+  ✓  14 [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px (6.4s)
+
+  14 passed (1.8m)

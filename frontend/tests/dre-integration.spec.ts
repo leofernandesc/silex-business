@@ -21,6 +21,7 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  await expect(page.getByText('Classificação registrada com histórico.')).toBeVisible();
  await page.getByRole('button',{name:'Voltar',exact:true}).click();
  await page.goto('/app#finance-reports');await page.getByLabel('Relatório',{exact:true}).selectOption('dre');
+ await page.getByRole('link',{name:'Configuração da DRE',exact:true}).click();
  const key=`finance_entry:${entry.id}:principal`;
  await page.getByRole('button',{name:'Revisar reconhecimento de Conta a receber #'+key.split(':')[1],exact:true}).click();
  await page.getByLabel('Tipo de evidência *',{exact:true}).fill('Documento sintético comprovado');
@@ -31,6 +32,7 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  await page.getByRole('button',{name:'Confirmar revisão',exact:true}).click();
  expect(decisions).toBe(2);
  await expect(page.getByRole('dialog')).toHaveCount(0);
+ await page.getByRole('link',{name:'Consultar demonstrativo financeiro',exact:true}).click();
  await page.getByRole('button',{name:'Detalhar Receita bruta',exact:true}).click();
  await page.getByRole('link',{name:'Conta a receber #'+entry.id,exact:true}).click();
  await expect(page).toHaveURL(/#finance-receivable$/);
@@ -47,9 +49,9 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  expect((await new AxeBuilder({page}).analyze()).violations).toEqual([]);
  const evidence=process.env.SILEX_DRE_EVIDENCE_DIR;
  if(evidence){mkdirSync(evidence,{recursive:true});await page.screenshot({path:join(evidence,`dre-${info.project.name}-${process.env.SILEX_INTEGRATION_BROWSER||'chromium'}.png`),fullPage:true})}
- await page.emulateMedia({media:'print'});await expect(page.locator('.dre-report')).toBeVisible();await expect(page.locator('.dre-print-facts')).toBeVisible();await expect(page.locator('.dre-report th[scope=row]').filter({hasText:'Lucro líquido gerencial'})).toBeVisible();
+ await page.emulateMedia({media:'print'});await expect(page.locator('.dre-report')).toBeVisible();await expect(page.locator('.dre-print-facts')).toHaveCount(0);await expect(page.locator('.dre-report th[scope=row]').filter({hasText:'Lucro líquido gerencial'})).toBeVisible();
  for(const button of await page.locator('.dre-report button').all())await expect(button).toBeHidden();
- await expect(page.locator('.dre-lines th').filter({hasText:'Revisão'})).toBeHidden();
+ await expect(page.locator('.dre-lines th').filter({hasText:'Revisão'})).toHaveCount(0);
  if(evidence&&info.project.name==='desktop'&&process.env.SILEX_INTEGRATION_BROWSER!=='firefox')await page.pdf({path:join(evidence,'dre-partial-a4.pdf'),format:'A4',printBackground:true});
 });
 
@@ -82,5 +84,5 @@ test('DRE lookup failure and malformed response recover in place without reporti
  await expect(page.getByRole('alert')).toBeVisible();await expect(page.locator('.dre-report tbody tr')).toHaveCount(0);
  await page.getByRole('button',{name:'Tentar novamente: DRE gerencial',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Resposta inválida');
  await page.getByRole('button',{name:'Tentar novamente: DRE gerencial',exact:true}).click();await expect(page.getByRole('alert')).toHaveCount(0);
- const line=page.locator('.dre-report tbody tr').filter({has:page.getByRole('rowheader',{name:/Lucro líquido gerencial/})});await expect(line).toContainText('Indisponível');await expect(line).not.toContainText('R$ 0,00');expect(requests).toBe(3);
+ await expect(page.locator('.dre-summary')).toContainText('Informações insuficientes');await expect(page.locator('.dre-lines')).toHaveCount(0);await expect(page.locator('.dre-report')).not.toContainText('R$ 0,00');const today=(await(await page.request.get('/api/dashboard')).json()).date;const report=await(await page.request.get('/api/finance/dre',{params:{start:today.slice(0,7)+'-01',end:today}})).json();expect(report.lines.find((l:any)=>l.code==='LL').final_amount_cents).toBeNull();expect(requests).toBe(3);
 });

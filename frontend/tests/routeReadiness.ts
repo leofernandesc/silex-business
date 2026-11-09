@@ -23,6 +23,7 @@ const endpoints: Record<(typeof routes)[number]["id"], string> = {
   "finance-categories": "/categories",
   "finance-subcategories": "/subcategories",
   "finance-reports": "/finance/reports/cash-monthly",
+  "finance-dre-config": "/finance/dre",
   "finance-dre": "/finance/dre",
   users: "/users",
   audit: "/audit",

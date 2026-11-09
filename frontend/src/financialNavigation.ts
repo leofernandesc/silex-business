@@ -85,7 +85,7 @@ export function preserveFinancialSearch(destination: string): string {
   const route = destination.split("#")[1],
     context = contexts[route];
   if(typeof location!=="undefined"&&(sourceRoutes as readonly string[]).includes(route)&&location.hash==='#'+route){const id=sourceId(location.search);if(id!==null)return sourceHref({route,id});}
-  if(typeof location!=="undefined"&&["finance-dre","finance-reports"].includes(route)&&["#finance-dre","#finance-reports"].includes(location.hash)){const dre=readDrePeriod(location.search);if(dre)return dreHref(dre);}
+  if(typeof location!=="undefined"&&["finance-dre","finance-dre-config","finance-reports"].includes(route)&&["#finance-dre","#finance-dre-config","#finance-reports"].includes(location.hash)){const dre=readDrePeriod(location.search);if(dre)return dreHref(dre,route==="finance-dre-config");}
   if (
     typeof location === "undefined" ||
     !context ||

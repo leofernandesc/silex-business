@@ -1,0 +1,1410 @@
+import { civilDate } from "./civilDates";
+import { sourceHref } from "./sourceNavigation";
+import "./dre.css";
+import { useEffect, useRef, useState } from "react";
+import { api as coreApi, query } from "./api";
+import {
+  dreLineNames,
+  dreStatuses,
+  dreDisplayState,
+  dreIssueMessage,
+  dreOperationName,
+  dreEvidenceLabel,
+  dreErrorMessage,
+} from "./drePresentation";
+import { DreSourceName, DreSourceDescription, DreTechnical } from "./dreSource";
+import { exportDiagnosticDre } from "./dreExport";
+import { dreHref } from "./dreNavigation";
+import { dateOnly, localDate, money } from "./format";
+import { SilexDatePicker } from "./SilexDatePicker";
+import {
+  ExportButton,
+  Field,
+  Form,
+  LoadFeedback,
+  Modal,
+  Notice,
+  PageTitle,
+  Pagination,
+  Table,
+  useLoad,
+} from "./ui";
+
+type Period = { start: string; end: string };
+type Line = {
+  code: string;
+  known_amount_cents: number | null;
+  final_amount_cents: number | null;
+  coverage_status: string;
+};
+type Issue = {
+  cancellation_fingerprint?: string;
+  cancellation_revision?: number;
+  canceled_on?: string;
+  economic_date?: string;
+  policy_fingerprint?: string;
+  origin?: { route: string; id: number };
+  category_id?: number;
+  subcategory_id?: number | null;
+  key?: string;
+  codes: string[];
+  source_type?: string;
+  source_id?: number;
+  amount_cents?: number;
+  source_fingerprint?: string;
+  recognition_revision?: number;
+  entry_ids?: number[];
+};
+type Fact = {
+  original_source_key?: string;
+  linked_finance_entry_id?: number | null;
+  origin?: { route: string; id: number };
+  key: string;
+  source_type: string;
+  source_id: number;
+  dre_line_code: string;
+  amount_cents: number;
+  economic_date: string;
+  recognition_basis: string;
+};
+export type Report = {
+  excluded: { key: string; amount_cents: number; reason: string }[];
+  report_fingerprint: string;
+  margins: Record<string, { value: string | null; reason: string | null }>;
+  lines: Line[];
+  facts: Fact[];
+  issues: Issue[];
+  start: string;
+  end: string;
+  source_fingerprint: string;
+  mapping_version: number;
+  decision_version: number;
+  cancellation_version: number;
+};
+const names = dreLineNames,
+  statuses = dreStatuses;
+const base = ["RB", "DED", "CD", "DO", "OR", "OD", "DA", "FI", "FE", "TL"];
+async function api<T>(
+  path: string,
+  method = "GET",
+  body?: unknown,
+): Promise<T> {
+  try {
+    return await coreApi<T>(path, method, body);
+  } catch (error) {
+    throw new Error(dreErrorMessage(error));
+  }
+}
+function DreLoadFeedback({
+  resource,
+  label,
+}: Parameters<typeof LoadFeedback>[0]) {
+  return (
+    <LoadFeedback
+      resource={{
+        ...resource,
+        error: resource.error ? dreErrorMessage(resource.error) : "",
+      }}
+      label={label}
+    />
+  );
+}
+export function DreConfiguration({
+  period,
+  onPeriod,
+}: {
+  period: Period;
+  onPeriod: (p: Period) => void;
+}) {
+  const [setupTarget, setSetupTarget] = useState<{
+    categoryId: number;
+    subcategoryId?: number;
+  } | null>(null);
+  const [from, setFrom] = useState(period.start),
+    [to, setTo] = useState(period.end),
+    [version, setVersion] = useState(0),
+    [issue, setIssue] = useState<Issue | null>(null),
+    [cancellation, setCancellation] = useState<Issue | null>(null),
+    [coverage, setCoverage] = useState<string | null>(null),
+    [review, setReview] = useState(false),
+    [detail, setDetail] = useState<string | null>(null);
+  const result = useLoad<Report>("/finance/dre?" + query(period), version);
+  const data = !result.loading && !result.error ? result.data : null;
+  const presentation = data ? dreDisplayState(data) : null;
+  const refresh = () => {
+    setIssue(null);
+    setCancellation(null);
+    setCoverage(null);
+    setReview(false);
+    setVersion((v) => v + 1);
+  };
+  return (
+    <>
+      <PageTitle
+        title="Configuração da DRE"
+        subtitle="Classificações reutilizáveis, comprovações e histórico administrativo."
+      />
+      <form
+        className="panel toolbar report-filters dre-filters"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onPeriod({ start: from, end: to });
+          setVersion((v) => v + 1);
+        }}
+      >
+        <SilexDatePicker label="De" value={from} onChange={setFrom} />
+        <SilexDatePicker label="Até" value={to} onChange={setTo} />
+        <button className="primary">Gerar relatório</button>
+      </form>
+      <DreLoadFeedback resource={result} label="configuração da DRE" />
+      <p>
+        <a href={dreHref(period)}>Consultar demonstrativo financeiro</a>
+      </p>
+      <DreInitialSetup
+        period={period}
+        version={version}
+        target={setupTarget}
+        onSaved={refresh}
+      />
+      <section className="panel dre-configuration">
+        <div className="panel-heading">
+          <div>
+            <h2>2. Conferir exceções e evidências</h2>
+            <p>
+              {dateOnly(period.start)} a {dateOnly(period.end)} · Competência
+              econômica · Silex Business
+            </p>
+          </div>
+          <ExportButton
+            label="Exportar diagnóstico CSV"
+            onClick={() => exportDiagnosticDre(period)}
+          />
+        </div>
+        {data && (
+          <div className="dre-content">
+            {presentation === "empty" ? (
+              <section className="dre-empty" role="status">
+                <h3>Nenhuma operação no período</h3>
+                <p>
+                  Não há fatos econômicos elegíveis neste período. Escolha outro
+                  período nos filtros para consultar sua DRE.
+                </p>
+              </section>
+            ) : (
+              <p className="dre-summary" role="status">
+                {presentation === "pending"
+                  ? "Existem operações para classificar ou confirmar. Após revisar, gere o relatório novamente."
+                  : presentation === "partial"
+                    ? "Resultado parcial. Faltam confirmações de custos, tributos ou outros componentes."
+                    : "Cobertura do período confirmada."}
+              </p>
+            )}
+            <details className="dre-administration">
+              <summary>Detalhes administrativos</summary>
+              <p>
+                Classificação: versão {data.mapping_version} · Reconhecimento:
+                versão {data.decision_version} · Ajustes econômicos: versão{" "}
+                {data.cancellation_version}.
+              </p>
+              <p>
+                Fingerprint das fontes: <code>{data.source_fingerprint}</code>
+              </p>
+              <p>
+                Fingerprint do demonstrativo:{" "}
+                <code>{data.report_fingerprint}</code>
+              </p>
+              <p>
+                A DRE considera a competência econômica do período. Os filtros
+                de conta e beneficiário dos demais relatórios não se aplicam
+                aqui. Componentes desconhecidos não são considerados zero;
+                resultados parciais não representam lucro final.
+              </p>
+            </details>
+            {presentation !== "empty" && (
+              <>
+                <div className="dre-lines">
+                  <Table
+                    headers={[
+                      "Rubrica",
+                      "Cobertura",
+                      "Valor conhecido",
+                      "Valor final",
+                      "Revisão",
+                    ]}
+                    empty={false}
+                    loading={false}
+                  >
+                    {data.lines.map((line) => (
+                      <tr key={line.code}>
+                        <th scope="row">
+                          {names[line.code] || line.code}{" "}
+                          <button
+                            className="text-button"
+                            type="button"
+                            aria-label={
+                              "Detalhar " + (names[line.code] || "rubrica")
+                            }
+                            onClick={() =>
+                              setDetail(detail === line.code ? null : line.code)
+                            }
+                          >
+                            Detalhar
+                          </button>
+                        </th>
+                        <td data-label="Cobertura">
+                          {statuses[line.coverage_status]}
+                        </td>
+                        <td data-label="Valor conhecido">
+                          {line.known_amount_cents === null
+                            ? "—"
+                            : money(line.known_amount_cents)}
+                        </td>
+                        <td data-label="Valor final">
+                          {line.final_amount_cents === null
+                            ? "—"
+                            : money(line.final_amount_cents)}
+                        </td>
+                        <td data-label="Revisão">
+                          {base.includes(line.code) && (
+                            <button
+                              type="button"
+                              aria-label={
+                                "Revisar cobertura de " +
+                                (names[line.code] || "rubrica")
+                              }
+                              disabled={data.issues.length > 0}
+                              onClick={() => setCoverage(line.code)}
+                            >
+                              Revisar cobertura
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </Table>
+                </div>
+                {detail && (
+                  <DreDetails
+                    key={detail}
+                    line={detail}
+                    period={period}
+                    audit
+                  />
+                )}
+                <div className="dre-records">
+                  <Table
+                    headers={["Margem", "Resultado", "Critério"]}
+                    loading={false}
+                    empty={false}
+                  >
+                    {Object.entries(data.margins).map(([code, margin]) => (
+                      <tr key={code}>
+                        <th scope="row">
+                          {
+                            (
+                              {
+                                LB: "Margem bruta",
+                                EBIT: "Margem operacional",
+                                EBITDA: "Margem EBITDA",
+                                LL: "Margem líquida",
+                              } as Record<string, string>
+                            )[code]
+                          }
+                        </th>
+                        <td data-label="Resultado">
+                          {margin.value === null
+                            ? "—"
+                            : margin.value.replace(".", ",") + "%"}
+                        </td>
+                        <td data-label="Critério">
+                          {margin.reason ||
+                            "Componentes completos e receita líquida positiva"}
+                        </td>
+                      </tr>
+                    ))}
+                  </Table>
+                </div>
+
+                {data.excluded.length > 0 && (
+                  <section className="dre-records">
+                    <h3>Fatos fora da DRE</h3>
+                    <Table
+                      headers={["Origem", "Valor excluído", "Justificativa"]}
+                      loading={false}
+                      empty={false}
+                    >
+                      {data.excluded.map((row) => (
+                        <tr key={row.key}>
+                          <td data-label="Origem">
+                            <DreSourceName source={row} />
+                            <DreTechnical source={row} />
+                          </td>
+                          <td data-label="Valor excluído">
+                            {money(row.amount_cents)}
+                          </td>
+                          <td data-label="Justificativa">{row.reason}</td>
+                        </tr>
+                      ))}
+                    </Table>
+                  </section>
+                )}
+                <section>
+                  <h3>Pendências econômicas</h3>
+                  {!data.issues.length ? (
+                    <p>
+                      Sem pendências identificadas nas fontes; revise a
+                      cobertura de cada componente.
+                    </p>
+                  ) : (
+                    <ul>
+                      {data.issues.map((item, index) => (
+                        <li
+                          key={`${item.key || "global"}:${item.codes.join(",")}:${index}`}
+                        >
+                          {item.key && (
+                            <strong>
+                              {dreOperationName({ ...item, key: item.key })}{" "}
+                              ·{" "}
+                            </strong>
+                          )}
+                          {item.codes.map(dreIssueMessage).join(" ")}{" "}
+                          {item.key && item.source_fingerprint && (
+                            <>
+                              {item.cancellation_fingerprint ? (
+                                <button
+                                  type="button"
+                                  onClick={() => setCancellation(item)}
+                                >
+                                  Revisar cancelamento de{" "}
+                                  {dreOperationName({ ...item, key: item.key })}
+                                </button>
+                              ) : (
+                                item.codes.some((code) =>
+                                  [
+                                    "recognition_required",
+                                    "source_or_policy_changed_since_review",
+                                    "source_changed_since_review",
+                                    "economic_nature_confirmation_required",
+                                  ].includes(code),
+                                ) &&
+                                !item.codes.some((code) =>
+                                  [
+                                    "unclassified",
+                                    "mapping_policy_confirmation_required",
+                                    "service_not_completed",
+                                    "completion_evidence_required",
+                                    "titles_required",
+                                    "cost_title_required",
+                                    "sale_not_finalized",
+                                    "duplicate_documents",
+                                    "service_title_mismatch",
+                                    "cost_title_mismatch",
+                                    "supplier_kind_mismatch",
+                                  ].includes(code),
+                                ) && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setIssue(item)}
+                                  >
+                                    Revisar reconhecimento de{" "}
+                                    {dreOperationName({
+                                      ...item,
+                                      key: item.key,
+                                    })}
+                                  </button>
+                                )
+                              )}{" "}
+                              <a
+                                href={
+                                  item.origin
+                                    ? sourceHref(item.origin)
+                                    : "/app#finance-plan"
+                                }
+                              >
+                                Abrir operação original
+                              </a>{" "}
+                              {item.category_id && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSetupTarget({
+                                      categoryId: item.category_id!,
+                                      subcategoryId:
+                                        item.subcategory_id || undefined,
+                                    });
+                                    document
+                                      .getElementById("dre-initial-setup")
+                                      ?.scrollIntoView({ block: "start" });
+                                  }}
+                                >
+                                  Classificar esta operação
+                                </button>
+                              )}
+                            </>
+                          )}
+                          <DreTechnical
+                            source={
+                              item.key ? { ...item, key: item.key } : undefined
+                            }
+                            codes={item.codes}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              </>
+            )}
+            <button type="button" onClick={() => setReview(true)}>
+              Registrar revisão deste período
+            </button>
+          </div>
+        )}
+      </section>
+      <DreReviewHistory period={period} version={version} />
+      {cancellation && data && (
+        <CancellationReview
+          issue={cancellation}
+          close={() => setCancellation(null)}
+          done={refresh}
+        />
+      )}
+      {issue && data && (
+        <RecognitionReview
+          issue={issue}
+          close={() => setIssue(null)}
+          done={refresh}
+        />
+      )}
+      {(coverage || review) && data && (
+        <EvidenceReview
+          line={coverage}
+          data={data}
+          close={() => {
+            setCoverage(null);
+            setReview(false);
+          }}
+          done={refresh}
+        />
+      )}
+    </>
+  );
+}
+function RecognitionReview({
+  issue,
+  close,
+  done,
+}: {
+  issue: Issue;
+  close: () => void;
+  done: () => void;
+}) {
+  const [economicDate, setEconomicDate] = useState(localDate()),
+    [reason, setReason] = useState(""),
+    [evidence, setEvidence] = useState(""),
+    [line, setLine] = useState(""),
+    [decision, setDecision] = useState("recognize");
+  const key = useRef(crypto.randomUUID());
+  const policy = useLoad<{
+    policy_fingerprint: string;
+    economic_policy: {
+      classification: string | null;
+      affects_result: boolean | null;
+    };
+  }>(
+    "/finance/dre/recognition-policy?" +
+      query({
+        source_key: issue.key,
+        economic_date: civilDate(economicDate)?.toString() || localDate(),
+      }),
+  );
+  return (
+    <Modal title="Revisar fato econômico existente" close={close}>
+      <p>
+        {dreOperationName({ ...issue, key: issue.key || "" })} ·{" "}
+        {issue.amount_cents === undefined ? "—" : money(issue.amount_cents)}.
+        Esta revisão não cria receita ou despesa.
+      </p>
+      <DreSourceDescription source={{ ...issue, key: issue.key || "" }} />
+      <DreTechnical source={{ ...issue, key: issue.key || "" }} />
+      <DreLoadFeedback resource={policy} label="política econômica" />
+      <button type="button" disabled={policy.loading} onClick={policy.reload}>
+        Atualizar política econômica
+      </button>
+      {policy.data && (
+        <p>
+          Natureza econômica na data:{" "}
+          {(
+            {
+              operating: "Operacional",
+              investment: "Investimento",
+              financing: "Financiamento",
+            } as Record<string, string>
+          )[policy.data.economic_policy.classification || ""] ||
+            "Política não confirmada"}{" "}
+          ·{" "}
+          {policy.data.economic_policy.affects_result === null
+            ? "Incidência não confirmada"
+            : policy.data.economic_policy.affects_result
+              ? "Incide no resultado"
+              : "Não incide no resultado"}
+        </p>
+      )}
+      <Form
+        cancel={close}
+        submit="Confirmar revisão"
+        submitDisabled={
+          policy.loading ||
+          !!policy.error ||
+          !policy.data ||
+          policy.data.economic_policy.classification === null ||
+          policy.data.economic_policy.affects_result === null ||
+          !civilDate(economicDate)
+        }
+        onSubmit={async () => {
+          if (policy.loading || policy.error || !policy.data)
+            throw new Error(
+              "Aguarde ou atualize a consulta da política econômica.",
+            );
+          await api("/finance/dre/recognition-review", "POST", {
+            source_key: issue.key,
+            decision,
+            economic_date: economicDate || null,
+            evidence_kind: evidence,
+            line_code: line || null,
+            expected_revision: issue.recognition_revision || 0,
+            source_fingerprint: issue.source_fingerprint,
+            policy_fingerprint: policy.data.policy_fingerprint,
+            request_key: key.current,
+            reason,
+          });
+          done();
+        }}
+      >
+        <Field label="Decisão">
+          <select
+            value={decision}
+            onChange={(e) => setDecision(e.target.value)}
+          >
+            <option value="recognize">Reconhecimento comprovado</option>
+            <option value="pending">Manter pendente</option>
+            <option value="not_applicable">
+              Fora do resultado, com justificativa
+            </option>
+          </select>
+        </Field>
+        <SilexDatePicker
+          label="Data econômica comprovada"
+          value={economicDate}
+          onChange={setEconomicDate}
+          required
+        />
+        <Field label="Tipo de evidência *">
+          <input
+            required
+            minLength={3}
+            maxLength={100}
+            value={evidence}
+            onChange={(e) => setEvidence(e.target.value)}
+          />
+        </Field>
+        {issue.source_type === "payment" && (
+          <Field label="Natureza econômica do encargo *">
+            <select
+              required
+              value={line}
+              onChange={(e) => setLine(e.target.value)}
+            >
+              <option value="">Selecione</option>
+              {base.map((c) => (
+                <option key={c} value={c}>
+                  {names[c]}
+                </option>
+              ))}
+            </select>
+          </Field>
+        )}
+        <Field label="Justificativa e evidência *">
+          <textarea
+            required
+            minLength={5}
+            maxLength={500}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+        </Field>
+      </Form>
+    </Modal>
+  );
+}
+function CancellationReview({
+  issue,
+  close,
+  done,
+}: {
+  issue: Issue;
+  close: () => void;
+  done: () => void;
+}) {
+  const [when, setWhen] = useState(
+      issue.economic_date || issue.canceled_on || localDate(),
+    ),
+    [decision, setDecision] = useState("reverse"),
+    [evidence, setEvidence] = useState(""),
+    [reason, setReason] = useState(""),
+    [ack, setAck] = useState(false);
+  const [preview, setPreview] = useState<{
+      preview_token: string;
+      original_facts: Fact[];
+      adjustment_facts: Fact[];
+      reviewed_period: boolean;
+    } | null>(null),
+    key = useRef(crypto.randomUUID());
+  const changed = () => setPreview(null);
+  const payload = {
+    source_key: issue.key,
+    source_fingerprint: issue.source_fingerprint,
+    cancellation_fingerprint: issue.cancellation_fingerprint,
+    expected_revision: issue.cancellation_revision || 0,
+    decision,
+    economic_date: when,
+    evidence_kind: evidence,
+    reason,
+    reviewed_period_acknowledged: ack,
+    request_key: key.current,
+  };
+  return (
+    <Modal title="Revisar cancelamento econômico" close={close}>
+      <p>
+        {dreOperationName({ ...issue, key: issue.key || "" })}. Cancelar um
+        título ou estornar um pagamento não comprova cancelamento econômico. O
+        fato original e as revisões anteriores serão preservados. Nenhuma
+        movimentação financeira será criada.
+      </p>
+      <DreSourceDescription source={{ ...issue, key: issue.key || "" }} />
+      <DreTechnical source={{ ...issue, key: issue.key || "" }} />
+      <Form
+        cancel={close}
+        processingText={
+          preview ? "Registrando ajuste..." : "Conferindo prévia..."
+        }
+        submit={
+          preview
+            ? "Confirmar revisão do cancelamento"
+            : "Prévia do ajuste econômico"
+        }
+        onSubmit={async () => {
+          if (preview) {
+            await api("/finance/dre/cancellation-review", "POST", {
+              ...payload,
+              preview_token: preview.preview_token,
+            });
+            done();
+          } else {
+            const value = await api<{
+              preview_token: string;
+              original_facts: Fact[];
+              adjustment_facts: Fact[];
+              reviewed_period: boolean;
+            }>("/finance/dre/cancellation-review/preview", "POST", payload);
+            if (
+              !value ||
+              typeof value.preview_token !== "string" ||
+              !Array.isArray(value.original_facts) ||
+              !Array.isArray(value.adjustment_facts) ||
+              typeof value.reviewed_period !== "boolean"
+            )
+              throw new Error(
+                "Resposta inválida na prévia do ajuste econômico.",
+              );
+            setPreview(value);
+          }
+        }}
+      >
+        <Field label="Decisão sobre o cancelamento">
+          <select
+            value={decision}
+            onChange={(e) => {
+              setDecision(e.target.value);
+              changed();
+            }}
+          >
+            <option value="reverse">
+              Reverter integralmente o fato econômico comprovado
+            </option>
+            <option value="retain">
+              Manter o reconhecimento: cancelamento apenas financeiro
+            </option>
+          </select>
+        </Field>
+        <SilexDatePicker
+          label="Data econômica do ajuste"
+          value={when}
+          onChange={(v) => {
+            setWhen(v);
+            changed();
+          }}
+          required
+        />
+        <Field label="Evidência do cancelamento *">
+          <input
+            required
+            minLength={3}
+            maxLength={100}
+            value={evidence}
+            onChange={(e) => {
+              setEvidence(e.target.value);
+              changed();
+            }}
+          />
+        </Field>
+        <Field label="Justificativa do ajuste *">
+          <textarea
+            required
+            minLength={5}
+            maxLength={500}
+            value={reason}
+            onChange={(e) => {
+              setReason(e.target.value);
+              changed();
+            }}
+          />
+        </Field>
+        <Field label="Confirmo a data e que revisões históricas permanecerão preservadas">
+          <input
+            type="checkbox"
+            checked={ack}
+            onChange={(e) => {
+              setAck(e.target.checked);
+              changed();
+            }}
+          />
+        </Field>
+        {preview && (
+          <section aria-label="Prévia do ajuste econômico">
+            <h3>Impacto econômico</h3>
+            {preview.reviewed_period && (
+              <Notice tone="info">
+                Há competência já revisada. Confirme explicitamente a
+                preservação histórica antes de gravar.
+              </Notice>
+            )}
+            <p>
+              {decision === "reverse"
+                ? "Reversão integral dos componentes abaixo, sem apagar o fato original."
+                : "Reconhecimento mantido, sem ajuste de valor."}
+            </p>
+            <Table
+              headers={["Origem", "Rubrica", "Ajuste"]}
+              empty={!preview.adjustment_facts.length}
+              loading={false}
+            >
+              {preview.adjustment_facts.map((f) => (
+                <tr key={f.key}>
+                  <td>
+                    <DreSourceName source={{ ...f, origin: issue.origin }} />
+                  </td>
+                  <td>{names[f.dre_line_code]}</td>
+                  <td>{money(f.amount_cents)}</td>
+                </tr>
+              ))}
+            </Table>
+          </section>
+        )}
+      </Form>
+    </Modal>
+  );
+}
+
+function EvidenceReview({
+  line,
+  data,
+  close,
+  done,
+}: {
+  line: string | null;
+  data: Report;
+  close: () => void;
+  done: () => void;
+}) {
+  const [reason, setReason] = useState(""),
+    [kind, setKind] = useState("complete");
+  return (
+    <Modal
+      title={
+        line
+          ? "Revisar cobertura de " + names[line]
+          : "Registrar revisão do período"
+      }
+      close={close}
+    >
+      <Notice tone="info">
+        Confirme somente com evidência. Ausência de cadastro não comprova que um
+        custo ou tributo seja zero. A revisão fica vinculada à versão atual das
+        fontes.
+      </Notice>
+      <Form
+        cancel={close}
+        submit="Confirmar evidência"
+        onSubmit={async () => {
+          await api(
+            line
+              ? "/finance/dre/component-assertions"
+              : "/finance/dre/period-reviews",
+            "POST",
+            {
+              start: data.start,
+              end: data.end,
+              source_fingerprint: data.source_fingerprint,
+              report_fingerprint: data.report_fingerprint,
+              reason,
+              ...(line ? { line_code: line, assertion_kind: kind } : {}),
+            },
+          );
+          done();
+        }}
+      >
+        {line && (
+          <Field label="Situação comprovada do componente">
+            <select value={kind} onChange={(e) => setKind(e.target.value)}>
+              <option value="complete">
+                Componente completo, inclusive zero comprovado
+              </option>
+              <option value="not_applicable">
+                Não aplicável, com justificativa
+              </option>
+            </select>
+          </Field>
+        )}
+        <Field label="Motivo e evidência *">
+          <textarea
+            required
+            minLength={5}
+            maxLength={500}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+        </Field>
+        <Field label="Confirmo a revisão das fontes e a responsabilidade pela declaração">
+          <input type="checkbox" required />
+        </Field>
+      </Form>
+    </Modal>
+  );
+}
+
+type Mapping = {
+  economic_classification: "operating" | "investment" | "financing" | null;
+  economic_affects_result: boolean | null;
+  id: number;
+  category_id: number;
+  subcategory_id: number | null;
+  line_code: string;
+  valid_from: string;
+  valid_to: string;
+  revision: number;
+  reason: string;
+};
+export function DreMappingEditor({
+  categoryId,
+  subcategoryId,
+  onSaved,
+  initialFrom,
+}: {
+  categoryId: number;
+  subcategoryId?: number;
+  onSaved?: () => void;
+  initialFrom?: string;
+}) {
+  const [version, setVersion] = useState(0),
+    [line, setLine] = useState("RB"),
+    [nature, setNature] = useState(""),
+    [affects, setAffects] = useState<boolean | null>(null),
+    [from, setFrom] = useState(initialFrom || localDate()),
+    [to, setTo] = useState("2099-12-31"),
+    [reason, setReason] = useState(""),
+    [prior, setPrior] = useState<Mapping | null>(null),
+    [preview, setPreview] = useState<{
+      preview_token: string;
+      affected_sources: number;
+      affected_principal_cents: number;
+      periods: string[];
+      retained_intervals: { start: string; end: string }[];
+      previous: Mapping | null;
+      proposed: {
+        line_code: string;
+        economic_classification: string;
+        economic_affects_result: boolean;
+      };
+    } | null>(null),
+    [error, setError] = useState(""),
+    [busy, setBusy] = useState(false),
+    [saved, setSaved] = useState(false);
+  const pending = useRef(false),
+    mappings = useLoad<Mapping[]>("/finance/dre/mappings", version);
+  const targetRows =
+    mappings.data?.filter(
+      (r) =>
+        r.category_id === categoryId &&
+        r.subcategory_id === (subcategoryId || null),
+    ) || [];
+  const values = {
+    category_id: categoryId,
+    subcategory_id: subcategoryId || null,
+    line_code: line,
+    economic_classification: nature || null,
+    economic_affects_result: subcategoryId ? affects : null,
+    valid_from: from,
+    valid_to: to,
+    reason,
+    expected_revision: Math.max(0, ...targetRows.map((r) => r.revision)),
+    supersedes_id: prior?.id || null,
+  };
+  const changed = () => {
+    setPreview(null);
+    setSaved(false);
+  };
+  async function act(confirm = false) {
+    if (pending.current) return;
+    pending.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      if (!reason.trim() || reason.trim().length < 5)
+        throw new Error(
+          "Informe motivo e evidência com ao menos cinco caracteres.",
+        );
+      if (confirm) {
+        await api("/finance/dre/mappings", "POST", {
+          ...values,
+          preview_token: preview?.preview_token,
+        });
+        setPreview(null);
+        setPrior(null);
+        setSaved(true);
+        setVersion((v) => v + 1);
+        onSaved?.();
+      } else
+        setPreview(await api("/finance/dre/mappings/preview", "POST", values));
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      pending.current = false;
+      setBusy(false);
+    }
+  }
+  return (
+    <>
+      <DreLoadFeedback resource={mappings} label="mapeamentos DRE" />
+      <fieldset disabled={busy || mappings.loading || !!mappings.error}>
+        <legend>Classificação DRE versionada</legend>
+        {error && <Notice>{error}</Notice>}
+        {saved && <p role="status">Classificação registrada com histórico.</p>}
+        <Field label="Revisão a substituir">
+          <select
+            value={
+              prior ? `${prior.id}:${prior.valid_from}:${prior.valid_to}` : ""
+            }
+            onChange={(e) => {
+              const row =
+                targetRows.find(
+                  (r) =>
+                    `${r.id}:${r.valid_from}:${r.valid_to}` === e.target.value,
+                ) || null;
+              setPrior(row);
+              setNature(row?.economic_classification || "");
+              setAffects(row?.economic_affects_result ?? null);
+              if (row) {
+                setFrom(row.valid_from);
+                setTo(row.valid_to);
+                setLine(row.line_code);
+              }
+              changed();
+            }}
+          >
+            <option value="">Nova vigência sem sobreposição</option>
+            {targetRows.map((r) => (
+              <option
+                key={`${r.id}:${r.valid_from}`}
+                value={`${r.id}:${r.valid_from}:${r.valid_to}`}
+              >
+                Versão {r.revision}: {dateOnly(r.valid_from)} a{" "}
+                {dateOnly(r.valid_to)}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <p>
+          A nova vigência pode recortar o intervalo selecionado. As partes
+          anteriores e posteriores serão preservadas.
+        </p>
+        <div className="form-grid">
+          <Field label="Rubrica DRE">
+            <select
+              value={line}
+              onChange={(e) => {
+                setLine(e.target.value);
+                changed();
+              }}
+            >
+              {base.map((c) => (
+                <option key={c} value={c}>
+                  {names[c]}
+                </option>
+              ))}
+              <option value="outside_dre">
+                Fora da DRE, com justificativa
+              </option>
+            </select>
+          </Field>
+          <SilexDatePicker
+            label="Vigência inicial da DRE"
+            value={from}
+            onChange={(v) => {
+              setFrom(v);
+              changed();
+            }}
+          />
+          <SilexDatePicker
+            label="Vigência final da DRE"
+            value={to}
+            onChange={(v) => {
+              setTo(v);
+              changed();
+            }}
+          />
+        </div>
+        <div className="form-grid">
+          <Field label="Natureza econômica nesta vigência DRE">
+            <select
+              value={nature}
+              onChange={(e) => {
+                setNature(e.target.value);
+                changed();
+              }}
+            >
+              <option value="">Capturar a política vigente do cadastro</option>
+              <option value="operating">Operacional</option>
+              <option value="investment">Investimento</option>
+              <option value="financing">Financiamento</option>
+            </select>
+          </Field>
+          {subcategoryId && (
+            <Field label="Incidência no resultado nesta vigência DRE">
+              <select
+                value={affects === null ? "" : String(affects)}
+                onChange={(e) => {
+                  setAffects(
+                    e.target.value === "" ? null : e.target.value === "true",
+                  );
+                  changed();
+                }}
+              >
+                <option value="">
+                  Capturar a política vigente do cadastro
+                </option>
+                <option value="true">Incide no resultado</option>
+                <option value="false">Não incide no resultado</option>
+              </select>
+            </Field>
+          )}
+        </div>
+        <Field label="Motivo da classificação DRE">
+          <textarea
+            minLength={5}
+            maxLength={500}
+            value={reason}
+            onChange={(e) => {
+              setReason(e.target.value);
+              changed();
+            }}
+          />
+        </Field>
+        <button type="button" onClick={() => void act()}>
+          Prévia do impacto
+        </button>
+        {preview && (
+          <>
+            <p role="status">
+              {preview.previous
+                ? names[preview.previous.line_code]
+                : "Sem classificação"}{" "}
+              → {names[preview.proposed.line_code]} · {preview.affected_sources}{" "}
+              fontes potencialmente afetadas ·{" "}
+              {money(preview.affected_principal_cents)} de principal ·
+              competências:{" "}
+              {preview.periods
+                .map((m) =>
+                  /^\d{4}-\d{2}$/.test(m)
+                    ? m.slice(5) + "/" + m.slice(0, 4)
+                    : "a conferir",
+                )
+                .join(", ") || "nenhuma"}
+              . Natureza econômica:{" "}
+              {preview.proposed.economic_classification === "operating"
+                ? "Operacional"
+                : preview.proposed.economic_classification === "investment"
+                  ? "Investimento"
+                  : "Financiamento"}{" "}
+              ·{" "}
+              {preview.proposed.economic_affects_result
+                ? "Incide no resultado"
+                : "Não incide no resultado"}
+              . Registros originais não serão reescritos. Intervalos
+              preservados:{" "}
+              {preview.retained_intervals
+                .map((i) => `${dateOnly(i.start)} a ${dateOnly(i.end)}`)
+                .join("; ") || "nenhum recorte"}
+              .
+            </p>
+            <button type="button" onClick={() => void act(true)}>
+              Confirmar classificação revisada
+            </button>
+          </>
+        )}
+      </fieldset>
+    </>
+  );
+}
+
+export function DreDetails({
+  line,
+  period,
+  audit = false,
+}: {
+  line: string;
+  period: Period;
+  audit?: boolean;
+}) {
+  const [page, setPage] = useState(1);
+  const result = useLoad<{
+    items: Fact[];
+    total: number;
+    page: number;
+    page_size: number;
+  }>("/finance/dre/items?" + query({ ...period, line, page }));
+  return (
+    <section className="dre-screen-detail dre-records">
+      <h3>Fontes de {names[line]}</h3>
+      <Table
+        headers={
+          audit
+            ? ["Origem", "Rubrica", "Data econômica", "Valor", "Evidência"]
+            : ["Origem", "Rubrica", "Data econômica", "Valor"]
+        }
+        loading={result.loading}
+        error={result.error ? dreErrorMessage(result.error) : ""}
+        onRetry={result.reload}
+        empty={!!result.data && !result.data.items.length}
+      >
+        {result.data?.items.map((f) => (
+          <tr key={f.key}>
+            <td data-label="Origem">
+              <DreSourceName source={f} />
+              <DreSourceDescription source={f} />
+              {audit && <DreTechnical source={f} />}
+            </td>
+            <td data-label="Rubrica">{names[f.dre_line_code]}</td>
+            <td data-label="Data econômica">{dateOnly(f.economic_date)}</td>
+            <td data-label="Valor">{money(f.amount_cents)}</td>
+            {audit && (
+              <td data-label="Evidência">
+                {dreEvidenceLabel(f.recognition_basis, f.source_type)}
+              </td>
+            )}
+          </tr>
+        ))}
+      </Table>
+      <Pagination data={result.data} onPage={setPage} />
+    </section>
+  );
+}
+
+function DreReviewHistory({
+  period,
+  version,
+}: {
+  period: Period;
+  version: number;
+}) {
+  const reviews = useLoad<
+      { id: number; recorded_at: string; reason: string }[]
+    >("/finance/dre/period-reviews?" + query(period), version),
+    [selected, setSelected] = useState<number | null>(null);
+  return (
+    <section className="panel dre-review-history">
+      <h2>Revisões documentadas do período</h2>
+      <DreLoadFeedback resource={reviews} label="revisões DRE" />
+      {reviews.data?.map((r) => (
+        <p key={r.id}>
+          #{r.id} · {r.reason}{" "}
+          <button type="button" onClick={() => setSelected(r.id)}>
+            Consultar revisão #{r.id}
+          </button>
+        </p>
+      ))}
+      {reviews.data?.length === 0 && (
+        <p>Nenhuma revisão documentada por esta identidade neste período.</p>
+      )}
+      {selected !== null && (
+        <DreSnapshot id={selected} close={() => setSelected(null)} />
+      )}
+    </section>
+  );
+}
+function DreSnapshot({ id, close }: { id: number; close: () => void }) {
+  const result = useLoad<{ snapshot: Report; source_changed: boolean }>(
+    "/finance/dre/period-reviews/" + id,
+  );
+  return (
+    <Modal title={"Revisão histórica #" + id} close={close}>
+      <DreLoadFeedback resource={result} label="revisão histórica" />
+      {result.data && (
+        <>
+          <p>
+            {dateOnly(result.data.snapshot.start)} a{" "}
+            {dateOnly(result.data.snapshot.end)} · Dados preservados na revisão,
+            sem reinterpretação.
+          </p>
+          {result.data.source_changed && (
+            <Notice tone="info">
+              As fontes atuais mudaram. Este demonstrativo preserva a versão
+              documentada.
+            </Notice>
+          )}
+          <Table
+            headers={["Rubrica", "Cobertura", "Valor final"]}
+            loading={false}
+            empty={false}
+          >
+            {result.data.snapshot.lines.map((line) => (
+              <tr key={line.code}>
+                <th scope="row">{names[line.code]}</th>
+                <td>{statuses[line.coverage_status]}</td>
+                <td>
+                  {line.final_amount_cents === null
+                    ? "—"
+                    : money(line.final_amount_cents)}
+                </td>
+              </tr>
+            ))}
+          </Table>
+        </>
+      )}
+    </Modal>
+  );
+}
+
+function DreInitialSetup({
+  period,
+  version,
+  target,
+  onSaved,
+}: {
+  period: Period;
+  version: number;
+  target: { categoryId: number; subcategoryId?: number } | null;
+  onSaved: () => void;
+}) {
+  const categories = useLoad<{ id: number; name: string }[]>("/categories"),
+    subcategories =
+      useLoad<{ id: number; category_id: number; name: string }[]>(
+        "/subcategories",
+      ),
+    mappings = useLoad<Mapping[]>("/finance/dre/mappings", version);
+  const [selected, setSelected] = useState(""),
+    [sub, setSub] = useState("");
+  useEffect(() => {
+    if (target) {
+      setSelected(String(target.categoryId));
+      setSub(target.subcategoryId ? String(target.subcategoryId) : "");
+    }
+  }, [target]);
+  const categoryId = selected ? Number(selected) : undefined,
+    subcategoryId = sub ? Number(sub) : undefined;
+  const available =
+    !categories.loading &&
+    !categories.error &&
+    !subcategories.loading &&
+    !subcategories.error;
+  return (
+    <section
+      id="dre-initial-setup"
+      className="panel dre-content"
+      aria-label="Classificações econômicas"
+    >
+      <h2>1. Configurar classificações</h2>
+      <p>
+        Confirme a rubrica e a vigência de cada categoria utilizada. A
+        configuração será reaproveitada nas próximas operações; lançamentos
+        avulsos continuam exigindo comprovação própria.
+      </p>
+      <DreLoadFeedback resource={categories} label="categorias DRE" />
+      <DreLoadFeedback resource={subcategories} label="subcategorias DRE" />
+      <DreLoadFeedback resource={mappings} label="classificações DRE" />
+      {available && (
+        <>
+          <div className="form-grid">
+            <Field label="Categoria para configurar">
+              <select
+                value={categoryId || ""}
+                onChange={(e) => {
+                  setSelected(e.target.value);
+                  setSub("");
+                }}
+              >
+                <option value="">Selecione</option>
+                {categories.data?.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                    {mappings.data?.some(
+                      (m) =>
+                        m.category_id === c.id &&
+                        m.subcategory_id === null &&
+                        m.valid_from <= period.end &&
+                        m.valid_to >= period.start,
+                    )
+                      ? " — possui vigência no período"
+                      : " — classificação a conferir"}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Subcategoria para configurar">
+              <select
+                value={subcategoryId || ""}
+                disabled={!categoryId}
+                onChange={(e) => setSub(e.target.value)}
+              >
+                <option value="">Regra da categoria</option>
+                {subcategories.data
+                  ?.filter((s) => s.category_id === categoryId)
+                  .map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
+                    </option>
+                  ))}
+              </select>
+            </Field>
+          </div>
+          <p>
+            Vigências cadastradas no período:{" "}
+            {mappings.data?.filter(
+              (m) => m.valid_from <= period.end && m.valid_to >= period.start,
+            ).length || 0}
+            . Confira também exceções por subcategoria.
+          </p>
+          {categoryId && (
+            <DreMappingEditor
+              key={categoryId + ":" + (subcategoryId || 0)}
+              categoryId={categoryId}
+              subcategoryId={subcategoryId}
+              initialFrom={period.start}
+              onSaved={onSaved}
+            />
+          )}
+        </>
+      )}
+    </section>
+  );
+}

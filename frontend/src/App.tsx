@@ -252,7 +252,7 @@ export default function App() {
             </button>
           </div>
         </header>
-        <main id="main-content" tabIndex={-1} key={safePage === "finance-dre" ? "finance-reports" : safePage} className={undefined}>
+        <main id="main-content" tabIndex={-1} key={["finance-dre","finance-dre-config"].includes(safePage) ? "finance-reports" : safePage} className={undefined}>
           {error && <Notice>{error}</Notice>}
           {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate}><section className="silex-overview" aria-label="Resumo operacional"><OperationalSummary user={user} navigate={navigate}/></section></AuthenticatedHome>}{" "}
           {safePage === "customers" && <Customers user={user} />}{" "}
@@ -271,7 +271,7 @@ export default function App() {
           {safePage === "finance" && <LedgerPage />}
           {safePage === "finance-dashboard" && <FinanceOverview navigate={navigate} />}
           {safePage === "finance-reconcile" && <FinanceReconciliation />}
-          {(safePage === "finance-reports" || safePage === "finance-dre") && <FinanceReports user={user} view={safePage === "finance-dre" ? "dre" : "legacy"} navigate={navigate} />}
+          {(safePage === "finance-reports" || safePage === "finance-dre" || safePage === "finance-dre-config") && <FinanceReports user={user} view={safePage === "finance-dre-config" ? "configuration" : safePage === "finance-dre" ? "dre" : "legacy"} navigate={navigate} />}
           {safePage === "finance-payable" && (
             <FinancePage user={user} initialDirection="expense" />
           )}

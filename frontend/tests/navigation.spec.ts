@@ -140,9 +140,9 @@ test("compatibilidade dos 24 hashes anteriores, alias, home e destino desconheci
   const active = await (await page.request.get("/api/auth/me")).json();
   for (const route of routes.filter(route => canAccessRoute(active, route.id))) {
     await page.goto("/#" + route.id);
-    if (route.id === "finance-dre") {
+    if (["finance-dre","finance-dre-config"].includes(route.id)) {
       const today = (await (await page.request.get("/api/dashboard")).json()).date;
-      await expect(page).toHaveURL(new RegExp(`/app\\?dre_view=dre&dre_start=${today.slice(0,7)}-01&dre_end=${today}#finance-dre$`));
+      await expect(page).toHaveURL(new RegExp(`/app\\?dre_view=dre&dre_start=${today.slice(0,7)}-01&dre_end=${today}#${route.id}$`));
     } else {
       await expect(page).toHaveURL(new RegExp("/app#" + (route.id==="dashboard"?"home":route.id) + "$"));
     }

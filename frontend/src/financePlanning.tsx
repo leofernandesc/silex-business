@@ -1,5 +1,6 @@
 import {parseMoney} from "./moneyInput";
 import {readDrePeriod,dreHref} from "./dreNavigation";
+import {DreConfiguration} from "./dreAdministration";
 import { DreReport } from "./dre";
 import { hasTransport } from "./capabilities";
 import type { User } from "./types";
@@ -89,13 +90,13 @@ function OfxNewFields({direction,category,setCategory,subcategory,setSubcategory
 
 export {FinanceOverview} from "./financialOverview";
 
-export function FinanceReports({user,view,navigate}:{user:User;view:'dre'|'legacy';navigate:(id:string)=>void}){
+export function FinanceReports({user,view,navigate}:{user:User;view:'dre'|'legacy'|'configuration';navigate:(id:string)=>void}){
  const today=localDate(),initial=readDrePeriod(typeof location==="undefined"?"":location.search);
  const [selected,setSelected]=useState('cash-monthly'),[savedPeriod,setSavedPeriod]=useState(initial||{start:today.slice(0,7)+'-01',end:today});
  // The URL is authoritative on history traversal; unsubmitted controls never replace it.
- const period=(view==='dre'?readDrePeriod(location.search):null)||savedPeriod;
- useEffect(()=>{if(view==='dre')history.replaceState(history.state,'',dreHref(period));else {const u=new URL(location.href);['dre_view','dre_start','dre_end'].forEach(k=>u.searchParams.delete(k));history.replaceState(history.state,'',u.pathname+u.search+u.hash)}},[view,period.start,period.end]);
- return view==='dre'?<DreReport period={period} onPeriod={p=>{history.replaceState(history.state,'',dreHref(p));setSavedPeriod(p)}} onLegacy={id=>{setSelected(id);setSavedPeriod(period);navigate('finance-reports')}}/>:<LegacyFinanceReports key={selected} user={user} initialReport={selected} initialPeriod={period} onPeriodApplied={setSavedPeriod} onDre={p=>{setSavedPeriod(p);navigate('finance-dre')}}/>;
+ const period=(view!=='legacy'?readDrePeriod(location.search):null)||savedPeriod;
+ useEffect(()=>{if(view!=='legacy')history.replaceState(history.state,'',dreHref(period,view==='configuration'));else {const u=new URL(location.href);['dre_view','dre_start','dre_end'].forEach(k=>u.searchParams.delete(k));history.replaceState(history.state,'',u.pathname+u.search+u.hash)}},[view,period.start,period.end]);
+ return view==='configuration'?<DreConfiguration period={period} onPeriod={p=>{history.replaceState(history.state,'',dreHref(p,true));setSavedPeriod(p)}}/>:view==='dre'?<DreReport period={period} onPeriod={p=>{history.replaceState(history.state,'',dreHref(p));setSavedPeriod(p)}} onLegacy={id=>{setSelected(id);setSavedPeriod(period);navigate('finance-reports')}}/>:<LegacyFinanceReports key={selected} user={user} initialReport={selected} initialPeriod={period} onPeriodApplied={setSavedPeriod} onDre={p=>{setSavedPeriod(p);navigate('finance-dre')}}/>;
 }
 function LegacyFinanceReports({user,initialReport,initialPeriod,onPeriodApplied,onDre}:{user:User;initialReport:string;initialPeriod:{start:string;end:string};onPeriodApplied:(p:{start:string;end:string})=>void;onDre:(p:{start:string;end:string})=>void}){
  const now=localDate(),[report,setReport]=useState(initialReport),[from,setFrom]=useState(initialPeriod.start),[to,setTo]=useState(initialPeriod.end),[account,setAccount]=useState(''),[category,setCategory]=useState(''),[supplierKind,setSupplierKind]=useState(''),[filters,setFilters]=useState({start:initialPeriod.start,end:initialPeriod.end,account_id:'',category_id:'',supplier_kind:''}),[page,setPage]=useState(1),[budgetMonth,setBudgetMonth]=useState(now.slice(0,7)),[showBudget,setShowBudget]=useState(false),[version,setVersion]=useState(0),[budgetForm,setBudgetForm]=useState(false);

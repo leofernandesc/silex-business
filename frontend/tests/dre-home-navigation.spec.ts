@@ -385,11 +385,9 @@ test("DRE service lifecycle through real forms shows known revenue once and expl
     .getByRole("button", { name: "Gerar relatório", exact: true })
     .click();
   await expect(page.locator(".dre-summary")).toContainText(
-    "Existem operações para classificar ou confirmar",
+    "Informações insuficientes para apresentar",
   );
-  await expect(page.locator(".dre-report")).toContainText(
-    "A categoria ainda não possui classificação na DRE",
-  );
+  await expect(page.locator(".dre-report")).not.toContainText("classificação");
   await evidence(page, "dre-pending");
   const period = "start=2000-01-01&end=2000-01-31",
     pending = await req(page, "/finance/dre?" + period);
@@ -397,11 +395,11 @@ test("DRE service lifecycle through real forms shows known revenue once and expl
   expect(pending.issues).toHaveLength(1);
   await page
     .getByRole("link", {
-      name: "Revisar classificação no Plano financeiro",
+      name: "Configuração da DRE",
       exact: true,
     })
     .click();
-  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("button", {name:"Classificar esta operação", exact:true}).click();
   await page.getByLabel("Rubrica DRE", { exact: true }).selectOption("RB");
   await enterDate(page, "Vigência inicial da DRE", "2000-01-01");
   await enterDate(page, "Vigência final da DRE", "2000-01-31");
@@ -420,8 +418,7 @@ test("DRE service lifecycle through real forms shows known revenue once and expl
   await expect(
     page.getByText("Classificação registrada com histórico.", { exact: true }),
   ).toBeVisible();
-  await page.keyboard.press("Escape");
-  await page.goBack();
+  await page.getByRole("link",{name:"Consultar demonstrativo financeiro",exact:true}).click();
   await expect(page).toHaveURL(/#finance-dre$/);
   await page
     .getByRole("button", { name: "Gerar relatório", exact: true })
@@ -447,9 +444,7 @@ test("DRE service lifecycle through real forms shows known revenue once and expl
   await expect(page.locator(".dre-screen-detail")).toContainText(
     "Serviço fictício de manutenção empresarial comprovado",
   );
-  await expect(page.locator(".dre-screen-detail")).toContainText(
-    "Conclusão do serviço conferida",
-  );
+  await expect(page.locator(".dre-screen-detail code")).toHaveCount(0);
   await evidence(page, "dre-known-partial");
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.goto(`/app?source_id=${title.id}#finance-receivable`);
