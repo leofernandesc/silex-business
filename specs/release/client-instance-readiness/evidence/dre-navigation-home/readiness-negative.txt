@@ -1,0 +1,40 @@
+[WebServer] INFO:     Started server process [1225468]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8037 (Press CTRL+C to quit)
+
+Running 1 test using 1 worker
+
+(node:1225470) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/integration.spec.ts:59:3 › all route guards for demo (1.5s)
+
+
+  1) [desktop] › tests/integration.spec.ts:59:3 › all route guards for demo ────────────────────────
+
+    Error: finance-dre: primary GET must be explicitly registered
+
+    expect(received).toBeTruthy()
+
+    Received: undefined
+
+       at routeReadiness.ts:44
+
+      42 |   }else{
+      43 |     const endpoint = endpoints[route.id];
+    > 44 |     expect(endpoint, `${route.id}: primary GET must be explicitly registered`).toBeTruthy();
+         |                                                                                ^
+      45 |     const response = page.waitForResponse(r=>new URL(r.url()).pathname==='/api'+endpoint&&r.request().method()==='GET');
+      46 |     await page.goto('/app#'+route.id);
+      47 |     const received=await response;
+        at openReadyRoute (/home/leofernandesc/silex-dre-home-refinement/frontend/tests/routeReadiness.ts:44:80)
+        at /home/leofernandesc/silex-dre-home-refinement/frontend/tests/integration.spec.ts:71:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-home-readiness-before-output/integration-all-route-guards-for-demo-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-home-readiness-before-output/integration-all-route-guards-for-demo-desktop/error-context.md
+
+  1 failed
+    [desktop] › tests/integration.spec.ts:59:3 › all route guards for demo ─────────────────────────

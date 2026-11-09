@@ -1,0 +1,29 @@
+[WebServer] INFO:     Started server process [1193601]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8038 (Press CTRL+C to quit)
+
+Running 16 tests using 1 worker
+
+(node:1193744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-home-navigation.spec.ts:56:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (5.1s)
+  ✓   2 [desktop] › tests/dre-home-navigation.spec.ts:102:1 › DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports (2.5s)
+  ✓   3 [desktop] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve nonzero counts (1.1s)
+  ✓   4 [desktop] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve unavailable states (1.4s)
+  ✓   5 [desktop] › tests/dre-home-navigation.spec.ts:166:1 › Home KPIs remain three legible columns at tablet widths (1.3s)
+  ✓   6 [desktop] › tests/dre-home-navigation.spec.ts:196:1 › DRE direct URL and API preserve operator and visitor authorization (1.6s)
+  ✓   7 [desktop] › tests/dre-home-navigation.spec.ts:220:1 › DRE legacy deep link, active item, history and report selector preserve applied periods (4.0s)
+  ✓   8 [desktop] › tests/dre-home-navigation.spec.ts:278:1 › DRE service lifecycle through real forms shows known revenue once and explains missing coverage (19.2s)
+(node:1195644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [mobile] › tests/dre-home-navigation.spec.ts:56:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (4.9s)
+  ✓  10 [mobile] › tests/dre-home-navigation.spec.ts:102:1 › DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports (3.7s)
+  ✓  11 [mobile] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve nonzero counts (1.4s)
+  ✓  12 [mobile] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve unavailable states (1.8s)
+  ✓  13 [mobile] › tests/dre-home-navigation.spec.ts:166:1 › Home KPIs remain three legible columns at tablet widths (1.3s)
+  ✓  14 [mobile] › tests/dre-home-navigation.spec.ts:196:1 › DRE direct URL and API preserve operator and visitor authorization (1.5s)
+  ✓  15 [mobile] › tests/dre-home-navigation.spec.ts:220:1 › DRE legacy deep link, active item, history and report selector preserve applied periods (3.4s)
+  ✓  16 [mobile] › tests/dre-home-navigation.spec.ts:278:1 › DRE service lifecycle through real forms shows known revenue once and explains missing coverage (14.8s)
+
+  16 passed (1.3m)

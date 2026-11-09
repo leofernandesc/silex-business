@@ -1,0 +1,47 @@
+{
+  "run_id": 42669360930,
+  "head": "6b7262712136678dc255e72590181b166863a01b",
+  "attempt": 1,
+  "started_at": "2026-11-09T17:55:49Z",
+  "finished_at": "2026-11-09T18:31:33Z",
+  "conclusion": "cancelled",
+  "core": "success",
+  "diff": "success",
+  "browsers": [
+    {
+      "browser": "chromium",
+      "failed_executions_observed": [
+        "2026-11-09T18:01:53.0614501Z   ✘   13 [desktop] › tests/commercial-a11y.spec.ts:9:1 › accessible login, every registered authorized route and customer dialog (4.0m)",
+        "2026-11-09T18:06:52.4391335Z   ✘   95 [desktop] › tests/integration.spec.ts:59:3 › all route guards for demo (2.5m)",
+        "2026-11-09T18:09:23.1459025Z   ✘   96 [desktop] › tests/integration.spec.ts:59:3 › all route guards for specialized (2.5m)",
+        "2026-11-09T18:11:53.7625129Z   ✘   97 [desktop] › tests/integration.spec.ts:59:3 › all route guards for generic-second (2.5m)",
+        "2026-11-09T18:14:24.3792314Z   ✘   98 [desktop] › tests/integration.spec.ts:59:3 › all route guards for specialized-second (2.5m)",
+        "2026-11-09T18:17:17.9064275Z   ✘  101 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1440px (2.5m)",
+        "2026-11-09T18:19:48.5864447Z   ✘  102 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1024px (2.5m)",
+        "2026-11-09T18:22:19.2604139Z   ✘  103 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 768px (2.5m)",
+        "2026-11-09T18:24:49.8685535Z   ✘  104 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 375px (2.5m)",
+        "2026-11-09T18:27:20.4872391Z   ✘  105 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 320px (2.5m)",
+        "2026-11-09T18:31:21.3083306Z   ✘  173 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1440px (2.0m)"
+      ],
+      "cancellation_observed": "The operation was canceled; job limit in workflow is 35 minutes. Full E2E did not complete."
+    },
+    {
+      "browser": "firefox",
+      "failed_executions_observed": [
+        "2026-11-09T18:01:59.0999994Z   ✘   13 [desktop] › tests/commercial-a11y.spec.ts:9:1 › accessible login, every registered authorized route and customer dialog (4.0m)",
+        "2026-11-09T18:07:02.5287857Z   ✘   95 [desktop] › tests/integration.spec.ts:59:3 › all route guards for demo (2.5m)",
+        "2026-11-09T18:09:33.6154283Z   ✘   96 [desktop] › tests/integration.spec.ts:59:3 › all route guards for specialized (2.5m)",
+        "2026-11-09T18:12:04.6851065Z   ✘   97 [desktop] › tests/integration.spec.ts:59:3 › all route guards for generic-second (2.5m)",
+        "2026-11-09T18:14:35.7495584Z   ✘   98 [desktop] › tests/integration.spec.ts:59:3 › all route guards for specialized-second (2.5m)",
+        "2026-11-09T18:17:19.5075266Z   ✘  101 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1440px (2.5m)",
+        "2026-11-09T18:19:50.9760843Z   ✘  102 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 1024px (2.5m)",
+        "2026-11-09T18:22:22.2796850Z   ✘  103 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 768px (2.5m)",
+        "2026-11-09T18:24:53.7284222Z   ✘  104 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 375px (2.5m)",
+        "2026-11-09T18:27:24.7729946Z   ✘  105 [desktop] › tests/integration.spec.ts:90:3 › specialized routes reflow at 320px (2.5m)",
+        "2026-11-09T18:31:27.0617534Z   ✘  173 [desktop] › tests/system-review.spec.ts:6:3 › all registered screens load without horizontal document overflow at 1440px (2.0m)"
+      ],
+      "cancellation_observed": "The operation was canceled; job limit in workflow is 35 minutes. Full E2E did not complete."
+    }
+  ],
+  "diagnosis": "The existing all-route test helper did not register finance-dre and waited for /apiundefined. A local negative control failed immediately on missing registration; corrected tests still require the real /api/finance/dre GET, HTTP success, destination content and authorization. No production code changed."
+}

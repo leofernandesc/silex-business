@@ -100,3 +100,5 @@ it("dashboard rejects blank bounds instead of labeling a server-default period a
     ),
   ).toEqual({ start: "2026-01-01", end: "2026-01-31" });
 });
+
+it.each(['#finance-reports','#finance-dre'])('preserves the economic period when resolving DRE address %s',hash=>{vi.stubGlobal('location',{hash,search:'?dre_view=dre&dre_start=2000-01-01&dre_end=2000-01-31'});expect(preserveFinancialSearch('/app#finance-dre')).toBe('/app?dre_view=dre&dre_start=2000-01-01&dre_end=2000-01-31#finance-dre');expect(preserveFinancialSearch('/app#finance-dashboard')).toBe('/app#finance-dashboard');vi.unstubAllGlobals()});

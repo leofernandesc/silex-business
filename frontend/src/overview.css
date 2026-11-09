@@ -70,3 +70,13 @@
     margin: -8px 0 16px;
   }
 }
+
+/* Service indicators share the Home tokens and keep three explicit KPI blocks. */
+.home-service-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--silex-space-3); margin: 0; padding: var(--silex-space-4); }
+.home-service-kpis > div { display: flex; flex-direction: column; justify-content: center; gap: var(--silex-space-2); min-width: 0; padding: var(--silex-space-4); border: 1px solid var(--silex-border-default); border-radius: var(--silex-radius-card); background: var(--silex-surface-subtle); }
+.home-service-kpis dt { color: var(--silex-text-muted); font-size: var(--silex-size-caption); line-height: 1.4; }
+.home-service-kpis dd { order: -1; margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 650; line-height: 1.15; color: var(--silex-brand-deep); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+@media screen and (max-width: 650px) {
+ .home-service-kpis { gap: var(--silex-space-2); }
+ .home-service-kpis > div { padding: var(--silex-space-3); }
+}

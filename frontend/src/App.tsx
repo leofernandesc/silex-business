@@ -252,7 +252,7 @@ export default function App() {
             </button>
           </div>
         </header>
-        <main id="main-content" tabIndex={-1} key={safePage} className={undefined}>
+        <main id="main-content" tabIndex={-1} key={safePage === "finance-dre" ? "finance-reports" : safePage} className={undefined}>
           {error && <Notice>{error}</Notice>}
           {safePage === "home" && <AuthenticatedHome user={user} company={company} companyStatus={companyStatus} navigate={navigate}><section className="silex-overview" aria-label="Resumo operacional"><OperationalSummary user={user} navigate={navigate}/></section></AuthenticatedHome>}{" "}
           {safePage === "customers" && <Customers user={user} />}{" "}
@@ -271,7 +271,7 @@ export default function App() {
           {safePage === "finance" && <LedgerPage />}
           {safePage === "finance-dashboard" && <FinanceOverview navigate={navigate} />}
           {safePage === "finance-reconcile" && <FinanceReconciliation />}
-          {safePage === "finance-reports" && <FinanceReports user={user} />}
+          {(safePage === "finance-reports" || safePage === "finance-dre") && <FinanceReports user={user} view={safePage === "finance-dre" ? "dre" : "legacy"} navigate={navigate} />}
           {safePage === "finance-payable" && (
             <FinancePage user={user} initialDirection="expense" />
           )}
@@ -475,7 +475,7 @@ function OperationalSummary({
       </div>
       <p id="overview-values-help" className="overview-values-help">Se necessário, deslize ou use as setas para conferir os valores completos.</p>
       <div className="dashboard-grid">
-        {user.role==='admin'&&<section className="panel" aria-label="Resumo de serviços e pedidos"><div className="panel-heading"><div><h2>Serviços e pedidos</h2><p>Ordens acessíveis ao seu perfil, sem confundir previsão com realização.</p></div></div><dl><div><dt>Agendados</dt><dd>{serviceMetrics?.scheduled??'—'}</dd></div><div><dt>Em execução</dt><dd>{serviceMetrics?.inProgress??'—'}</dd></div><div><dt>Concluídos</dt><dd>{serviceMetrics?.completed??'—'}</dd></div></dl><button className="panel-link" onClick={()=>navigate('service-orders')}>Consultar serviços e pedidos <ArrowRight size={16}/></button></section>}
+        {user.role==='admin'&&<section className="panel home-service-summary" aria-label="Resumo de serviços e pedidos"><div className="panel-heading"><div><h2>Serviços e pedidos</h2><p>Ordens acessíveis ao seu perfil, sem confundir previsão com realização.</p></div></div><dl className="home-service-kpis"><div><dt>Agendados</dt><dd>{serviceMetrics?.scheduled??'—'}</dd></div><div><dt>Em execução</dt><dd>{serviceMetrics?.inProgress??'—'}</dd></div><div><dt>Concluídos</dt><dd>{serviceMetrics?.completed??'—'}</dd></div></dl><button className="panel-link" onClick={()=>navigate('service-orders')}>Consultar serviços e pedidos <ArrowRight size={16}/></button></section>}
         <section className="panel">
           <div className="panel-heading">
             <div>

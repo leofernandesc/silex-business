@@ -1,0 +1,12 @@
+
+> gestao-local@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-dre-home-refinement/frontend
+
+
+ Test Files  24 passed (24)
+      Tests  336 passed (336)
+   Start at  13:39:23
+   Duration  2.89s (transform 1.81s, setup 0ms, import 8.54s, tests 1.01s, environment 4ms)

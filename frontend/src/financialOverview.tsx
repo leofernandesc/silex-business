@@ -1,4 +1,3 @@
-import {dreHref} from "./dreNavigation";
 import { useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Scale } from "lucide-react";
 import { query } from "./api";
@@ -139,9 +138,8 @@ export function FinanceOverview(_props: { navigate: (id: string) => void }) {
     <div className="silex-financial-dashboard" aria-busy={pending}>
       <PageTitle
         title="Visão financeira"
-        subtitle="Movimentos, títulos em aberto, saldos por conta e resultado por competência."
+        subtitle="Movimentos, títulos em aberto, vencimentos e saldos por conta."
       />
-      <p><a href={dreHref()}>Consultar DRE gerencial por competência econômica nos relatórios</a></p>
       <form
         className="panel toolbar dashboard-period"
         onSubmit={(e) => {
