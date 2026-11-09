@@ -1,0 +1,15 @@
+{
+  "candidate": "985e50c4bf33aa976252cfc49696c28765a25ef9",
+  "original_local_path": "/home/leofernandesc/silex-homologacao-15/specs/dre-integration/homologation",
+  "original_artifact_manifest_sha256": "efd6f5dffb4636302dfab67d16c578eaccef8a06a6ed5a249d38cc47e8871d27",
+  "artifact_files_verified": 338,
+  "financial_rows": 132,
+  "numeric_mismatches": 0,
+  "case_results_per_browser": {
+    "PASS": 25,
+    "BLOCKED": 1
+  },
+  "blocked_case": "HOM-22 physical and assistive subcriteria",
+  "human_signoff": false,
+  "historical_not_new_release_tests": true
+}

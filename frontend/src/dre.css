@@ -13,3 +13,9 @@
   .dre-report th, .dre-report td { overflow-wrap: anywhere; }
   .dre-report h3 { break-after: avoid; }
 }
+.dre-source-description { display: block; margin-top: 0.35rem; overflow-wrap: anywhere; }
+.dre-technical { margin: 0.5rem 0; font-size: 0.875rem; overflow-wrap: anywhere; }
+.dre-technical summary { cursor: pointer; }
+@media print {
+  .dre-report .dre-technical { display: none; }
+}

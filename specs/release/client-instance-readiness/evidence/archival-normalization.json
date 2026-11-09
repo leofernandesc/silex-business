@@ -1,0 +1,56 @@
+[
+  {
+    "path": "chromium-before-description-fix.txt",
+    "original_sha256": "4d7555acb8d172fe5dbc0a8fbe6ad8626f0b4e1c2e2a78bdbfafc0661c98065b",
+    "archived_sha256": "9b0b1551151f97540c54e2a56dbd8ecb2fc67beda038e32d9adbcb3fe59fc59e",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "chromium-before-preview-fix.txt",
+    "original_sha256": "37da0cee43aaf1d8839172e437baaf2d4a0bb63de70a8a7df8dee81068605d2b",
+    "archived_sha256": "af82a03fc7bccb2f0ff02bdade4b4e872a77f352da3d7588412c3043d876e945",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "dre-readable-desktop-chromium.csv",
+    "original_sha256": "acbdeee547b5e54a1aecef3d7c9fe3743071d31ac15ba1256e05b8529bcafdf4",
+    "archived_sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "dre-readable-desktop-firefox.csv",
+    "original_sha256": "acbdeee547b5e54a1aecef3d7c9fe3743071d31ac15ba1256e05b8529bcafdf4",
+    "archived_sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "dre-readable-mobile-chromium.csv",
+    "original_sha256": "acbdeee547b5e54a1aecef3d7c9fe3743071d31ac15ba1256e05b8529bcafdf4",
+    "archived_sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "dre-readable-mobile-firefox.csv",
+    "original_sha256": "acbdeee547b5e54a1aecef3d7c9fe3743071d31ac15ba1256e05b8529bcafdf4",
+    "archived_sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "firefox-before-description-fix.txt",
+    "original_sha256": "6d498d8a07bde81e32ef6efd3781ca79fd8c43ce1ab1d7042a59f200d58f7616",
+    "archived_sha256": "9fe9af9d81da37c9793f6745168a58c001f07b0afac1b5594713f8259d1cfbf9",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "firefox-before-preview-fix.txt",
+    "original_sha256": "8db321b622bbc82a58f1e48852e42b52132efc91b8f161d2a4442cbe44fe4627",
+    "archived_sha256": "e4d9327d07e57f9d6beb44cce7dd65b51a963bfc0b48e4ceff73de419c4bf4e2",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  },
+  {
+    "path": "homologation-financial-comparison-historical.csv",
+    "original_sha256": "9dae707dd4617a6e82d487ebc7ca880b871b9412c9b5bde74d3c027d7eb13212",
+    "archived_sha256": "bd631814df4a4a6fa7ae32f62caf3b48954dbc9ed78a011d70aad0a7f0bfff55",
+    "change": "CRLF to LF and trailing whitespace only; original files preserved outside repository"
+  }
+]

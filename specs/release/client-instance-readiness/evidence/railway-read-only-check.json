@@ -1,0 +1,25 @@
+{
+  "project_id": "ebfa4cbf-aba5-4388-ae95-387b836072b7",
+  "environment_id": "3c84a85b-5d0a-4a64-95f1-1b9ca791fe86",
+  "service_id": "697bf677-ec0a-4987-b05b-3c27745aca8f",
+  "reported_by_owner": {
+    "mount": "/data",
+    "database_url": "sqlite:////data/silex-clientes.sqlite3",
+    "source_connected": false,
+    "deployed": false,
+    "variables": [
+      "GESTAO_ENV",
+      "GESTAO_DATABASE_URL"
+    ]
+  },
+  "verified_remotely": false,
+  "blockers": [
+    "Railway CLI unavailable",
+    "No Railway token or CLI config available",
+    "Browser MCP failed before navigation: configured Chrome binary absent"
+  ],
+  "pilot_accessed": false,
+  "resources_created": false,
+  "source_connected": false,
+  "remote_mutations": false
+}

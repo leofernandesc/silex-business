@@ -1,0 +1,46 @@
+{
+  "base": "985e50c4bf33aa976252cfc49696c28765a25ef9",
+  "implementation_commit": "0fdfb65773461619e1fa33b01b76b7367863fa40",
+  "files": [
+    {
+      "path": "frontend/playwright.integration.config.ts",
+      "sha256": "609fda0e390c5263ab9f45b23e7373893edc2fd89351e095b8aa817e0c65a390"
+    },
+    {
+      "path": "frontend/src/dre.css",
+      "sha256": "e29fb4b238e15f0984bb4655f14acb5b0f430fce0e79f6a04e521aa76c5b66b4"
+    },
+    {
+      "path": "frontend/src/dre.tsx",
+      "sha256": "76db5f6365965db301d1a8a801be98ae2a1e12ac1d0e9f285e5013f976df0d4a"
+    },
+    {
+      "path": "frontend/src/dreExport.ts",
+      "sha256": "d8cd9f950ab34cadd74d70c8bef2c7e4fe34b9b480343aaf05eb06de592a24bd"
+    },
+    {
+      "path": "frontend/src/drePresentation.test.ts",
+      "sha256": "a6e0261ff04c8cf8436161527b59932386ab5c905456173698f4556b36c9e787"
+    },
+    {
+      "path": "frontend/src/drePresentation.ts",
+      "sha256": "f143337cd586b5e7a84fed9d5c176cb18a7af5fce8308a69388323d6bd74ac55"
+    },
+    {
+      "path": "frontend/src/dreSource.tsx",
+      "sha256": "f15b583d7016707434030053c542120cbe079c17432fdde9226811704be17d52"
+    },
+    {
+      "path": "frontend/tests/dre-integration.spec.ts",
+      "sha256": "48e1428a362d182468bb217a3b572e3974d348ef14370171613ab5025b2de1ef"
+    },
+    {
+      "path": "frontend/tests/dre-release-ux.spec.ts",
+      "sha256": "b4f89670d2a0f7e9a84f5af8aca130e9b5a4ba7563cffa0e83c4d0f0f081d161"
+    },
+    {
+      "path": "frontend/tests/dre-review-fixes.spec.ts",
+      "sha256": "57ebcc148a7125ddb903d2582a672111d3f5898acd4bed27c4e14de92b972e4d"
+    }
+  ]
+}

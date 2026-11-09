@@ -1,0 +1,106 @@
+[
+  {
+    "path": "archival-normalization.json",
+    "sha256": "8469f7b7bbcacc7af215d2d51730eb4cd0a7626030b906a15838f9ed0aa02494"
+  },
+  {
+    "path": "backend.txt",
+    "sha256": "df62ecf1d0d6fefbe877b97640e5e1343d7a6886ab7571c7fcd9783ada02fd4f"
+  },
+  {
+    "path": "browser-executions.json",
+    "sha256": "80a65744ac4d04e9a260d758a3e1fe888acf9574ed23b4a02e7b6bf87ac5521d"
+  },
+  {
+    "path": "build.txt",
+    "sha256": "b965f9969fa562b82563385536a5150685bf63b4f152031cf4e24f6228f6e601"
+  },
+  {
+    "path": "chromium-before-description-fix.txt",
+    "sha256": "9b0b1551151f97540c54e2a56dbd8ecb2fc67beda038e32d9adbcb3fe59fc59e"
+  },
+  {
+    "path": "chromium-before-preview-fix.txt",
+    "sha256": "af82a03fc7bccb2f0ff02bdade4b4e872a77f352da3d7588412c3043d876e945"
+  },
+  {
+    "path": "chromium-directed.txt",
+    "sha256": "792a542f822da95b9dc4b62de1cf25cd44b7e38271f28c5093b3062904383c1e"
+  },
+  {
+    "path": "dre-readable-desktop-chromium.csv",
+    "sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52"
+  },
+  {
+    "path": "dre-readable-desktop-firefox.csv",
+    "sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52"
+  },
+  {
+    "path": "dre-readable-mobile-chromium.csv",
+    "sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52"
+  },
+  {
+    "path": "dre-readable-mobile-firefox.csv",
+    "sha256": "0706b53870eb6c1c385b41c3ff1ad8d66d09e7f42f1974b6bd016bdd5fbbfb52"
+  },
+  {
+    "path": "dre-ux-a4.pdf",
+    "sha256": "a614c5a155307db088db93c07af655d2106aa0e9f6d4adddd3db7b58f66e7d49"
+  },
+  {
+    "path": "dre-ux-desktop-chromium.png",
+    "sha256": "2af074a39b53b2a75eeb033bb7bd5d63045a0f45398cf18cd9ce474ce4ce4f39"
+  },
+  {
+    "path": "dre-ux-desktop-firefox.png",
+    "sha256": "a8aeb365943b3530308786b5f3e05fb48f2f0192711ce1688c43678037576581"
+  },
+  {
+    "path": "dre-ux-mobile-chromium.png",
+    "sha256": "f49934cddca6d6a8b3979480065fdc092e2c336698bceeafa0caff6943b4a12d"
+  },
+  {
+    "path": "dre-ux-mobile-firefox.png",
+    "sha256": "65ddf53bee6b2ad4fb04ad53d7822afdc8b77a8e68b2b2741b5bc6f950543ce2"
+  },
+  {
+    "path": "firefox-before-description-fix.txt",
+    "sha256": "9fe9af9d81da37c9793f6745168a58c001f07b0afac1b5594713f8259d1cfbf9"
+  },
+  {
+    "path": "firefox-before-preview-fix.txt",
+    "sha256": "e4d9327d07e57f9d6beb44cce7dd65b51a963bfc0b48e4ceff73de419c4bf4e2"
+  },
+  {
+    "path": "firefox-directed.txt",
+    "sha256": "676372e555e3d618152b6922f36bf702972f951479c8ac86c9de43aa33d5523e"
+  },
+  {
+    "path": "frontend.txt",
+    "sha256": "4866ff0b639410a26c87eeae67d775c46974120522dfd1bf6ba83801bbb27f67"
+  },
+  {
+    "path": "homologation-financial-comparison-historical.csv",
+    "sha256": "bd631814df4a4a6fa7ae32f62caf3b48954dbc9ed78a011d70aad0a7f0bfff55"
+  },
+  {
+    "path": "homologation-reference.json",
+    "sha256": "f7f16140fa19bb73cbda4f6241054370bb0810885debb562be124cbfed1c47a7"
+  },
+  {
+    "path": "legacy-report-comparison.json",
+    "sha256": "d3e7a7581a0244df142f0c358c010a47565c045b941a162cd3eaa62606729952"
+  },
+  {
+    "path": "railway-read-only-check.json",
+    "sha256": "e7dad453c59ace80fbd58a4aa8abf38f40de7a18a6d8b9db355b6906a9d9d131"
+  },
+  {
+    "path": "restart.json",
+    "sha256": "46c055d69229ab3fa0f6e9060968ad56ead736e63856e71aa33e861327687f03"
+  },
+  {
+    "path": "tested-sources.json",
+    "sha256": "a10d33d8699896c112488ae0e6c1208db33b3bd0622d64a036992690dc31983a"
+  }
+]
