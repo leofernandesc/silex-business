@@ -22,7 +22,7 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  await page.getByRole('button',{name:'Voltar',exact:true}).click();
  await page.goto('/app#finance-reports');await page.getByLabel('Relatório',{exact:true}).selectOption('dre');
  const key=`finance_entry:${entry.id}:principal`;
- await page.getByRole('button',{name:'Revisar reconhecimento de '+key,exact:true}).click();
+ await page.getByRole('button',{name:'Revisar reconhecimento de Conta a receber #'+key.split(':')[1],exact:true}).click();
  await page.getByLabel('Tipo de evidência *',{exact:true}).fill('Documento sintético comprovado');
  await page.getByLabel('Justificativa e evidência *',{exact:true}).fill('Receita auferida e conferida na fixture');
  let decisions=0;await page.route('**/api/finance/dre/recognition-review',route=>{decisions++;return decisions===1?route.fulfill({status:503,json:{detail:'Unavailable'}}):route.continue()});
@@ -31,8 +31,8 @@ test('DRE: classify in the existing plan, confirm economic recognition and expor
  await page.getByRole('button',{name:'Confirmar revisão',exact:true}).click();
  expect(decisions).toBe(2);
  await expect(page.getByRole('dialog')).toHaveCount(0);
- await page.getByRole('button',{name:'Detalhar RB',exact:true}).click();
- await page.getByRole('link',{name:key,exact:true}).click();
+ await page.getByRole('button',{name:'Detalhar Receita bruta',exact:true}).click();
+ await page.getByRole('link',{name:'Conta a receber #'+entry.id,exact:true}).click();
  await expect(page).toHaveURL(/#finance-receivable$/);
  await expect(page.getByRole('dialog')).toContainText('Fato econômico fictício DRE');
  await page.getByRole('button',{name:'Fechar janela',exact:true}).click();
