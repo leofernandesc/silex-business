@@ -1,0 +1,313 @@
+[WebServer] INFO:     Started server process [1254026]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8041 (Press CTRL+C to quit)
+
+Running 94 tests using 1 worker
+
+(node:1254824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-commercial.spec.ts:20:1 › DRE commercial: reusable setup, uncompleted service and manual evidence stay outside the statement and exports (6.2s)
+  ✓   2 [desktop] › tests/dre-commercial.spec.ts:56:1 › DRE commercial: administrative destination is denied to operator and visitor (534ms)
+  ✓   3 [desktop] › tests/dre-home-navigation.spec.ts:56:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (2.7s)
+  ✓   4 [desktop] › tests/dre-home-navigation.spec.ts:102:1 › DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports (1.6s)
+  ✓   5 [desktop] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve nonzero counts (1.2s)
+  ✓   6 [desktop] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve unavailable states (1.2s)
+  ✓   7 [desktop] › tests/dre-home-navigation.spec.ts:166:1 › Home KPIs remain three legible columns at tablet widths (1.2s)
+  ✓   8 [desktop] › tests/dre-home-navigation.spec.ts:196:1 › DRE direct URL and API preserve operator and visitor authorization (1.2s)
+  ✓   9 [desktop] › tests/dre-home-navigation.spec.ts:220:1 › DRE legacy deep link, active item, history and report selector preserve applied periods (2.3s)
+  ✓  10 [desktop] › tests/dre-home-navigation.spec.ts:278:1 › DRE service lifecycle through real forms shows known revenue once and explains missing coverage (10.8s)
+  ✓  11 [desktop] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (6.2s)
+  ✓  12 [desktop] › tests/dre-integration.spec.ts:58:1 › navigation aliases converge on one home and one financial plan (957ms)
+  ✓  13 [desktop] › tests/dre-integration.spec.ts:66:1 › service completion persists without auto titles and contextual generation remains confirmed and unique (1.8s)
+  ✘  14 [desktop] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (6.0s)
+(node:1262011) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  15 [desktop] › tests/dre-release-ux.spec.ts:9:1 › DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure (2.0s)
+  ✓  16 [desktop] › tests/dre-release-ux.spec.ts:15:1 › DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels (4.2s)
+  ✓  17 [desktop] › tests/dre-release-ux.spec.ts:19:1 › DRE release: unavailable description and fresh export authorization do not disclose stale financial information (2.2s)
+  ✓  18 [desktop] › tests/dre-release-ux.spec.ts:24:1 › DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile (4.9s)
+  ✓  19 [desktop] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (3.1s)
+  ✓  20 [desktop] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (3.3s)
+  ✓  21 [desktop] › tests/dre-review-fixes.spec.ts:54:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (5.6s)
+  ✓  22 [desktop] › tests/dre-review-fixes.spec.ts:75:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (1.4s)
+  ✓  23 [desktop] › tests/ux-homologation.spec.ts:39:1 › UX: empty DRE has an understandable empty state instead of unavailable rows (906ms)
+  ✓  24 [desktop] › tests/ux-homologation.spec.ts:57:1 › UX: reversal action is reachable without horizontal scrolling with long descriptions and attachments (2.2s)
+  ✓  25 [desktop] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 1440px (2.7s)
+  ✓  26 [desktop] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 1024px (2.6s)
+  ✓  27 [desktop] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 768px (2.4s)
+  ✓  28 [desktop] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 375px (2.3s)
+  ✓  29 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 1 product value persists in integer cents (2.1s)
+  ✓  30 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 2 product value persists in integer cents (2.8s)
+  ✓  31 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 3 product value persists in integer cents (3.9s)
+  ✓  32 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 4 product value persists in integer cents (4.0s)
+  ✓  33 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 5 product value persists in integer cents (3.0s)
+  ✓  34 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 6 product value persists in integer cents (2.9s)
+  ✓  35 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 7 product value persists in integer cents (2.8s)
+  ✓  36 [desktop] › tests/ux-homologation.spec.ts:201:3 › UX money: 8 product value persists in integer cents (2.7s)
+  ✓  37 [desktop] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid 1.000 never saves a product (1.6s)
+  ✓  38 [desktop] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid R$ 5.000,001 never saves a product (1.4s)
+  ✓  39 [desktop] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid R$ 1 2 never saves a product (1.5s)
+  ✓  40 [desktop] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid -R$ 5,00 never saves a product (1.3s)
+  ✓  41 [desktop] › tests/ux-homologation.spec.ts:268:3 › UX money: income partial payment and reversal preserve cents and one mutation (2.4s)
+  ✓  42 [desktop] › tests/ux-homologation.spec.ts:268:3 › UX money: expense partial payment and reversal preserve cents and one mutation (2.4s)
+  ✓  43 [desktop] › tests/ux-homologation.spec.ts:343:1 › UX money: signed balances, percentage rates and budgets use their own contracts (1.8s)
+  ✓  44 [desktop] › tests/ux-homologation.spec.ts:392:1 › UX money: service costs and daily quantities persist independently after edit (2.8s)
+  ✓  45 [desktop] › tests/ux-homologation.spec.ts:457:1 › UX money: draft sale values and discounts preserve quantity precision and cursor (1.6s)
+  ✘  46 [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px (8.1s)
+(node:1276380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  47 [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px (7.8s)
+(node:1278949) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  48 [mobile] › tests/dre-commercial.spec.ts:20:1 › DRE commercial: reusable setup, uncompleted service and manual evidence stay outside the statement and exports (6.8s)
+  ✓  49 [mobile] › tests/dre-commercial.spec.ts:56:1 › DRE commercial: administrative destination is denied to operator and visitor (746ms)
+  ✓  50 [mobile] › tests/dre-home-navigation.spec.ts:56:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (5.8s)
+  ✓  51 [mobile] › tests/dre-home-navigation.spec.ts:102:1 › DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports (3.0s)
+  ✓  52 [mobile] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve nonzero counts (1.3s)
+  ✓  53 [mobile] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve unavailable states (1.3s)
+  ✓  54 [mobile] › tests/dre-home-navigation.spec.ts:166:1 › Home KPIs remain three legible columns at tablet widths (1.3s)
+  ✓  55 [mobile] › tests/dre-home-navigation.spec.ts:196:1 › DRE direct URL and API preserve operator and visitor authorization (1.2s)
+  ✓  56 [mobile] › tests/dre-home-navigation.spec.ts:220:1 › DRE legacy deep link, active item, history and report selector preserve applied periods (2.6s)
+  ✓  57 [mobile] › tests/dre-home-navigation.spec.ts:278:1 › DRE service lifecycle through real forms shows known revenue once and explains missing coverage (11.8s)
+  ✓  58 [mobile] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (5.1s)
+  ✓  59 [mobile] › tests/dre-integration.spec.ts:58:1 › navigation aliases converge on one home and one financial plan (859ms)
+  ✓  60 [mobile] › tests/dre-integration.spec.ts:66:1 › service completion persists without auto titles and contextual generation remains confirmed and unique (1.5s)
+  ✘  61 [mobile] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (5.9s)
+(node:1287188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  62 [mobile] › tests/dre-release-ux.spec.ts:9:1 › DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure (1.3s)
+  ✓  63 [mobile] › tests/dre-release-ux.spec.ts:15:1 › DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels (3.0s)
+  ✓  64 [mobile] › tests/dre-release-ux.spec.ts:19:1 › DRE release: unavailable description and fresh export authorization do not disclose stale financial information (1.8s)
+  ✓  65 [mobile] › tests/dre-release-ux.spec.ts:24:1 › DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile (4.3s)
+  ✓  66 [mobile] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (1.9s)
+  ✓  67 [mobile] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (1.7s)
+  ✓  68 [mobile] › tests/dre-review-fixes.spec.ts:54:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (2.3s)
+  ✓  69 [mobile] › tests/dre-review-fixes.spec.ts:75:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (1.0s)
+  ✓  70 [mobile] › tests/ux-homologation.spec.ts:39:1 › UX: empty DRE has an understandable empty state instead of unavailable rows (662ms)
+  ✓  71 [mobile] › tests/ux-homologation.spec.ts:57:1 › UX: reversal action is reachable without horizontal scrolling with long descriptions and attachments (1.9s)
+  ✓  72 [mobile] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 1440px (1.9s)
+  ✓  73 [mobile] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 1024px (1.8s)
+  ✓  74 [mobile] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 768px (2.1s)
+  ✓  75 [mobile] › tests/ux-homologation.spec.ts:109:3 › UX: visual route and form inventory at 375px (2.3s)
+  ✓  76 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 1 product value persists in integer cents (2.0s)
+  ✓  77 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 2 product value persists in integer cents (2.2s)
+  ✓  78 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 3 product value persists in integer cents (1.9s)
+  ✓  79 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 4 product value persists in integer cents (1.9s)
+  ✓  80 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 5 product value persists in integer cents (1.9s)
+  ✓  81 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 6 product value persists in integer cents (1.7s)
+  ✓  82 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 7 product value persists in integer cents (2.1s)
+  ✓  83 [mobile] › tests/ux-homologation.spec.ts:201:3 › UX money: 8 product value persists in integer cents (2.1s)
+  ✓  84 [mobile] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid 1.000 never saves a product (814ms)
+  ✓  85 [mobile] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid R$ 5.000,001 never saves a product (765ms)
+  ✓  86 [mobile] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid R$ 1 2 never saves a product (1.2s)
+  ✓  87 [mobile] › tests/ux-homologation.spec.ts:243:3 › UX money: invalid -R$ 5,00 never saves a product (835ms)
+  ✓  88 [mobile] › tests/ux-homologation.spec.ts:268:3 › UX money: income partial payment and reversal preserve cents and one mutation (1.7s)
+  ✓  89 [mobile] › tests/ux-homologation.spec.ts:268:3 › UX money: expense partial payment and reversal preserve cents and one mutation (1.3s)
+  ✓  90 [mobile] › tests/ux-homologation.spec.ts:343:1 › UX money: signed balances, percentage rates and budgets use their own contracts (1.6s)
+  ✓  91 [mobile] › tests/ux-homologation.spec.ts:392:1 › UX money: service costs and daily quantities persist independently after edit (2.5s)
+  ✓  92 [mobile] › tests/ux-homologation.spec.ts:457:1 › UX money: draft sale values and discounts preserve quantity precision and cursor (1.3s)
+  ✘  93 [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px (7.5s)
+(node:1289666) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  94 [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px (8.4s)
+
+
+  1) [desktop] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.dre-report tbody tr').filter({ has: getByRole('rowheader', { name: /Lucro líquido gerencial/ }) })
+    Expected substring: "Indisponível"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" locator('.dre-report tbody tr').filter({ has: getByRole('rowheader', { name: /Lucro líquido gerencial/ }) }) with timeout 5000ms
+      - waiting for locator('.dre-report tbody tr').filter({ has: getByRole('rowheader', { name: /Lucro líquido gerencial/ }) })
+
+
+      85 |  await page.getByRole('button',{name:'Tentar novamente: DRE gerencial',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Resposta inválida');
+      86 |  await page.getByRole('button',{name:'Tentar novamente: DRE gerencial',exact:true}).click();await expect(page.getByRole('alert')).toHaveCount(0);
+    > 87 |  const line=page.locator('.dre-report tbody tr').filter({has:page.getByRole('rowheader',{name:/Lucro líquido gerencial/})});await expect(line).toContainText('Indisponível');await expect(line).not.toContainText('R$ 0,00');expect(requests).toBe(3);
+         |                                                                                                                                                ^
+      88 | });
+      89 |
+        at /home/leofernandesc/silex-dre-commercial/frontend/tests/dre-integration.spec.ts:87:144
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-commercial-chromium-output/dre-integration-DRE-lookup-c0d2f-out-reporting-a-zero-profit-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-commercial-chromium-output/dre-integration-DRE-lookup-c0d2f-out-reporting-a-zero-profit-desktop/error-context.md
+
+  2) [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.dre-screen-detail')
+    Expected substring: "Conclusão do serviço conferida"
+    Received string:    "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('.dre-screen-detail') with timeout 5000ms
+      - waiting for locator('.dre-screen-detail')
+        - locator resolved to <section class="dre-screen-detail dre-records">…</section>
+        - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1Consultando a descrição da operação…Receita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+        13 × locator resolved to <section class="dre-screen-detail dre-records">…</section>
+           - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+
+
+      589 |       .getByRole("button", { name: "Detalhar Receita bruta", exact: true })
+      590 |       .click();
+    > 591 |     await expect(page.locator(".dre-screen-detail")).toContainText(
+          |                                                      ^
+      592 |       "Conclusão do serviço conferida",
+      593 |     );
+      594 |     await expect(page.locator(".dre-screen-detail")).toContainText(
+        at /home/leofernandesc/silex-dre-commercial/frontend/tests/ux-homologation.spec.ts:591:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-78626-complete-coverage-at-1440px-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-78626-complete-coverage-at-1440px-desktop/error-context.md
+
+  3) [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.dre-screen-detail')
+    Expected substring: "Conclusão do serviço conferida"
+    Received string:    "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('.dre-screen-detail') with timeout 5000ms
+      - waiting for locator('.dre-screen-detail')
+        - locator resolved to <section class="dre-screen-detail dre-records">…</section>
+        - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorCarregando registros..."
+        13 × locator resolved to <section class="dre-screen-detail dre-records">…</section>
+           - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+
+
+      589 |       .getByRole("button", { name: "Detalhar Receita bruta", exact: true })
+      590 |       .click();
+    > 591 |     await expect(page.locator(".dre-screen-detail")).toContainText(
+          |                                                      ^
+      592 |       "Conclusão do serviço conferida",
+      593 |     );
+      594 |     await expect(page.locator(".dre-screen-detail")).toContainText(
+        at /home/leofernandesc/silex-dre-commercial/frontend/tests/ux-homologation.spec.ts:591:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-fd773--complete-coverage-at-375px-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-fd773--complete-coverage-at-375px-desktop/error-context.md
+
+  4) [mobile] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.dre-report tbody tr').filter({ has: getByRole('rowheader', { name: /Lucro líquido gerencial/ }) })
+    Expected substring: "Indisponível"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" locator('.dre-report tbody tr').filter({ has: getByRole('rowheader', { name: /Lucro líquido gerencial/ }) }) with timeout 5000ms
+      - waiting for locator('.dre-report tbody tr').filter({ has: getByRole('rowheader', { name: /Lucro líquido gerencial/ }) })
+
+
+      85 |  await page.getByRole('button',{name:'Tentar novamente: DRE gerencial',exact:true}).click();await expect(page.getByRole('alert')).toContainText('Resposta inválida');
+      86 |  await page.getByRole('button',{name:'Tentar novamente: DRE gerencial',exact:true}).click();await expect(page.getByRole('alert')).toHaveCount(0);
+    > 87 |  await expect(page.locator('.dre-summary')).toContainText('Informações insuficientes');await expect(page.locator('.dre-lines')).toHaveCount(0);await expect(page.locator('.dre-report')).not.toContainText('R$ 0,00');const today=(await(await page.request.get('/api/dashboard')).json()).date;const report=await(await page.request.get('/api/finance/dre',{params:{start:today.slice(0,7)+'-01',end:today}})).json();expect(report.lines.find((l:any)=>l.code==='LL').final_amount_cents).toBeNull();expect(requests).toBe(3);
+         |                                                                                                                                                ^
+      88 | });
+      89 |
+        at /home/leofernandesc/silex-dre-commercial/frontend/tests/dre-integration.spec.ts:87:144
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-commercial-chromium-output/dre-integration-DRE-lookup-c0d2f-out-reporting-a-zero-profit-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-commercial-chromium-output/dre-integration-DRE-lookup-c0d2f-out-reporting-a-zero-profit-mobile/error-context.md
+
+  5) [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.dre-screen-detail')
+    Expected substring: "Conclusão do serviço conferida"
+    Received string:    "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('.dre-screen-detail') with timeout 5000ms
+      - waiting for locator('.dre-screen-detail')
+        - locator resolved to <section class="dre-screen-detail dre-records">…</section>
+        - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorCarregando registros..."
+        13 × locator resolved to <section class="dre-screen-detail dre-records">…</section>
+           - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+
+
+      589 |       .getByRole("button", { name: "Detalhar Receita bruta", exact: true })
+      590 |       .click();
+    > 591 |     expect(report.facts[0].recognition_basis).toBe("verified_finalization");
+          |                                                      ^
+      592 |     await expect(page.locator(".dre-screen-detail code")).toHaveCount(0);
+      593 |     await expect(page.locator(".dre-screen-detail")).toContainText(
+      594 |       "Serviço fictício comprovado para homologação",
+        at /home/leofernandesc/silex-dre-commercial/frontend/tests/ux-homologation.spec.ts:591:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-78626-complete-coverage-at-1440px-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-78626-complete-coverage-at-1440px-mobile/error-context.md
+
+  6) [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('.dre-screen-detail')
+    Expected substring: "Conclusão do serviço conferida"
+    Received string:    "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('.dre-screen-detail') with timeout 5000ms
+      - waiting for locator('.dre-screen-detail')
+        - locator resolved to <section class="dre-screen-detail dre-records">…</section>
+        - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorCarregando registros..."
+        - locator resolved to <section class="dre-screen-detail dre-records">…</section>
+        - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1Consultando a descrição da operação…Receita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+        12 × locator resolved to <section class="dre-screen-detail dre-records">…</section>
+           - unexpected value "Fontes de Receita brutaOrigemRubricaData econômicaValorReceita do serviço #1OS-000001 · Serviço fictício comprovado para homologação · Cliente: Empresa fictícia da DREReceita bruta10/01/2000R$ 5.000,011 registro1 de 1"
+
+
+      589 |       .getByRole("button", { name: "Detalhar Receita bruta", exact: true })
+      590 |       .click();
+    > 591 |     expect(report.facts[0].recognition_basis).toBe("verified_finalization");
+          |                                                      ^
+      592 |     await expect(page.locator(".dre-screen-detail code")).toHaveCount(0);
+      593 |     await expect(page.locator(".dre-screen-detail")).toContainText(
+      594 |       "Serviço fictício comprovado para homologação",
+        at /home/leofernandesc/silex-dre-commercial/frontend/tests/ux-homologation.spec.ts:591:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-fd773--complete-coverage-at-375px-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-commercial-chromium-output/ux-homologation-UX-DRE-ser-fd773--complete-coverage-at-375px-mobile/error-context.md
+
+  6 failed
+    [desktop] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit
+    [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px
+    [desktop] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px
+    [mobile] › tests/dre-integration.spec.ts:80:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit
+    [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px
+    [mobile] › tests/ux-homologation.spec.ts:499:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px
+  88 passed (4.6m)

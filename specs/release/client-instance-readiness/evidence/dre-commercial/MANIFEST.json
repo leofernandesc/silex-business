@@ -1,0 +1,240 @@
+{
+  "base": "e90a3de62644aa864a17cb05448fe2e56803f6b5",
+  "source_commit": "260e27d78e34095db4e9ec715e43474f7eab2751",
+  "source_files": [
+    {
+      "path": "backend/tests/test_dre_commercial_workflow.py",
+      "sha256": "147d3a4f24dd399a4ff12f4201cff7cea2732342659022913109a6ab343d8ddd"
+    },
+    {
+      "path": "frontend/playwright.integration.config.ts",
+      "sha256": "842d19e6429f2e8698d6f56808fe60d2dc44e1f2a7bb53d2fee50978cce1bca9"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "967ef6b73a8f07782a9ca2289617d2aa13a135f25488ae5ff5ef43cae78bae16"
+    },
+    {
+      "path": "frontend/src/dre.css",
+      "sha256": "6a059ea34f96d69abd95cdf468ca65178e709d2ed9356327ae3c8ebf8fa678a0"
+    },
+    {
+      "path": "frontend/src/dre.tsx",
+      "sha256": "4f06b563fe5f9a740c9ca2c706023d40b102e607b9a9a07e17d58a4cbaaa176f"
+    },
+    {
+      "path": "frontend/src/dreAdministration.tsx",
+      "sha256": "c9efba1687798dfd36c11be25bce68c302bae3ce04410dad36d811e5f10ac291"
+    },
+    {
+      "path": "frontend/src/dreCommercial.test.ts",
+      "sha256": "37cc43055ccf1e5e0f0b5dcfbd32b1dc3fc4a5659aaa465407102aefdb9ba9ab"
+    },
+    {
+      "path": "frontend/src/dreExport.ts",
+      "sha256": "80e70478ba7d62f7f325545ce3a967c49ff8d305180522fe4cff7afbaf58933b"
+    },
+    {
+      "path": "frontend/src/dreNavigation.ts",
+      "sha256": "e4e5c8a87f9ad3523ef4383c6353121eaad8c472b8669e50a65430441a951db1"
+    },
+    {
+      "path": "frontend/src/drePresentation.test.ts",
+      "sha256": "1e7567df204990532464a0286e03febc20330fb1d120d7852edeb8db6a14b881"
+    },
+    {
+      "path": "frontend/src/drePresentation.ts",
+      "sha256": "14b1db513577fe0a986ece9eb312d43e614ce99758447cc18772423a45e7f139"
+    },
+    {
+      "path": "frontend/src/financePlanning.tsx",
+      "sha256": "07af7383828be9bf25a541a473dc7ae1e314debbd6121e902f03bbb8bf93c8df"
+    },
+    {
+      "path": "frontend/src/financialNavigation.test.ts",
+      "sha256": "d142ec14dce4b791f1fddd5cdf3e5e84d7bc937aa0c30b0f1851bdeacbb189cf"
+    },
+    {
+      "path": "frontend/src/financialNavigation.ts",
+      "sha256": "5cf4ffbc5d9706891dd2fafc4c91ecf6f4037bbfe7620598a35847dcd06d10fb"
+    },
+    {
+      "path": "frontend/src/navigation/routes.test.ts",
+      "sha256": "2631748079f537e3587c23182515051408612569455e4934d2ef8ceb1af938e5"
+    },
+    {
+      "path": "frontend/src/navigation/routes.ts",
+      "sha256": "e2cd320d462e157da436c218cc46743b34870bdcb94169aa54ff2b5f3e56a45b"
+    },
+    {
+      "path": "frontend/src/navigation/useAppNavigation.ts",
+      "sha256": "d7b980953d3024e8638fe3f621bbc550456b4179f9087cfc2ae6303a1e13667a"
+    },
+    {
+      "path": "frontend/src/ui.tsx",
+      "sha256": "ac9a1dc727e874fcd2a264be7862aadbcf88d7f53582fce3f046b3c8ed31234d"
+    },
+    {
+      "path": "frontend/tests/dre-commercial.spec.ts",
+      "sha256": "f8385afbf635155bcd26c1570c59ee1b64998bce6355cb4f1640cb6da03b6ea4"
+    },
+    {
+      "path": "frontend/tests/dre-home-navigation.spec.ts",
+      "sha256": "81c895118b19150d583baefd57e44571ac7c92ec4ca2cadab4a2bf40dc92afe9"
+    },
+    {
+      "path": "frontend/tests/dre-integration.spec.ts",
+      "sha256": "26a409d976bddf3584dbaeea12e9d152c7434b30601528ca6ae18b6d795f35f5"
+    },
+    {
+      "path": "frontend/tests/dre-release-ux.spec.ts",
+      "sha256": "c5751fc466e92609ac02dcd3fdffd83c24d722c606aac9edbf1fdf276dcaa8f9"
+    },
+    {
+      "path": "frontend/tests/dre-review-fixes.spec.ts",
+      "sha256": "4c379aa29e8c0d52029f9a2495d5d19eef49ee99afa723951d289cf0fdd7c9f3"
+    },
+    {
+      "path": "frontend/tests/home.spec.ts",
+      "sha256": "9ee80f14926e72d31817e70fd49bb346168ada00aed20f280a891ea963534164"
+    },
+    {
+      "path": "frontend/tests/navigation.spec.ts",
+      "sha256": "8e90fbc787820d7d6f3ecae60807b811b19e56fd4fce903d9757ec3c424648eb"
+    },
+    {
+      "path": "frontend/tests/predeploy-export-session.spec.ts",
+      "sha256": "df79ddb04ffe109710e255aec8296a9c5043ecb346de8d12611dbcc7b6195ddc"
+    },
+    {
+      "path": "frontend/tests/routeReadiness.ts",
+      "sha256": "4d82e9db3b5d0451e9dfbc099b020a14f56be268d8c4e46754ca02e0661cfbb8"
+    },
+    {
+      "path": "frontend/tests/ux-homologation.spec.ts",
+      "sha256": "e5c691e8b6b19f990e323092b9cc4b5412de094c61d0bd27a78f7fba314cc26f"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "audit-desktop.csv",
+      "sha256": "6d785dc90f82681ff8f0262607a5b42a9d86fabeb2a57b66ef17137b3a84016a",
+      "bytes": 2876
+    },
+    {
+      "path": "audit-mobile.csv",
+      "sha256": "627c65b221f7f28b4b4fbc9ee32ac4a85ffe893e04f16567e4d7c1fea4ffeb25",
+      "bytes": 2876
+    },
+    {
+      "path": "backend-full.txt",
+      "sha256": "e2e549015c44b3140d8b4115dcc3d1d346165a9db3de5d3bdd9aa5ed14373adf",
+      "bytes": 941
+    },
+    {
+      "path": "baseline-negative.txt",
+      "sha256": "55b2a2e06cb99e96851ecefb7c62c43eaed9c4cc91c143f500d65bbf0baf8bdf",
+      "bytes": 2509
+    },
+    {
+      "path": "chromium-directed.txt",
+      "sha256": "eb590a269d3e87c3c2259af31bb60b83b43430f93d3c3fc74e23b18c85e76c98",
+      "bytes": 2931
+    },
+    {
+      "path": "chromium-intermediate.txt",
+      "sha256": "f283c0df4f15458230cb0aa14aa9a2bcf15623017940e70bb4d42966ce28ed5b",
+      "bytes": 31961
+    },
+    {
+      "path": "commercial-a4.pdf",
+      "sha256": "fbd01ea09a7f4621dd86c874be343e92a88710edf8fd7c56e9d21449c58296b2",
+      "bytes": 51748
+    },
+    {
+      "path": "commercial-a4.txt",
+      "sha256": "caa2aaff354f0d5b2132f6ff9bfacac91f218c90220482ff0e8e86383e6f9c14",
+      "bytes": 2002
+    },
+    {
+      "path": "commercial-desktop.csv",
+      "sha256": "a9aa371dd0adbfbdc2b877b65401b42f236ebe0c8272a031b5c495db31616938",
+      "bytes": 1528
+    },
+    {
+      "path": "commercial-desktop.png",
+      "sha256": "7550c40a499a5cdf3d676be0db8e7652eb27933d7599b73a8b37f0994970e005",
+      "bytes": 148415
+    },
+    {
+      "path": "commercial-mobile.csv",
+      "sha256": "a9aa371dd0adbfbdc2b877b65401b42f236ebe0c8272a031b5c495db31616938",
+      "bytes": 1528
+    },
+    {
+      "path": "commercial-mobile.png",
+      "sha256": "8ccaa1058a46c021c11302c9af9233158bf3d259ab8b47b459fc762f576ced3d",
+      "bytes": 147051
+    },
+    {
+      "path": "configuration-desktop.png",
+      "sha256": "29bd8c6ffe55c8063ca19504b492e20287f1331d60462c858ad65c6b69297c9e",
+      "bytes": 229141
+    },
+    {
+      "path": "configuration-mobile.png",
+      "sha256": "71dea56eb07b31d019bcddfa2610d269395efc3885478e7982ee71000618872e",
+      "bytes": 248982
+    },
+    {
+      "path": "firefox-commercial-mobile.png",
+      "sha256": "ce849629285d74de9317d27aa3715233c3c3a502009a84a51b9fdb9421e36a4f",
+      "bytes": 198584
+    },
+    {
+      "path": "firefox-configuration-mobile.png",
+      "sha256": "f4d07178543efabd0575afe435772f3ebff0986a9551c0b303b8c9bd44b7c10b",
+      "bytes": 346344
+    },
+    {
+      "path": "firefox-directed.txt",
+      "sha256": "66667704f6c340cad41d88d587a29c9d09d6cd04e8a123831709d84ed2fd6d54",
+      "bytes": 15033
+    },
+    {
+      "path": "frontend-full.txt",
+      "sha256": "81efa701196da14a3f77f7e1e86e93b08063fc8dc511a5804e637bdd0b71d5f1",
+      "bytes": 283
+    },
+    {
+      "path": "legacy-comparison.json",
+      "sha256": "c54b8724523162f064bc0e353f822fcdc65a7439651b9cd14ac99e771d722297",
+      "bytes": 36314
+    },
+    {
+      "path": "service-500001-desktop.png",
+      "sha256": "2c6dd54c807707788c8959844fe787ca021b6e350af17aaee467c0d1222b360e",
+      "bytes": 148762
+    },
+    {
+      "path": "service-500001-mobile.png",
+      "sha256": "dbc5388e437591df445f6ab4a0186e2c0ea7cc1a1e598f9505fa8ca1cac9945f",
+      "bytes": 147978
+    },
+    {
+      "path": "source-secret-scan.txt",
+      "sha256": "10f277f31873130d4c68fea73963df325d0c24b66dad3852ae3d3eb1bfd8ee1f",
+      "bytes": 108
+    },
+    {
+      "path": "typescript-build.txt",
+      "sha256": "cf4a51cf9230ebf4126ed643699242841adb52ed3c590baa6e4cbcbc1f24175a",
+      "bytes": 754
+    }
+  ],
+  "notes": [
+    "Actual local browser/PDF/CSV outputs; entirely fictitious disposable SQLite. No Railway access.",
+    "Archived logs strip ANSI and trailing whitespace only; intermediate failures are retained.",
+    "Final immutable SHA and CI results are recorded in PR checks and description; no historical PASS is reassigned."
+  ]
+}
