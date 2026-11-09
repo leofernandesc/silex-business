@@ -255,3 +255,17 @@
     }
   }
 }
+
+/* Payment history uses records: the action stays next to its own date and amount. */
+.payment-records { list-style: none; margin: 16px 0; padding: 0; display: grid; gap: 16px; }
+.payment-record { border: 1px solid var(--silex-border-default); border-radius: var(--silex-radius-card); padding: 16px; min-width: 0; overflow-wrap: anywhere; }
+.payment-record > header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: start; gap: 12px; }
+.payment-record > header > div { min-width: 0; flex: 1 1 14rem; }
+.payment-record button { flex-shrink: 0; max-width: 100%; }
+.payment-record h3 { font-size: 1rem; }
+.payment-record h4 { margin-top: 12px; }
+.payment-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: 12px; margin-block: 16px; }
+.payment-values dt { color: var(--silex-text-muted); font-size: 0.875rem; }
+.payment-values dd { margin: 4px 0 0; font-variant-numeric: tabular-nums; }
+.payment-record .attachment-list { min-width: 0; }
+.payment-record .attachment-list a { overflow-wrap: anywhere; }

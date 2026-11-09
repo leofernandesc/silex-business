@@ -1,0 +1,18 @@
+
+> gestao-local@0.1.0 build
+> tsc -b && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 3124 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                        0.60 kB │ gzip:   0.37 kB
+dist/assets/PublicPage-DkWOma6T.css   11.83 kB │ gzip:   2.49 kB
+dist/assets/App-C8_RbEDP.css          42.03 kB │ gzip:   6.06 kB
+dist/assets/index-C_2apK6P.css        46.98 kB │ gzip:  10.44 kB
+dist/assets/x-DA8WnQqB.js              3.44 kB │ gzip:   1.58 kB
+dist/assets/PublicPage-CELdANNN.js    12.04 kB │ gzip:   3.61 kB
+dist/assets/index-CL7x8yoQ.js        228.54 kB │ gzip:  71.70 kB
+dist/assets/App-DqMXtOJf.js          482.88 kB │ gzip: 145.40 kB
+✓ built in 3.84s

@@ -1,0 +1,36 @@
+DRE gerencial
+01/01/2000 a 31/01/2000 · Competência econômica · Silex Business
+Resultado parcial. Faltam confirmações de custos, tributos ou outros componentes.
+Rubrica                    Cobertura                   Valor conhecido              Valor final
+Receita bruta              Completo                    R$ 5.000,01                  R$ 5.000,01
+Deduções                   Indisponível                —                            —
+Custos diretos / CMV / CSP Indisponível                —                            —
+Despesas operacionais      Indisponível                —                            —
+Outras receitas            Indisponível                —                            —
+operacionais
+Outras despesas            Indisponível                —                            —
+operacionais
+Depreciação e amortização Indisponível                 —                            —
+Receitas financeiras       Indisponível                —                            —
+Despesas financeiras       Indisponível                —                            —
+Tributos sobre lucro       Indisponível                —                            —
+Receita líquida            Indisponível                —                            —
+Lucro bruto                Indisponível                —                            —
+Resultado operacional      Indisponível                —                            —
+EBITDA gerencial           Indisponível                —                            —
+Resultado financeiro       Indisponível                —                            —
+Lucro líquido gerencial    Indisponível                —                            —
+Margem                              Resultado                            Critério
+Margem bruta                        —                                    Resultado incompleto ou receita
+                                                                         líquida não positiva
+Margem operacional                   —                                   Resultado incompleto ou receita
+                                                                         líquida não positiva
+Margem EBITDA                        —                                   Resultado incompleto ou receita
+                                                                         líquida não positiva
+Margem líquida                       —                                   Resultado incompleto ou receita
+                                                                         líquida não positiva
+Fontes reconhecidas no período completo
+Origem                     Rubrica                    Data econômica              Valor (R$)
+Receita do serviço #1      Receita bruta              10/01/2000                  R$ 5.000,01
+Pendências econômicas
+Sem pendências identificadas nas fontes; revise a cobertura de cada componente.

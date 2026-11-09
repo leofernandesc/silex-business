@@ -1,0 +1,12 @@
+
+> gestao-local@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-ux-homologation/frontend
+
+
+ Test Files  24 passed (24)
+      Tests  332 passed (332)
+   Start at  12:15:09
+   Duration  2.54s (transform 1.58s, setup 0ms, import 7.56s, tests 939ms, environment 4ms)

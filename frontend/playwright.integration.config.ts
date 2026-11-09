@@ -13,6 +13,7 @@ export default defineConfig({
   testDir: "./tests",
   testMatch: [
     "app.spec.ts",
+    "ux-homologation.spec.ts",
     "dre-integration.spec.ts",
     "dre-review-fixes.spec.ts",
     "dre-release-ux.spec.ts",

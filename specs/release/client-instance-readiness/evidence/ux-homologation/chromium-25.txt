@@ -1,0 +1,36 @@
+[WebServer] INFO:     Started server process [1170349]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8035 (Press CTRL+C to quit)
+
+Running 25 tests using 1 worker
+
+(node:1170631) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [audit] › tests/ux-homologation.spec.ts:38:1 › UX: empty DRE has an understandable empty state instead of unavailable rows (1.1s)
+  ✓   2 [audit] › tests/ux-homologation.spec.ts:56:1 › UX: reversal action is reachable without horizontal scrolling with long descriptions and attachments (3.1s)
+  ✓   3 [audit] › tests/ux-homologation.spec.ts:108:3 › UX: visual route and form inventory at 1440px (3.3s)
+  ✓   4 [audit] › tests/ux-homologation.spec.ts:108:3 › UX: visual route and form inventory at 1024px (2.4s)
+  ✓   5 [audit] › tests/ux-homologation.spec.ts:108:3 › UX: visual route and form inventory at 768px (2.7s)
+  ✓   6 [audit] › tests/ux-homologation.spec.ts:108:3 › UX: visual route and form inventory at 375px (2.6s)
+  ✓   7 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 1 product value persists in integer cents (2.2s)
+  ✓   8 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 2 product value persists in integer cents (2.1s)
+  ✓   9 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 3 product value persists in integer cents (2.2s)
+  ✓  10 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 4 product value persists in integer cents (2.1s)
+  ✓  11 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 5 product value persists in integer cents (2.2s)
+  ✓  12 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 6 product value persists in integer cents (2.2s)
+  ✓  13 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 7 product value persists in integer cents (2.2s)
+  ✓  14 [audit] › tests/ux-homologation.spec.ts:200:3 › UX money: 8 product value persists in integer cents (2.2s)
+  ✓  15 [audit] › tests/ux-homologation.spec.ts:242:3 › UX money: invalid 1.000 never saves a product (1.1s)
+  ✓  16 [audit] › tests/ux-homologation.spec.ts:242:3 › UX money: invalid R$ 5.000,001 never saves a product (1.1s)
+  ✓  17 [audit] › tests/ux-homologation.spec.ts:242:3 › UX money: invalid R$ 1 2 never saves a product (1.2s)
+  ✓  18 [audit] › tests/ux-homologation.spec.ts:242:3 › UX money: invalid -R$ 5,00 never saves a product (982ms)
+  ✓  19 [audit] › tests/ux-homologation.spec.ts:267:3 › UX money: income partial payment and reversal preserve cents and one mutation (2.2s)
+  ✓  20 [audit] › tests/ux-homologation.spec.ts:267:3 › UX money: expense partial payment and reversal preserve cents and one mutation (2.3s)
+  ✓  21 [audit] › tests/ux-homologation.spec.ts:342:1 › UX money: signed balances, percentage rates and budgets use their own contracts (1.8s)
+  ✓  22 [audit] › tests/ux-homologation.spec.ts:391:1 › UX money: service costs and daily quantities persist independently after edit (2.7s)
+  ✓  23 [audit] › tests/ux-homologation.spec.ts:456:1 › UX money: draft sale values and discounts preserve quantity precision and cursor (1.7s)
+  ✓  24 [audit] › tests/ux-homologation.spec.ts:498:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px (10.7s)
+  ✓  25 [audit] › tests/ux-homologation.spec.ts:498:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px (9.6s)
+
+  25 passed (1.3m)

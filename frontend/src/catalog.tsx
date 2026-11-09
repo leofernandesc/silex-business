@@ -1,9 +1,10 @@
+import {parseMoney} from "./moneyInput";
 import { hasTransport } from "./capabilities";
 import { useRef, useState, type ReactNode } from "react";
 import { Pencil } from "lucide-react";
 import { api, exportCsv, query } from "./api";
 import { DocumentInput, PostalCodeInput } from "./formInputs";
-import { money, quantity, parseDecimal, decimalInput } from "./format";
+import { money, quantity, decimalInput } from "./format";
 import type { Customer, CustomerAddress, CustomerServiceDetails, Product, Page, User } from "./types";
 import { customerAddressFields, emptyCustomerAddress, hasCustomerAddress, customerAddressSummary, previousCollectionAddress } from "./customerAddresses";
 import {
@@ -472,7 +473,7 @@ function ProductForm({
               group_name: groupName,
               unit,
               barcode: barcode || null,
-              price_cents: parseDecimal(price, 2),
+              price_cents: parseMoney(price),
               active,
             },
           );

@@ -1,3 +1,4 @@
+import {parseMoney} from "./moneyInput";
 import { useState } from "react";
 import { Banknote, ArrowDownLeft, ArrowUpRight, Printer } from "lucide-react";
 import { api, exportCsv, query } from "./api";
@@ -352,7 +353,7 @@ function OpenCash({ close, done }: { close: () => void; done: () => void }) {
         submit="Confirmar abertura"
         onSubmit={async () => {
           await api("/cash-sessions", "POST", {
-            opening_cents: parseDecimal(value, 2),
+            opening_cents: parseMoney(value),
           });
           done();
         }}
@@ -385,7 +386,7 @@ function CloseCash({
   const [value, setValue] = useState(decimalInput(cash.expected_cents));
   let diff: number | null = null;
   try {
-    diff = parseDecimal(value, 2) - cash.expected_cents;
+    diff = parseMoney(value) - cash.expected_cents;
   } catch {
     /*exibe após validar*/
   }
@@ -396,7 +397,7 @@ function CloseCash({
         submit="Confirmar fechamento"
         onSubmit={async () => {
           await api(`/cash-sessions/${cash.id}/close`, "POST", {
-            counted_cents: parseDecimal(value, 2),
+            counted_cents: parseMoney(value),
           });
           done();
         }}

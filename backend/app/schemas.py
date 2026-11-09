@@ -3,6 +3,8 @@ from typing import Annotated, Literal
 import re
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic_core import PydanticCustomError
+from .deployment import reserved_public_username, PUBLIC_RESERVED_USERNAME_MESSAGE
 
 Money = Annotated[int, Field(strict=True, ge=0, le=100_000_000_000)]
 Amount = Annotated[int, Field(strict=True, gt=0, le=100_000_000_000)]
@@ -47,6 +49,13 @@ class UserInput(Input):
     @classmethod
     def trim_names(cls, value):
         return value.strip() if isinstance(value, str) else value
+
+    @field_validator("username")
+    @classmethod
+    def reject_reserved_public_username(cls, value):
+        if reserved_public_username(value):
+            raise PydanticCustomError('reserved_public_username', PUBLIC_RESERVED_USERNAME_MESSAGE)
+        return value
 
 
 class CompanySettingsInput(Input):

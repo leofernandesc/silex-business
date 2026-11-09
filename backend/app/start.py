@@ -5,7 +5,7 @@ import sys
 
 from sqlalchemy import select
 
-from .deployment import Deployment
+from .deployment import Deployment, PUBLIC_RESERVED_USERNAMES
 from .db import ROOT, build_engine, session_factory
 
 
@@ -36,7 +36,7 @@ def main():
     migrate()
     engine = build_engine()
     with session_factory(engine)() as db:
-        if db.scalar(select(User.id).where(User.username.in_(["demo.admin", "demo.operador"]))):
+        if db.scalar(select(User.id).where(User.username.in_(PUBLIC_RESERVED_USERNAMES))):
             raise RuntimeError("Banco com contas demo: não pode ser servido pela instância pública.")
     engine.dispose()
     os.execv(sys.executable, [sys.executable, "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", str(port), "--workers", "1", "--no-proxy-headers", "--no-access-log"])

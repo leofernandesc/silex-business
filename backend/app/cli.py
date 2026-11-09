@@ -19,7 +19,7 @@ from sqlalchemy.exc import IntegrityError
 
 from .api import passwords
 from .db import ROOT, build_engine, session_factory
-from .deployment import Deployment
+from .deployment import Deployment, reserved_public_username, PUBLIC_RESERVED_USERNAME_MESSAGE
 from .models import Account, Customer, FinanceEntry, Product, Sale, User
 from .schemas import Finalize, ItemInput, SaleInput
 from .services import active_cash, create_sale, default_records, finalize_sale, move_stock, today
@@ -37,6 +37,8 @@ def create_admin():
     if not sys.stdin.isatty():
         raise SystemExit("Execute create-admin em um terminal interativo com entrada protegida.")
     username = input("Usuário administrador: ").strip().lower()
+    if reserved_public_username(username):
+        raise SystemExit(PUBLIC_RESERVED_USERNAME_MESSAGE)
     name = input("Nome: ").strip()
     try:
         with warnings.catch_warnings():

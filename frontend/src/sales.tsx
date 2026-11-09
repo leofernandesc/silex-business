@@ -1,3 +1,4 @@
+import {parseMoney} from "./moneyInput";
 import {currentSourceId,useSourceRecord,clearSource} from "./sourceNavigation";
 import { SilexDatePicker } from "./SilexDatePicker";
 import { useState } from "react";
@@ -73,10 +74,10 @@ export function PointOfSale({
   try {
     subtotal = cart.reduce(
       (total, row) =>
-        total + itemTotal(parseDecimal(row.price, 2), parseDecimal(row.qty, 3)),
+        total + itemTotal(parseMoney(row.price), parseDecimal(row.qty, 3)),
       0,
     );
-    discountN = parseDecimal(discount, 2);
+    discountN = parseMoney(discount);
   } catch {
     valid = false;
   }
@@ -123,11 +124,11 @@ export function PointOfSale({
     if (!cart.length) throw new Error("Adicione ao menos um item");
     const saved = await api<Sale>("/sales", "POST", {
       customer_id: customer ? Number(customer) : null,
-      discount_cents: parseDecimal(discount, 2),
+      discount_cents: parseMoney(discount),
       items: cart.map((r) => ({
         product_id: r.product.id,
         quantity_milli: parseDecimal(r.qty, 3),
-        unit_price_cents: parseDecimal(r.price, 2),
+        unit_price_cents: parseMoney(r.price),
       })),
     });
     setDraft(saved);
@@ -280,7 +281,7 @@ export function PointOfSale({
                   let rowTotal = 0;
                   try {
                     rowTotal = itemTotal(
-                      parseDecimal(row.price, 2),
+                      parseMoney(row.price),
                       parseDecimal(row.qty, 3),
                     );
                   } catch {

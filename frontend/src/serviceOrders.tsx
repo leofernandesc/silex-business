@@ -1,3 +1,4 @@
+import {parseMoney} from "./moneyInput";
 import {currentSourceId,useSourceRecord,clearSource} from "./sourceNavigation";
 import { hasTransport } from "./capabilities";
 import type { User } from "./types";
@@ -99,11 +100,11 @@ function ServiceOrderForm({ order, close, done, transportEnabled }: { order: Ser
     <Form cancel={close} submit={order ? "Salvar alterações" : "Cadastrar serviço"} onSubmit={async () => {
       const payload = {
         customer_id: Number(customer), description, service_date: serviceDate,
-        negotiated_cents: parseDecimal(revenue, 2), status, notes,
+        negotiated_cents: parseMoney(revenue), status, notes,
         costs: costs.map((cost) => ({
           kind: cost.kind, supplier_id: Number(cost.supplier_id),
           quantity_milli: cost.kind === "day_worker" ? parseDecimal(cost.days, 3) : null,
-          agreed_amount_cents: parseDecimal(cost.amount, 2), details: cost.details,
+          agreed_amount_cents: parseMoney(cost.amount), details: cost.details,
         })),
       };
       await api(order ? `/service-orders/${order.id}` : "/service-orders", order ? "PUT" : "POST", payload);

@@ -1,0 +1,87 @@
+[
+  {
+    "route": "customers",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "customers:form",
+    "content": 341,
+    "width": 341
+  },
+  {
+    "route": "products",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "products:form",
+    "content": 341,
+    "width": 341
+  },
+  {
+    "route": "service-orders",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "service-orders:form",
+    "content": 341,
+    "width": 341
+  },
+  {
+    "route": "sales",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "finance-receivable",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "finance-receivable:form",
+    "content": 339,
+    "width": 339
+  },
+  {
+    "route": "finance-payable",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "finance-payable:form",
+    "content": 339,
+    "width": 339
+  },
+  {
+    "route": "finance-dashboard",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "finance",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "finance:form",
+    "content": 339,
+    "width": 339
+  },
+  {
+    "route": "finance-plan",
+    "document": 375,
+    "viewport": 375
+  },
+  {
+    "route": "finance-plan:form",
+    "content": 341,
+    "width": 341
+  },
+  {
+    "route": "finance-reports",
+    "document": 375,
+    "viewport": 375
+  }
+]
