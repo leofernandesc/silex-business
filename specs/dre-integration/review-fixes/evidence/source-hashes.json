@@ -1,6 +1,6 @@
 {
   "reviewed_head": "13c2de557f40029b1008f019236d7551ac11eb03",
-  "code_commit": "3e0a2af2d125b21a97999684d907956d4bb6b86e",
+  "code_commit": "7e5adb6bd6c94e54088cb9875b06169f43b0ab01",
   "files": [
     {
       "path": ".github/workflows/integration-tests.yml",
@@ -16,7 +16,7 @@
     },
     {
       "path": "backend/app/dre_history.py",
-      "sha256": "eb793816b6801c168f668bab0294bdcf0dba65da356e90acb0f8b66470ac3d92"
+      "sha256": "8b00f22ed4fc4f79f2c05e7f752d7208737abf7c4c82c3ffa10b1c0ccd531e52"
     },
     {
       "path": "backend/app/dre_sources.py",
@@ -40,7 +40,7 @@
     },
     {
       "path": "backend/tests/test_dre_review_fixes.py",
-      "sha256": "b62a0cfc330fa2d7cf75e91831aa9c7edecdd131da9fb7cd609fbddb72e7bd0f"
+      "sha256": "18660f2d4a25ac11b9a0ab278c0892849dc463381e6efe40ba8e43850198a24e"
     },
     {
       "path": "backend/tests/test_dre_review_migration.py",
@@ -56,7 +56,7 @@
     },
     {
       "path": "frontend/src/dre.tsx",
-      "sha256": "65e42828dbcc8d9ef2841cd9812b2f83896b4be2907c35af7a9c8e29ee22bc33"
+      "sha256": "bd42a28a152008a18cbf5ff8a7c221151b0a1510a7ad48f660dea678c64f195a"
     },
     {
       "path": "frontend/src/home/AuthenticatedHome.tsx",
@@ -84,11 +84,12 @@
     },
     {
       "path": "frontend/tests/dre-review-fixes.spec.ts",
-      "sha256": "8d06213f74db8906036510c173c7e27e6aaa20f93e8f2273f878adf819bfe70d"
+      "sha256": "7d0c084ce1f7cbcd048a6807bb4626a3f166fb2c188ab7ae303600ebf9848c64"
     },
     {
       "path": "scripts/compare_dre_baseline.py",
       "sha256": "8a5df1c9839033a750e31f769be60d87800e9f74c540101587f3558b36c8a7ef"
     }
-  ]
+  ],
+  "previous_code_commit": "3e0a2af2d125b21a97999684d907956d4bb6b86e"
 }

@@ -1,6 +1,6 @@
 # PR #15 — correções da revisão independente
 
-HEAD revisado confirmado, local e remoto: `13c2de557f40029b1008f019236d7551ac11eb03`. Workspace inicialmente limpo. Trabalho exclusivamente em `feat/dre-integrated-financial-ux`, sem mudar a base empilhada do PR #14. Código desta correção: `3e0a2af2d125b21a97999684d907956d4bb6b86e`. [Arquivos e justificativas](FILES.tsv), [manifesto](evidence/source-hashes.json), [galeria](evidence/index.html).
+HEAD revisado confirmado, local e remoto: `13c2de557f40029b1008f019236d7551ac11eb03`. Workspace inicialmente limpo. Trabalho exclusivamente em `feat/dre-integrated-financial-ux`, sem mudar a base empilhada do PR #14. Correção principal: `3e0a2af2d125b21a97999684d907956d4bb6b86e`; último código validado localmente: `7e5adb6bd6c94e54088cb9875b06169f43b0ab01` (política legada não confirmada). [Arquivos e justificativas](FILES.tsv), [manifesto](evidence/source-hashes.json), [galeria](evidence/index.html).
 
 ## Problemas, reprodução e correção
 
@@ -35,7 +35,7 @@ A reversão implementada é integral, por componente original; não inventa um r
 
 Migração aditiva, após 0016: campos anuláveis de captura/vínculo de política, referência de recorte e tabela de revisões de cancelamento. Não há backfill de natureza econômica, alteração de valores financeiros ou reescrita das migrações publicadas.
 
-**Compatibilidade explícita:** políticas DRE anteriores que não guardavam os atributos necessários ficam pendentes de confirmação supervisionada; sua classificação passada não pode ser inferida. Snapshots históricos continuam preservados e consultáveis conforme a autorização. Não prometer replay ad hoc de uma política antiga que nunca foi registrada; o snapshot é a evidência congelada disponível. Antes de futura publicação, inventariar esses registros e confirmar a política, se existirem.
+**Compatibilidade explícita:** políticas DRE anteriores que não guardavam os atributos necessários ficam pendentes de confirmação supervisionada; sua classificação passada não pode ser inferida. Snapshots históricos continuam preservados e consultáveis conforme a autorização. Não prometer replay ad hoc de uma política antiga que nunca foi registrada; o snapshot é a evidência congelada disponível. Antes de futura publicação, inventariar esses registros e confirmar a política, se existirem. A incidência ausente é apresentada como **“Incidência não confirmada”**, nunca como “Não incide”; a confirmação fica desabilitada até revisão válida. Um teste backend usa uma linha legada real com capturas NULL e prova resposta 409; o E2E injeta esse contexto controlado e prova indicação, bloqueio e recuperação pelo mesmo modal.
 
 Testes verificam 0016→0017 com registros/documento histórico sintéticos, todas as colunas anteriores iguais, integridade/FKs, interrupção com rollback e retry. As regressões anteriores também percorrem 0012/0013→head. O ensaio de três processos comprovou reinício e restauração com anexo, [recibo](evidence/restart.json). Nenhum bundle, banco ou credencial foi incluído.
 
@@ -44,14 +44,16 @@ Testes verificam 0016→0017 com registros/documento histórico sintéticos, tod
 | Execução local | Resultado |
 |---|---|
 | Backend completo, checkpoint anterior aos últimos refinamentos de fingerprint/guard | 338 PASS, zero falhas/ignorados; [log](evidence/backend-checkpoint.txt) |
-| Backend dirigido da candidata congelada | 32 PASS (18 casos novos + 14 de API DRE); [log](evidence/backend-directed.txt) |
-| Frontend completo | 243 PASS, 22 arquivos; [log](evidence/frontend.txt) |
-| TypeScript + Vite | PASS; [log](evidence/build.txt) |
-| Chromium dirigido | 12/12 PASS, desktop/celular, sem skips/retries; [log](evidence/chromium-directed.txt) |
-| Firefox dirigido | 12/12 PASS, desktop/celular, sem skips/retries; [log](evidence/firefox-directed.txt) |
+| Backend dirigido após ajuste de política legada | 33 PASS (19 casos novos + 14 de API DRE); [log](evidence/backend-directed-legacy.txt) |
+| Frontend completo | 243 PASS, 22 arquivos; [log](evidence/frontend-legacy.txt) |
+| TypeScript + Vite | PASS; [log](evidence/build-legacy.txt) |
+| Chromium dirigido | 12/12 PASS, desktop/celular, sem skips/retries; [log](evidence/chromium-directed-legacy.txt) |
+| Firefox dirigido | 12/12 PASS, desktop/celular, sem skips/retries; [log](evidence/firefox-directed-legacy.txt) |
 | Comparação direta com `13c2de557f40029b1008f019236d7551ac11eb03` | 26 relatórios, 124 saídas iguais, zero divergências; [dados](legacy-comparison.json) |
 
 A primeira rodada de navegador teve 8 aprovações/4 falhas em cada motor: quantidade indevida na fixture de frete e locator do texto anterior ao estado de processamento. As fixtures foram corrigidas conforme o contrato; a asserção continua exigindo botão desabilitado, uma única mutação, erro recuperável e financeiro inalterado. Um comando Firefox foi iniciado no diretório errado e não executou testes; foi refeito a partir de `frontend/`. [Contadores separados](evidence/browser-runs.json). Não somar reexecuções como cenários novos.
+
+Os logs dirigidos anteriores (32 backend/12 por motor) foram preservados como checkpoints, sem somar reexecuções. O CI do HEAD intermediário `45e5410` executou 338 testes backend com sucesso, mas não comprova o novo ajuste; o total esperado passou a 339 após a nova regressão. Capturas/PDF representam os fluxos visuais já testados na correção principal; o novo teste de política legada possui log próprio.
 
 A matriz integral contém **330 casos por navegador**, confirmados por `--list` (isso não é aprovação de execução). **A execução integral final será a do CI no HEAD exato do PR**, depois do commit deste relatório, incluindo backend completo, frontend/build, 330 casos por motor, complementos de 30 financeiro/fusos + 8 transporte + 35 datas/foco, comparação das 124 saídas e reinício/restauração. SHA final, run e resultados efetivamente observados serão registrados na descrição do PR para evitar um ciclo de commits apenas do próprio SHA. Não antecipar aprovação desses checks.
 
