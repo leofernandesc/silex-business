@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { routes } from "../navigation/routes";
 import type { CompanySettings, User } from "../types";
 import { AuthenticatedHome } from "./AuthenticatedHome";
-import { companyPresentation, homeNavigation } from "./model";
+import { companyPresentation, homeNavigation, homeServiceIndicators } from "./model";
 
 const company: CompanySettings = {
   id: 1,
@@ -40,7 +40,7 @@ describe("SB-04B authenticated home", () => {
         ...navigation.quick,
         ...navigation.remaining,
       ].map((route) => route.id);
-      expect(navigation.overview).toBeUndefined();
+      expect(navigation).not.toHaveProperty("overview");
       expect(new Set(ids).size).toBe(ids.length);
       expect(new Set(ids)).toEqual(new Set(expected.map((route) => route.id)));
     },
@@ -90,4 +90,19 @@ describe("SB-04B authenticated home", () => {
       expect(html).toContain('role="status"');
     },
   );
+});
+
+
+describe('balanced home service metrics',()=>{
+ it('preserves service zeros, unavailable data and operator privacy',()=>{
+  expect(homeServiceIndicators({role:'admin'},{})).toEqual({active:0,scheduled:0,inProgress:0,completed:0});
+  expect(homeServiceIndicators({role:'admin'},{scheduled:2,in_progress:3,completed:7})?.active).toBe(5);
+  expect(homeServiceIndicators({role:'admin'},null)?.active).toBeNull();
+  expect(homeServiceIndicators({role:'operator'},{completed:99})).toBeNull();
+ });
+ it('does not render the former independent overview or a self-link',()=>{
+  const html=renderToStaticMarkup(createElement(AuthenticatedHome,{user,company,companyStatus:'ready',navigate:()=>{}}));
+  expect(html).not.toContain('Visão Geral');expect(html).not.toContain('tela independente');expect(html).not.toContain('href="/app#home"');
+  expect(homeNavigation(user).quick.slice(0,3).map(r=>r.id)).toEqual(['customers','service-orders','finance-dashboard']);
+ });
 });

@@ -20,7 +20,7 @@ def recognize(admin,key,**extra):
     issues=admin.get('/api/finance/dre/issues',params=period()).json()
     issue=next(i for i in issues if i.get('key')==key)
     return post(admin,'/finance/dre/recognition-review',{'source_key':key,'decision':'recognize','economic_date':V.today().isoformat(),
-        'evidence_kind':'documento_comprovado','expected_revision':issue['recognition_revision'],'source_fingerprint':issue['source_fingerprint'],
+        'evidence_kind':'documento_comprovado','expected_revision':issue['recognition_revision'],'source_fingerprint':issue['source_fingerprint'],'policy_fingerprint':issue['policy_fingerprint'],
         'request_key':'dre-synthetic-recognition-'+key,'reason':'Reconhecimento comprovado em teste',**extra})
 
 

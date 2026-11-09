@@ -4,11 +4,13 @@ from datetime import timezone
 from sqlalchemy import select
 from . import services as V
 from .capabilities import has_transport
-from .models import FinanceEntry,Payment,Sale,SaleItem,Product,ServiceOrder,ServiceOrderCost,Supplier
+from .models import FinanceEntry,Payment,Sale,SaleItem,Product,ServiceOrder,ServiceOrderCost,Supplier,Category,Subcategory
 from .dre_history import fingerprint
 
 
 def sources(db,user):
+    categories={r.id:r for r in db.scalars(select(Category))}
+    subcategories={r.id:r for r in db.scalars(select(Subcategory))}
     entries=list(db.scalars(select(FinanceEntry).order_by(FinanceEntry.id)))
     sales={r.id:r for r in db.scalars(select(Sale))}
     orders={r.id:r for r in db.scalars(select(ServiceOrder))}
@@ -60,7 +62,7 @@ def sources(db,user):
         output.append({'key':key,'source_type':kind,'source_id':identifier,'component':component,'entry_ids':[e.id for e in group],
                        'category_id':entry.category_id,'subcategory_id':entry.subcategory_id,'amount_cents':amount,
                        'candidate_date':entry.competence_date,'economic_date':economic_date,'automatic':automatic,'issues':issues,
-                       'direction':entry.direction,'commercial_discount_cents':sales[identifier].discount_cents if kind=='sale' and identifier in sales else 0, 'canceled_on':entry.canceled_at.replace(tzinfo=timezone.utc).astimezone(V.TZ).date() if entry.canceled_at else None})
+                       'direction':entry.direction,'commercial_discount_cents':sales[identifier].discount_cents if kind=='sale' and identifier in sales else 0, 'canceled_on':entry.canceled_at.replace(tzinfo=timezone.utc).astimezone(V.TZ).date() if entry.canceled_at else None, 'cancellation_fingerprint':fingerprint({'source_key':key,'canceled_at':entry.canceled_at,'entry_ids':[e.id for e in group]}) if entry.canceled_at else None})
     entries_by_id={e.id:e for e in entries}
     visible_entries={i for src in output for i in src['entry_ids']}
     for payment in db.scalars(select(Payment)):
@@ -97,6 +99,8 @@ def sources(db,user):
         elif item['source_type']=='service_order':origin={'route':'service-orders','id':item['source_id']}
         elif item['source_type']=='service_order_cost':origin={'route':'service-orders','id':costs[item['source_id']].service_order_id}
         else:origin={'route':'finance-receivable' if item['direction']=='income' else 'finance-payable','id':item['entry_ids'][0]}
+        item['catalog_classification']=categories[item['category_id']].classification if item['category_id'] in categories else None
+        item['catalog_affects_result']=subcategories[item['subcategory_id']].affects_result if item['subcategory_id'] in subcategories else True
         item['origin']=origin
-        item['fingerprint']=fingerprint({k:v for k,v in item.items() if k not in ('candidate_date','canceled_on','origin')})
+        item['fingerprint']=fingerprint({k:v for k,v in item.items() if k not in ('candidate_date','canceled_on','cancellation_fingerprint','origin')})
     return output,restricted

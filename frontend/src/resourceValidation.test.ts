@@ -23,3 +23,10 @@ it('DRE preserves unavailable versus confirmed zero and rejects false final tota
  expect(validResource('/finance/dre',{})).toBe(false);
  expect(validResource('/finance/dre',{...report,facts:[{key:'source',amount_cents:'0',economic_date:'2026-11-08'}]})).toBe(false);
 });
+
+it('rejects malformed economic policy context and mapping history',()=>{
+ expect(validResource('/finance/dre/recognition-policy',{})).toBe(false);
+ expect(validResource('/finance/dre/recognition-policy',{policy_fingerprint:'a'.repeat(64),economic_policy:{classification:'operating',affects_result:true}})).toBe(true);
+ expect(validResource('/finance/dre/mappings',{})).toBe(false);
+ expect(validResource('/finance/dre/mappings',[{id:1,category_id:1,revision:1,line_code:'RB',valid_from:'2026-01-01',valid_to:'2026-12-31'}])).toBe(true);
+});

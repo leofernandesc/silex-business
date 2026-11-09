@@ -317,6 +317,7 @@ export function Form({
   cancel,
   submitClassName = "primary",
   processingText = "Salvando...",
+  submitDisabled = false,
 }: {
   onSubmit: () => Promise<void>;
   children: ReactNode;
@@ -324,13 +325,14 @@ export function Form({
   cancel?: () => void;
   submitClassName?: string;
   processingText?: string;
+  submitDisabled?: boolean;
 }) {
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const pending = useRef(false);
   async function handle(e: FormEvent) {
     e.preventDefault();
-    if (pending.current) return;
+    if (pending.current || submitDisabled) return;
     pending.current = true;
     setBusy(true);
     setError("");
@@ -354,7 +356,7 @@ export function Form({
               Voltar
             </button>
           )}
-          <button className={submitClassName} disabled={busy} type="submit">
+          <button className={submitClassName} disabled={busy || submitDisabled} type="submit">
             {busy ? processingText : submit}
           </button>
         </div>

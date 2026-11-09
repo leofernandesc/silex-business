@@ -424,6 +424,9 @@ class DreMapping(Base):
     valid_to: Mapped[date] = mapped_column(Date)
     revision: Mapped[int] = mapped_column(Integer)
     supersedes_id: Mapped[int | None] = mapped_column(ForeignKey('dre_category_mapping_history.id'), unique=True, nullable=True)
+    replaces_id: Mapped[int | None] = mapped_column(ForeignKey('dre_category_mapping_history.id'), nullable=True)
+    economic_classification: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    economic_affects_result: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     reason: Mapped[str] = mapped_column(String(500))
     actor_user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     recorded_at: Mapped[datetime] = mapped_column(DateTime, default=now)
@@ -437,6 +440,7 @@ class DreDecision(Base):
     decision: Mapped[str] = mapped_column(String(30))
     economic_date: Mapped[date | None] = mapped_column(Date, nullable=True)
     source_fingerprint: Mapped[str] = mapped_column(String(64))
+    policy_fingerprint: Mapped[str | None] = mapped_column(String(64), nullable=True)
     evidence_kind: Mapped[str] = mapped_column(String(100))
     line_code: Mapped[str | None] = mapped_column(String(20), nullable=True)
     revision: Mapped[int] = mapped_column(Integer)
@@ -472,3 +476,24 @@ class DrePeriodReview(Base):
     reason: Mapped[str] = mapped_column(String(500))
     actor_user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     recorded_at: Mapped[datetime] = mapped_column(DateTime, default=now)
+
+
+class DreCancellationReview(Base):
+    """Versioned exception to an existing economic fact, never a financial entry."""
+    __tablename__ = 'dre_cancellation_reviews'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    source_key: Mapped[str] = mapped_column(String(100))
+    cancellation_fingerprint: Mapped[str] = mapped_column(String(64))
+    source_fingerprint: Mapped[str] = mapped_column(String(64))
+    original_facts_json: Mapped[str] = mapped_column(Text)
+    decision: Mapped[str] = mapped_column(String(20))
+    economic_date: Mapped[date] = mapped_column(Date)
+    evidence_kind: Mapped[str] = mapped_column(String(100))
+    reason: Mapped[str] = mapped_column(String(500))
+    reviewed_period_acknowledged: Mapped[bool] = mapped_column(Boolean, default=False)
+    revision: Mapped[int] = mapped_column(Integer)
+    request_key: Mapped[str] = mapped_column(String(80), unique=True)
+    request_hash: Mapped[str] = mapped_column(String(64))
+    actor_user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    recorded_at: Mapped[datetime] = mapped_column(DateTime, default=now)
+    __table_args__ = (UniqueConstraint('source_key','cancellation_fingerprint','revision'), CheckConstraint("decision IN ('reverse','retain')"))

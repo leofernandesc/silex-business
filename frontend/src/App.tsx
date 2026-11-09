@@ -24,7 +24,7 @@ import {
   Settings2,
 } from "lucide-react";
 import { AuthenticatedHome } from "./home/AuthenticatedHome";
-import type { CompanyStatus } from "./home/model";
+import {homeServiceIndicators,type CompanyStatus} from "./home/model";
 import { api } from "./api";
 import { PasswordInput } from "./formInputs";
 import { canAccessRoute, getRoute, routes } from "./navigation/routes";
@@ -428,25 +428,15 @@ function OperationalSummary({
   const result = useLoad<Dashboard>("/dashboard"),
     [view, setView] = useState<Sale | null>(null),
     d = result.data;
+  const serviceMetrics=homeServiceIndicators(user,d?.service_counts);
   if (result.error) return <LoadFeedback resource={result} label="resumo operacional"/>;
   if (!d) return <div className="empty">Carregando resumo...</div>;
   return (
     <>
       <h2>Indicadores operacionais</h2>
       <div className="summary-grid overview-summary" role="region" aria-label="Indicadores operacionais" aria-describedby="overview-values-help" tabIndex={0}>
-        <SummaryCard
-          label="Vendas hoje"
-          value={money(d.sales_today_cents)}
-          detail={`${d.sales_today_count} venda${d.sales_today_count !== 1 ? "s" : ""} finalizada${d.sales_today_count !== 1 ? "s" : ""}`}
-          icon={<TrendingUp />}
-          tone="teal"
-        />
-        <SummaryCard
-          label="Vendas no mês"
-          value={money(d.sales_month_cents)}
-          detail="Inclui vendas à vista e a prazo."
-          icon={<Receipt />}
-        />
+        {user.role==='admin'?<SummaryCard label="Serviços em andamento" value={serviceMetrics?.active==null?'—':String(serviceMetrics.active)} detail={serviceMetrics?.active==null?'Dados dos serviços indisponíveis.':'Agendados e em execução, acessíveis ao seu perfil.'} icon={<Receipt/>} tone="teal"/>:<SummaryCard label="Vendas hoje" value={money(d.sales_today_cents)} detail={`${d.sales_today_count} vendas finalizadas por você`} icon={<TrendingUp/>} tone="teal"/>}
+        <SummaryCard label={user.role==='admin'?'Vendas hoje':'Vendas no mês'} value={money(user.role==='admin'?d.sales_today_cents:d.sales_month_cents)} detail={user.role==='admin'?`${d.sales_today_count} vendas finalizadas`:'Inclui vendas à vista e a prazo.'} icon={<Receipt/>}/>
         {user.role === "admin" ? (
           <>
             <SummaryCard
@@ -483,14 +473,14 @@ function OperationalSummary({
           </>
         )}
       </div>
-      {user.role==='admin'&&d.service_counts&&<div className="summary-grid"><SummaryCard icon={<Receipt/>} label="Serviços agendados" value={String(d.service_counts.scheduled||0)} detail="Ordens acessíveis ao seu perfil"/><SummaryCard icon={<Receipt/>} label="Serviços em execução" value={String(d.service_counts.in_progress||0)} detail="Ordens acessíveis ao seu perfil"/><SummaryCard icon={<Receipt/>} label="Serviços concluídos" value={String(d.service_counts.completed||0)} detail="Confira a evidência e os títulos no pedido"/></div>}
       <p id="overview-values-help" className="overview-values-help">Se necessário, deslize ou use as setas para conferir os valores completos.</p>
       <div className="dashboard-grid">
+        {user.role==='admin'&&<section className="panel" aria-label="Resumo de serviços e pedidos"><div className="panel-heading"><div><h2>Serviços e pedidos</h2><p>Ordens acessíveis ao seu perfil, sem confundir previsão com realização.</p></div></div><dl><div><dt>Agendados</dt><dd>{serviceMetrics?.scheduled??'—'}</dd></div><div><dt>Em execução</dt><dd>{serviceMetrics?.inProgress??'—'}</dd></div><div><dt>Concluídos</dt><dd>{serviceMetrics?.completed??'—'}</dd></div></dl><button className="panel-link" onClick={()=>navigate('service-orders')}>Consultar serviços e pedidos <ArrowRight size={16}/></button></section>}
         <section className="panel">
           <div className="panel-heading">
             <div>
               <h2>Últimas vendas</h2>
-              <p>Pedidos finalizados mais recentes</p>
+              <p>Vendas finalizadas mais recentes · No mês: {money(d.sales_month_cents)}</p>
             </div>
             <button className="text-button" onClick={() => navigate("sales")}>
               Ver todas <ArrowRight size={15} />
@@ -558,7 +548,7 @@ function OperationalSummary({
           <span>
             {d.cash
               ? `Dinheiro esperado: ${money(d.cash.expected_cents)}`
-              : "Abra um turno para registrar novas vendas."}
+              : "Abra um turno quando houver movimentação em dinheiro."}
           </span>
         </div>
         <button onClick={() => navigate("cash")}>

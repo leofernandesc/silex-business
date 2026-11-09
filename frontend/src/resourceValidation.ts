@@ -15,6 +15,8 @@ export function validResource(path: string, value: unknown): boolean {
     if(name==='/accounts')return value.every(row=>integers(row,['id','opening_cents','balance_cents'])&&typeof row.name==='string');
     return true;
   }
+  if(name==='/finance/dre/recognition-policy')return object(value)&&typeof value.policy_fingerprint==='string'&&value.policy_fingerprint.length===64&&object(value.economic_policy)&&[null,'operating','investment','financing'].includes(value.economic_policy.classification as string|null)&&[null,true,false].includes(value.economic_policy.affects_result as boolean|null);
+  if(name==='/finance/dre/mappings')return Array.isArray(value)&&value.every(row=>object(row)&&integers(row,['id','category_id','revision'])&&typeof row.line_code==='string'&&typeof row.valid_from==='string'&&typeof row.valid_to==='string');
   if(name==='/finance/dre') {
     if(!object(value)||!Array.isArray(value.lines)||!Array.isArray(value.facts)||!Array.isArray(value.issues)||!Array.isArray(value.excluded)||typeof value.source_fingerprint!=='string'||!object(value.margins))return false;
     if(!Object.values(value.margins).every(m=>object(m)&&(m.value===null||typeof m.value==='string')&&(m.reason===null||typeof m.reason==='string')))return false;

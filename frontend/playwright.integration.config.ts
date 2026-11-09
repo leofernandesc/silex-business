@@ -14,6 +14,7 @@ export default defineConfig({
   testMatch: [
     "app.spec.ts",
     "dre-integration.spec.ts",
+    "dre-review-fixes.spec.ts",
     "navigation.spec.ts",
     "home.spec.ts",
     "public.spec.ts",

@@ -214,32 +214,6 @@ export function AuthenticatedHome({
         </div>
       </section>
 
-      {navigation.overview && (
-        <section
-          className="silex-home__overview"
-          aria-labelledby="home-overview-title"
-        >
-          <div>
-            <h2 id="home-overview-title">
-              Os indicadores continuam na Visão Geral.
-            </h2>
-            <p>
-              Consulte os resumos e acompanhe suas operações em uma tela
-              independente.
-            </p>
-          </div>
-          <a
-            className="silex-home__overview-link"
-            href={appUrl(navigation.overview.id)}
-            data-home-route={navigation.overview.id}
-            onClick={(event) => follow(event, navigation.overview!.id)}
-          >
-            <ArrowRight size={18} aria-hidden="true" />
-            Abrir Visão Geral
-          </a>
-        </section>
-      )}
-
       {administration.length > 0 && (
         <section
           className="silex-home__administration"

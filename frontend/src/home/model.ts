@@ -5,15 +5,15 @@ export type CompanyStatus = "loading" | "ready" | "error";
 
 // Presentation order only. Availability and titles always come from routes.ts.
 const quickOrder: readonly RouteId[] = [
-  "pos",
-  "sales",
-  "customers",
-  "products",
-  "finance",
-  "finance-payable",
-  "finance-receivable",
-  "service-orders",
+  "customers", "service-orders", "finance-dashboard", "finance-payable",
+  "finance-receivable", "products", "sales", "pos",
 ];
+/** Optional data never becomes a confirmed zero, and operators see no global service metrics. */
+export function homeServiceIndicators(user: Pick<User,'role'>, counts: Record<string,number>|null|undefined) {
+  if(user.role!=='admin')return null;
+  if(!counts||Object.values(counts).some(n=>!Number.isSafeInteger(n)||n<0))return {active:null,scheduled:null,inProgress:null,completed:null};
+  return {active:(counts.scheduled||0)+(counts.in_progress||0),scheduled:counts.scheduled||0,inProgress:counts.in_progress||0,completed:counts.completed||0};
+}
 export function homeNavigation(user: Pick<User, "role" | "capabilities"> | null) {
   const available = routes.filter(
     (route) =>
@@ -33,7 +33,6 @@ export function homeNavigation(user: Pick<User, "role" | "capabilities"> | null)
     available,
     quick,
     remaining,
-    overview: available.find((route) => route.id === "dashboard"),
   };
 }
 export function companyPresentation(company: CompanySettings | null) {

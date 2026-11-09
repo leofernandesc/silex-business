@@ -1,4 +1,5 @@
 """Compare all 26 legacy reports and CSV bytes against the confirmed PR14 baseline."""
+import argparse
 import hashlib
 import json
 import os
@@ -14,10 +15,15 @@ BASE='00fcaa5f869d702dda6ad535d264a0216dd11b65'
 
 
 def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--base',default=BASE)
+    parser.add_argument('--output',type=Path,default=ROOT/'specs/dre-integration/legacy-report-comparison.json')
+    args=parser.parse_args()
+    baseline_commit=subprocess.check_output(['git','rev-parse','--verify',args.base+'^{commit}'],cwd=ROOT,text=True).strip()
     with tempfile.TemporaryDirectory(prefix='silex-dre-contracts-') as directory:
         temp=Path(directory);baseline=temp/'baseline';baseline.mkdir()
         archive=temp/'baseline.tar'
-        with archive.open('wb') as f:subprocess.run(['git','archive',BASE,'backend'],cwd=ROOT,stdout=f,check=True)
+        with archive.open('wb') as f:subprocess.run(['git','archive',baseline_commit,'backend'],cwd=ROOT,stdout=f,check=True)
         with tarfile.open(archive) as f:f.extractall(baseline,filter='data')
         outputs=[]
         for name,source in [('baseline',baseline),('candidate',ROOT)]:
@@ -32,8 +38,9 @@ def main():
             comparisons.append({'case':key,'equal':old==new,'baseline_sha256':hashlib.sha256(json.dumps(old,sort_keys=True).encode()).hexdigest(),'candidate_sha256':hashlib.sha256(json.dumps(new,sort_keys=True).encode()).hexdigest()})
         report_ids=[d['id'] for d in outputs[0]['before-reversal:catalog']]
         assert len(report_ids)==26
-        target=ROOT/'specs/dre-integration/legacy-report-comparison.json'
-        summary={'baseline':BASE,'reports':report_ids,'comparisons':comparisons,'mismatches':[r['case'] for r in comparisons if not r['equal']],
+        target=args.output
+        target.parent.mkdir(parents=True,exist_ok=True)
+        summary={'baseline':baseline_commit,'reports':report_ids,'comparisons':comparisons,'mismatches':[r['case'] for r in comparisons if not r['equal']],
                  'fixture':'Independent disposable SQLite fixtures; partial principal, charges, discounts and reversal. Identical event registration timestamps for CSV; JSON removes only the documented volatile timestamps from the existing probe. No CSV normalization.',
                  'intentional_dashboard_change':'/api/dashboard uses remaining principal including partial/reversed titles; proved separately in test_dre_receivables.'}
         target.write_text(json.dumps(summary,indent=2)+'\n')
