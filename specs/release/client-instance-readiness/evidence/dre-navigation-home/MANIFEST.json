@@ -77,6 +77,11 @@
       "bytes": 5073
     },
     {
+      "path": "cancelled-ci-6b72627.json",
+      "sha256": "890c04f1442a2f0b127b018d5e25f9b2c0793c622d9776f69d48898b5655d5ae",
+      "bytes": 4298
+    },
+    {
       "path": "chromium-canonical.txt",
       "sha256": "41e79f09888d045badcc143e22551d68993324300df8f4a9e34aa7d25f197a39",
       "bytes": 918
@@ -100,6 +105,11 @@
       "path": "chromium-lifecycle-375.json",
       "sha256": "c83e0b2b4830939625b353fb1cf83c9e31e6776bc5048c196cd5185edf9c5642",
       "bytes": 288
+    },
+    {
+      "path": "chromium-readiness.txt",
+      "sha256": "f9a5334d38592c776c6f6d4458a52e61c2cbb5a7bd21a6088e1551321a4428ca",
+      "bytes": 6426
     },
     {
       "path": "chromium-release.txt",
@@ -152,6 +162,11 @@
       "bytes": 288
     },
     {
+      "path": "firefox-readiness.txt",
+      "sha256": "89b74a4c37a26574574b741ecfb67a3c4bb4ec74a37004b1a1861d04d8ba1449",
+      "bytes": 6424
+    },
+    {
       "path": "firefox-release.txt",
       "sha256": "98226a11a9c5dc6444a644eb66fbc3c92ced5ee5e78f6193be99945a9cb65b9e",
       "bytes": 15631
@@ -182,6 +197,11 @@
       "bytes": 36314
     },
     {
+      "path": "readiness-negative.txt",
+      "sha256": "b248832964850d1826f63389957773bb23f40e316da2ae6453fe72005e07ffa9",
+      "bytes": 2499
+    },
+    {
       "path": "source-secret-scan.txt",
       "sha256": "f3ca732ffb205d7597b437c1a794f434897db7f49c6c610aafcf833ebee5bce8",
       "bytes": 75
@@ -201,8 +221,11 @@
   "subsequent_test_contracts": [
     {
       "path": "frontend/tests/home.spec.ts",
-      "sha256": "94b82a3d9a553404cf4149962e9fa4eea084367e2f492df2dfa7c0ab22a3f650",
-      "reason": "Exact canonical DRE query/date assertion in home shortcuts; production code unchanged."
+      "sha256": "94b82a3d9a553404cf4149962e9fa4eea084367e2f492df2dfa7c0ab22a3f650"
+    },
+    {
+      "path": "frontend/tests/routeReadiness.ts",
+      "sha256": "ed5b83207d75b8cd602ee435453c4a36151ff5026cbfb0a2ab401e992d663911"
     }
   ]
 }

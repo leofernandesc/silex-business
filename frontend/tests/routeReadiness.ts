@@ -1,6 +1,6 @@
 import { expect, type Page } from "@playwright/test";
 import type { routes } from "../src/navigation/routes";
-const endpoints: Record<string, string> = {
+const endpoints: Record<(typeof routes)[number]["id"], string> = {
   home: "/dashboard",
   "finance-plan": "/categories",
   dashboard: "/dashboard",
@@ -23,6 +23,7 @@ const endpoints: Record<string, string> = {
   "finance-categories": "/categories",
   "finance-subcategories": "/subcategories",
   "finance-reports": "/finance/reports/cash-monthly",
+  "finance-dre": "/finance/dre",
   users: "/users",
   audit: "/audit",
   "company-settings": "/company-settings",
@@ -40,7 +41,9 @@ export async function openReadyRoute(
     await expect(page).toHaveURL(/#home$/);
     await expect(page.getByRole('region',{name:'Indicadores operacionais',exact:true})).toHaveCount(1);
   }else{
-    const response = page.waitForResponse(r=>new URL(r.url()).pathname==='/api'+endpoints[route.id]&&r.request().method()==='GET');
+    const endpoint = endpoints[route.id];
+    expect(endpoint, `${route.id}: primary GET must be explicitly registered`).toBeTruthy();
+    const response = page.waitForResponse(r=>new URL(r.url()).pathname==='/api'+endpoint&&r.request().method()==='GET');
     await page.goto('/app#'+route.id);
     const received=await response;
     expect(received.ok(),`${route.id}: ${received.status()}`).toBe(true);

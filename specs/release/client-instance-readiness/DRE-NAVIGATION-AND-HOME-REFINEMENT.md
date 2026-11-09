@@ -66,6 +66,7 @@ A competência antiga é deliberada para separar as operações da fixture atual
 | `frontend/src/dreNavigation.ts`, `financialNavigation.ts` | URL canônica e preservação de datas civis/links anteriores. |
 | `frontend/src/financePlanning.tsx` | Mesma tela de relatórios controlada pela rota, período aplicado e escolha do relatório preservados. |
 | `frontend/src/financialOverview.tsx`, `dre.tsx` | Remoção do atalho destacado, título coerente e orientação curta para atualizar após revisão. |
+| `frontend/tests/routeReadiness.ts` | Registro do GET real da DRE no helper geral; mapa tipado e falha imediata para destino sem endpoint. Mantidas as verificações de HTTP, tela e autorização. |
 | Três testes unitários de navegação | Novo destino, aliases, datas, autorização, ordem e metadados de retorno. |
 | `frontend/tests/dre-home-navigation.spec.ts` | Oito definições novas: card, zero/indisponibilidade, tablets, sidebar, autorização, histórico e ciclo real da DRE. |
 | `frontend/tests/navigation.spec.ts`, `home.spec.ts` | Asserção específica e estrita da URL canônica com datas para a rota nova; endereços antigos continuam com suas asserções anteriores. |
@@ -86,6 +87,7 @@ Ambiente local: Ubuntu, Python 3.12, Node 22, dependências fixadas existentes; 
 | Ampliação dirigida, seis arquivos | **64 PASS / 2 FAIL em cada motor**; falhas da asserção antiga de URL no destino recém-adicionado, descritas abaixo. Não é chamada de bateria integral aprovada. |
 | Reexecução da compatibilidade corrigida | **2/2 em cada motor**, subconjunto dos casos anteriores, não testes novos. |
 | Atalhos reais do Início, admin/operador | **4/4 em cada motor**, casos existentes com a URL nova validada estritamente. |
+| Helper geral corrigido: rotas, perfis, reflow, Axe, impressão/CSV | **46/46 Chromium e 46/46 Firefox**, zero falhas/skips/retries. Inclui casos já contados e não deve ser somado como cobertura nova. |
 | Legados | **124 comparações / 26 relatórios, zero divergências** contra `cc7d983`. |
 | Axe | Nenhuma violação nas telas exercitadas de Início e DRE conhecida/parcial; não é certificação WCAG ou teste com leitor real. |
 | CI final | Resultado do HEAD final será vinculado na descrição/checks do Draft PR após execução. A matriz principal inclui **406 execuções por motor**; não atribuir resultados do PR #18 a esta candidata. |
@@ -115,6 +117,8 @@ npx --no-install playwright test --config playwright.integration.config.ts dre-h
 npx --no-install playwright test --config playwright.integration.config.ts dre-home-navigation.spec.ts dre-integration.spec.ts dre-review-fixes.spec.ts dre-release-ux.spec.ts predeploy-export-session.spec.ts navigation.spec.ts
 npx --no-install playwright test --config playwright.integration.config.ts navigation.spec.ts --grep 'compatibilidade dos'
 npx --no-install playwright test --config playwright.integration.config.ts home.spec.ts --grep 'atalhos .*todos os destinos'
+npx --no-install playwright test --config playwright.integration.config.ts integration.spec.ts system-review.spec.ts commercial-a11y.spec.ts
+# O padrão integration.spec.ts também seleciona dre-integration.spec.ts: 46 execuções em quatro arquivos.
 # Para Firefox, prefixar SILEX_INTEGRATION_BROWSER=firefox; usar porta local livre.
 ```
 
@@ -128,6 +132,8 @@ npx --no-install playwright test --config playwright.integration.config.ts home.
 A varredura do patch binário codificado marcou um falso positivo em bytes base85 de uma captura PNG. A imagem foi preservada; a revisão do conteúdo real e a varredura do diff textual não encontraram credencial.
 
 A mesma suposição de URL sem parâmetros foi identificada por revisão no teste dos atalhos do Início e ajustada apenas para DRE, antes da validação final. Os quatro casos (admin/operador × desktop/mobile) passaram em cada motor. Não foi atribuída uma falha que não foi executada a esse controle. O CI intermediário do HEAD documental é substituído pelo novo HEAD com essa asserção.
+
+O CI `42669360930`, no HEAD `6b72627`, concluiu core/diff, mas os jobs de navegador atingiram o limite de 35 minutos após falhas nos percursos de rotas. O helper antigo não registrava `finance-dre`, aguardando um GET inexistente em vez de `/api/finance/dre`. Isso foi reproduzido localmente com uma asserção de registro que falhou imediatamente por `undefined`, sem esperar minutos. O mapa recebeu o endpoint correto e uma verificação de registro obrigatório; nenhuma verificação de HTTP/conteúdo foi removida e nenhum timeout foi aumentado. Depois, 46 casos passaram em cada motor, incluindo todas as identidades/rotas, os cinco tamanhos de tela e os 26 relatórios. [Registro do CI interrompido](evidence/dre-navigation-home/cancelled-ci-6b72627.json). O CI completo do novo HEAD deve ser conferido separadamente; o run cancelado não é aprovação.
 
 Nenhum teste desabilitado, `xfail`, retry, ajuste financeiro ou relaxamento de autorização para produzir aprovação.
 
