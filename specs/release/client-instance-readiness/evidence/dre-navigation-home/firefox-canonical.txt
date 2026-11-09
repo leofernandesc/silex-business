@@ -1,0 +1,15 @@
+[WebServer] INFO:     Started server process [1211903]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8038 (Press CTRL+C to quit)
+
+Running 2 tests using 1 worker
+
+(node:1211905) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [desktop] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido (14.9s)
+(node:1212345) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [mobile] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido (14.2s)
+
+  2 passed (38.3s)

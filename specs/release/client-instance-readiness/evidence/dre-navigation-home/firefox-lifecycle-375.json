@@ -1,0 +1,11 @@
+{
+  "service_id": 1,
+  "title_id": 6,
+  "customer_id": 3,
+  "expected_revenue_cents": 500001,
+  "known_revenue_cents": 500001,
+  "remaining_after_partial": 300000,
+  "known_net_profit": null,
+  "facts_before_after_receipt_and_reversal_equal": true,
+  "coverage_confirmations_created": 0
+}

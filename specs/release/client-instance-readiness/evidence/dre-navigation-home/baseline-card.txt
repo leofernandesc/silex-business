@@ -1,0 +1,36 @@
+[WebServer] INFO:     Started server process [1183357]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8037 (Press CTRL+C to quit)
+
+Running 1 test using 1 worker
+
+(node:1183361) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/dre-home-navigation.spec.ts:11:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (1.4s)
+
+
+  1) [desktop] › tests/dre-home-navigation.spec.ts:11:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "grid"
+    Received: "block"
+
+       9 | async function sidebar(page:Page,name:string){if(await page.getByRole('button',{name:'Abrir menu',exact:true}).isVisible())await page.getByRole('button',{name:'Abrir menu',exact:true}).click();const nav=page.locator('#app-navigation');const button=nav.getByRole('button',{name,exact:true});if(!await button.isVisible()){const group=nav.getByRole('button',{name:'FINANCEIRO',exact:true});await group.click()}await button.click();await expect(page.locator('#app-navigation[aria-modal=true]')).toHaveCount(0)}
+      10 |
+    > 11 | test('Home service summary uses three clear KPI blocks and preserves legitimate zeros',async({page})=>{await auth(page);await page.goto('/app#home');const card=page.getByRole('region',{name:'Resumo de serviços e pedidos',exact:true});await expect(card.getByText('Concluídos',{exact:true})).toBeVisible();await evidence(page,'home-services');expect(await card.locator('dl').evaluate(el=>getComputedStyle(el).display)).toBe('grid');await expect(card.locator('dt')).toHaveText(['Agendados','Em execução','Concluídos']);await expect(card.locator('dd')).toHaveText(['0','0','0']);const boxes=await card.locator('dl > div').evaluateAll(els=>els.map(el=>({x:el.getBoundingClientRect().x,y:el.getBoundingClientRect().y,width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height})));expect(boxes[0].x).toBeLessThan(boxes[1].x);expect(boxes[1].x).toBeLessThan(boxes[2].x);expect(boxes.every(box=>Math.abs(box.y-boxes[0].y)<1&&box.width>60&&box.height>60)).toBe(true);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);expect((await new AxeBuilder({page}).analyze()).violations).toEqual([])});
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                  ^
+      12 |
+      13 | test('DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports',async({page})=>{await auth(page);await page.goto('/app#home');await sidebar(page,'DRE gerencial');await expect(page).toHaveURL(/#finance-dre$/);await expect(page.locator('.breadcrumb strong')).toHaveText('DRE gerencial');await expect(page.getByRole('heading',{level:1,name:'DRE gerencial',exact:true})).toBeVisible();await page.reload();await expect(page.locator('.breadcrumb strong')).toHaveText('DRE gerencial');await sidebar(page,'Relatórios Financeiros');await expect(page).toHaveURL(/#finance-reports$/);await expect(page.getByLabel('Relatório',{exact:true}).locator('option')).toHaveCount(27);await expect(page.locator('.breadcrumb strong')).toHaveText('Relatórios Financeiros');await sidebar(page,'Visão financeira');await expect(page.getByRole('heading',{level:1,name:'Visão financeira',exact:true})).toBeVisible();await expect(page.getByRole('link',{name:/Consultar DRE gerencial/})).toHaveCount(0)});
+      14 |
+        at /home/leofernandesc/silex-dre-home-refinement/frontend/tests/dre-home-navigation.spec.ts:11:418
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-home-before-output/dre-home-navigation-Home-s-3b18f--preserves-legitimate-zeros-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-home-before-output/dre-home-navigation-Home-s-3b18f--preserves-legitimate-zeros-desktop/error-context.md
+
+  1 failed
+    [desktop] › tests/dre-home-navigation.spec.ts:11:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros

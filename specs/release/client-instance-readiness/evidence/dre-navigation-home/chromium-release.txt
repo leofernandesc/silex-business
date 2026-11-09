@@ -1,0 +1,153 @@
+[WebServer] INFO:     Started server process [1197783]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8037 (Press CTRL+C to quit)
+
+Running 66 tests using 1 worker
+
+(node:1197999) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-home-navigation.spec.ts:56:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (2.7s)
+  ✓   2 [desktop] › tests/dre-home-navigation.spec.ts:102:1 › DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports (1.9s)
+  ✓   3 [desktop] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve nonzero counts (1.3s)
+  ✓   4 [desktop] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve unavailable states (1.2s)
+  ✓   5 [desktop] › tests/dre-home-navigation.spec.ts:166:1 › Home KPIs remain three legible columns at tablet widths (1.3s)
+  ✓   6 [desktop] › tests/dre-home-navigation.spec.ts:196:1 › DRE direct URL and API preserve operator and visitor authorization (1.1s)
+  ✓   7 [desktop] › tests/dre-home-navigation.spec.ts:220:1 › DRE legacy deep link, active item, history and report selector preserve applied periods (2.4s)
+  ✓   8 [desktop] › tests/dre-home-navigation.spec.ts:278:1 › DRE service lifecycle through real forms shows known revenue once and explains missing coverage (14.0s)
+  ✓   9 [desktop] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (7.0s)
+  ✓  10 [desktop] › tests/dre-integration.spec.ts:56:1 › navigation aliases converge on one home and one financial plan (1.0s)
+  ✓  11 [desktop] › tests/dre-integration.spec.ts:64:1 › service completion persists without auto titles and contextual generation remains confirmed and unique (2.0s)
+  ✓  12 [desktop] › tests/dre-integration.spec.ts:78:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (1.2s)
+  ✓  13 [desktop] › tests/dre-release-ux.spec.ts:9:1 › DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure (1.7s)
+  ✓  14 [desktop] › tests/dre-release-ux.spec.ts:15:1 › DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels (3.8s)
+  ✓  15 [desktop] › tests/dre-release-ux.spec.ts:19:1 › DRE release: unavailable description and fresh export authorization do not disclose stale financial information (1.8s)
+  ✓  16 [desktop] › tests/dre-release-ux.spec.ts:24:1 › DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile (5.2s)
+  ✓  17 [desktop] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (2.9s)
+  ✓  18 [desktop] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (2.9s)
+  ✓  19 [desktop] › tests/dre-review-fixes.spec.ts:54:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (3.3s)
+  ✓  20 [desktop] › tests/dre-review-fixes.spec.ts:75:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (1.4s)
+  ✓  21 [desktop] › tests/navigation.spec.ts:63:1 › login inválido/válido e persistência sem mudanças no cookie (1.9s)
+  ✓  22 [desktop] › tests/navigation.spec.ts:91:1 › rota protegida retorna após login, refresh e logout sem conteúdo privado no histórico (2.5s)
+  ✘  23 [desktop] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido (11.4s)
+(node:1201920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  24 [desktop] › tests/navigation.spec.ts:162:1 › navegação interna, Voltar/Avançar, foco e atalho financeiro (2.5s)
+  ✓  25 [desktop] › tests/navigation.spec.ts:193:1 › P08: operador sem atalhos administrativos e guard uniforme para todos os destinos (1.4s)
+  ✓  26 [desktop] › tests/navigation.spec.ts:243:1 › P03: teclado, modal móvel, submenus, Escape e foco restaurado (892ms)
+
+  ✓  27 [desktop] › tests/navigation.spec.ts:342:1 › sessão expirada no servidor, limpeza e retorno após reautenticação (1.3s)
+
+  ✓  28 [desktop] › tests/navigation.spec.ts:367:1 › logout com sessão já expirada considera 401 como saída concluída (1.1s)
+  ✓  29 [desktop] › tests/navigation.spec.ts:391:1 › falha de rede no logout oculta dados, persiste bloqueio local e permite nova tentativa (1.3s)
+  ✓  30 [desktop] › tests/navigation.spec.ts:429:1 › 403 de operação preserva sessão e comunica recusa sem expirar (1.1s)
+  ✓  31 [desktop] › tests/navigation.spec.ts:457:1 › retorno adulterado e parâmetro externo não redirecionam para outra origem (920ms)
+  ✓  32 [desktop] › tests/navigation.spec.ts:473:1 › P03: mudança de breakpoint conserva foco acessível e desfaz o modo modal (1.0s)
+  ✓  33 [desktop] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (11.6s)
+(node:1203496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  34 [mobile] › tests/dre-home-navigation.spec.ts:56:1 › Home service summary uses three clear KPI blocks and preserves legitimate zeros (3.5s)
+  ✓  35 [mobile] › tests/dre-home-navigation.spec.ts:102:1 › DRE has a dedicated sidebar destination, breadcrumb and preserves the other reports (2.6s)
+  ✓  36 [mobile] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve nonzero counts (1.3s)
+  ✓  37 [mobile] › tests/dre-home-navigation.spec.ts:140:3 › Home service KPIs preserve unavailable states (1.2s)
+  ✓  38 [mobile] › tests/dre-home-navigation.spec.ts:166:1 › Home KPIs remain three legible columns at tablet widths (1.3s)
+  ✓  39 [mobile] › tests/dre-home-navigation.spec.ts:196:1 › DRE direct URL and API preserve operator and visitor authorization (1.1s)
+  ✓  40 [mobile] › tests/dre-home-navigation.spec.ts:220:1 › DRE legacy deep link, active item, history and report selector preserve applied periods (2.6s)
+  ✓  41 [mobile] › tests/dre-home-navigation.spec.ts:278:1 › DRE service lifecycle through real forms shows known revenue once and explains missing coverage (12.3s)
+  ✓  42 [mobile] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (5.2s)
+  ✓  43 [mobile] › tests/dre-integration.spec.ts:56:1 › navigation aliases converge on one home and one financial plan (959ms)
+  ✓  44 [mobile] › tests/dre-integration.spec.ts:64:1 › service completion persists without auto titles and contextual generation remains confirmed and unique (1.6s)
+  ✓  45 [mobile] › tests/dre-integration.spec.ts:78:1 › DRE lookup failure and malformed response recover in place without reporting a zero profit (1.0s)
+  ✓  46 [mobile] › tests/dre-release-ux.spec.ts:9:1 › DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure (1.3s)
+  ✓  47 [mobile] › tests/dre-release-ux.spec.ts:15:1 › DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels (3.3s)
+  ✓  48 [mobile] › tests/dre-release-ux.spec.ts:19:1 › DRE release: unavailable description and fresh export authorization do not disclose stale financial information (1.7s)
+  ✓  49 [mobile] › tests/dre-release-ux.spec.ts:24:1 › DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile (4.2s)
+  ✓  50 [mobile] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (2.4s)
+  ✓  51 [mobile] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (2.3s)
+  ✓  52 [mobile] › tests/dre-review-fixes.spec.ts:54:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (3.1s)
+  ✓  53 [mobile] › tests/dre-review-fixes.spec.ts:75:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (1.4s)
+  ✓  54 [mobile] › tests/navigation.spec.ts:63:1 › login inválido/válido e persistência sem mudanças no cookie (1.9s)
+  ✓  55 [mobile] › tests/navigation.spec.ts:91:1 › rota protegida retorna após login, refresh e logout sem conteúdo privado no histórico (2.4s)
+  ✘  56 [mobile] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido (11.2s)
+(node:1207461) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  57 [mobile] › tests/navigation.spec.ts:162:1 › navegação interna, Voltar/Avançar, foco e atalho financeiro (2.6s)
+  ✓  58 [mobile] › tests/navigation.spec.ts:193:1 › P08: operador sem atalhos administrativos e guard uniforme para todos os destinos (1.5s)
+  ✓  59 [mobile] › tests/navigation.spec.ts:243:1 › P03: teclado, modal móvel, submenus, Escape e foco restaurado (2.0s)
+
+  ✓  60 [mobile] › tests/navigation.spec.ts:342:1 › sessão expirada no servidor, limpeza e retorno após reautenticação (1.3s)
+
+  ✓  61 [mobile] › tests/navigation.spec.ts:367:1 › logout com sessão já expirada considera 401 como saída concluída (895ms)
+  ✓  62 [mobile] › tests/navigation.spec.ts:391:1 › falha de rede no logout oculta dados, persiste bloqueio local e permite nova tentativa (1.4s)
+  ✓  63 [mobile] › tests/navigation.spec.ts:429:1 › 403 de operação preserva sessão e comunica recusa sem expirar (953ms)
+  ✓  64 [mobile] › tests/navigation.spec.ts:457:1 › retorno adulterado e parâmetro externo não redirecionam para outra origem (901ms)
+  ✓  65 [mobile] › tests/navigation.spec.ts:473:1 › P03: mudança de breakpoint conserva foco acessível e desfaz o modo modal (982ms)
+  ✓  66 [mobile] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (11.5s)
+
+
+  1) [desktop] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/app#finance-dre$/
+    Received string:  "http://127.0.0.1:8037/app?dre_view=dre&dre_start=2026-11-01&dre_end=2026-11-09#finance-dre"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        4 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://127.0.0.1:8037/#finance-dre"
+        9 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://127.0.0.1:8037/app?dre_view=dre&dre_start=2026-11-01&dre_end=2026-11-09#finance-dre"
+
+
+      141 |   for (const route of routes.filter(route => canAccessRoute(active, route.id))) {
+      142 |     await page.goto("/#" + route.id);
+    > 143 |     await expect(page).toHaveURL(new RegExp("/app#" + (route.id==="dashboard"?"home":route.id) + "$"));
+          |                        ^
+      144 |     await expect(page.locator(".breadcrumb strong")).toHaveText(route.title);
+      145 |     await expect(page.locator(".app-shell")).toBeVisible();
+      146 |   }
+        at /home/leofernandesc/silex-dre-home-refinement/frontend/tests/navigation.spec.ts:143:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-home-release-chromium-output/navigation-compatibilidade-f778a-home-e-destino-desconhecido-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-home-release-chromium-output/navigation-compatibilidade-f778a-home-e-destino-desconhecido-desktop/error-context.md
+
+  2) [mobile] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /\/app#finance-dre$/
+    Received string:  "http://127.0.0.1:8037/app?dre_view=dre&dre_start=2026-11-01&dre_end=2026-11-09#finance-dre"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        5 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://127.0.0.1:8037/#finance-dre"
+        9 × locator resolved to <html lang="pt-BR">…</html>
+          - unexpected value "http://127.0.0.1:8037/app?dre_view=dre&dre_start=2026-11-01&dre_end=2026-11-09#finance-dre"
+
+
+      141 |   for (const route of routes.filter(route => canAccessRoute(active, route.id))) {
+      142 |     await page.goto("/#" + route.id);
+    > 143 |     if (route.id === "finance-dre") {
+          |                        ^
+      144 |       const today = (await (await page.request.get("/api/dashboard")).json()).date;
+      145 |       await expect(page).toHaveURL(new RegExp(`/app\\?dre_view=dre&dre_start=${today.slice(0,7)}-01&dre_end=${today}#finance-dre$`));
+      146 |     } else {
+        at /home/leofernandesc/silex-dre-home-refinement/frontend/tests/navigation.spec.ts:143:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-dre-home-release-chromium-output/navigation-compatibilidade-f778a-home-e-destino-desconhecido-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-dre-home-release-chromium-output/navigation-compatibilidade-f778a-home-e-destino-desconhecido-mobile/error-context.md
+
+  2 failed
+    [desktop] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido
+    [mobile] › tests/navigation.spec.ts:136:1 › compatibilidade dos 24 hashes anteriores, alias, home e destino desconhecido
+  64 passed (3.4m)

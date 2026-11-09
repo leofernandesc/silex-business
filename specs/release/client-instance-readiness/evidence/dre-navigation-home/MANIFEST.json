@@ -1,0 +1,191 @@
+{
+  "base": "cc7d9836649566211809270b286e6c62422f10d5",
+  "source_commit": "474fa6808f6b6a1c0a2d32c1072a9230bed71b27",
+  "branch": "fix/dre-navigation-home-refinement",
+  "date": "2026-11-09",
+  "source_files": [
+    {
+      "path": "frontend/playwright.integration.config.ts",
+      "sha256": "45de63414f3f40459da0b9f4973c8c19b798ccf7bf31681420f1533609672a47"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "17e9cd4a18cfcdd342113ee9a78ceadf8de1af1dface3563eb3bbe618df0efb7"
+    },
+    {
+      "path": "frontend/src/dre.tsx",
+      "sha256": "7cb4606c1e4c11b89b40da022de044c9e56ad2800ecb7f2a1f5b697667d97a60"
+    },
+    {
+      "path": "frontend/src/dreNavigation.test.ts",
+      "sha256": "3d334a4a8a9060a2be2724dcf431eadf509fc65cd7aaefa9d529636f4cfc2262"
+    },
+    {
+      "path": "frontend/src/dreNavigation.ts",
+      "sha256": "5d489f631fc25362a7daaf52492faac39e51dff7727dace0dd3070482c096d7c"
+    },
+    {
+      "path": "frontend/src/financePlanning.tsx",
+      "sha256": "9ddac150d08975b1911cf8226c956c1a2040e94cb509ce7acfa3c6c91f275be0"
+    },
+    {
+      "path": "frontend/src/financialNavigation.test.ts",
+      "sha256": "78787b0284acdf0e337971941400977bf47f9e850b8716f97a8ce9308ec00e18"
+    },
+    {
+      "path": "frontend/src/financialNavigation.ts",
+      "sha256": "3fb853ff4981ff73666248ff9ca789a0c8bb898db1c91d0c24d50f029d358bd0"
+    },
+    {
+      "path": "frontend/src/financialOverview.tsx",
+      "sha256": "0ab137a9c10e4667d271de79e43f3f75d6259d6770fd249570e29ee4a1ab420c"
+    },
+    {
+      "path": "frontend/src/navigation/routes.test.ts",
+      "sha256": "c985b8fe0d863a9fe72231fab053a3d62842e6d2b348016badef5aadc443d867"
+    },
+    {
+      "path": "frontend/src/navigation/routes.ts",
+      "sha256": "961b12ae9e60ba38ad9ad36a51e267255a0e77947a9433d194540490f0a2e2e4"
+    },
+    {
+      "path": "frontend/src/navigation/useAppNavigation.ts",
+      "sha256": "55b05f99adc3d242f32e7f6e650be5afb16d0bc9425edd2a8acebb534e111c25"
+    },
+    {
+      "path": "frontend/src/overview.css",
+      "sha256": "0a373be19a341dadb8b5a2aa36a493b541a005a12f2dbfeaeb6ee093a71fecc9"
+    },
+    {
+      "path": "frontend/tests/dre-home-navigation.spec.ts",
+      "sha256": "06dcea981595fe891d8710ea0ed791953265a40932980befced54b3f56d151d8"
+    },
+    {
+      "path": "frontend/tests/navigation.spec.ts",
+      "sha256": "b9530943baec49de5252f03a3ddf9b09570d139ae506e9a55849fae690cc8852"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "backend-directed.txt",
+      "sha256": "0577285d1ed8710e48ee34397bb2174833e6e5925c36affcec7f5dedcb5eaa66",
+      "bytes": 614
+    },
+    {
+      "path": "baseline-card.txt",
+      "sha256": "fcc89ebd291316f14860858e218bc19c7630f343a8bb7377dbd6d73352aed0a5",
+      "bytes": 5073
+    },
+    {
+      "path": "chromium-canonical.txt",
+      "sha256": "41e79f09888d045badcc143e22551d68993324300df8f4a9e34aa7d25f197a39",
+      "bytes": 918
+    },
+    {
+      "path": "chromium-final.txt",
+      "sha256": "085d579dee38269fdcf00333175c76c2fc86e180b49ba512c1ed91d04d429ac7",
+      "bytes": 2944
+    },
+    {
+      "path": "chromium-lifecycle-1440.json",
+      "sha256": "c83e0b2b4830939625b353fb1cf83c9e31e6776bc5048c196cd5185edf9c5642",
+      "bytes": 288
+    },
+    {
+      "path": "chromium-lifecycle-375.json",
+      "sha256": "c83e0b2b4830939625b353fb1cf83c9e31e6776bc5048c196cd5185edf9c5642",
+      "bytes": 288
+    },
+    {
+      "path": "chromium-release.txt",
+      "sha256": "d522713621d12313a4c1f33b14be0d296e64c20c94c7813f0572819fa4c29897",
+      "bytes": 15641
+    },
+    {
+      "path": "dre-empty-1440.png",
+      "sha256": "f84ba6ae7d8620a0b775838db3b1cff23b878d4587941f0d44b3ae0811e96e2d",
+      "bytes": 88469
+    },
+    {
+      "path": "dre-known-partial-1440.png",
+      "sha256": "7031d123a69fd70886d2a7d47b6a46c60f3761077d5b6747fa400c17895532a4",
+      "bytes": 225422
+    },
+    {
+      "path": "dre-pending-1440.png",
+      "sha256": "cbb3c6423a864ee0c3657b0f28ff3a96855288ef18bbef11ee24362fddcfc1c4",
+      "bytes": 211930
+    },
+    {
+      "path": "firefox-canonical.txt",
+      "sha256": "5943f7a62d16bbf18d061915271354fcb04b6bb11cebe34fdbbbcf46118fa316",
+      "bytes": 918
+    },
+    {
+      "path": "firefox-dre-known-partial-375.png",
+      "sha256": "9988d215c8f9e3b6013d5683b0850bffe0e73fab2179ccd7711c5da4bc4d162c",
+      "bytes": 320757
+    },
+    {
+      "path": "firefox-final.txt",
+      "sha256": "118e56858671ef5b21acee6e1ef0b3cfca13c02b2da1d062b373fd3dffc2d065",
+      "bytes": 2944
+    },
+    {
+      "path": "firefox-lifecycle-1440.json",
+      "sha256": "c83e0b2b4830939625b353fb1cf83c9e31e6776bc5048c196cd5185edf9c5642",
+      "bytes": 288
+    },
+    {
+      "path": "firefox-lifecycle-375.json",
+      "sha256": "c83e0b2b4830939625b353fb1cf83c9e31e6776bc5048c196cd5185edf9c5642",
+      "bytes": 288
+    },
+    {
+      "path": "firefox-release.txt",
+      "sha256": "98226a11a9c5dc6444a644eb66fbc3c92ced5ee5e78f6193be99945a9cb65b9e",
+      "bytes": 15631
+    },
+    {
+      "path": "frontend.txt",
+      "sha256": "d50ee883b4d222d965e59d0b6a98c9eb57f1abfc88bde9ff10b7df3014e56bdf",
+      "bytes": 285
+    },
+    {
+      "path": "home-services-1440.png",
+      "sha256": "b74bc89062bc27dcedbdaa49871267a61a302356b072923aedf58e0713bf8ec3",
+      "bytes": 203954
+    },
+    {
+      "path": "home-services-375.png",
+      "sha256": "93352a2a133f72bd50a1b5d19ac8ec25cddf20bb8873dc2a2f04eff665a77c8c",
+      "bytes": 193528
+    },
+    {
+      "path": "home-services-before.png",
+      "sha256": "cdb7cedb11d2366120706e45b9360f92da26be6bdb0f6abb1583ad33c15b0efd",
+      "bytes": 202578
+    },
+    {
+      "path": "legacy-comparison.json",
+      "sha256": "f535d8e389736934e711fbe5f7457e1938a0ef190dcde59449b21f0d2a7c955f",
+      "bytes": 36314
+    },
+    {
+      "path": "source-secret-scan.txt",
+      "sha256": "f3ca732ffb205d7597b437c1a794f434897db7f49c6c610aafcf833ebee5bce8",
+      "bytes": 75
+    },
+    {
+      "path": "typescript-build.txt",
+      "sha256": "c68ed67faff56658290a5a0663b05e0649ce224dd982723ea67cbe382791026c",
+      "bytes": 754
+    }
+  ],
+  "notes": [
+    "Fictitious disposable SQLite only. No persistent DB or Railway access.",
+    "Logs are archived with trailing whitespace normalization only.",
+    "final logs: 16 new E2E executions per motor; release logs: 66 executions with 2 URL expectation failures per motor; canonical logs: 2 directed reexecutions per motor. Do not sum overlapping tests.",
+    "Final immutable CI results belong to the exact final HEAD checks and Draft PR description."
+  ]
+}
