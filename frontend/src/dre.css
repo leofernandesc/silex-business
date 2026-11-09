@@ -50,3 +50,11 @@
  .dre-administration { display: none; }
  .dre-summary { padding: 0; background: none; margin-bottom: 4mm; }
 }
+
+.dre-configuration {padding: 18px;}
+.dre-configuration-link {margin: 0 0 16px;}
+.dre-configuration li {margin-bottom: 16px; overflow-wrap: anywhere;}
+.dre-configuration li button, .dre-configuration li a {margin: 4px;}
+@media print {
+ .dre-configuration, .dre-configuration-link, #dre-initial-setup, .dre-review-history {display:none!important;}
+}

@@ -63,12 +63,13 @@ export function dreErrorMessage(error:unknown):string{
  if(['not found','forbidden','unauthorized','internal server error','service unavailable','unavailable','failed to fetch'].includes(text.toLowerCase())||/Cannot read|TypeError|SyntaxError|NetworkError|^[a-z]+(?:_[a-z0-9]+)+$/i.test(text))return 'Não foi possível concluir a operação. Atualize a consulta e tente novamente; confira o resultado antes de reenviar.';
  return text||'Não foi possível concluir a operação. Atualize os dados e tente novamente.';
 }
-type CsvReport={start:string;end:string;mapping_version:number;decision_version:number;cancellation_version:number;lines:{code:string;coverage_status:string;known_amount_cents:number|null;final_amount_cents:number|null}[];facts:(DreSourceRef&{dre_line_code:string;economic_date:string;amount_cents:number})[];excluded:{key:string;amount_cents:number;reason:string}[];issues:{key?:string;codes:string[]}[];margins:Record<string,{value:string|null;reason:string|null}>};
+type CsvReport={source_fingerprint?:string;report_fingerprint?:string;start:string;end:string;mapping_version:number;decision_version:number;cancellation_version:number;lines:{code:string;coverage_status:string;known_amount_cents:number|null;final_amount_cents:number|null}[];facts:(DreSourceRef&{dre_line_code:string;economic_date:string;amount_cents:number})[];excluded:{key:string;amount_cents:number;reason:string}[];issues:{key?:string;codes:string[]}[];margins:Record<string,{value:string|null;reason:string|null}>};
 const cell=(value:unknown)=>{let s=value==null?'':String(value);if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};
 /** A readable document; the existing technical CSV endpoint and its contracts are unchanged. */
-export function dreReadableCsv(report:CsvReport){
+export function dreDiagnosticCsv(report:CsvReport){
  const rows:unknown[][]=[['DRE gerencial','Competência econômica',dateOnly(report.start),dateOnly(report.end)],['Valores parciais não representam lucro final; componentes desconhecidos não são zero.'],['Rubrica','Cobertura','Valor conhecido','Valor final']];
  for(const l of report.lines)rows.push([dreLineNames[l.code]||'Rubrica a conferir',dreStatuses[l.coverage_status]||'A conferir',l.known_amount_cents===null?'Indisponível':money(l.known_amount_cents),l.final_amount_cents===null?'Indisponível':money(l.final_amount_cents)]);
+ rows.push(['Fingerprint das fontes',report.source_fingerprint||''],['Fingerprint do demonstrativo',report.report_fingerprint||'']);
  rows.push(['Versão de classificação',report.mapping_version,'Versão de reconhecimento',report.decision_version,'Versão de ajustes',report.cancellation_version],['Margem','Percentual','Critério']);
  const margins:Record<string,string>={LB:'Margem bruta',EBIT:'Margem operacional',EBITDA:'Margem EBITDA',LL:'Margem líquida'};
  for(const [code,m]of Object.entries(report.margins))rows.push([margins[code]||'Margem a conferir',m.value===null?'Indisponível':m.value.replace('.',',')+'%',m.reason||'Componentes completos']);
@@ -76,4 +77,16 @@ export function dreReadableCsv(report:CsvReport){
  rows.push(['Pendências','Orientação','Identificador técnico (auditoria)']);for(const i of report.issues)rows.push([i.key?dreOperationName({key:i.key}):'Cobertura do período',i.codes.map(dreIssueMessage).join(' '),i.key||'']);
  rows.push(['Operação','Rubrica','Data econômica','Valor','Centavos','Identificador técnico (auditoria)']);for(const f of report.facts)rows.push([dreOperationName(f),dreLineNames[f.dre_line_code]||'Rubrica a conferir',dateOnly(f.economic_date),money(f.amount_cents),f.amount_cents,f.key]);
  return '\ufeff'+rows.map(r=>r.map(v=>typeof v==='number'?String(v):cell(v)).join(';')).join('\r\n')+'\r\n';
+}
+
+export function dreCommercialMessage(report:Parameters<typeof dreDisplayState>[0]){
+ return ({empty:'Nenhuma operação no período selecionado.',pending:'Informações insuficientes para apresentar o demonstrativo deste período.',partial:'Resultado parcial. Os valores finais dependem de informações ainda não comprovadas.',complete:'Demonstrativo completo para o período.'})[dreDisplayState(report)];
+}
+/** Commercial allowlist: never serialize sources, evidence, free-form reasons or audit metadata. */
+export function dreReadableCsv(report:CsvReport){
+ const rows:unknown[][]=[['DRE gerencial','Competência econômica',dateOnly(report.start),dateOnly(report.end)],[dreCommercialMessage(report)],['Rubrica','Situação','Valor conhecido','Valor final']];
+ for(const l of report.lines)rows.push([dreLineNames[l.code]||'Rubrica',dreStatuses[l.coverage_status]||'Indisponível',l.known_amount_cents===null?'Indisponível':money(l.known_amount_cents),l.final_amount_cents===null?'Indisponível':money(l.final_amount_cents)]);
+ rows.push(['Margem','Percentual']);
+ for(const [code,m] of Object.entries(report.margins))rows.push([({LB:'Margem bruta',EBIT:'Margem operacional',EBITDA:'Margem EBITDA',LL:'Margem líquida'} as Record<string,string>)[code]||'Margem',m.value===null?'Indisponível':m.value.replace('.',',')+'%']);
+ return '\ufeff'+rows.map(r=>r.map(cell).join(';')).join('\r\n')+'\r\n';
 }

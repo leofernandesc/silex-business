@@ -539,7 +539,7 @@ for (const width of [1440, 375])
         "/app?dre_view=dre&dre_start=2000-01-01&dre_end=2000-01-31#finance-reports";
     await page.goto(url);
     await expect(page.locator(".dre-summary")).toContainText(
-      "Existem operações para classificar ou confirmar",
+      "Informações insuficientes para apresentar",
     );
     expect(await page.locator(".dre-report").innerText()).not.toContain(
       "versão 0",
@@ -547,11 +547,11 @@ for (const width of [1440, 375])
     await evidence(page, "dre-pending-" + width);
     await page
       .getByRole("link", {
-        name: "Revisar classificação no Plano financeiro",
+        name: "Configuração da DRE",
         exact: true,
       })
       .click();
-    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.getByRole("button",{name:"Classificar esta operação",exact:true}).click();
     await page.getByLabel("Rubrica DRE", { exact: true }).selectOption("RB");
     await enterDate(page, "Vigência inicial da DRE", "2000-01-01");
     await enterDate(page, "Vigência final da DRE", "2000-01-31");
@@ -588,9 +588,8 @@ for (const width of [1440, 375])
     await page
       .getByRole("button", { name: "Detalhar Receita bruta", exact: true })
       .click();
-    await expect(page.locator(".dre-screen-detail")).toContainText(
-      "Conclusão do serviço conferida",
-    );
+    expect(report.facts[0].recognition_basis).toBe("verified_finalization");
+    await expect(page.locator(".dre-screen-detail code")).toHaveCount(0);
     await expect(page.locator(".dre-screen-detail")).toContainText(
       "Serviço fictício comprovado para homologação",
     );
@@ -658,7 +657,7 @@ for (const width of [1440, 375])
     }
     await page.reload();
     await expect(page.locator(".dre-summary")).toHaveText(
-      "Cobertura do período confirmada.",
+      "Demonstrativo completo para o período.",
     );
     report = await req(page, "/finance/dre?" + query);
     expect(
@@ -678,14 +677,16 @@ for (const width of [1440, 375])
       .click();
     const file = await download,
       csv = readFileSync((await file.path())!, "utf8");
-    expect(csv).toContain(";500001;");
-    expect(csv).toContain("Identificador técnico (auditoria)");
+    expect(csv).toContain("5.000,01");
+    expect(csv).not.toContain("Identificador técnico (auditoria)");
+    expect(csv).not.toMatch(/finance_entry:|service_order:|Fingerprint|Versão/);
     const folder = process.env.SILEX_UX_EVIDENCE;
     if (folder)
       await file.saveAs(join(folder, "dre-complete-" + width + ".csv"));
     await page.emulateMedia({ media: "print" });
-    await expect(page.locator(".dre-print-facts")).toContainText("5.000,01");
-    await expect(page.locator(".dre-administration")).toBeHidden();
+    await expect(page.locator(".dre-lines")).toContainText("5.000,01");
+    await expect(page.locator(".dre-print-facts")).toHaveCount(0);
+    await expect(page.locator(".dre-administration")).toHaveCount(0);
     for(const button of await page.locator('.dre-report button').all())await expect(button).toBeHidden();
     if (
       folder &&

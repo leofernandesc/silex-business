@@ -11,8 +11,8 @@ import {
 
 describe("Route availability and compatibility, including SB-04B home", () => {
   it("preserves legacy addresses and adds one canonical financial plan", () => {
-    expect(routes).toHaveLength(27);
-    expect(new Set(routes.map((r) => r.id)).size).toBe(27);
+    expect(routes).toHaveLength(28);
+    expect(new Set(routes.map((r) => r.id)).size).toBe(28);
     expect(getRoute("home")).toMatchObject({
       admin: false,
       group: "PRINCIPAL",

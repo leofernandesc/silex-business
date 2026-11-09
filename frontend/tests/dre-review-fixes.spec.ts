@@ -19,7 +19,7 @@ async function setup(page:Page){
  await post(page,'/finance/dre/recognition-review',{source_key:key,decision:'recognize',economic_date:today,source_fingerprint:source.source_fingerprint,policy_fingerprint:source.policy_fingerprint,expected_revision:0,evidence_kind:'comprovação_sintética',reason:'Receita auferida com documentação fictícia',request_key:'browser-initial-recognition-key'});
  return {today,params,key,category,entry,first};
 }
-async function dre(page:Page){await page.goto('/app#finance-reports');await page.getByLabel('Relatório',{exact:true}).selectOption('dre');await expect(page.locator('.dre-report h2')).toHaveText('DRE gerencial')}
+async function dre(page:Page){await page.goto('/app#finance-dre-config');await expect(page.getByRole('heading',{level:1,name:'Configuração da DRE',exact:true})).toBeVisible()}
 
 test('DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review',async({page})=>{
  const {today,category,first,params,key}=await setup(page);const tomorrow=civilDate(today)!.add({days:1}).toString();
@@ -68,7 +68,7 @@ test('DRE review: economic cancellation has an explicit preview, handles failure
  const old=await(await page.request.get(`/api/finance/dre/period-reviews/${review.id}`)).json();expect(old.snapshot.facts).toEqual(before.facts);
  const csv=await page.request.get('/api/finance/dre.csv',{params});expect(csv.ok()).toBe(true);expect(await csv.text()).toContain('-10001');
  const evidence=process.env.SILEX_DRE_REVIEW_EVIDENCE;if(evidence){mkdirSync(evidence,{recursive:true});await page.screenshot({path:join(evidence,`cancellation-${info.project.name}-${process.env.SILEX_INTEGRATION_BROWSER||'chromium'}.png`),fullPage:true})}
- await page.emulateMedia({media:'print'});await expect(page.locator('.dre-print-facts')).toContainText('100,01');
+ await page.getByRole('link',{name:'Consultar demonstrativo financeiro',exact:true}).click();await page.emulateMedia({media:'print'});await expect(page.locator('.dre-lines')).toContainText('0,00');await expect(page.locator('.dre-report')).not.toContainText('Rastreabilidade');
  if(evidence&&info.project.name==='desktop'&&process.env.SILEX_INTEGRATION_BROWSER!=='firefox')await page.pdf({path:join(evidence,'economic-cancellation-a4.pdf'),format:'A4',printBackground:true});
 });
 

@@ -138,9 +138,9 @@ for (const role of ["admin", "operator"] as const) {
     }
     for (const route of expected) {
       await page.locator(`.silex-home [data-home-route="${route.id}"]`).click();
-      if (route.id === "finance-dre") {
+      if (["finance-dre","finance-dre-config"].includes(route.id)) {
         const today = (await (await page.request.get("/api/dashboard")).json()).date;
-        await expect(page).toHaveURL(new RegExp(`/app\\?dre_view=dre&dre_start=${today.slice(0,7)}-01&dre_end=${today}#finance-dre$`));
+        await expect(page).toHaveURL(new RegExp(`/app\\?dre_view=dre&dre_start=${today.slice(0,7)}-01&dre_end=${today}#${route.id}$`));
       } else {
         await expect(page).toHaveURL(new RegExp(`/app#${route.id}$`));
       }

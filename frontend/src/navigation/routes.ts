@@ -92,6 +92,7 @@ export const routes = [
     group: "financeiro",
     admin: true,
   },
+  {id:"finance-dre-config",title:"Configuração da DRE",group:"administracao",admin:true},
   { id: "users", title: "Usuários", group: "administracao", admin: true },
   {
     id: "audit",

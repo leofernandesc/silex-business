@@ -6,6 +6,6 @@ export function readDrePeriod(search:string,today=localDate()):{start:string;end
  if(p.getAll('dre_start').length>1||p.getAll('dre_end').length>1||!civilDate(start)||!civilDate(end)||start>end)return null;
  return {start,end};
 }
-export function dreHref(period?:{start:string;end:string}){
- const q=new URLSearchParams({dre_view:'dre',...(period?{dre_start:period.start,dre_end:period.end}:{})});return '/app?'+q.toString()+'#finance-dre';
+export function dreHref(period?:{start:string;end:string},configuration=false){
+ const q=new URLSearchParams({dre_view:'dre',...(period?{dre_start:period.start,dre_end:period.end}:{})});return '/app?'+q.toString()+(configuration?'#finance-dre-config':'#finance-dre');
 }

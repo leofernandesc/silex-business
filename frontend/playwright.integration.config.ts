@@ -15,6 +15,7 @@ export default defineConfig({
     "app.spec.ts",
     "ux-homologation.spec.ts",
     "dre-home-navigation.spec.ts",
+    "dre-commercial.spec.ts",
     "dre-integration.spec.ts",
     "dre-review-fixes.spec.ts",
     "dre-release-ux.spec.ts",

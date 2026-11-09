@@ -103,10 +103,10 @@ export function AddButton({
     </button>
   );
 }
-export function ExportButton({onClick}:{onClick:()=>void|Promise<void>}) {
+export function ExportButton({onClick,label="Exportar CSV"}:{onClick:()=>void|Promise<void>;label?:string}) {
   const [busy,setBusy]=useState(false),[error,setError]=useState('');const pending=useRef(false);
   async function exportFile(){if(pending.current)return;pending.current=true;setBusy(true);setError('');try{await onClick();}catch(error){setError((error as Error).message);}finally{pending.current=false;setBusy(false);}}
-  return <><button type="button" disabled={busy} onClick={()=>void exportFile()}><Download size={16}/>{busy?'Exportando...':'Exportar CSV'}</button>{error&&<Notice>{error}</Notice>}</>;
+  return <><button type="button" disabled={busy} onClick={()=>void exportFile()}><Download size={16}/>{busy?'Exportando...':label}</button>{error&&<Notice>{error}</Notice>}</>;
 }
 export function SearchBox({
   value,

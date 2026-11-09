@@ -165,7 +165,7 @@ export function useAppNavigation() {
       return;
     }
     const route = readAddress({ pathname: "/app", hash: `#${id}` }).route;
-    address(route === "finance-dre" ? preserveFinancialSearch(appUrl(route)) : appUrl(route), false);
+    address(["finance-dre","finance-dre-config"].includes(route) ? preserveFinancialSearch(appUrl(route)) : appUrl(route), false);
     handledAddress.current = currentAddress();
     focusRequested.current = true;
     setPage(route);
