@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_cancellation_has_a_resolution_procedure _________________
+
+env = (<fastapi.applications.FastAPI object at 0x7018d72bde50>, <starlette.testclient.TestClient object at 0x7018d6f88140>, <starlette.testclient.TestClient object at 0x7018d6c61610>, <starlette.testclient.TestClient object at 0x7018d6c7c110>)
+
+    def test_cancellation_has_a_resolution_procedure(env):
+     _,admin,*_=env
+     entry=title(admin,'income',10001);mapping(admin,entry);recognize(admin,f"finance_entry:{entry['id']}:principal")
+     post(admin,f"/finance/{entry['id']}/cancel",{'reason':'Cancelamento fictício para revisão'},200)
+     issues=admin.get('/api/finance/dre/issues',params=period()).json()
+     assert any('economic_cancellation_review_required' in r['codes'] for r in issues)
+     response=admin.post('/api/finance/dre/cancellation-review/preview',json={})
+>    assert response.status_code==200, f"No resolution endpoint in reviewed baseline: HTTP {response.status_code}"
+E    AssertionError: No resolution endpoint in reviewed baseline: HTTP 404
+E    assert 404 == 200
+E     +  where 404 = <Response [404 Not Found]>.status_code
+
+backend/tests/test_cancellation_negative_review.py:11: AssertionError
+=============================== warnings summary ===============================
+../../home/leofernandesc/silex-dre-integration/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/leofernandesc/silex-dre-integration/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED backend/tests/test_cancellation_negative_review.py::test_cancellation_has_a_resolution_procedure
+1 failed, 1 warning in 1.90s
