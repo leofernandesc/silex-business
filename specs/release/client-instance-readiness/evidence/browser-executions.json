@@ -1,0 +1,1814 @@
+[
+  {
+    "browser": "chromium",
+    "execution": "before-description-fix",
+    "stats": {
+      "startTime": "2026-11-09T05:42:32.033Z",
+      "duration": 102941.20700000001,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 8748
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1175
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2995
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1821
+          }
+        ]
+      },
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 8127
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1122
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1904
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1213
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1898
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 5270
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2490
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 7831
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1556
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4034
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2102
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 7074
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3489
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3126
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4185
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2040
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3042
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3080
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4318
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2883
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "browser": "chromium",
+    "execution": "before-preview-fix",
+    "stats": {
+      "startTime": "2026-11-09T05:48:20.955Z",
+      "duration": 80944.841,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 8198
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1097
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2049
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1227
+          }
+        ]
+      },
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6219
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1057
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1837
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1227
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1452
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3786
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1924
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 7356
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1222
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3468
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1653
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 7417
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2961
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2296
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3245
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1441
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2177
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2504
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3133
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1331
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "browser": "chromium",
+    "execution": "final-directed",
+    "stats": {
+      "startTime": "2026-11-09T05:51:00.350Z",
+      "duration": 74713.454,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 7343
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1097
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1963
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1312
+          }
+        ]
+      },
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6446
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1010
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1661
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1073
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1399
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4899
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1980
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4747
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1337
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3934
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1772
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4950
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2864
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2822
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3179
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1323
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2452
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2176
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2940
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1392
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "browser": "firefox",
+    "execution": "before-description-fix",
+    "stats": {
+      "startTime": "2026-11-09T05:42:32.043Z",
+      "duration": 134462.734,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 13217
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1909
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3069
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2195
+          }
+        ]
+      },
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 9825
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1837
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2452
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1833
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2743
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6007
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3233
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 9067
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2706
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4703
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2484
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 7978
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6997
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6078
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 5667
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2751
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4226
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3823
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4765
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2588
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "browser": "firefox",
+    "execution": "before-preview-fix",
+    "stats": {
+      "startTime": "2026-11-09T05:48:20.955Z",
+      "duration": 115269.89,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 10989
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1554
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2263
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1824
+          }
+        ]
+      },
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 8324
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1551
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2072
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1694
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1977
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4282
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2365
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 8517
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1907
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3491
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2261
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "failed",
+            "retry": 0,
+            "duration_ms": 7844
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6049
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4740
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4873
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2335
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 6326
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4655
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4747
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2400
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "browser": "firefox",
+    "execution": "final-directed",
+    "stats": {
+      "startTime": "2026-11-09T05:51:00.228Z",
+      "duration": 100391.83399999999,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 10353
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1644
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2980
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2177
+          }
+        ]
+      },
+      {
+        "title": "DRE: classify in the existing plan, confirm economic recognition and export a partial statement",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 9317
+          }
+        ]
+      },
+      {
+        "title": "navigation aliases converge on one home and one financial plan",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1344
+          }
+        ]
+      },
+      {
+        "title": "service completion persists without auto titles and contextual generation remains confirmed and unique",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1917
+          }
+        ]
+      },
+      {
+        "title": "DRE lookup failure and malformed response recover in place without reporting a zero profit",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1513
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2251
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 5357
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2879
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 7013
+          }
+        ]
+      },
+      {
+        "title": "DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1674
+          }
+        ]
+      },
+      {
+        "title": "DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4033
+          }
+        ]
+      },
+      {
+        "title": "DRE release: unavailable description and fresh export authorization do not disclose stale financial information",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2093
+          }
+        ]
+      },
+      {
+        "title": "DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 4816
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3657
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 5453
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 5064
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "desktop",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2523
+          }
+        ]
+      },
+      {
+        "title": "DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 2428
+          }
+        ]
+      },
+      {
+        "title": "DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3776
+          }
+        ]
+      },
+      {
+        "title": "DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 3320
+          }
+        ]
+      },
+      {
+        "title": "DRE review: one balanced home preserves legacy navigation and does not disclose private service activity",
+        "project": "mobile",
+        "expected": "passed",
+        "results": [
+          {
+            "status": "passed",
+            "retry": 0,
+            "duration_ms": 1664
+          }
+        ]
+      }
+    ]
+  }
+]

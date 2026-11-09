@@ -1,0 +1,12 @@
+
+> gestao-local@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-release-readiness/frontend
+
+
+ Test Files  23 passed (23)
+      Tests  259 passed (259)
+   Start at  01:49:59
+   Duration  4.71s (transform 2.91s, setup 0ms, import 14.08s, tests 2.02s, environment 14ms)

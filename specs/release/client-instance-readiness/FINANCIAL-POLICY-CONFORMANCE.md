@@ -1,0 +1,22 @@
+# Oito políticas — aderência e limites
+
+Direção de produto aprovada pelo proprietário, **não aceite profissional contábil assinado**. A correção desta release é de apresentação: nenhum algoritmo, schema, endpoint, mapeamento, fingerprint ou centavo foi modificado.
+
+| Política | Classificação | Comportamento conferido / limite | Evidência |
+|---|---|---|---|
+| 1. Receita de serviço na conclusão comprovada | Parcialmente atendida | `completed_on`, evidência e título vinculado são exigidos; serviço planejado não vira receita. Reconhecimento por etapas/ao longo da execução ou adiantamento não é automatizado; exige política específica e permanece pendente. | `dre_sources.py`, `service_orders.py`; `test_dre_service_completion.py`; HOM-02…05 histórico |
+| 2. Custo efetivamente incorrido | Parcialmente atendida | Incorrência por item e data comprovadas; custo contratado sem evidência não é zero nem custo automaticamente consumido. Apropriação contábil, rateios e divergência entre contratado/incorrido exigem validação. | `ServiceOrderCost.incurred_on`; HOM-06; testes DRE completos |
+| 3. CMV vinculado à venda com custo histórico | Não implementada | Não há estoque valorizado/CMV automático confiável. O motor mantém CD e dependentes incompletos, não usa preço de venda como custo. Não oferecer “margem comercial/LL completos” sem fonte de custo comprovada. | Modelos de produto/estoque; `dre_policy.py`; testes de cobertura |
+| 4. Tributos e descontos por natureza | Parcialmente atendida | Desconto comercial da venda separado de juros/multa/desconto financeiro da baixa; encargos requerem reconhecimento. Não há apuração tributária automática nem alíquota presumida; fonte de tributo e competência exigem comprovação. | `test_dre_api.py`; HOM-08/10; comparação de 26 relatórios |
+| 5. DA/provisões documentadas | Dependente de validação contábil | Não existe módulo automático de ativos/provisões. DA/tributos/CMV desconhecidos propagam incompletude; declaração de zero/não aplicável exige responsabilidade e evidência, não comprova sua veracidade. | `dre_policy.py`, component-assertions; HOM-19 |
+| 6. Cancelamentos auditáveis | Parcialmente atendida | Fato original preservado; prévia, data, justificativa, evidência, autor, revisão e idempotência; reverse integral ou retain financeiro. Cancelamento parcial não é calculado automaticamente e não pode ser simulado por uma reversão integral. | `dre_cancellations.py`; `test_dre_review_fixes.py`; HOM-16…18 |
+| 7. Principal de financiamento/investimento/transferência fora do resultado | Atendida no escopo implementado | Natureza e mapeamento explícitos; principal investment/financing exige outside_dre; componentes econômicos reconhecidos separadamente. Uma transferência/entrada de caixa não comprova receita. Sem classificação/evidência, pendência em vez de receita presumida. | `resolve_source`, `test_investment_principal_is_never_income_and_exclusion_remains_traceable`; HOM-12 |
+| 8. Histórico pré-0017 | Atendida | Capturas ausentes não recebem backfill inventado; requer revisão supervisionada. Revisões/snapshots preservados; política aplicável alterada invalida confirmação; vigências sem sobreposição. | 0017, `dre_history.py`, testes de política/migração/replay; HOM-14/15/25 |
+
+## Compatibilidade capaz de gerar valor incorreto
+
+Não foi demonstrada nova divergência monetária no escopo validado. Os riscos de uso indevido continuam materiais: declarar zero sem prova; tratar execução parcial como integral; classificar principal de empréstimo como venda; tratar cancelamento parcial como reversão total; anunciar CMV/LL/EBITDA completos sem dados. A interface mantém a DRE gerencial e seus estados parcial/indisponível. Essas lacunas não serão “resolvidas” com fórmulas presumidas.
+
+A oferta inicial deve excluir apuração fiscal/contábil homologada, reconhecimento por etapas, CMV automático e cancelamentos parciais automáticos. Validar com o responsável financeiro os critérios efetivamente utilizados pela primeira empresa; qualquer necessidade desses recursos é nova decisão, não implementada aqui.
+
+Zero verdadeiro segue sendo exibido; desconhecido não vira zero. Cálculos em centavos, fonte canônica, caixa versus competência, baixas parciais/estornos, autoria e propriedade continuam responsabilidade do backend. O CSV legível é um documento de apresentação; o endpoint técnico da DRE e os 26 relatórios legados permanecem iguais.
