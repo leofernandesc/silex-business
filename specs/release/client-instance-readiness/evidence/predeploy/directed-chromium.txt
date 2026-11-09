@@ -1,0 +1,33 @@
+[WebServer] INFO:     Started server process [1075392]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8033 (Press CTRL+C to quit)
+
+Running 20 tests using 1 worker
+
+(node:1075597) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (7.6s)
+  ✓   2 [desktop] › tests/dre-release-ux.spec.ts:9:1 › DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure (1.3s)
+  ✓   3 [desktop] › tests/dre-release-ux.spec.ts:15:1 › DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels (4.4s)
+  ✓   4 [desktop] › tests/dre-release-ux.spec.ts:19:1 › DRE release: unavailable description and fresh export authorization do not disclose stale financial information (2.3s)
+  ✓   5 [desktop] › tests/dre-release-ux.spec.ts:24:1 › DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile (5.1s)
+  ✓   6 [desktop] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (3.0s)
+  ✓   7 [desktop] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (2.8s)
+  ✓   8 [desktop] › tests/dre-review-fixes.spec.ts:54:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (3.2s)
+  ✓   9 [desktop] › tests/dre-review-fixes.spec.ts:75:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (1.3s)
+  ✓  10 [desktop] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (11.3s)
+(node:1077874) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 [mobile] › tests/dre-integration.spec.ts:8:1 › DRE: classify in the existing plan, confirm economic recognition and export a partial statement (5.7s)
+  ✓  12 [mobile] › tests/dre-release-ux.spec.ts:9:1 › DRE release: planned service explains the next action in Portuguese and keeps codes only in technical disclosure (984ms)
+  ✓  13 [mobile] › tests/dre-release-ux.spec.ts:15:1 › DRE release: authorized descriptions, source links and technical audit remain usable without exposing implementation labels (2.7s)
+  ✓  14 [mobile] › tests/dre-release-ux.spec.ts:19:1 › DRE release: unavailable description and fresh export authorization do not disclose stale financial information (1.7s)
+  ✓  15 [mobile] › tests/dre-release-ux.spec.ts:24:1 › DRE release: readable CSV and A4 preserve original and signed cancellation facts on desktop and mobile (4.4s)
+  ✓  16 [mobile] › tests/dre-review-fixes.spec.ts:24:1 › DRE review: dated policy splits preserve history and generic catalog edits cannot bypass review (2.5s)
+  ✓  17 [mobile] › tests/dre-review-fixes.spec.ts:40:1 › DRE review: changing economic policy invalidates the shown confirmation and can recover in the same modal (2.3s)
+  ✓  18 [mobile] › tests/dre-review-fixes.spec.ts:54:1 › DRE review: economic cancellation has an explicit preview, handles failures and double clicks without financial duplication (3.0s)
+  ✓  19 [mobile] › tests/dre-review-fixes.spec.ts:75:1 › DRE review: one balanced home preserves legacy navigation and does not disclose private service activity (1.4s)
+  ✓  20 [mobile] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (11.4s)
+
+  20 passed (1.4m)

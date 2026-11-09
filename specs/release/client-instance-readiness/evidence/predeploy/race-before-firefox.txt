@@ -1,0 +1,36 @@
+[WebServer] INFO:     Started server process [1074092]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8034 (Press CTRL+C to quit)
+
+Running 1 test using 1 worker
+
+(node:1074094) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session (2.9s)
+
+
+  1) [desktop] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session
+
+    Error: No download may survive the authenticated identity change
+
+    expect(received).toBeNull()
+
+    Received: {"_artifact": {"_guid": "artifact@fd26f48c85d368a8bf14b1b6d296565b", "_type": "Artifact"}, "_page": {"_guid": "page@5d742632b3d85b6ef406cb8c3c3134ba", "_type": "Page"}, "_suggestedFilename": "dre.csv", "_url": "blob:http://127.0.0.1:8034/a2f9e4bd-9df2-4e8c-a052-fd41a34bedc8"}
+
+      21 |  await page.getByRole('button',{name:'Sair',exact:true}).click();await expect(page.getByRole('heading',{name:'Acesse seu espaço'})).toBeVisible();await login(page,'demo.operador');
+      22 |  expect((await page.request.get('/api/finance/dre?'+new URLSearchParams(period))).status()).toBe(403);
+    > 23 |  release();const result=await download;expect(result,'No download may survive the authenticated identity change').toBeNull();
+         |                                                                                                                   ^
+      24 | });
+      25 |
+        at /home/leofernandesc/silex-predeploy-audit/frontend/tests/predeploy-export-session.spec.ts:23:115
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-predeploy-race-firefox/predeploy-export-session-a-c4110-ish-in-the-operator-session-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-predeploy-race-firefox/predeploy-export-session-a-c4110-ish-in-the-operator-session-desktop/error-context.md
+
+  1 failed
+    [desktop] › tests/predeploy-export-session.spec.ts:5:1 › a financial download from the previous session must not finish in the operator session

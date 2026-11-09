@@ -1,0 +1,12 @@
+
+> gestao-local@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.12 /home/leofernandesc/silex-predeploy-audit/frontend
+
+
+ Test Files  23 passed (23)
+      Tests  264 passed (264)
+   Start at  02:30:13
+   Duration  2.40s (transform 1.75s, setup 0ms, import 6.95s, tests 961ms, environment 4ms)

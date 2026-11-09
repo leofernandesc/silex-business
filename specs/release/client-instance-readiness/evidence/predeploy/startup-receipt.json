@@ -1,0 +1,28 @@
+{
+  "tested_candidate": "0ade7944238cfa52175936650115f5bcf86592e4",
+  "image": "silex-predeploy-0ade794:local",
+  "image_manifest": "sha256:40d7ced7976642032617c61e44bc7055f923bf041b383acdd8b12af46d6a73dc",
+  "script_original_sha256": "699fd3a8b8694263fc45510a3af7570d94cfc70113110624413f2a9558a058f5",
+  "script_executed_sha256": "c8d9de3547f37d6af6ce8ca1f65930aacdcba7e057528162ec1062b65aa5e68a",
+  "adaptations": [
+    "ROOT isolated worktree",
+    "synthetic host clientes.example.test",
+    "/data/silex-clientes.sqlite3 instead of /data/gestao.sqlite3; backup archive member remains gestao.sqlite3"
+  ],
+  "mount_required": true,
+  "empty_database_reached_health_and_app": true,
+  "no_initial_users": true,
+  "admin_cli_no_password_echo": true,
+  "restart_equal": true,
+  "fresh_container_equal": true,
+  "attachments_restored": true,
+  "single_instance_lock": true,
+  "migration_failure_stops_without_reset": true,
+  "demo_database_rejected": true,
+  "forged_proxy_headers_rejected": true,
+  "runtime_memory_limit_MiB": 470,
+  "observed_local_idle_MiB": 79.16,
+  "observed_local_peak_bytes": 137728000,
+  "railway_accessed": false,
+  "persistent_database_used": false
+}

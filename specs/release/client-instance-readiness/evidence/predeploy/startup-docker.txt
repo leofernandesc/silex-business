@@ -1,0 +1,113 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.12kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 569B done
+#4 DONE 0.0s
+
+#5 [runtime 1/8] FROM docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#5 resolve docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258 0.0s done
+#5 DONE 0.0s
+
+#6 [frontend 1/8] FROM docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+#6 resolve docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 1.55MB 0.0s done
+#7 DONE 0.1s
+
+#8 [runtime 3/8] COPY backend/requirements.txt /app/backend/requirements.txt
+#8 CACHED
+
+#9 [runtime 2/8] WORKDIR /app
+#9 CACHED
+
+#10 [runtime 4/8] RUN pip install --no-cache-dir -r /app/backend/requirements.txt
+#10 CACHED
+
+#11 [frontend 3/8] COPY frontend/package.json frontend/package-lock.json ./
+#11 CACHED
+
+#12 [frontend 2/8] WORKDIR /build/frontend
+#12 CACHED
+
+#13 [frontend 4/8] RUN npm ci --no-audit --no-fund
+#13 CACHED
+
+#14 [runtime 5/8] COPY backend/app/ /app/backend/app/
+#14 DONE 0.1s
+
+#15 [frontend 5/8] COPY frontend/src/ ./src/
+#15 DONE 0.1s
+
+#16 [runtime 6/8] COPY backend/migrations/ /app/backend/migrations/
+#16 DONE 0.1s
+
+#17 [frontend 6/8] COPY frontend/public/ ./public/
+#17 DONE 0.1s
+
+#18 [runtime 7/8] COPY backend/alembic.ini /app/backend/alembic.ini
+#18 DONE 0.0s
+
+#19 [frontend 7/8] COPY frontend/index.html frontend/tsconfig.json frontend/vite.config.ts ./
+#19 DONE 0.1s
+
+#20 [frontend 8/8] RUN npm run build
+#20 0.577
+#20 0.577 > gestao-local@0.1.0 build
+#20 0.577 > tsc -b && vite build
+#20 0.577
+#20 8.750 vite v7.3.7 building client environment for production...
+#20 8.834 transforming...
+#20 13.78 ✓ 3123 modules transformed.
+#20 13.98 rendering chunks...
+#20 14.18 computing gzip size...
+#20 14.21 dist/index.html                        0.60 kB │ gzip:   0.37 kB
+#20 14.21 dist/assets/PublicPage-DkWOma6T.css   11.83 kB │ gzip:   2.49 kB
+#20 14.21 dist/assets/App-D6LM8HkK.css          39.50 kB │ gzip:   5.59 kB
+#20 14.21 dist/assets/index-Cis4Wmyo.css        46.51 kB │ gzip:  10.33 kB
+#20 14.21 dist/assets/x-BXP4u2mI.js              3.44 kB │ gzip:   1.58 kB
+#20 14.21 dist/assets/PublicPage-9sO-Xs2K.js    12.04 kB │ gzip:   3.61 kB
+#20 14.21 dist/assets/index-ChaYLC-y.js        228.54 kB │ gzip:  71.70 kB
+#20 14.21 dist/assets/App-DWA0vyMq.js          479.47 kB │ gzip: 144.43 kB
+#20 14.21 ✓ built in 5.43s
+#20 DONE 14.4s
+
+#21 [runtime 8/8] COPY --from=frontend /build/frontend/dist /app/frontend/dist
+#21 DONE 0.0s
+
+#22 exporting to image
+#22 exporting layers
+#22 exporting layers 0.2s done
+#22 exporting manifest sha256:6c64109875229d6b1574c919e05d313905b01a6c69220b8ea357bb4ee211cb5e done
+#22 exporting config sha256:a4816f0cd5863c109bcbe4c2b4d0db7e996763bbafed81f8df3ba539f1433820 done
+#22 exporting attestation manifest sha256:8d2ebbc298ce53b9dbdef1e76e9b6d22325e034882dfadb1d94f44fab97977fe done
+#22 exporting manifest list sha256:40d7ced7976642032617c61e44bc7055f923bf041b383acdd8b12af46d6a73dc done
+#22 naming to docker.io/library/silex-predeploy-0ade794:local done
+#22 unpacking to docker.io/library/silex-predeploy-0ade794:local 0.1s done
+#22 DONE 0.3s
+{
+  "mount_required": true,
+  "no_demo_seed": true,
+  "admin_cli_no_password_echo": true,
+  "restart_equal": true,
+  "fresh_container_equal": true,
+  "attachments_restored": true,
+  "single_instance_lock": true,
+  "migration_failure_stops": true,
+  "demo_database_rejected": true,
+  "forged_proxy_headers_rejected": true,
+  "runtime_memory_limit_MiB": 470,
+  "memory_peak_bytes_including_cli": 137728000
+}
+{"idle_sample_memory": "79.16MiB / 470MiB", "idle_sample_cpu": "0.10%"}

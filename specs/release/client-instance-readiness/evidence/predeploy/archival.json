@@ -1,0 +1,56 @@
+[
+  {
+    "path": "startup-docker.txt",
+    "original_sha256": "2a1587fe4024f598827b231a7248f1f74700ec422b7b65c255081647671880ba",
+    "archived_sha256": "719eec7f560c2e96c02680bc6d239c8afd634a2a8bb2de19b708ddd46c3f6ef7",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "race-before-chromium.txt",
+    "original_sha256": "02338b2aa01bda833f50ef44a301ace5f0896de6fe607266da0c361cf70d9ad3",
+    "archived_sha256": "cc5e1fa1c59bd9b915df5e1116ec4880ac33fc0491d5f0c654ab9f53877c4748",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "race-before-firefox.txt",
+    "original_sha256": "00b2fa771617b4ff11ce02962f9084256a5cf9828b14bc49131f9445a60995ff",
+    "archived_sha256": "6f91d0e1e0aedf62413047356e14b93ffa9e404adb1d584ac0dd447c3af05fd6",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "unit-before.txt",
+    "original_sha256": "5913711e0a2a0d78371209ec9b99bde49b89aac6685313801ae50e4ed98529a0",
+    "archived_sha256": "d805e8bd9bce4b6193d2661121406218fd5a7f18e04bc3d54ddfddf1ba57ecaf",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "unit-after.txt",
+    "original_sha256": "d4f014ccb73652cf89026c2a1e941f593e13b58968b74d6abe357c616a08b5de",
+    "archived_sha256": "29e19b9de9e19e6f1caf3f9adc6275aa09ca8de724dd763de94f985618f66e36",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "frontend.txt",
+    "original_sha256": "0420345872facddf74c1a67be782e8c85cacfdc2781b1acc98f6a24b71ad966e",
+    "archived_sha256": "352cd8f2b72be00b6c5fc75e7f6f71b1907b641ac6ca080d10bd2c435f200f18",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "build.txt",
+    "original_sha256": "95fb33e652473ddb35bc8d3049348ff320fc935a4f4b0e2afafcabd130d0ce9b",
+    "archived_sha256": "95fb33e652473ddb35bc8d3049348ff320fc935a4f4b0e2afafcabd130d0ce9b",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "directed-chromium.txt",
+    "original_sha256": "5413c54e46f3c14cf40afb42f16f41420b6c9a15cd7eb345095bab48b7d379c5",
+    "archived_sha256": "5413c54e46f3c14cf40afb42f16f41420b6c9a15cd7eb345095bab48b7d379c5",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  },
+  {
+    "path": "directed-firefox.txt",
+    "original_sha256": "e3f05a205321efeee3dfba414884750c24786bdb819a95d2ac9f0d492d0eb590",
+    "archived_sha256": "e3f05a205321efeee3dfba414884750c24786bdb819a95d2ac9f0d492d0eb590",
+    "normalization": "LF and trailing whitespace only; original /tmp files unchanged"
+  }
+]
