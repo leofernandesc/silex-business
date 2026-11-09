@@ -1,0 +1,239 @@
+FFFF..FFF                                                                [100%]
+=================================== FAILURES ===================================
+_ test_cli_public_reserved_names_stop_before_password_or_database[demo.admin] __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d4613fb0>
+username = 'demo.admin'
+
+    @pytest.mark.parametrize('username',['demo.admin','demo.operador',' Demo.Admin ','DEMO.OPERADOR'])
+    def test_cli_public_reserved_names_stop_before_password_or_database(monkeypatch,username):
+        monkeypatch.setenv('GESTAO_ENV','railway')
+        monkeypatch.setattr('sys.stdin.isatty',lambda:True)
+        with patch('builtins.input',return_value=username),patch('getpass.getpass',side_effect=AssertionError('No password required for a refused username')),patch('app.cli.build_engine',side_effect=AssertionError('No database may be opened')):
+>           with pytest.raises(SystemExit,match='reservado'):create_admin()
+                                                             ^^^^^^^^^^^^^^
+
+backend/tests/test_reserved_usernames.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+../silex-predeploy-audit/backend/app/cli.py:44: in create_admin
+    password = getpass.getpass("Senha (mínimo 10 caracteres): ")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='getpass' id='127787428254576'>
+args = ('Senha (mínimo 10 caracteres): ',), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: No password required for a refused username
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+_ test_cli_public_reserved_names_stop_before_password_or_database[demo.operador] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d444a3c0>
+username = 'demo.operador'
+
+    @pytest.mark.parametrize('username',['demo.admin','demo.operador',' Demo.Admin ','DEMO.OPERADOR'])
+    def test_cli_public_reserved_names_stop_before_password_or_database(monkeypatch,username):
+        monkeypatch.setenv('GESTAO_ENV','railway')
+        monkeypatch.setattr('sys.stdin.isatty',lambda:True)
+        with patch('builtins.input',return_value=username),patch('getpass.getpass',side_effect=AssertionError('No password required for a refused username')),patch('app.cli.build_engine',side_effect=AssertionError('No database may be opened')):
+>           with pytest.raises(SystemExit,match='reservado'):create_admin()
+                                                             ^^^^^^^^^^^^^^
+
+backend/tests/test_reserved_usernames.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+../silex-predeploy-audit/backend/app/cli.py:44: in create_admin
+    password = getpass.getpass("Senha (mínimo 10 caracteres): ")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='getpass' id='127787428252512'>
+args = ('Senha (mínimo 10 caracteres): ',), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: No password required for a refused username
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+_ test_cli_public_reserved_names_stop_before_password_or_database[ Demo.Admin ] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d4448ec0>
+username = ' Demo.Admin '
+
+    @pytest.mark.parametrize('username',['demo.admin','demo.operador',' Demo.Admin ','DEMO.OPERADOR'])
+    def test_cli_public_reserved_names_stop_before_password_or_database(monkeypatch,username):
+        monkeypatch.setenv('GESTAO_ENV','railway')
+        monkeypatch.setattr('sys.stdin.isatty',lambda:True)
+        with patch('builtins.input',return_value=username),patch('getpass.getpass',side_effect=AssertionError('No password required for a refused username')),patch('app.cli.build_engine',side_effect=AssertionError('No database may be opened')):
+>           with pytest.raises(SystemExit,match='reservado'):create_admin()
+                                                             ^^^^^^^^^^^^^^
+
+backend/tests/test_reserved_usernames.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+../silex-predeploy-audit/backend/app/cli.py:44: in create_admin
+    password = getpass.getpass("Senha (mínimo 10 caracteres): ")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='getpass' id='127787428549584'>
+args = ('Senha (mínimo 10 caracteres): ',), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: No password required for a refused username
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+_ test_cli_public_reserved_names_stop_before_password_or_database[DEMO.OPERADOR] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d45b6330>
+username = 'DEMO.OPERADOR'
+
+    @pytest.mark.parametrize('username',['demo.admin','demo.operador',' Demo.Admin ','DEMO.OPERADOR'])
+    def test_cli_public_reserved_names_stop_before_password_or_database(monkeypatch,username):
+        monkeypatch.setenv('GESTAO_ENV','railway')
+        monkeypatch.setattr('sys.stdin.isatty',lambda:True)
+        with patch('builtins.input',return_value=username),patch('getpass.getpass',side_effect=AssertionError('No password required for a refused username')),patch('app.cli.build_engine',side_effect=AssertionError('No database may be opened')):
+>           with pytest.raises(SystemExit,match='reservado'):create_admin()
+                                                             ^^^^^^^^^^^^^^
+
+backend/tests/test_reserved_usernames.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+../silex-predeploy-audit/backend/app/cli.py:44: in create_admin
+    password = getpass.getpass("Senha (mínimo 10 caracteres): ")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1134: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/lib/python3.12/unittest/mock.py:1138: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='getpass' id='127787428258896'>
+args = ('Senha (mínimo 10 caracteres): ',), kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               AssertionError: No password required for a refused username
+
+/usr/lib/python3.12/unittest/mock.py:1193: AssertionError
+___ test_public_api_rejects_reserved_usernames_without_mutating_users[admin] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-leofernandesc/pytest-105/test_public_api_rejects_reserv0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d4448aa0>
+password_hash = '$argon2id$v=19$m=65536,t=3,p=4$xi9qBED2v23Zp0PRSSU86g$CSJJMiHptesigg0t/lg/wPnQb3+MxyxfYPJU4JPhBsI'
+role = 'admin'
+
+    @pytest.mark.parametrize('role',['admin','operator'])
+    def test_public_api_rejects_reserved_usernames_without_mutating_users(tmp_path,monkeypatch,password_hash,role):
+        mount=tmp_path/'volume';mount.mkdir()
+        for key,value in {'GESTAO_ENV':'railway','GESTAO_PUBLIC_HOST':'clientes.example.test','GESTAO_PUBLIC_ORIGIN':'https://clientes.example.test','RAILWAY_VOLUME_MOUNT_PATH':str(mount),'GESTAO_DATABASE_URL':f'sqlite:///{mount}/clientes.sqlite3'}.items():monkeypatch.setenv(key,value)
+        monkeypatch.setattr(Path,'is_mount',lambda p:p==mount)
+        migrate();engine=build_engine()
+        with session_factory(engine)() as db:
+            db.add(User(username='individual.admin',name='Administrador fictício',role='admin',password_hash=password_hash));db.commit()
+        app=create_app(engine,serve_frontend=False)
+        with TestClient(app,base_url='https://clientes.example.test') as client:
+            assert client.post('/api/auth/login',json={'username':'individual.admin','password':'TestPassword#2026'}).status_code==200
+            before=client.get('/api/users').json()
+            for username in ['demo.admin','DEMO.OPERADOR']:
+                response=client.post('/api/users',json={'username':username,'name':'Usuário fictício','role':role,'password':'SyntheticReservedOnly#2026'})
+>               assert response.status_code==422 and 'reservado' in response.json()['detail']
+E               assert (201 == 422)
+E                +  where 201 = <Response [201 Created]>.status_code
+
+backend/tests/test_reserved_usernames.py:43: AssertionError
+_ test_public_api_rejects_reserved_usernames_without_mutating_users[operator] __
+
+tmp_path = PosixPath('/tmp/pytest-of-leofernandesc/pytest-105/test_public_api_rejects_reserv1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d3e23560>
+password_hash = '$argon2id$v=19$m=65536,t=3,p=4$xi9qBED2v23Zp0PRSSU86g$CSJJMiHptesigg0t/lg/wPnQb3+MxyxfYPJU4JPhBsI'
+role = 'operator'
+
+    @pytest.mark.parametrize('role',['admin','operator'])
+    def test_public_api_rejects_reserved_usernames_without_mutating_users(tmp_path,monkeypatch,password_hash,role):
+        mount=tmp_path/'volume';mount.mkdir()
+        for key,value in {'GESTAO_ENV':'railway','GESTAO_PUBLIC_HOST':'clientes.example.test','GESTAO_PUBLIC_ORIGIN':'https://clientes.example.test','RAILWAY_VOLUME_MOUNT_PATH':str(mount),'GESTAO_DATABASE_URL':f'sqlite:///{mount}/clientes.sqlite3'}.items():monkeypatch.setenv(key,value)
+        monkeypatch.setattr(Path,'is_mount',lambda p:p==mount)
+        migrate();engine=build_engine()
+        with session_factory(engine)() as db:
+            db.add(User(username='individual.admin',name='Administrador fictício',role='admin',password_hash=password_hash));db.commit()
+        app=create_app(engine,serve_frontend=False)
+        with TestClient(app,base_url='https://clientes.example.test') as client:
+            assert client.post('/api/auth/login',json={'username':'individual.admin','password':'TestPassword#2026'}).status_code==200
+            before=client.get('/api/users').json()
+            for username in ['demo.admin','DEMO.OPERADOR']:
+                response=client.post('/api/users',json={'username':username,'name':'Usuário fictício','role':role,'password':'SyntheticReservedOnly#2026'})
+>               assert response.status_code==422 and 'reservado' in response.json()['detail']
+E               assert (201 == 422)
+E                +  where 201 = <Response [201 Created]>.status_code
+
+backend/tests/test_reserved_usernames.py:43: AssertionError
+_____________ test_railway_metadata_also_prevents_unsafe_usernames _____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7438d3e54650>
+
+    def test_railway_metadata_also_prevents_unsafe_usernames(monkeypatch):
+        monkeypatch.delenv('GESTAO_ENV',raising=False);monkeypatch.setenv('RAILWAY_PROJECT_ID','synthetic-project')
+>       with pytest.raises(ValueError,match='reservado'):UserInput(username='demo.admin',name='Fictício',password='SyntheticOnly#2026')
+E       Failed: DID NOT RAISE ValueError
+
+backend/tests/test_reserved_usernames.py:52: Failed
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /home/leofernandesc/silex-ux-homologation/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED backend/tests/test_reserved_usernames.py::test_cli_public_reserved_names_stop_before_password_or_database[demo.admin]
+FAILED backend/tests/test_reserved_usernames.py::test_cli_public_reserved_names_stop_before_password_or_database[demo.operador]
+FAILED backend/tests/test_reserved_usernames.py::test_cli_public_reserved_names_stop_before_password_or_database[ Demo.Admin ]
+FAILED backend/tests/test_reserved_usernames.py::test_cli_public_reserved_names_stop_before_password_or_database[DEMO.OPERADOR]
+FAILED backend/tests/test_reserved_usernames.py::test_public_api_rejects_reserved_usernames_without_mutating_users[admin]
+FAILED backend/tests/test_reserved_usernames.py::test_public_api_rejects_reserved_usernames_without_mutating_users[operator]
+FAILED backend/tests/test_reserved_usernames.py::test_railway_metadata_also_prevents_unsafe_usernames
+7 failed, 2 passed, 1 warning in 1.14s

@@ -1,0 +1,36 @@
+[WebServer] INFO:     Started server process [1117899]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8035 (Press CTRL+C to quit)
+
+Running 1 test using 1 worker
+
+(node:1117901) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [audit] › tests/ux-homologation.spec.ts:9:1 › UX: reversal action is reachable without horizontal scrolling with long descriptions and attachments (1.6s)
+
+
+  1) [audit] › tests/ux-homologation.spec.ts:9:1 › UX: reversal action is reachable without horizontal scrolling with long descriptions and attachments
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 375
+    Received:    1107.296875
+
+      12 |  const paid=await req(page,`/finance/${entry.id}/settle`,{method:'pix',account_id:bank.id,principal_cents:10001,interest_cents:0,fine_cents:0,discount_cents:0,request_key:'ux-payment-history-00001'},200);
+      13 |  await req(page,`/finance/payments/${paid.payments[0].id}/attachments`,{filename:'Comprovante fictício com nome extenso.pdf',content_type:'application/pdf',content_base64:Buffer.from('%PDF-1.4\nFicticio\n').toString('base64')});
+    > 14 |  await page.goto(`/app?source_id=${entry.id}#finance-receivable`);await expect(page.getByRole('dialog')).toBeVisible();await evidence(page,'payment-history');const box=await page.getByRole('button',{name:'Estornar baixa',exact:true}).boundingBox();expect(box).not.toBeNull();expect(box!.x).toBeGreaterThanOrEqual(0);expect(box!.x+box!.width).toBeLessThanOrEqual(375);
+         |                                                                                                                                                                                                                                                                                                                                                       ^
+      15 | });
+      16 |
+      17 | for(const width of [1440,1024,768,375])test(`UX: visual route and form inventory at ${width}px`,async({page})=>{
+        at /home/leofernandesc/silex-ux-homologation/frontend/tests/ux-homologation.spec.ts:14:343
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/silex-ux-payment-before-results/ux-homologation-UX-reversa-697f6-escriptions-and-attachments-audit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/silex-ux-payment-before-results/ux-homologation-UX-reversa-697f6-escriptions-and-attachments-audit/error-context.md
+
+  1 failed
+    [audit] › tests/ux-homologation.spec.ts:9:1 › UX: reversal action is reachable without horizontal scrolling with long descriptions and attachments

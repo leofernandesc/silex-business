@@ -1,0 +1,13 @@
+[WebServer] INFO:     Started server process [1175985]
+[WebServer] INFO:     Waiting for application startup.
+[WebServer] INFO:     Application startup complete.
+[WebServer] INFO:     Uvicorn running on http://127.0.0.1:8035 (Press CTRL+C to quit)
+
+Running 2 tests using 1 worker
+
+(node:1176194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [audit] › tests/ux-homologation.spec.ts:498:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 1440px (10.6s)
+  ✓  2 [audit] › tests/ux-homologation.spec.ts:498:3 › UX DRE: service lifecycle, classification, partial and complete coverage at 375px (10.0s)
+
+  2 passed (26.5s)

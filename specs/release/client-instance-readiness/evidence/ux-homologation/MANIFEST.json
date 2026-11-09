@@ -1,0 +1,346 @@
+{
+  "base": "24d9e3949b150474c78512335c5dbc47857fdacb",
+  "source_commit": "b2578c25489ecdc730bdc761c41f66f2e7e3a66d",
+  "branch": "fix/homologation-money-layout-dre",
+  "date": "2026-11-09",
+  "source_files": [
+    {
+      "path": "backend/app/api.py",
+      "sha256": "8342c5d065e8aefc0c16e351d2001d6bdce63c5b768dc5ea23f36a31805f50fc"
+    },
+    {
+      "path": "backend/app/cli.py",
+      "sha256": "9ab1afb440172c8d67dc2b1e545495e32d58bd03722f7b34778a4bc632b24ca1"
+    },
+    {
+      "path": "backend/app/deployment.py",
+      "sha256": "4cb8df67e84dcd90b5a5c7813ef1d03bcb45fca9304495b91351c1c03717e6e3"
+    },
+    {
+      "path": "backend/app/schemas.py",
+      "sha256": "cef6499e04b54d5b54ac17da5c61727ddb12ac797109e672aa4128988ba56374"
+    },
+    {
+      "path": "backend/app/start.py",
+      "sha256": "e8b3b0ad7333a3f7187e93e859fe6adb7d9ebb428b4f40b9a1003390ddb8addc"
+    },
+    {
+      "path": "backend/tests/test_dre_homologation.py",
+      "sha256": "a24939b76d5a60c30fac2770e8a545112da82e3d0095a2dc54505aba24e2e4d5"
+    },
+    {
+      "path": "backend/tests/test_reserved_usernames.py",
+      "sha256": "bf62552844258931e3e32f3ab5735f16a533bd32d9a6e143bd34e80b065c90a0"
+    },
+    {
+      "path": "frontend/playwright.integration.config.ts",
+      "sha256": "bd3dfa67e26b5e0f9eb94582d6f02d764d6f148c2c818e594fcfc544a0628663"
+    },
+    {
+      "path": "frontend/src/accounts.css",
+      "sha256": "81d05de772acac9ad77e719f425bd0b3e8b6f340fe61c737518c44c42192dfa9"
+    },
+    {
+      "path": "frontend/src/catalog.tsx",
+      "sha256": "5ec8ad2cd34b9d6021263dfbe6d5e7b3d20b5d33bd7697b4a21ace50392b5066"
+    },
+    {
+      "path": "frontend/src/dre.css",
+      "sha256": "139a400f8b9f4b9a889e571438ae46e99bbad2ac0aefd2ba2a058d0b91d8b8b5"
+    },
+    {
+      "path": "frontend/src/dre.tsx",
+      "sha256": "2e5ba534c26e9bb2c24dae1a799f323673dad841cdfe98e002c73179a3b608fa"
+    },
+    {
+      "path": "frontend/src/drePresentation.test.ts",
+      "sha256": "e8e59f4b3b5331c1fae40c0b7046668c68628ba5d0d97686d1d4961a6af5fe26"
+    },
+    {
+      "path": "frontend/src/drePresentation.ts",
+      "sha256": "3ddf88df3af849fa181962d12006501e0e676a47d45bb30d30b2d219ec3c2867"
+    },
+    {
+      "path": "frontend/src/finance.tsx",
+      "sha256": "f4b7de4a07e41abdbd783effe50eb264889c76d068d6090ffe33b018e0ab3fcf"
+    },
+    {
+      "path": "frontend/src/financeCatalog.tsx",
+      "sha256": "5afea707d4fca5e98b2a88c250f558682e23786406b4c6751f20f55121b072f1"
+    },
+    {
+      "path": "frontend/src/financePlanning.tsx",
+      "sha256": "11f141707709c31c6e0f88ef7df91fcfbe990b57c86f2a904308a4882c1fbb7b"
+    },
+    {
+      "path": "frontend/src/ledger.tsx",
+      "sha256": "8bdc8fccd7c98860843735489ed08bee772cea5fe4470bdfcd75f6421126db10"
+    },
+    {
+      "path": "frontend/src/moneyInput.test.ts",
+      "sha256": "c42924db66536bdb27390b8918cb443b707d8ad1527739ae9742bfd036f5e790"
+    },
+    {
+      "path": "frontend/src/moneyInput.ts",
+      "sha256": "869ae888256d35065dc4169348853cdd5120320cc18befa721dc4443aa6b6d78"
+    },
+    {
+      "path": "frontend/src/operations.tsx",
+      "sha256": "a8f3fac6d2550837fcb3bfdc767b534b0a7d71e8c636c85a110433960ae7b08b"
+    },
+    {
+      "path": "frontend/src/partners.tsx",
+      "sha256": "06d71eae13047fc6aa5edc64ebfdc3de18a032e8a174e33a601128930fb12894"
+    },
+    {
+      "path": "frontend/src/sales.tsx",
+      "sha256": "d9d49288f3058879f2baa5e0541b5cb19b0a3b727cbd11687e3c867f5b622b6d"
+    },
+    {
+      "path": "frontend/src/serviceOrders.tsx",
+      "sha256": "933a171cc388fa883a4771460d03955482758ab3804708656586f8065f9ee8e4"
+    },
+    {
+      "path": "frontend/src/styles.css",
+      "sha256": "a4ff3d20a958dcc6fc6aedaaf823ad60d812bd9560c90c314e4dd73569bd1d57"
+    },
+    {
+      "path": "frontend/tests/ux-homologation.spec.ts",
+      "sha256": "6aec1d4ff8c934c436a0a38f7be6285a827b13320c7ec201114a9ae252723cd9"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "backend-full.txt",
+      "bytes": 942,
+      "sha256": "2ca08e94f3bdca4a9d4e0f7473c57fd61e472c336ef3fb49a42ab401fb57ef5a"
+    },
+    {
+      "path": "chromium-25.txt",
+      "bytes": 3724,
+      "sha256": "eb82e6ef6bbe3bb4610e999dab6ff23080e342609882859f39a9b765d83eb4fa"
+    },
+    {
+      "path": "chromium-dre-a4.pdf",
+      "bytes": 57517,
+      "sha256": "95ecf45367332b22a051a4975f6be0769cdd0bd900ed49ff1e7e0359d13d71bd"
+    },
+    {
+      "path": "chromium-dre-complete-1440.csv",
+      "bytes": 1845,
+      "sha256": "a8357209fa7a190457fc553a61a469c9dd5dd5dfb8dfae3f07ab6575471250f0"
+    },
+    {
+      "path": "chromium-dre-complete-1440.png",
+      "bytes": 200821,
+      "sha256": "ed654a2e426fd85bc7e6c2265befd7c3eafefd51baea15dc3198a280c7e4de08"
+    },
+    {
+      "path": "chromium-dre-final.txt",
+      "bytes": 770,
+      "sha256": "75c24a17ed0c846eee6d225254a726b9909305e1e6a45b12761e13bb061758f9"
+    },
+    {
+      "path": "chromium-dre-partial-1440.png",
+      "bytes": 214011,
+      "sha256": "7076f80a8d5a8bf0a08822c1d2d452b1c271c772b64f4c7f8d27cca6dc4c139c"
+    },
+    {
+      "path": "chromium-dre-partial-375.png",
+      "bytes": 236106,
+      "sha256": "3712cd9aea28d59ef5c1abbc1156d4f0ba46e2c6052bc8caf9950bdd343ec098"
+    },
+    {
+      "path": "chromium-dre-partial-a4.pdf",
+      "bytes": 59312,
+      "sha256": "45f4acfd379bc3499750f15336106b11d6f5d92af8308866eb012d24140c6cec"
+    },
+    {
+      "path": "chromium-dre-pending-1440.png",
+      "bytes": 202114,
+      "sha256": "059e2b42f80c3792b2ef8dc0faafa3e2c967410ce666433c99df88b35e040e85"
+    },
+    {
+      "path": "chromium-fixture-final.txt",
+      "bytes": 936,
+      "sha256": "3b2ed3e1e511e9faa21eea9911cd3be7955e2078a9c74194c45fc86aa7be7d40"
+    },
+    {
+      "path": "chromium-layout-1024.json",
+      "bytes": 1371,
+      "sha256": "f89c6ec1ae2b8721cd022b4d1e6f9205dead7fc39d0046862aff2d38340e5b08"
+    },
+    {
+      "path": "chromium-layout-1440.json",
+      "bytes": 1371,
+      "sha256": "c1f71d224b387e91647d61fb1d3e88d5ccc12e63f78863ba519e2a896ef893fb"
+    },
+    {
+      "path": "chromium-layout-375.json",
+      "bytes": 1351,
+      "sha256": "604683d39fe9345d72b4a3eefa6be807605be825491ab749faca502e2daf2e87"
+    },
+    {
+      "path": "chromium-layout-768.json",
+      "bytes": 1351,
+      "sha256": "a5ae0f09ecbe8146f0ba3a52f78c35cc3ada43fe127f1c698cbf3c0340d871a9"
+    },
+    {
+      "path": "customers-form-1440.png",
+      "bytes": 124718,
+      "sha256": "234ee72d36dea8cd0c738d72c163581852f5ce33f5050c92294accad2a0cb67e"
+    },
+    {
+      "path": "customers-form-375.png",
+      "bytes": 30244,
+      "sha256": "2aea9076f74f3a894db5b7ee8d6cb31a2b7184d215441c643241523b0673cef9"
+    },
+    {
+      "path": "dre-diagnosis.txt",
+      "bytes": 608,
+      "sha256": "738c7fefff3a91233c60bc20ed3ddf0b867d0961a23c1819cb9025f801fc2303"
+    },
+    {
+      "path": "dre-empty-before.png",
+      "bytes": 177641,
+      "sha256": "ee9741e7a7dc7d556da86f244f9364b89aad861e0cc2bb98f2e7cdcd0e1aee8c"
+    },
+    {
+      "path": "dre-empty.png",
+      "bytes": 87809,
+      "sha256": "565fcfdf0db04aa66a7b0375e9f6e72fc3047bccc2529fc87f444f011b72aee2"
+    },
+    {
+      "path": "dre-partial-pdf-text.txt",
+      "bytes": 2990,
+      "sha256": "c4ff65f11fd625f53981b413b74b8ab1b40cf5828f3e53271207dd5ce79cc9d5"
+    },
+    {
+      "path": "firefox-25.txt",
+      "bytes": 3723,
+      "sha256": "ab0f8ce8934a22e07c622167b43e924f85da1aff896951290235db5d47876407"
+    },
+    {
+      "path": "firefox-dre-complete-375.csv",
+      "bytes": 1845,
+      "sha256": "a8357209fa7a190457fc553a61a469c9dd5dd5dfb8dfae3f07ab6575471250f0"
+    },
+    {
+      "path": "firefox-dre-final.txt",
+      "bytes": 770,
+      "sha256": "0e41a874cb7905b4e2b917391d39b39efaba80a93aa6ce339afc858669c548ab"
+    },
+    {
+      "path": "firefox-dre-partial-375.png",
+      "bytes": 324967,
+      "sha256": "7c7192d31c8b64f9662b405dc71faf93d6e3cd5a30bbb88e8c45620d79ba14d4"
+    },
+    {
+      "path": "firefox-fixture-final.txt",
+      "bytes": 937,
+      "sha256": "01fe0b4d91bbb3d00efc1053a5764353b8d58ddbce293a712c0a455e7c69dfda"
+    },
+    {
+      "path": "firefox-layout-1024.json",
+      "bytes": 1371,
+      "sha256": "f89c6ec1ae2b8721cd022b4d1e6f9205dead7fc39d0046862aff2d38340e5b08"
+    },
+    {
+      "path": "firefox-layout-1440.json",
+      "bytes": 1371,
+      "sha256": "c1f71d224b387e91647d61fb1d3e88d5ccc12e63f78863ba519e2a896ef893fb"
+    },
+    {
+      "path": "firefox-layout-375.json",
+      "bytes": 1351,
+      "sha256": "604683d39fe9345d72b4a3eefa6be807605be825491ab749faca502e2daf2e87"
+    },
+    {
+      "path": "firefox-layout-768.json",
+      "bytes": 1351,
+      "sha256": "a5ae0f09ecbe8146f0ba3a52f78c35cc3ada43fe127f1c698cbf3c0340d871a9"
+    },
+    {
+      "path": "frontend-full.txt",
+      "bytes": 281,
+      "sha256": "7e0db1cbbe61e197a1b68878e79e494d2dfbdbfa1a4c038ff55a1238e934e5e5"
+    },
+    {
+      "path": "legacy-comparison.json",
+      "bytes": 36314,
+      "sha256": "af518ee0df074f02cac7469131150ac9277f4f7f0034327f0fc3daae0b4aa465"
+    },
+    {
+      "path": "money-negative.txt",
+      "bytes": 2329,
+      "sha256": "6a2ba5e4da703719e8f62d8321a6932e459a0826cd25e2611b19df8c3f6872b1"
+    },
+    {
+      "path": "payment-history-before.png",
+      "bytes": 136732,
+      "sha256": "f4dc4e122bed995aa0aff7ca7f6201a745d309fd83e3eb350e396b32b678e90c"
+    },
+    {
+      "path": "payment-history.png",
+      "bytes": 131949,
+      "sha256": "9302f2e7248efb10d9b4069a415b6bbe8186c64928a6d47f0eea8b06c3411171"
+    },
+    {
+      "path": "payment-negative.txt",
+      "bytes": 3289,
+      "sha256": "55fffdb3074e45e2db0fd2e5f927fc922b02713226525d49836798fa4966513c"
+    },
+    {
+      "path": "reserved-directed.txt",
+      "bytes": 609,
+      "sha256": "ae368fc53d533507056acf9c4952d8cb544a76f6d1b43ac3593110de19db5f4c"
+    },
+    {
+      "path": "reserved-negative.txt",
+      "bytes": 14923,
+      "sha256": "06546f8d20472d338d796bf0b2e72523343d9ee2c7937094dc9dbc85b197b009"
+    },
+    {
+      "path": "restart-restoration.json",
+      "bytes": 483,
+      "sha256": "eb3ebdce8aa6c35ce4f8f15b56308a94f6438cff7ee0b4f934887a16a63f1ce0"
+    },
+    {
+      "path": "service-orders-form-1440.png",
+      "bytes": 132185,
+      "sha256": "6402c8c2395008b799090e21a5d8c8efea58dad02c04812dbbd0319ba1f2426e"
+    },
+    {
+      "path": "service-orders-form-375.png",
+      "bytes": 47819,
+      "sha256": "8431937cad7ce877bcd86fb3a7c12f482681680a1f22e81c65efc1c7ee534eca"
+    },
+    {
+      "path": "source-secret-scan.txt",
+      "bytes": 82,
+      "sha256": "cef651552ca343c0459a997a9c444ee748d62ffc9f34e733257f28c74df87eef"
+    },
+    {
+      "path": "typescript-build.txt",
+      "bytes": 754,
+      "sha256": "1a60d57d63854075bc185ae4df12dcff8e090e8f48383e50af0a47a38d03851a"
+    }
+  ],
+  "evidence_text_normalization": "Trailing whitespace and final blank lines normalized in archived logs only. Archived CSV copies use LF instead of CRLF; original CSV bytes and hashes are recorded separately; application exports unchanged.",
+  "data": "Fictitious, disposable SQLite only. No DB or backup files included.",
+  "ci_final": "See exact final HEAD checks and Draft PR for subsequent remote results.",
+  "original_csv": [
+    {
+      "path": "firefox-dre-complete-375.csv",
+      "original_bytes": 1874,
+      "original_sha256": "b5fd01bf2750ce5808e941406e278df6c3e37f4ab1fcffe0ad4dcf0e222cc3f9",
+      "archival_change": "CRLF to LF only; application CSV/export unchanged."
+    },
+    {
+      "path": "chromium-dre-complete-1440.csv",
+      "original_bytes": 1874,
+      "original_sha256": "b5fd01bf2750ce5808e941406e278df6c3e37f4ab1fcffe0ad4dcf0e222cc3f9",
+      "archival_change": "CRLF to LF only; application CSV/export unchanged."
+    }
+  ]
+}

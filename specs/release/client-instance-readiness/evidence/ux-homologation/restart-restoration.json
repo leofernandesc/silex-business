@@ -1,0 +1,17 @@
+{
+  "server_instances": 3,
+  "restarts_with_same_database": 1,
+  "restored_database_server_starts": 1,
+  "all_original_table_rows_equal": true,
+  "dre_fact_amounts_cents": [
+    500001,
+    200001
+  ],
+  "attachment_bytes_equal": true,
+  "integrity_check": "ok",
+  "foreign_key_violations": 0,
+  "backup_sha256": "f044d95cb86da304e04f52b7d0c9da7969876d3df0c2245300c9df789709f461",
+  "persistent_database_used": false,
+  "railway_accessed": false,
+  "real_users_provisioned": false
+}

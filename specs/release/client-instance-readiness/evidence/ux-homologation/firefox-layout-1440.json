@@ -1,0 +1,87 @@
+[
+  {
+    "route": "customers",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "customers:form",
+    "content": 538,
+    "width": 538
+  },
+  {
+    "route": "products",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "products:form",
+    "content": 538,
+    "width": 538
+  },
+  {
+    "route": "service-orders",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "service-orders:form",
+    "content": 778,
+    "width": 778
+  },
+  {
+    "route": "sales",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "finance-receivable",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "finance-receivable:form",
+    "content": 538,
+    "width": 538
+  },
+  {
+    "route": "finance-payable",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "finance-payable:form",
+    "content": 538,
+    "width": 538
+  },
+  {
+    "route": "finance-dashboard",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "finance",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "finance:form",
+    "content": 538,
+    "width": 538
+  },
+  {
+    "route": "finance-plan",
+    "document": 1440,
+    "viewport": 1440
+  },
+  {
+    "route": "finance-plan:form",
+    "content": 538,
+    "width": 538
+  },
+  {
+    "route": "finance-reports",
+    "document": 1440,
+    "viewport": 1440
+  }
+]
